@@ -1,15 +1,23 @@
 import { Column, DeleteDateColumn, Entity } from 'typeorm';
 
 @Entity()
-export class User {
+export class Person {
     @Column({unique:true})
     id: number;
-    @Column({unique:true})
-    username: string;
     @Column()
-    password: string;
+    name: string;
+    @Column()
+    lastName: string;
     @Column({unique:true})
-    personId: number;
+    dni: string;
+    @Column()
+    address: number;
+    @Column()
+    birthDate: Date;
+    @Column({unique:true})
+    email: string;
+    @Column({unique:true})
+    phone: string;
     @DeleteDateColumn()
     deletedAt: Date;
 }
