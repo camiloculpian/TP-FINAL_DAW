@@ -2,7 +2,7 @@ import { Column, DeleteDateColumn, Entity } from 'typeorm';
 
 @Entity()
 export class Person {
-    @Column({unique:true})
+    @Column({primary:true, generated:true})
     id: number;
     @Column()
     name: string;
