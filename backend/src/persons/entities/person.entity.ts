@@ -4,15 +4,15 @@ import { Column, DeleteDateColumn, Entity } from 'typeorm';
 export class Person {
     @Column({primary:true, generated:true})
     id: number;
-    @Column()
+    @Column({nullable:false})
     name: string;
-    @Column()
+    @Column({nullable:false})
     lastName: string;
-    @Column({unique:true})
+    @Column({unique:true, nullable:false})
     dni: string;
-    @Column()
-    address: number;
-    @Column()
+    @Column({nullable:false})
+    address: string;
+    @Column({nullable:false})
     birthDate: Date;
     @Column({unique:true})
     email: string;
