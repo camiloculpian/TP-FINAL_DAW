@@ -20,6 +20,9 @@ export class Person {
     @Column({nullable:false})
     birthDate: Date;
 
+    @Column()
+    gender: boolean;
+
     @Column({unique:true})
     email: string;
 
