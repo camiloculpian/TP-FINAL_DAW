@@ -1,8 +1,8 @@
-import { Column, DeleteDateColumn, Entity } from 'typeorm';
+import { Column, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Person {
-    @Column({primary:true, generated:true})
+    @PrimaryGeneratedColumn()
     id: number;
     @Column({nullable:false})
     name: string;
@@ -16,7 +16,7 @@ export class Person {
     birthDate: Date;
     @Column({unique:true})
     email: string;
-    @Column({unique:true})
+    @Column()
     phone: string;
     @DeleteDateColumn()
     deletedAt: Date;

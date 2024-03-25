@@ -1,8 +1,9 @@
-import { Column, DeleteDateColumn, Entity } from 'typeorm';
+import { Person } from 'src/persons/entities/person.entity';
+import { Column, DeleteDateColumn, Entity, OneToOne, JoinColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
-    @Column({primary:true, generated:true})
+    @PrimaryGeneratedColumn()
     id: number;
     @Column({unique:true, nullable:false})
     username: string;
@@ -10,8 +11,9 @@ export class User {
     password: string;
     @Column({default:'user',nullable:false})
     rol: string;
-    @Column({unique:true,nullable:false})
-    personId: number;
+    @OneToOne(() => Person)
+    @JoinColumn()
+    person: Person;
     @DeleteDateColumn()
     deletedAt: Date;
 }
