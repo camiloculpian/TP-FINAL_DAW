@@ -5,15 +5,20 @@ import { Column, DeleteDateColumn, Entity, OneToOne, JoinColumn, PrimaryGenerate
 export class User {
     @PrimaryGeneratedColumn()
     id: number;
+
     @Column({unique:true, nullable:false})
     username: string;
+
     @Column({nullable:false})
     password: string;
+
     @Column({default:'user',nullable:false})
     rol: string;
+
     @OneToOne(() => Person)
     @JoinColumn()
     person: Person;
+    
     @DeleteDateColumn()
     deletedAt: Date;
 }
