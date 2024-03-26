@@ -4,6 +4,7 @@ import { UpdatePersonDto } from './dto/update-person.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Person } from './entities/person.entity';
 import { Repository } from 'typeorm';
+import { error } from 'console';
 
 @Injectable()
 export class PersonsService {
@@ -15,11 +16,21 @@ export class PersonsService {
 
   async create(createPersonDto: CreatePersonDto) {
     const person = this.personRepository.create(createPersonDto);
-    return await this.personRepository.save(person);
+    try{
+      return await this.personRepository.save(person);
+    }catch (e){
+      console.log(e);
+      return e;
+    }
   }
 
   async findAll() {
-    return await this.personRepository.find();
+    try{
+      return await this.personRepository.find();
+    }catch(e){
+      console.log(e)
+      return e;
+    }
   }
 
   async findOne(id: number) {
