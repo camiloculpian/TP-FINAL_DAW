@@ -15,9 +15,8 @@ export class PersonsService {
   ){}
 
   async create(createPersonDto: CreatePersonDto) {
-    const person = this.personRepository.create(createPersonDto);
     try{
-      return await this.personRepository.save(person);
+      return await this.personRepository.save(createPersonDto);
     }catch (e){
       console.log(e);
       return e;
@@ -34,14 +33,29 @@ export class PersonsService {
   }
 
   async findOne(id: number) {
-    return `This action returns a #${id} person`;
+    try{
+      return await this.personRepository.findOneBy({id});
+    }catch(e){
+      console.log(e)
+      return e;
+    }
   }
 
   async update(id: number, updatePersonDto: UpdatePersonDto) {
-    return `This action updates a #${id} person`;
+    try{
+      return await this.personRepository.update(id, updatePersonDto);
+    }catch(e){
+      console.log(e)
+      return e;
+    }
   }
 
   async remove(id: number) {
-    return `This action removes a #${id} person`;
+    try{
+      return await this.personRepository.softDelete({id});
+    }catch(e){
+      console.log(e)
+      return e;
+    }
   }
 }

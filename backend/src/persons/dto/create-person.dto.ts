@@ -26,5 +26,4 @@ export class CreatePersonDto {
 
     @IsPhoneNumber()
     phone: string;
-
 }
