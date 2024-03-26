@@ -12,7 +12,7 @@ export class Person {
     lastName: string;
 
     @Column({unique:true, nullable:false})
-    dni: string;
+    dni: number;
 
     @Column({nullable:false})
     address: string;
@@ -20,7 +20,7 @@ export class Person {
     @Column({nullable:false})
     birthDate: Date;
 
-    @Column()
+    @Column() /**TRUE: MALE FALSE: FEMALE*/
     gender: boolean;
 
     @Column({unique:true})
