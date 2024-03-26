@@ -1,4 +1,5 @@
-import { Column, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/users/entities/user.entity';
+import { Column, DeleteDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Person {
@@ -31,4 +32,8 @@ export class Person {
     
     @DeleteDateColumn()
     deletedAt: Date;
+
+    @OneToOne(() => User, (user) => user.person) // specify inverse side as a second parameter
+    user: User
+
 }
