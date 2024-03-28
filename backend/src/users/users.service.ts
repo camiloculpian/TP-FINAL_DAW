@@ -24,10 +24,6 @@ export class UsersService {
     await queryRunner.connect();
     await queryRunner.startTransaction();
     try{
-        // const person = await this.personRepository.findOneBy({id: createUserDto.personId});
-        // if(!person){
-        //   throw new BadRequestException('Person NOT FOUND');
-        // }
       const person = await this.personRepository.save({...createUserDto});
       const user = await this.userRepository.save({...createUserDto, person});
       await queryRunner.commitTransaction();
