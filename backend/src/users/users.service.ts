@@ -1,24 +1,43 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { RelationId, Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
+import { Person } from '../persons/entities/person.entity';
 
 @Injectable()
 export class UsersService {
 
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>
+    private readonly userRepository: Repository<User>,
+
+    @InjectRepository(Person)
+    private readonly personRepository: Repository<Person>,
+
+    private dataSource: DataSource
   ){}
 
   async create(createUserDto: CreateUserDto) {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
     try{
-      return await this.userRepository.save(createUserDto);
+        // const person = await this.personRepository.findOneBy({id: createUserDto.personId});
+        // if(!person){
+        //   throw new BadRequestException('Person NOT FOUND'); 
+        // }
+      const person = await this.personRepository.save({...createUserDto});
+      const user = await this.userRepository.save({...createUserDto, person});
+      await queryRunner.commitTransaction();
+      return user;
     }catch (e){
       console.log(e);
+      await queryRunner.rollbackTransaction();
       return e;
+    }finally {
+      await queryRunner.release();
     }
   }
 
