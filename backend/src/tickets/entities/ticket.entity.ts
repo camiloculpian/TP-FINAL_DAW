@@ -1,9 +1,11 @@
 import { User } from "src/users/entities/user.entity";
-import { PrimaryGeneratedColumn } from "typeorm";
+import { ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 export class Ticket {
     @PrimaryGeneratedColumn()
     id: number;
 
-    
+    @ManyToOne(type => User, user => user.id)
+    user: User;
+
 }

@@ -1,5 +1,6 @@
 import { Person } from 'src/persons/entities/person.entity';
-import { Column, DeleteDateColumn, Entity, OneToOne, JoinColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { Ticket } from 'src/tickets/entities/ticket.entity';
+import { Column, DeleteDateColumn, Entity, OneToOne, JoinColumn, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity()
 export class User {
@@ -21,4 +22,7 @@ export class User {
     
     @DeleteDateColumn()
     deletedAt: Date;
+
+    @OneToMany(type => Ticket, ticket => ticket.user)
+    tickets: Ticket[];
 }
