@@ -1,1 +1,3 @@
-export class CreateTicketDto {}
+export class CreateTicketDto {
+    // TO-DO: Hacer Chequeos
+}

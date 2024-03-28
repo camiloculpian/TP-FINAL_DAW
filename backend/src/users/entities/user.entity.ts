@@ -25,7 +25,7 @@ export class User {
     })
     rol: UserRole;
 
-    @OneToOne(() => Person)
+    @OneToOne(() => Person, (person) => person.id, {nullable:false})
     @JoinColumn()
     person: Person;
     

@@ -18,11 +18,17 @@ export class Ticket {
     @ManyToOne(type => User, user => user.id) //User who owns the ticket
     asignedToUser: User;
 
+    @Column()
+    description: string;
+
     @Column({
         type: "enum",
         enum: Priority,
         default: Priority.NORMAL,
     })
     priority: Priority;
+
+    @Column()
+    lastModified: Date;
 
 }
