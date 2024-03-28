@@ -5,15 +5,10 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { PersonsModule } from './persons/persons.module';
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { AuditsModule } from './audits/audits.module';
 import { TicketsModule } from './tickets/tickets.module';
-import { AuditsModule } from './audits/audits.module';
 
 @Module({
   imports: [
-    UsersModule,
-    AuthModule,
-    PersonsModule,
     TypeOrmModule.forRoot({
       type: "mysql",
       host: "localhost",
@@ -24,7 +19,9 @@ import { AuditsModule } from './audits/audits.module';
       autoLoadEntities: true,
       synchronize: true,
     }),
-    AuditsModule,
+    UsersModule,
+    AuthModule,
+    PersonsModule,
     TicketsModule,
   ],
   controllers: [AppController],
