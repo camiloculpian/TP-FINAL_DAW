@@ -1,5 +1,5 @@
-import { Person } from 'src/persons/entities/person.entity';
-import { Ticket } from 'src/tickets/entities/ticket.entity';
+import { Person } from '../../persons/entities/person.entity';
+import { Ticket } from '../../tickets/entities/ticket.entity';
 import { Column, DeleteDateColumn, Entity, OneToOne, JoinColumn, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 export enum UserRole {
