@@ -7,7 +7,7 @@ export class AuthController {
 
     @Post('register')
     register(
-        @Body()
+        @Body(){}
     ){
         return this.authService.register();
     }
