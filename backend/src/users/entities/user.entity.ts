@@ -32,9 +32,9 @@ export class User {
     @DeleteDateColumn()
     deletedAt: Date;
 
-    @OneToMany(type => Ticket, ticket => ticket.createdByUser) //All tickets created by this user
+    @OneToMany(type => Ticket, ticket => ticket.createdByUser) // All tickets created by this user
     createdTickets: Ticket[];
 
-    @OneToMany(type => Ticket, ticket => ticket.createdByUser) //All tickets created by this user
+    @OneToMany(type => Ticket, ticket => ticket.createdByUser) //All tickets asigned to this user
     asignedTickets: Ticket[];
 }

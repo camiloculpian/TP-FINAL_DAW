@@ -25,7 +25,11 @@ export class PersonsService {
 
   async findAll() {
     try{
-      return await this.personRepository.find();
+      return await this.personRepository.find({
+        // relations: {
+        //     user: true,
+        // },
+      });
     }catch(e){
       console.log(e)
       return e;
@@ -34,7 +38,16 @@ export class PersonsService {
 
   async findOne(id: number) {
     try{
-      return await this.personRepository.findOneBy({id});
+      return await this.personRepository.find(
+        {
+          where:{
+            id: id
+          },
+          // relations: {
+          //     user: true,
+          // },
+        }
+      );
     }catch(e){
       console.log(e)
       return e;
