@@ -13,7 +13,7 @@ export class Person {
     lastName: string;
 
     @Column({unique:true, nullable:false})
-    dni: number;
+    dni: string;
 
     @Column({nullable:false})
     address: string;

@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { DataSource, Repository } from 'typeorm';
 import { Person } from '../persons/entities/person.entity';
+import { Transform } from 'class-transformer';
 
 @Injectable()
 export class UsersService {
@@ -113,7 +114,7 @@ export class UsersService {
     }
   }
 
-  async findOneByDNI(dni: number){
+  async findOneByDNI(dni: string){
     try{
       return await this.personRepository.find(
         {

@@ -17,7 +17,7 @@ export class CreateUserDto {
     @IsNumberString()
     @MinLength(7)
     @MaxLength(8)
-    dni:number;
+    dni:string;
 
     @IsString()
     address: string;

@@ -1,6 +1,7 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { RegisterUserDto } from './dto/registerUser.dto';
+import { LoginUserDto } from './dto/loginUser.dto';
 
 @Injectable()
 export class AuthService {
@@ -19,7 +20,13 @@ export class AuthService {
             return e;
         }
     }
-    login(){
-        return 'login';
+
+    async login(loginUserDto: LoginUserDto){
+        if(     !this.usersServive.findOneByUsername(loginUserDto.username) 
+                || !this.usersServive.findOneByDNI(loginUserDto.dni)
+                || !this.usersServive.findOneByEmail(loginUserDto.email))
+            {
+                throw new UnauthorizedException('Invalid Credentials') //TO-DO: Controlar uno por uno y pasar el error puntual (Ej.: ese email ya esta en uso, etc...)
+            }
     }
 }
