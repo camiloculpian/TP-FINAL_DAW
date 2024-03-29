@@ -1,10 +1,11 @@
-import { IsBoolean, IsDateString, IsDefined, IsEmail, IsNumber, IsNumberString, IsPhoneNumber, IsString, MaxLength, MinLength } from "class-validator";
+import { IsBoolean, IsDateString, IsDefined, IsEmail, IsHash, IsNumber, IsNumberString, IsPhoneNumber, IsString, MaxLength, MinLength } from "class-validator";
 
 export class CreateUserDto {
     @IsString()
     username: string;
 
-    @IsString()
+    @IsHash('sha512')
+    @MinLength(8)
     password: string;
 
     @IsString()

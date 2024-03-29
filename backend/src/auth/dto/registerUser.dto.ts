@@ -1,12 +1,13 @@
 import { Transform } from "class-transformer";
-import { IsBoolean, IsDateString, IsEmail, IsNumberString, IsPhoneNumber, IsString, MaxLength, MinLength, minLength } from "class-validator";
+import { IsBoolean, IsDateString, IsEmail, IsHash, IsNumberString, IsPhoneNumber, IsString, MaxLength, MinLength, minLength } from "class-validator";
 
 export class RegisterUserDto {
+    @Transform(({value}) => value.trim())
     @IsString()
     username: string;
 
     @Transform(({value}) => value.trim())
-    @IsString()
+    @IsHash('sha512')
     @MinLength(8)
     password: string;
 
