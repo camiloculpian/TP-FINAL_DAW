@@ -77,6 +77,60 @@ export class UsersService {
     }
   }
 
+  async findOneByUsername(username: string){
+    try{
+      return await this.userRepository.find(
+        {
+          where:{
+            username: username
+          },
+          relations: {
+              person: true,
+          },
+        }
+      );
+    }catch(e){
+      console.log(e)
+      return e;
+    }
+  }
+
+  async findOneByEmail(email: string){
+    try{
+      return await this.personRepository.find(
+        {
+          where:{
+            email: email
+          },
+          relations: {
+              user: true,
+          },
+        }
+      );
+    }catch(e){
+      console.log(e)
+      return e;
+    }
+  }
+
+  async findOneByDNI(dni: number){
+    try{
+      return await this.personRepository.find(
+        {
+          where:{
+            dni: dni
+          },
+          relations: {
+              user: true,
+          },
+        }
+      );
+    }catch(e){
+      console.log(e)
+      return e;
+    }
+  }
+
   update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }
