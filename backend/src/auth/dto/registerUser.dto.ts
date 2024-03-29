@@ -6,9 +6,7 @@ export class RegisterUserDto {
     @IsString()
     username: string;
 
-    @Transform(({value}) => value.trim())
     @IsHash('sha512')
-    @MinLength(8)
     password: string;
 
     @IsString()

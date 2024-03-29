@@ -1,11 +1,12 @@
+import { Transform } from "class-transformer";
 import { IsBoolean, IsDateString, IsDefined, IsEmail, IsHash, IsNumber, IsNumberString, IsPhoneNumber, IsString, MaxLength, MinLength } from "class-validator";
 
 export class CreateUserDto {
+    @Transform(({value}) => value.trim())
     @IsString()
     username: string;
 
     @IsHash('sha512')
-    @MinLength(8)
     password: string;
 
     @IsString()
