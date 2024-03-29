@@ -27,7 +27,16 @@ export class UsersService {
       const person = await this.personRepository.save({...createUserDto});
       const user = await this.userRepository.save({...createUserDto, person});
       await queryRunner.commitTransaction();
-      return user; // TO-DO: retornar el usuario obteniendolo mediante una query de la BD
+      return await this.userRepository.find(
+        {
+          where:{
+            id: user.id
+          },
+          relations: {
+              person: true,
+          },
+        }
+      );
     }catch (e){
       console.log(e);
       await queryRunner.rollbackTransaction();
