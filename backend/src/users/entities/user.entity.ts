@@ -36,7 +36,7 @@ export class User {
     createdTickets: Ticket[];
 
     @OneToMany(type => Ticket, ticket => ticket.createdByUser) //All tickets asigned by this user to other users
-    reAsignedTickets: Ticket[];
+    asignedToTickets: Ticket[];
 
     @OneToMany(type => Ticket, ticket => ticket.createdByUser) //All tickets asigned to this user
     asignedTickets: Ticket[];
