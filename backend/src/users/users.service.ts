@@ -104,7 +104,7 @@ export class UsersService {
             email: email
           },
           relations: {
-              user: true,
+              user: true
           },
         }
       );
