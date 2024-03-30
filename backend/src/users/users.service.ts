@@ -80,7 +80,7 @@ export class UsersService {
 
   async findOneByUsername(username: string){
     try{
-      return await this.userRepository.find(
+      return await this.userRepository.findOne(
         {
           where:{
             username: username
@@ -98,7 +98,7 @@ export class UsersService {
 
   async findOneByEmail(email: string){
     try{
-      return await this.personRepository.find(
+      return await this.personRepository.findOne(
         {
           where:{
             email: email
@@ -116,7 +116,7 @@ export class UsersService {
 
   async findOneByDNI(dni: string){
     try{
-      return await this.personRepository.find(
+      return await this.personRepository.findOne(
         {
           where:{
             dni: dni
