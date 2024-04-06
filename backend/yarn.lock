@@ -3585,9 +3585,9 @@ jws@^3.2.2:
     jwa "^1.4.1"
     safe-buffer "^5.0.1"
 
-jwt@0.2.0:
+jwt@^0.2.0:
   version "0.2.0"
-  resolved "https://registry.npmjs.org/jwt/-/jwt-0.2.0.tgz"
+  resolved "https://registry.yarnpkg.com/jwt/-/jwt-0.2.0.tgz#4c9ad46bc84bfeaf91556ecce7c57aa578cbc8b8"
   integrity sha512-+lsJgK3p+dr7yCHO19Ap2uFh+pMSCayPRGjWmf3kYCnYfO+1kqz4DqA8s65HKYIrw5c2NBo+dEvzoZUco09j4Q==
   dependencies:
     node-base64 "0.0.1"
