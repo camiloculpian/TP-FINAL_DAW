@@ -1,11 +1,13 @@
 import { User } from "../../users/entities/user.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
-export enum Priority {
-    URGENT = "urgent",
-    HIGH = "high",
-    NORMAL = "normal",
-}
+// export enum Priority {
+//     URGENT = "urgent",
+//     HIGH = "high",
+//     NORMAL = "normal",
+// }
+
+
 
 @Entity()
 export class Ticket {
@@ -24,12 +26,12 @@ export class Ticket {
     @Column()
     description: string;
 
-    @Column({
-        type: "enum",
-        enum: Priority,
-        default: Priority.NORMAL,
-    })
-    priority: Priority;
+    // @Column({
+    //     type: "enum",
+    //     enum: Priority,
+    //     default: Priority.NORMAL,
+    // })
+    // priority: Priority;
 
     @Column()
     lastModified: Date;

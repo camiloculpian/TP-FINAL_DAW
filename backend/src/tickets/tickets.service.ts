@@ -13,8 +13,13 @@ export class TicketsService {
     private readonly ticketRepository: Repository <Ticket>,
   ){}
 
-  create(createTicketDto: CreateTicketDto) {
-    return 'This action adds a new ticket';
+  async create(createTicketDto: CreateTicketDto) {
+    try{
+      return await this.ticketRepository.save(createTicketDto);
+    }catch (e){
+      console.log(e);
+      return e;
+    }
   }
 
   async findAll() {

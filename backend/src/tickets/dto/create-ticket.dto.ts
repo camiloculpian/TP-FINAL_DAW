@@ -1,5 +1,5 @@
 import { Transform } from "class-transformer";
-import { IsBoolean, IsDateString, IsEmail, IsEnum, IsHash, IsNumberString, IsPhoneNumber, IsString, MaxLength, MinLength, minLength } from "class-validator";
+import { isBoolean, IsBoolean, IsDateString, IsEmail, IsEnum, IsHash, IsNumberString, IsPhoneNumber, IsString, MaxLength, MinLength, minLength } from "class-validator";
 
 // Pioridad
 enum TicketPriority{
@@ -48,6 +48,9 @@ export class CreateTicketDto {
     createName: string;
 
     @IsEnum(TicketsService)
-    service: TicketsService; 
+    service: TicketsService;
+
+    @IsDateString()
+    lastModified: Date
 
 }
