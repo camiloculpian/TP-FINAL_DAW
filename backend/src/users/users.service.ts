@@ -19,6 +19,7 @@ export class UsersService {
     private dataSource: DataSource
   ){}
 
+  // TO-DO: Chequear que el usuario y/o la persona exista y devolver un ERROR
   async create(createUserDto: CreateUserDto) {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
