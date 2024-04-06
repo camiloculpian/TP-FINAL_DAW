@@ -50,4 +50,5 @@ export class CreateTicketDto {
     @IsEnum(TicketsService)
     departament: TicketsService;
 
+    
 }
