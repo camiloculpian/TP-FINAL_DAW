@@ -48,7 +48,6 @@ export class CreateTicketDto {
     createName: string;
 
     @IsEnum(TicketsService)
-    departament: TicketsService;
+    departament: TicketsService; //DEBERIA SER ticketService o service para que sea un campo igual al ENUM, mejora la legibilidad
 
-    
 }
