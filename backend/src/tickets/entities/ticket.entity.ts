@@ -7,7 +7,28 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 //     NORMAL = "normal",
 // }
 
+// Pioridad
+export enum TicketPriority{
+    LOW = "LOW",
+    MEDIUM = "MEDIUM",
+    HIGH = "HIGH"
+}
 
+//  Estado del ticket
+export enum TicketStatus{
+    OPEN = "OPEN",
+    IN_PROGRESS = "IN_PROGRESS",
+    RESOLVED = "RESOLVED"
+}
+
+// A que servicio pertenece (se puede considerar ya que creando al usuario se podria asignar el rol o a que parte de departamento pertenece y que se filtren por ahi)
+export enum TicketsService {
+    TRANSPORTATION = "TRANSPORTATION",
+    STORAGE = "STORAGE",
+    DISTRIBUCION = "DISTRIBUTION",
+    CUSTOMS = "CUSTOMS",
+    CUSTOMER_SERVICE = "CUSTOMER_SERVICE"
+}
 
 @Entity()
 export class Ticket {
@@ -26,12 +47,26 @@ export class Ticket {
     @Column()
     description: string;
 
-    // @Column({
-    //     type: "enum",
-    //     enum: Priority,
-    //     default: Priority.NORMAL,
-    // })
-    // priority: Priority;
+    @Column({
+        type: "enum",
+        enum: TicketPriority,
+        default: TicketPriority.LOW,
+    })
+    priority: TicketPriority;
+
+    @Column({
+        type: "enum",
+        enum: TicketStatus,
+        default: TicketStatus.OPEN,
+    })
+    status: TicketStatus;
+
+    @Column({
+        type: "enum",
+        enum: TicketsService,
+        default: TicketsService.CUSTOMER_SERVICE,
+    })
+    service: TicketsService;
 
     @Column()
     lastModified: Date;

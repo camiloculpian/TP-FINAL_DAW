@@ -1,28 +1,7 @@
 import { Transform } from "class-transformer";
-import { isBoolean, IsBoolean, IsDateString, IsEmail, IsEnum, IsHash, IsNumberString, IsPhoneNumber, IsString, MaxLength, MinLength, minLength } from "class-validator";
+import { IsBoolean, IsDateString, IsEnum, IsString } from "class-validator";
+import { TicketPriority, TicketsService, TicketStatus } from "../entities/ticket.entity";
 
-// Pioridad
-enum TicketPriority{
-    LOW = "LOW",
-    MEDIUM = "MEDIUM",
-    HIGH = "HIGH"
-}
-
-//  Estado del ticket
-enum TicketStatus{
-    OPEN = "OPEN",
-    IN_PROGRESS = "IN_PROGRESS",
-    RESOLVED = "RESOLVED"
-}
-
-// A que servicio pertenece (se puede considerar ya que creando al usuario se podria asignar el rol o a que parte de departamento pertenece y que se filtren por ahi)
-enum TicketsService {
-    TRANSPORTATION = "TRANSPORTATION",
-    STORAGE = "STORAGE",
-    DISTRIBUCION = "DISTRIBUTION",
-    CUSTOMS = "CUSTOMS",
-    CUSTOMER_SERVICE = "CUSTOMER_SERVICE"
-}
 export class CreateTicketDto {
     @Transform(({value}) => value.trim())
     @IsString()
@@ -37,6 +16,9 @@ export class CreateTicketDto {
     @IsEnum(TicketStatus)
     status: TicketStatus;
 
+    @IsEnum(TicketsService)
+    service: TicketsService;
+
     @IsDateString()
     createDate: Date;
 
@@ -46,9 +28,6 @@ export class CreateTicketDto {
     //quien lo asigno
     @IsString()
     createName: string;
-
-    @IsEnum(TicketsService)
-    service: TicketsService;
 
     @IsDateString()
     lastModified: Date
