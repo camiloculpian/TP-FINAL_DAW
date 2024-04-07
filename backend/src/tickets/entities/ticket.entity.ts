@@ -2,11 +2,6 @@ import { IsDate } from "class-validator";
 import { User } from "../../users/entities/user.entity";
 import { Column, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
-// export enum Priority {
-//     URGENT = "urgent",
-//     HIGH = "high",
-//     NORMAL = "normal",
-// }
 
 // Pioridad
 export enum TicketPriority{
@@ -30,7 +25,10 @@ export enum TicketsService {
     CUSTOMER_SERVICE = "CUSTOMER_SERVICE",
     CUSTOMER_SUPPORT = "CUSTOMER_SUPPORT",
     CUSTOMS = "CUSTOMS",
-}
+    SOFTWARE_SUPORT = "SOFTWARE_SUPORT",
+    PREVENTIVE_MAINTENANCE = "PREVENTIVE_MAINTENANCE",
+    PC_ASSEMBLY = "PC_ASSEMBLY "
+} 
 
 @Entity()
 export class Ticket {
