@@ -1,5 +1,5 @@
 import { Transform } from "class-transformer";
-import { IsBoolean, IsDateString, IsEnum, IsString } from "class-validator";
+import { IsBoolean, IsDateString, IsEnum, IsOptional, IsString } from "class-validator";
 import { TicketPriority, TicketsService, TicketStatus } from "../entities/ticket.entity";
 
 export class CreateTicketDto {
@@ -11,7 +11,8 @@ export class CreateTicketDto {
     description: string;
 
     @IsEnum(TicketPriority)
-    priority: TicketPriority;
+    @IsOptional()
+    priority?: TicketPriority;
 
     @IsEnum(TicketsService)
     service: TicketsService;
