@@ -1,5 +1,6 @@
+import { IsDate } from "class-validator";
 import { User } from "../../users/entities/user.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 // export enum Priority {
 //     URGENT = "urgent",
@@ -23,11 +24,12 @@ export enum TicketStatus{
 
 // A que servicio pertenece (se puede considerar ya que creando al usuario se podria asignar el rol o a que parte de departamento pertenece y que se filtren por ahi)
 export enum TicketsService {
-    TRANSPORTATION = "TRANSPORTATION",
-    STORAGE = "STORAGE",
-    DISTRIBUCION = "DISTRIBUTION",
+    HARDWARE_REPAIR = "HARDWARE_REPAIR",
+    REMOTE_SERVICE = "REMOTE_SERVICE",
+    TECHNICAL_SERVICE = "TECHNICAL_SERVICE",
+    CUSTOMER_SERVICE = "CUSTOMER_SERVICE",
+    CUSTOMER_SUPPORT = "CUSTOMER_SUPPORT",
     CUSTOMS = "CUSTOMS",
-    CUSTOMER_SERVICE = "CUSTOMER_SERVICE"
 }
 
 @Entity()
@@ -68,7 +70,16 @@ export class Ticket {
     })
     service: TicketsService;
 
-    @Column()
+    @Column({nullable:true})
     lastModified: Date;
+
+    @Column({
+        type: "timestamp",
+        default: () => "now()"
+    })
+    createdAt: Date;
+
+    @DeleteDateColumn()
+    deletedAt: Date;
 
 }
