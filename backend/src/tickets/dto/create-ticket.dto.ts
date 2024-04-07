@@ -17,4 +17,7 @@ export class CreateTicketDto {
     @IsEnum(TicketsService)
     service: TicketsService;
 
+    @IsOptional()
+    assignedToUserId?: number;
+
 }

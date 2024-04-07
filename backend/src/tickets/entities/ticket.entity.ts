@@ -38,7 +38,7 @@ export class Ticket {
     @ManyToOne(type => User, user => user.id) //User who asigns the ticket to other user (on first will be the admin, but then other user can re-asign))
     asignedByUser: User;
 
-    @ManyToOne(type => User, user => user.id) //User who owns the ticket
+    @ManyToOne(type => User, user => user.id, { nullable: true }) //User who owns the ticket
     asignedToUser: User;
 
     @Column()
