@@ -3,21 +3,18 @@ import { User } from "../../users/entities/user.entity";
 import { Column, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 
-// Pioridad
 export enum TicketPriority{
     LOW = "LOW",
     MEDIUM = "MEDIUM",
     HIGH = "HIGH"
 }
 
-//  Estado del ticket
 export enum TicketStatus{
     OPEN = "OPEN",
     IN_PROGRESS = "IN_PROGRESS",
     RESOLVED = "RESOLVED"
 }
 
-// A que servicio pertenece (se puede considerar ya que creando al usuario se podria asignar el rol o a que parte de departamento pertenece y que se filtren por ahi)
 export enum TicketsService {
     HARDWARE_REPAIR = "HARDWARE_REPAIR",
     REMOTE_SERVICE = "REMOTE_SERVICE",
