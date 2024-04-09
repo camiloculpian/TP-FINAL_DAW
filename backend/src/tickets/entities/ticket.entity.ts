@@ -78,4 +78,6 @@ export class Ticket {
     @DeleteDateColumn()
     deletedAt: Date;
 
+    @Column({nullable:true})
+    image: string;
 }
