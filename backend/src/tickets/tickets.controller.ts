@@ -10,6 +10,7 @@
 // export class TicketsController {
 //   constructor(private readonly ticketsService: TicketsService) {}
 
+
 //   @Post()
 //   @UseInterceptors(FileInterceptor('image', {
 //     storage: diskStorage({
