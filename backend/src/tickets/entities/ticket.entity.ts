@@ -33,13 +33,13 @@ export class Ticket {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(type => User, user => user.id) //User who creates the ticket
+    @ManyToOne(type => User, user => user.id) //User who creates the ticket. Lo tomamos del ID del usuario autenticado y autorizado para crear el ticket
     createdByUser: User;
 
-    @ManyToOne(type => User, user => user.id) //User who asigns the ticket to other user (on first will be the admin, but then other user can re-asign))
+    @ManyToOne(type => User, user => user.id) //User who asigns the ticket to other user (on first will be the admin, but then other user can re-asign)) Lo tomamos del ID del usuario autenticado y autorizado para reasignar el ticket
     asignedByUser: User;
 
-    @ManyToOne(type => User, user => user.id, { nullable: true }) //User who owns the ticket
+    @ManyToOne(type => User, user => user.id, { nullable: true }) //User who owns the ticket. Chequear que exista y sea valido
     asignedToUser: User;
 
     @Column()
