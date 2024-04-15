@@ -60,4 +60,8 @@ export class AuthService {
             throw new UnauthorizedException('Invalid Credentials');
         }
     }
+
+    async getProfile( userId: number ){
+        return await this.usersServive.findOne(userId);
+    }
 }
