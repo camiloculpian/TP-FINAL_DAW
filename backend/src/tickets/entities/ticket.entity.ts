@@ -15,7 +15,6 @@ export enum TicketStatus{
     RESOLVED = "RESOLVED"
 }
 
-// Esto podria estar en otra tabla y que sean creadas segun sea necesario?
 export enum TicketsService {
     HARDWARE_REPAIR = "HARDWARE_REPAIR",
     REMOTE_SERVICE = "REMOTE_SERVICE",
