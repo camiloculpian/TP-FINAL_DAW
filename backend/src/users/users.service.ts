@@ -149,7 +149,7 @@ export class UsersService {
       const user = await this.userRepository.save({ ...createUserDto, person });
   
       await queryRunner.commitTransaction();
-      console.log(user);
+      // console.log(user);
       return 'Successfully created user';
       
     } catch (error) {
