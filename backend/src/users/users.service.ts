@@ -177,7 +177,7 @@ export class UsersService {
   // busca uno by id
   async findOne(id: number) {
     try{
-      return await this.userRepository.find(
+      return await this.userRepository.findOne(
         {
           where:{
             id: id
