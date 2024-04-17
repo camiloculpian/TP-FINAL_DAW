@@ -1,8 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam } from '@nestjs/swagger';
+// import { Roles } from '../auth/decorators/roles.decorator';
+// import { Role } from '../auth/enums/role.enum';
+// import { AuthGuard } from '../auth/auth.guard';
 
 
 @ApiTags('Users')
@@ -16,6 +19,8 @@ export class UsersController {
   @ApiResponse({ status: HttpStatus.CREATED, description: 'Usuario creado con éxito' })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Datos inválidos' })
   @ApiBody({ type: CreateUserDto })
+  // @UseGuards(AuthGuard)
+  // @Roles(Role.ADMIN)
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
