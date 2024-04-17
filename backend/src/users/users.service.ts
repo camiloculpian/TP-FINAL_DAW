@@ -62,7 +62,7 @@ export class UsersService {
 
   async findOne(id: number) {
     try{
-      return await this.userRepository.find(
+      return await this.userRepository.findOne(
         {
           where:{
             id: id

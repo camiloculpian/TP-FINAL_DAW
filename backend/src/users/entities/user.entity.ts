@@ -1,11 +1,13 @@
+import { Role } from '../../auth/enums/role.enum';
 import { Person } from '../../persons/entities/person.entity';
 import { Ticket } from '../../tickets/entities/ticket.entity';
 import { Column, DeleteDateColumn, Entity, OneToOne, JoinColumn, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
-export enum UserRole {
-    ADMIN = "admin",
-    USER = "user",
-}
+// export enum UserRoles {
+//     ADMIN = "admin",
+//     USER = "user",
+//     DISPATCHER = 'dispatcher',
+// }
 
 @Entity()
 export class User {
@@ -20,10 +22,10 @@ export class User {
 
     @Column({
         type: "enum",
-        enum: UserRole,
-        default: UserRole.USER,
+        enum: Role,
+        default: Role.USER,
     })
-    rol: UserRole;
+    roles: Role;
 
     @OneToOne(() => Person, (person) => person.id, {nullable:false})
     @JoinColumn()
