@@ -61,8 +61,12 @@ export class UsersController {
   @UseGuards(AuthGuard)
   @Roles(Role.ADMIN)
   updateRole(@Param('id') id: number, @Body() updateUserRolesDto: UpdateUserRolesDto ) {
-    //return this.usersService.updateRole(+id, updateUserRoleDto);
-    return this.usersService.updateRole(id,updateUserRolesDto);
+    try{
+      return this.usersService.updateRole(id,updateUserRolesDto);
+    }catch{
+      return "error";
+    }
+    
   }
 
   @Delete(':id')
