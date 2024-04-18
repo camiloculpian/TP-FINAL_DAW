@@ -1,9 +1,12 @@
 
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { PersonsService } from './persons.service';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam } from '@nestjs/swagger';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from 'src/auth/enums/role.enum';
 
 @ApiTags('persons')
 @Controller('persons')
@@ -11,6 +14,8 @@ export class PersonsController {
   constructor(private readonly personsService: PersonsService) { }
 
   @Post()
+  @UseGuards(AuthGuard)
+  @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Crear una nueva persona' })
   @ApiResponse({ status: 201, description: 'La persona ha sido creada con éxito.' })
   @ApiResponse({ status: 400, description: 'Datos inválidos.' })
@@ -20,6 +25,7 @@ export class PersonsController {
   }
 
   @Get()
+  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Obtener todas las personas' })
   @ApiResponse({ status: 200, description: 'Lista de todas las personas.' })
   findAll() {
@@ -27,6 +33,7 @@ export class PersonsController {
   }
 
   @Get(':id')
+  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Obtener una persona por ID' })
   @ApiResponse({ status: 200, description: 'Persona encontrada.' })
   @ApiResponse({ status: 404, description: 'Persona no encontrada.' })
@@ -36,6 +43,8 @@ export class PersonsController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard)
+  @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Actualizar una persona' })
   @ApiResponse({ status: 200, description: 'Persona actualizada con éxito.' })
   @ApiResponse({ status: 404, description: 'Persona no encontrada.' })
@@ -46,6 +55,8 @@ export class PersonsController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard)
+  @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Eliminar una persona' })
   @ApiResponse({ status: 200, description: 'Persona eliminada con éxito.' })
   @ApiResponse({ status: 404, description: 'Persona no encontrada.' })
