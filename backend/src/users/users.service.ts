@@ -279,7 +279,8 @@ export class UsersService {
 
   async updateRole(id: number, updateUserRolesDto: UpdateUserRolesDto) {
     try{
-      return await this.userRepository.update(id,updateUserRolesDto);
+      await this.userRepository.update(id,updateUserRolesDto);
+      return 'Successfully updated user role';
     }catch(e){
       console.log(e)
       return e;
