@@ -3,6 +3,8 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam } from '@nestjs/swagger';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { Role } from '../auth/enums/role.enum';
 // import { Roles } from '../auth/decorators/roles.decorator';
 // import { Role } from '../auth/enums/role.enum';
 // import { AuthGuard } from '../auth/auth.guard';
@@ -51,11 +53,22 @@ export class UsersController {
     return this.usersService.update(+id, updateUserDto);
   }
 
+  //TO-DO: Update user Role passing id and Role (ONLY ADMIN!!!)
+  // @Patch(':id')
+  // @ApiBody({ type: UpdateUserRoleDto })
+  // @UseGuards()
+  // @Roles(Role.ADMIN)
+  // updateRole() {
+  //   return this.usersService.updateRole(+id, updateUserRoleDto);
+  // }
+
   @Delete(':id')
   @ApiOperation({ summary: 'Eliminar un usuario' })
   @ApiResponse({ status: 200, description: 'Usuario eliminado con éxito' })
   @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
   @ApiParam({ name: 'id', description: 'ID único del usuario' })
+  @UseGuards()
+  @Roles(Role.ADMIN)
   remove(@Param('id') id: number) {
     return this.usersService.remove(+id);
   }

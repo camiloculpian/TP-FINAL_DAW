@@ -53,7 +53,7 @@
 
 
 // tickets modified v1.1
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UseGuards } from '@nestjs/common';
 import { TicketsService } from './tickets.service';
 import { CreateTicketDto } from './dto/create-ticket.dto';
 import { UpdateTicketDto } from './dto/update-ticket.dto';
@@ -61,6 +61,9 @@ import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam } from '@nestjs/s
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from 'src/auth/enums/role.enum';
 
 @ApiTags('Tickets')
 @Controller('tickets')
@@ -120,6 +123,8 @@ export class TicketsController {
   @ApiResponse({ status: 200, description: 'Ticket eliminado con éxito' })
   @ApiResponse({ status: 404, description: 'Ticket no encontrado' })
   @ApiParam({ name: 'id', description: 'ID único del ticket' })
+  @UseGuards()
+  @Roles(Role.ADMIN)
   remove(@Param('id') id: string) {
     return this.ticketsService.remove(+id);
   }

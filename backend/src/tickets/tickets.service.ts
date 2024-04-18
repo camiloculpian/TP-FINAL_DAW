@@ -39,7 +39,12 @@ export class TicketsService {
     return `This action updates a #${id} ticket`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} ticket`;
+  async remove(id: number) {
+    try{
+      return await this.ticketRepository.softDelete(id);
+    }catch(e){
+      console.log(e)
+      return e;
+    }
   }
 }

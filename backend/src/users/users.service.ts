@@ -247,11 +247,41 @@ export class UsersService {
     }
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      const user = await this.userRepository.findOne(
+        {
+          where:{
+            id: id
+          },
+          relations: {
+              person: true
+          },
+        }
+      );
+      await this.userRepository.save({...user, ...updateUserDto});
+      await this.personRepository.save({...user.person, ...updateUserDto });
+      await queryRunner.commitTransaction();
+      return 'Successfully updated user';
+      
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      console.log(error.message);
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+    try{
+      return await this.userRepository.softDelete(id);
+    }catch(e){
+      console.log(e)
+      return e;
+    }
   }
 }
