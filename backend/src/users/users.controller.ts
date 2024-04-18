@@ -5,6 +5,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam } from '@nestjs/swagger';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/enums/role.enum';
+import { UpdateUserRolesDto } from './dto/update-userRoles.dto ';
 // import { Roles } from '../auth/decorators/roles.decorator';
 // import { Role } from '../auth/enums/role.enum';
 // import { AuthGuard } from '../auth/auth.guard';
@@ -54,13 +55,14 @@ export class UsersController {
   }
 
   //TO-DO: Update user Role passing id and Role (ONLY ADMIN!!!)
-  // @Patch(':id')
-  // @ApiBody({ type: UpdateUserRoleDto })
-  // @UseGuards()
-  // @Roles(Role.ADMIN)
-  // updateRole() {
-  //   return this.usersService.updateRole(+id, updateUserRoleDto);
-  // }
+  @Patch('/role/:id')
+ @ApiBody({ type: UpdateUserRolesDto })
+  //@UseGuards()
+  //@Roles(Role.ADMIN)
+  updateRole(@Param('id') id: number, @Body() updateUserRolesDto: UpdateUserRolesDto ) {
+    //return this.usersService.updateRole(+id, updateUserRoleDto);
+    return this.usersService.updateRole(id,updateUserRolesDto);
+  }
 
   @Delete(':id')
   @ApiOperation({ summary: 'Eliminar un usuario' })

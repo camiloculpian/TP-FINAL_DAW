@@ -6,6 +6,7 @@ import { User } from './entities/user.entity';
 import { DataSource, Repository } from 'typeorm';
 import { Person } from '../persons/entities/person.entity';
 import { BadRequestException } from '@nestjs/common';
+import { UpdateUserRolesDto } from './dto/update-userRoles.dto ';
 
 @Injectable()
 export class UsersService {
@@ -266,13 +267,22 @@ export class UsersService {
       await this.personRepository.save({...user.person, ...updateUserDto });
       await queryRunner.commitTransaction();
       return 'Successfully updated user';
-      
+
     } catch (error) {
       await queryRunner.rollbackTransaction();
       console.log(error.message);
       throw error;
     } finally {
       await queryRunner.release();
+    }
+  }
+
+  async updateRole(id: number, updateUserRolesDto: UpdateUserRolesDto) {
+    try{
+      return await this.userRepository.update(id,updateUserRolesDto);
+    }catch(e){
+      console.log(e)
+      return e;
     }
   }
 
