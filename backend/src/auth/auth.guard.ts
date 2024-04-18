@@ -38,7 +38,6 @@ export class AuthGuard implements CanActivate {
     }catch{
       throw new UnauthorizedException();
     }
-    // return true;
   }
 
   private extraxctTokenFromHeader(request: Request): string | undefined{
@@ -46,36 +45,3 @@ export class AuthGuard implements CanActivate {
     return type === 'Bearer' ? token : undefined;
   }
 }
-
-
-
-// @Injectable()
-// export class AuthGuard implements CanActivate {
-
-
-//   async canActivate( context: ExecutionContext ): Promise<boolean> {
-    
-//     const request = context.switchToHttp().getRequest();
-//     const token = this.extraxctTokenFromHeader(request);
-    
-
-    
-//     if(!token){
-//       throw new UnauthorizedException();
-//     }
-//     try{
-//       const payload = await this.jwtService.verifyAsync(token, {secret: jwtConstants.secret})
-//       const user : User = await this.userService.findOne(payload.sub);
-//       request ['user'] = payload;
-//       return requiredRoles.some((role) => user.roles?.includes(role));
-//     }catch{
-//       throw new UnauthorizedException();
-//     }
-//     //return true;
-//   }
-
-//   private extraxctTokenFromHeader(request: Request): string | undefined{
-//     const [type, token] = request.headers.authorization?.split(' ') ?? [];
-//     return type === 'Bearer' ? token : undefined;
-//   }
-// }
