@@ -14,8 +14,8 @@ export class PersonsController {
   constructor(private readonly personsService: PersonsService) { }
 
   @Post()
-  @UseGuards(AuthGuard)
-  @Roles(Role.ADMIN)
+  // @UseGuards(AuthGuard)
+  // @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Crear una nueva persona' })
   @ApiResponse({ status: 201, description: 'La persona ha sido creada con éxito.' })
   @ApiResponse({ status: 400, description: 'Datos inválidos.' })
@@ -33,7 +33,7 @@ export class PersonsController {
   }
 
   @Get(':id')
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Obtener una persona por ID' })
   @ApiResponse({ status: 200, description: 'Persona encontrada.' })
   @ApiResponse({ status: 404, description: 'Persona no encontrada.' })
@@ -43,8 +43,8 @@ export class PersonsController {
   }
 
   @Patch(':id')
-  @UseGuards(AuthGuard)
-  @Roles(Role.ADMIN)
+  // @UseGuards(AuthGuard)
+  // @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Actualizar una persona' })
   @ApiResponse({ status: 200, description: 'Persona actualizada con éxito.' })
   @ApiResponse({ status: 404, description: 'Persona no encontrada.' })
@@ -55,8 +55,8 @@ export class PersonsController {
   }
 
   @Delete(':id')
-  @UseGuards(AuthGuard)
-  @Roles(Role.ADMIN)
+  // @UseGuards(AuthGuard)
+  // @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Eliminar una persona' })
   @ApiResponse({ status: 200, description: 'Persona eliminada con éxito.' })
   @ApiResponse({ status: 404, description: 'Persona no encontrada.' })
