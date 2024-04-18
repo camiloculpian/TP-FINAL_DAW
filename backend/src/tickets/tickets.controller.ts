@@ -123,7 +123,7 @@ export class TicketsController {
   @ApiResponse({ status: 200, description: 'Ticket eliminado con éxito' })
   @ApiResponse({ status: 404, description: 'Ticket no encontrado' })
   @ApiParam({ name: 'id', description: 'ID único del ticket' })
-  @UseGuards()
+  @UseGuards(AuthGuard)
   @Roles(Role.ADMIN)
   remove(@Param('id') id: string) {
     return this.ticketsService.remove(+id);
