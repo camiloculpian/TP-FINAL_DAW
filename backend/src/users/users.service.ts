@@ -7,7 +7,6 @@ import { DataSource, Repository } from 'typeorm';
 import { Person } from '../persons/entities/person.entity';
 import { BadRequestException } from '@nestjs/common';
 import { UpdateUserRolesDto } from './dto/update-userRoles.dto ';
-import { STATUS_CODES } from 'http';
 
 @Injectable()
 export class UsersService {

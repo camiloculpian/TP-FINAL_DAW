@@ -3,8 +3,6 @@ import { AuthService } from './auth.service';
 import { RegisterUserDto } from './dto/registerUser.dto';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { AuthGuard } from './auth.guard';
-import { Role } from './enums/role.enum';
-import { Roles } from './decorators/roles.decorator';
 
 @Controller('auth')
 export class AuthController {

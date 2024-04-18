@@ -4,9 +4,9 @@ import { PersonsService } from './persons.service';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam } from '@nestjs/swagger';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { Roles } from 'src/auth/decorators/roles.decorator';
-import { Role } from 'src/auth/enums/role.enum';
+// import { AuthGuard } from 'src/auth/auth.guard';
+// import { Roles } from 'src/auth/decorators/roles.decorator';
+// import { Role } from 'src/auth/enums/role.enum';
 
 @ApiTags('persons')
 @Controller('persons')
@@ -25,7 +25,7 @@ export class PersonsController {
   }
 
   @Get()
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Obtener todas las personas' })
   @ApiResponse({ status: 200, description: 'Lista de todas las personas.' })
   findAll() {
