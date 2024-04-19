@@ -23,6 +23,7 @@ export class TicketsService {
   }
 
   async findAll(user) {
+    console.log(user.sub);
     try{
       return await this.ticketRepository.find();
     }catch(e){
