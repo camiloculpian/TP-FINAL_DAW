@@ -12,6 +12,6 @@ import { UsersModule } from 'src/users/users.module';
   ],
   controllers: [PersonsController],
   providers: [PersonsService],
-  exports: [PersonsService]
+  exports: [PersonsService, TypeOrmModule]
 })
 export class PersonsModule {}

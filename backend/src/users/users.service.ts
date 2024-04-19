@@ -295,4 +295,22 @@ export class UsersService {
       return e;
     }
   }
+
+  async getRolesById(id: number){
+    try{
+      return await this.userRepository.findOne(
+        {
+          where:{
+            id: id
+          },
+          select: {
+              roles: true,
+          },
+        }
+      );
+    }catch(e){
+      console.log(e)
+      return e;
+    }
+  }
 }

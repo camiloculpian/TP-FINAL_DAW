@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateTicketDto } from './dto/create-ticket.dto';
 import { UpdateTicketDto } from './dto/update-ticket.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Ticket } from './entities/ticket.entity';
-import { User } from 'src/users/entities/user.entity';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class TicketsService {
@@ -12,8 +12,8 @@ export class TicketsService {
   constructor(
     @InjectRepository(Ticket)
     private readonly ticketRepository: Repository <Ticket>,
-    @InjectRepository(User)
-    private readonly userRepository: Repository <User>
+    @Inject(UsersService)
+    private readonly userService: UsersService
   ){}
 
   async create(createTicketDto: CreateTicketDto) {
@@ -26,12 +26,9 @@ export class TicketsService {
   }
 
   async findAll(userId: number) {
+    // TO-DO: Si es admin mostrar tickets de todos los usuarios, sino mostrar solo los propios!!!
     console.log(userId);
-    const user = await this.userRepository.findOne({
-      where:{
-        id: userId
-      }
-    })
+    const user = await this.userService.getRolesById(userId);
     console.log(user);
     try{
       return await this.ticketRepository.find();
