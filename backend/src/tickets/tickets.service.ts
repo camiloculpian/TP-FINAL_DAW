@@ -22,7 +22,7 @@ export class TicketsService {
     }
   }
 
-  async findAll() {
+  async findAll(user) {
     try{
       return await this.ticketRepository.find();
     }catch(e){

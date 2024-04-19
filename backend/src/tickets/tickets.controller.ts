@@ -64,6 +64,8 @@ import { extname } from 'path';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
+import { CurrentUser } from 'src/auth/decorators/auth.decorator';
+import { User } from 'src/users/entities/user.entity';
 
 @ApiTags('Tickets')
 @Controller('tickets')
@@ -96,8 +98,10 @@ export class TicketsController {
   @Get()
   @ApiOperation({ summary: 'Obtener todos los tickets' })
   @ApiResponse({ status: 200, description: 'Lista de tickets' })
-  findAll() {
-    return this.ticketsService.findAll();
+  @UseGuards(AuthGuard)
+  findAll( @CurrentUser() user: User) {
+    console.log(user); // ACA TENGO LOS DATOS DEL USUARIO
+    return this.ticketsService.findAll(user);
   }
 
   @Get(':id')
