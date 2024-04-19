@@ -65,7 +65,6 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
-import { User } from 'src/users/entities/user.entity';
 
 @ApiTags('Tickets')
 @Controller('tickets')
