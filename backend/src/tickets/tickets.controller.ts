@@ -108,8 +108,9 @@ export class TicketsController {
   @ApiResponse({ status: 200, description: 'Ticket encontrado' })
   @ApiResponse({ status: 404, description: 'Ticket no encontrado' })
   @ApiParam({ name: 'id', description: 'ID único del ticket' })
-  findOne(@Param('id') id: string) {
-    return this.ticketsService.findOne(+id);
+  @UseGuards(AuthGuard)
+  findOne(@Param('id') id: string, @CurrentUser('sub') userId: number) {
+    return this.ticketsService.findOne(+id, +userId);
   }
 
   @Patch(':id')
