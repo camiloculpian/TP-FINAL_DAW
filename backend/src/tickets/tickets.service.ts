@@ -72,6 +72,13 @@ export class TicketsService {
 
   update(id: number, updateTicketDto: UpdateTicketDto) {
     return `This action updates a #${id} ticket`;
+    // CONDICIONES:
+    // Si el que modifica tiene rol "admin" puede modificar TODO de TODOS los tickets
+    // Si el que modifica tiene rol "usuario" solo puede:
+    // - Modificar descripcion SUS tickets
+    // - Modificar estado SUS tickets
+    // Si el que modifica tiene rol "dispatcher" solo puede:
+    // - Modificar asignacion de SUS tickets
   }
 
   async remove(id: number) {

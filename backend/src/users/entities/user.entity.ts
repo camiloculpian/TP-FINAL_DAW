@@ -3,12 +3,6 @@ import { Person } from '../../persons/entities/person.entity';
 import { Ticket } from '../../tickets/entities/ticket.entity';
 import { Column, DeleteDateColumn, Entity, OneToOne, JoinColumn, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
-// export enum UserRoles {
-//     ADMIN = "admin",
-//     USER = "user",
-//     DISPATCHER = 'dispatcher',
-// }
-
 @Entity()
 export class User {
     @PrimaryGeneratedColumn()
@@ -20,6 +14,7 @@ export class User {
     @Column({nullable:false})
     password: string;
 
+    // TO-DO: esto deberia ser una lista de Roles o sacamos a la miercoles el rol dispatcher
     @Column({
         type: "enum",
         enum: Role,
