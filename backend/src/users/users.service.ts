@@ -266,7 +266,7 @@ export class UsersService {
       await this.userRepository.save({...user, ...updateUserDto});
       await this.personRepository.save({...user.person, ...updateUserDto });
       await queryRunner.commitTransaction();
-      return ({status:'OK', message:'OK: Los datos del osoario se actualizaron de forma correcta'});
+      return ({status:'OK', message:'OK: Los datos del usuario se actualizaron de forma correcta'});
 
     } catch (error) {
       await queryRunner.rollbackTransaction();
@@ -280,7 +280,7 @@ export class UsersService {
   async updateRole(id: number, updateUserRolesDto: UpdateUserRolesDto) {
     try{
       await this.userRepository.update(id,updateUserRolesDto);
-      return ({statusCode:200,status:'OK', message:'OK: El rol del osoario se actualizó de forma correcta'});
+      return ({statusCode:200,status:'OK', message:'OK: El rol del usuario se actualizó de forma correcta'});
     }catch(e){
       console.log(e)
       return ({statusCode:e.statusCode,status:'ERROR', message:e.message});
