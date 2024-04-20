@@ -59,6 +59,7 @@ export class UsersController {
   @UseGuards(AuthGuard)
   @Roles(Role.ADMIN)
   updateRole(@Param('id') id: number, @Body() updateUserRolesDto: UpdateUserRolesDto ) {
+    // TO-DO. permitir al usuario con rol USER modificar solamente su contraseña y su foto de perfil
     return this.usersService.updateRole(id,updateUserRolesDto);
   }
 

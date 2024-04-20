@@ -118,6 +118,7 @@ export class TicketsController {
   @ApiResponse({ status: 200, description: 'Ticket actualizado con éxito' })
   @ApiResponse({ status: 404, description: 'Ticket no encontrado' })
   @ApiParam({ name: 'id', description: 'ID único del ticket' })
+  @UseGuards(AuthGuard)
   update(@Param('id') id: string, @Body() updateTicketDto: UpdateTicketDto) {
     return this.ticketsService.update(+id, updateTicketDto);
   }
