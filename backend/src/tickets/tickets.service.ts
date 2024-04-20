@@ -27,7 +27,6 @@ export class TicketsService {
   }
 
   async findAll(userId: number) {
-    // TO-DO: Si es admin mostrar tickets de todos los usuarios, sino mostrar solo los propios!!!
     try{
       const user = await this.userService.getRolesById(userId);
       if(user.roles.includes('admin')){
