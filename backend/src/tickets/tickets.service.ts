@@ -77,8 +77,6 @@ export class TicketsService {
     // Si el que modifica tiene rol "usuario" solo puede:
     // - Modificar descripcion SUS tickets
     // - Modificar estado SUS tickets
-    // Si el que modifica tiene rol "dispatcher" solo puede:
-    // - Modificar asignacion de SUS tickets
   }
 
   async remove(id: number) {

@@ -14,7 +14,6 @@ export class User {
     @Column({nullable:false})
     password: string;
 
-    // TO-DO: esto deberia ser una lista de Roles o sacamos a la miercoles el rol dispatcher
     @Column({
         type: "enum",
         enum: Role,
