@@ -84,6 +84,8 @@ export class TicketsController {
       },
     }),
   }))
+  @UseGuards(AuthGuard)
+  @Roles(Role.ADMIN)
   create(@Body() createTicketDto: CreateTicketDto, @UploadedFile() file: Express.Multer.File) {
     if (file) {
       createTicketDto.image = file.filename;

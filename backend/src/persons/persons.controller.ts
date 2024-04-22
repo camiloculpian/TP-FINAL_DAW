@@ -11,6 +11,8 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 
+// TO-DO: no deberia proveerse servicios de esta clase por si sola
+
 @ApiTags('persons')
 @Controller('persons')
 export class PersonsController {

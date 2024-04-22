@@ -75,6 +75,7 @@ export class TicketsService {
     // Si el que modifica tiene rol "usuario" solo puede:
     // - Modificar descripcion SUS tickets
     // - Modificar estado SUS tickets
+    // si modifico asignedToUser tengo que guardar el valor de quien asigno el ticket en asignedByUser
   }
 
   async remove(id: number) {
