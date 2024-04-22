@@ -36,7 +36,8 @@ export class CreateUserDto {
     @IsPhoneNumber()
     phone: string;
 
-    // @IsUrl()
-    // @IsString()
-    profilePicture?: Express.Multer.File;
+
+    @IsOptional()
+    @IsString()  
+    profilePicture?: string;
 }

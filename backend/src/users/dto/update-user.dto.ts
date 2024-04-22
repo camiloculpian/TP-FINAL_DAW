@@ -36,7 +36,7 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
 
     @IsEnum(Gender)
     @IsOptional()
-    gender: Gender;
+    gender?: Gender;  
 
     @IsEmail()
     @IsOptional()
@@ -47,7 +47,8 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
     phone?: string;
 
     @IsOptional()
-    profilePicture?: Express.Multer.File;
+    @IsString()  
+    profilePicture?: string;
 }
 
 
