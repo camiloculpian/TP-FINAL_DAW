@@ -26,4 +26,7 @@ export class CreatePersonDto {
 
     @IsPhoneNumber()
     phone: string;
+    
+    @IsString()
+    profilePicture?: string;
 }
