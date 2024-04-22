@@ -27,7 +27,6 @@ export class CreateUserDto {
     birthDate: Date;
 
     @IsBoolean() /**TRUE: MALE FALSE: FEMALE*/
-    @IsString()
     gender: boolean;
 
     @IsEmail()
@@ -36,6 +35,6 @@ export class CreateUserDto {
     @IsPhoneNumber()
     phone: string;
 
-    @IsUrl()
+    @IsString()
     profilePicture?: string;
 }

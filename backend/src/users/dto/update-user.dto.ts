@@ -45,8 +45,8 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
     @IsOptional()
     phone?: string;
 
-    @IsUrl()
-    @IsString()
     profilePicture?: string;
 }
+
+
 
