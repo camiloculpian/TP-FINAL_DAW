@@ -1,4 +1,5 @@
-import { IsBoolean, IsDate, IsDateString, IsEmail, IsNumber, IsNumberString, IsPhoneNumber, IsString, Length, MaxLength, MinLength, isNumber, isNumberString, length } from "class-validator";
+import { IsBoolean, IsDate, IsDateString, IsEmail, IsEnum, IsNumber, IsNumberString, IsPhoneNumber, IsString, Length, MaxLength, MinLength, isNumber, isNumberString, length } from "class-validator";
+import { Gender } from "../entities/person.entity";
 
 export class CreatePersonDto {
     @IsString()
@@ -18,8 +19,8 @@ export class CreatePersonDto {
     @IsDateString()
     birthDate: Date;
 
-    @IsBoolean() /**TRUE: MALE FALSE: FEMALE*/
-    gender: boolean;
+    @IsEnum(Gender) /**TRUE: MALE FALSE: FEMALE*/
+    gender: Gender;
 
     @IsEmail()
     email: string;

@@ -1,6 +1,7 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreatePersonDto } from './create-person.dto';
 import { IsBoolean, IsDateString, IsEmail, IsNumberString, IsOptional, IsPhoneNumber, IsString, MaxLength, MinLength } from 'class-validator';
+import { Gender } from '../entities/person.entity';
 
 export class UpdatePersonDto extends PartialType(CreatePersonDto) {
     @IsString()
@@ -25,9 +26,9 @@ export class UpdatePersonDto extends PartialType(CreatePersonDto) {
     @IsOptional()
     birthDate?: Date;
 
-    @IsBoolean() /**TRUE: MALE FALSE: FEMALE*/
+    //@IsBoolean() /**TRUE: MALE FALSE: FEMALE*/
     @IsOptional()
-    gender?: boolean;
+    gender?: Gender;
 
     @IsEmail()
     @IsOptional()
