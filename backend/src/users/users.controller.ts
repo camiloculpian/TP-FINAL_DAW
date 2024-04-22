@@ -83,7 +83,7 @@ export class UsersController {
   ) {    
     // si es administrador
       if (file) {
-          updateUserDto.profilePictureF = file.filename;
+          updateUserDto.profilePicture = file.filename;
       }
   
       if (currentUser.role === Role.ADMIN) {
