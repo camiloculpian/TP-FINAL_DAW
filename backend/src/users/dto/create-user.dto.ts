@@ -39,5 +39,6 @@ export class CreateUserDto {
 
     // @IsUrl()
     // @IsString()
-    profilePicture?: string;
+    @IsOptional()
+    profilePictureFile?: Express.Multer.File;
 }

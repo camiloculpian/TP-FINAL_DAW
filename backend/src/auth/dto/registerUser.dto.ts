@@ -36,5 +36,6 @@ export class RegisterUserDto {
     @IsPhoneNumber()
     phone: string;
 
-    profilePicture?: string;
+    @IsOptional()
+    profilePictureFile?: Express.Multer.File;
 }
