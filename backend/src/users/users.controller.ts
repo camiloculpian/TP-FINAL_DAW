@@ -10,7 +10,7 @@ import { AuthGuard } from '../auth/auth.guard';
 import { extname } from 'path';
 import { diskStorage } from 'multer';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { CurrentUser } from '../auth/decorators/currentUser.decorator'; // Agrega la ruta correcta
+import { CurrentUser } from '../auth/decorators/currentUser.decorator'; a
 
 
 @ApiTags('Users')

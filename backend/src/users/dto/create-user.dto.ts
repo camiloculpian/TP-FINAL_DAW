@@ -1,7 +1,6 @@
 import { Transform } from "class-transformer";
-import { IsBoolean, IsDateString, IsDefined, IsEmail, IsHash, IsNumberString, IsPhoneNumber, IsString, MaxLength, MinLength, IsUrl, isString, isEnum, IsEnum } from "class-validator";
+import { IsBoolean, IsDateString, IsDefined, IsOptional, IsEmail, IsHash, IsNumberString, IsPhoneNumber, IsString, MaxLength, MinLength, IsUrl, isString, isEnum, IsEnum } from "class-validator";
 import { Gender } from "src/persons/entities/person.entity";
-
 export class CreateUserDto {
     @Transform(({value}) => value.trim())
     @IsString()
@@ -39,6 +38,5 @@ export class CreateUserDto {
 
     // @IsUrl()
     // @IsString()
-    @IsOptional()
-    profilePictureFile?: Express.Multer.File;
+    profilePicture?: Express.Multer.File;
 }

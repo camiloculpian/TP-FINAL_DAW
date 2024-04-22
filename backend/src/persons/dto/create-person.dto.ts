@@ -28,6 +28,5 @@ export class CreatePersonDto {
     @IsPhoneNumber()
     phone: string;
     
-    @IsOptional()
-    profilePictureFile?: Express.Multer.File;
+    profilePicture?: Express.Multer.File;
 }
