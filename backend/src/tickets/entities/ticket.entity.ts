@@ -83,4 +83,5 @@ export class Ticket {
 
     @Column({nullable:true})
     image: string;
+
 }

@@ -36,4 +36,6 @@ export class UpdatePersonDto extends PartialType(CreatePersonDto) {
     @IsPhoneNumber()
     @IsOptional()
     phone?: string;
+
+    profilePicture?: string;
 }

@@ -1,5 +1,5 @@
 import { Transform } from "class-transformer";
-import { IsBoolean, IsDateString, IsEmail, IsHash, IsNumberString, IsPhoneNumber, IsString, MaxLength, MinLength, minLength } from "class-validator";
+import { IsBoolean, IsDateString, IsNumberString, IsHash, IsEmail, IsPhoneNumber, IsString, MaxLength, MinLength, IsUrl } from "class-validator";
 
 export class RegisterUserDto {
     @Transform(({value}) => value.trim())
@@ -25,7 +25,7 @@ export class RegisterUserDto {
 
     @IsDateString()
     birthDate: Date;
-
+    
     @IsBoolean() /**TRUE: MALE FALSE: FEMALE*/
     gender: boolean;
 
@@ -34,4 +34,6 @@ export class RegisterUserDto {
 
     @IsPhoneNumber()
     phone: string;
+
+    profilePicture?: string;
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, UseGuards, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -7,8 +7,9 @@ import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/enums/role.enum';
 import { UpdateUserRolesDto } from './dto/update-userRoles.dto ';
 import { AuthGuard } from '../auth/auth.guard';
-
-
+import { extname } from 'path';
+import { diskStorage } from 'multer';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('Users')
 @Controller('users')
@@ -21,9 +22,21 @@ export class UsersController {
   @ApiResponse({ status: HttpStatus.CREATED, description: 'Usuario creado con éxito' })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Datos inválidos' })
   @ApiBody({ type: CreateUserDto })
-  @UseGuards(AuthGuard)
-  @Roles(Role.ADMIN)
-  create(@Body() createUserDto: CreateUserDto) {
+  //@UseGuards(AuthGuard)
+  //@Roles(Role.ADMIN)
+  @UseInterceptors(FileInterceptor('profilePicture', {
+    storage: diskStorage({
+      destination: './uploads/users',
+      filename: (req, file, cb) => {
+        const randomName = Array(32).fill(null).map(()=>(Math.round(Math.random()*16)).toString(16)).join('');
+        return cb(null, `${randomName}${extname(file.originalname)}`);
+      },
+    }),
+  }))
+  create(@Body() createUserDto: CreateUserDto, @UploadedFile() file: Express.Multer.File) {
+    if (file) {
+      createUserDto.profilePicture = file.filename;
+    }
     return this.usersService.create(createUserDto);
   }
 
@@ -49,9 +62,21 @@ export class UsersController {
   @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
   @ApiParam({ name: 'id', description: 'ID único del usuario' })
   @ApiBody({ type: UpdateUserDto })
-  update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
+  @UseInterceptors(FileInterceptor('profilePicture', {
+    storage: diskStorage({
+      destination: './uploads/users',
+      filename: (req, file, cb) => {
+        const randomName = Array(32).fill(null).map(()=>(Math.round(Math.random()*16)).toString(16)).join('');
+        return cb(null, `${randomName}${extname(file.originalname)}`);
+      },
+    }),
+  }))
+  update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto, @UploadedFile() file: Express.Multer.File) {
+    if (file) {
+      updateUserDto.profilePicture = file.filename;
+    }
     return this.usersService.update(+id, updateUserDto);
-  }
+  } 
 
   //TO-DO: Update user Role passing id and Role (ONLY ADMIN!!!)
   @Patch('/role/:id')
