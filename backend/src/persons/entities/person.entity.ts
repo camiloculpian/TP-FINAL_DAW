@@ -1,11 +1,12 @@
 import { User } from '../../users/entities/user.entity';
 import { Column, DeleteDateColumn, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
-export enum Gender{
+export enum Gender {
     MALE = "male",
     FEMALE = "female",
     OTHER = "other"
 }
+
 @Entity()
 export class Person {
     @PrimaryGeneratedColumn()
@@ -27,10 +28,10 @@ export class Person {
     birthDate: Date;
 
     @Column({
-        type: "enum",
+        type:"enum",
         enum: Gender,
-        default: Gender.MALE,
-    }) /**TRUE: MALE FALSE: FEMALE*/
+        default: Gender.MALE
+    })
     gender: Gender;
 
     @Column({unique:true})
