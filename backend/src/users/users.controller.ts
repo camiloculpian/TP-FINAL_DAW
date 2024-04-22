@@ -10,6 +10,8 @@ import { AuthGuard } from '../auth/auth.guard';
 import { extname } from 'path';
 import { diskStorage } from 'multer';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { CurrentUser } from '../auth/decorators/currentUser.decorator'; // Agrega la ruta correcta
+
 
 @ApiTags('Users')
 @Controller('users')
@@ -22,8 +24,8 @@ export class UsersController {
   @ApiResponse({ status: HttpStatus.CREATED, description: 'Usuario creado con éxito' })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Datos inválidos' })
   @ApiBody({ type: CreateUserDto })
-  //@UseGuards(AuthGuard)
-  //@Roles(Role.ADMIN)
+  @UseGuards(AuthGuard)
+  @Roles(Role.ADMIN)
   @UseInterceptors(FileInterceptor('profilePicture', {
     storage: diskStorage({
       destination: './uploads/users',
@@ -62,30 +64,55 @@ export class UsersController {
   @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
   @ApiParam({ name: 'id', description: 'ID único del usuario' })
   @ApiBody({ type: UpdateUserDto })
+  // subida de archivos
   @UseInterceptors(FileInterceptor('profilePicture', {
-    storage: diskStorage({
-      destination: './uploads/users',
-      filename: (req, file, cb) => {
-        const randomName = Array(32).fill(null).map(()=>(Math.round(Math.random()*16)).toString(16)).join('');
-        return cb(null, `${randomName}${extname(file.originalname)}`);
-      },
-    }),
+      storage: diskStorage({
+          destination: './uploads/users',
+          filename: (req, file, cb) => {
+              const randomName = Array(32).fill(null).map(()=>(Math.round(Math.random()*16)).toString(16)).join('');
+              cb(null, `${randomName}${extname(file.originalname)}`);
+          },
+      }),
   }))
-  update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto, @UploadedFile() file: Express.Multer.File) {
-    if (file) {
-      updateUserDto.profilePicture = file.filename;
-    }
-    return this.usersService.update(+id, updateUserDto);
-  } 
-
-  //TO-DO: Update user Role passing id and Role (ONLY ADMIN!!!)
-  @Patch('/role/:id')
+  @UseGuards(AuthGuard)
+  update(
+      @Param('id') id: number,
+      @Body() updateUserDto: UpdateUserDto,
+      @CurrentUser() currentUser: any,
+      @UploadedFile() file: Express.Multer.File
+  ) {    
+    // si es administrador
+      if (file) {
+          updateUserDto.profilePicture = file.filename;
+      }
+  
+      if (currentUser.role === Role.ADMIN) {
+          return this.usersService.update(+id, updateUserDto);
+      } else if (currentUser.id === id) {
+          const allowedUpdates = {
+              password: updateUserDto.password, //Si el usuario es el mismo que se está actualizando, solo permite password y profilePicture
+              profilePicture: updateUserDto.profilePicture,
+          };
+          return this.usersService.update(+id, allowedUpdates);
+      } else {
+          throw new Error('No tienes permiso para modificar a este usuario');
+      }
+  }
+  
+  // Solo permite a administradores cambiar los roles de usuario
+  @Patch(':id/role')
+  @ApiOperation({ summary: 'Actualizar el rol de un usuario' })
+  @ApiResponse({ status: 200, description: 'Rol del usuario actualizado con éxito' })
+  @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
+  @ApiParam({ name: 'id', description: 'ID único del usuario' })
   @ApiBody({ type: UpdateUserRolesDto })
   @UseGuards(AuthGuard)
-  @Roles(Role.ADMIN)
-  updateRole(@Param('id') id: number, @Body() updateUserRolesDto: UpdateUserRolesDto ) {
-    // TO-DO. permitir al usuario con rol USER modificar solamente su contraseña y su foto de perfil
-    return this.usersService.updateRole(id,updateUserRolesDto);
+  @Roles(Role.ADMIN) 
+  updateUserRole(
+      @Param('id') id: number,
+      @Body() updateUserRolesDto: UpdateUserRolesDto,
+  ) {
+      return this.usersService.updateRole(id, updateUserRolesDto);
   }
 
   @Delete(':id')
