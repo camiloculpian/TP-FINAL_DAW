@@ -24,8 +24,8 @@ export class UsersController {
   @ApiResponse({ status: HttpStatus.CREATED, description: 'Usuario creado con éxito' })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Datos inválidos' })
   @ApiBody({ type: CreateUserDto })
-  @UseGuards(AuthGuard)
-  @Roles(Role.ADMIN)
+  //@UseGuards(AuthGuard)
+  //@Roles(Role.ADMIN)
   @UseInterceptors(FileInterceptor('profilePicture', {
     storage: diskStorage({
       destination: './uploads/users',

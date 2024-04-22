@@ -3,16 +3,12 @@ import { Controller, Get, UseInterceptors, UploadedFile, Post, Body, Patch, Para
 import { PersonsService } from './persons.service';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 
 // TO-DO: no deberia proveerse servicios de esta clase por si sola
-
 @ApiTags('persons')
 @Controller('persons')
 export class PersonsController {
@@ -24,19 +20,7 @@ export class PersonsController {
   @ApiOperation({ summary: 'Crear una nueva persona' })
   @ApiResponse({ status: 201, description: 'La persona ha sido creada con éxito.' })
   @ApiResponse({ status: 400, description: 'Datos inválidos.' })
-  @UseInterceptors(FileInterceptor('profilePicture', {
-    storage: diskStorage({
-      destination: './uploads/persons',
-      filename: (req, file, cb) => {
-        const randomName = Array(32).fill(null).map(()=>(Math.round(Math.random()*16)).toString(16)).join('');
-        return cb(null, `${randomName}${extname(file.originalname)}`);
-      },
-    }),
-  }))
-  create(@Body() createPersonDto: CreatePersonDto, @UploadedFile() file: Express.Multer.File) {
-    if (file) {
-      createPersonDto.profilePicture = file.filename;
-    }
+  create(@Body() createPersonDto: CreatePersonDto) {
     return this.personsService.create(createPersonDto);
   }
 
@@ -66,19 +50,7 @@ export class PersonsController {
   @ApiResponse({ status: 404, description: 'Persona no encontrada.' })
   @ApiParam({ name: 'id', type: 'number', description: 'ID de la persona a actualizar' })
   @ApiBody({ type: UpdatePersonDto })
-  @UseInterceptors(FileInterceptor('profilePicture', {
-    storage: diskStorage({
-      destination: './uploads/persons',
-      filename: (req, file, cb) => {
-        const randomName = Array(32).fill(null).map(()=>(Math.round(Math.random()*16)).toString(16)).join('');
-        return cb(null, `${randomName}${extname(file.originalname)}`);
-      },
-    }),
-  }))
-  update(@Param('id') id: number, @Body() updatePersonDto: UpdatePersonDto, @UploadedFile() file: Express.Multer.File) {
-    if (file) {
-      updatePersonDto.profilePicture = file.filename;
-    }
+  update(@Param('id') id: number, @Body() updatePersonDto: UpdatePersonDto) {
     return this.personsService.update(+id, updatePersonDto);
   }
 

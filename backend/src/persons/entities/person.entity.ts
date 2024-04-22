@@ -35,7 +35,4 @@ export class Person {
 
     @OneToOne(() => User, (user) => user.person) // specify inverse side as a second parameter
     user: User
-
-    @Column({ nullable:true})
-    profilePicture: string;
 }
