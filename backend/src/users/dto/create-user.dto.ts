@@ -35,7 +35,7 @@ export class CreateUserDto {
     @IsPhoneNumber()
     phone: string;
 
-    //@IsUrl()
-    @IsString()
+    // @IsUrl()
+    // @IsString()
     profilePicture?: string;
 }
