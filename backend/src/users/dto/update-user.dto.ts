@@ -45,7 +45,8 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
     @IsOptional()
     phone?: string;
 
-    profilePicture?: string;
+    @IsOptional()
+    profilePictureFile?: Express.Multer.File;
 }
 
 

@@ -1,5 +1,5 @@
 import { Transform } from "class-transformer";
-import { IsBoolean, IsDateString, IsDefined, IsEmail, IsHash, IsNumberString, IsPhoneNumber, IsString, MaxLength, MinLength, IsUrl } from "class-validator";
+import { IsBoolean, IsDateString, IsDefined,IsOptional, IsEmail, IsHash, IsNumberString, IsPhoneNumber, IsString, MaxLength, MinLength, IsUrl } from "class-validator";
 
 export class CreateUserDto {
     @Transform(({value}) => value.trim())
@@ -37,5 +37,6 @@ export class CreateUserDto {
 
     // @IsUrl()
     // @IsString()
-    profilePicture?: string;
+    @IsOptional()
+    profilePictureFile?: Express.Multer.File;
 }

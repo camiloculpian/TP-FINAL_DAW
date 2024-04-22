@@ -1,4 +1,4 @@
-import { IsBoolean, IsDate, IsDateString, IsEmail, IsNumber, IsNumberString, IsPhoneNumber, IsString, Length, MaxLength, MinLength, isNumber, isNumberString, length } from "class-validator";
+import { IsBoolean, IsDate, IsDateString, IsEmail,IsOptional,  IsNumber, IsNumberString, IsPhoneNumber, IsString, Length, MaxLength, MinLength, isNumber, isNumberString, length } from "class-validator";
 
 export class CreatePersonDto {
     @IsString()
@@ -18,7 +18,7 @@ export class CreatePersonDto {
     @IsDateString()
     birthDate: Date;
 
-    @IsBoolean() /**TRUE: MALE FALSE: FEMALE*/
+    //@IsBoolean() /**TRUE: MALE FALSE: FEMALE*/
     gender: boolean;
 
     @IsEmail()
@@ -27,6 +27,6 @@ export class CreatePersonDto {
     @IsPhoneNumber()
     phone: string;
     
-    @IsString()
-    profilePicture?: string;
+    @IsOptional()
+    profilePictureFile?: Express.Multer.File;
 }
