@@ -25,5 +25,6 @@ export class UpdateTicketDto extends PartialType(CreateTicketDto) {
     @IsOptional()
     assignedToUserId?: number;
 
-    image?: string;
+    @IsOptional()
+    archive?: string;
 }

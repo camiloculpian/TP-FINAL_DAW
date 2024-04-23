@@ -20,5 +20,6 @@ export class CreateTicketDto {
     @IsOptional()
     assignedToUserId?: number;
 
-    image?: string;
+    @IsOptional()
+    archive?: string;
 }

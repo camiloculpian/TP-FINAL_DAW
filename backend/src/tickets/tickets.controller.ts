@@ -75,27 +75,51 @@ export class TicketsController {
   @ApiOperation({ summary: 'Crear un nuevo ticket' })
   @ApiResponse({ status: 201, description: 'Ticket creado con éxito' })
   @ApiResponse({ status: 400, description: 'Datos inválidos' })
-  @UseInterceptors(FileInterceptor('image', {
-    storage: diskStorage({
-      destination: './src/uploads/ticket/img',
-      filename: (req, file, cb) => {
-        const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
-        return cb(null, `${randomName}${extname(file.originalname)}`);
-      },
-    }),
-  }))
+  @UseInterceptors(
+      FileInterceptor('archive', {
+          storage: diskStorage({
+              destination: (req, file, cb) => {
+                  // Verifica la extension y lo manda a su carpeta
+                  const ext = extname(file.originalname).toLowerCase();
+                  if (ext === '.pdf') {
+                      cb(null, './src/uploads/ticket/pdf');
+                  } else if (['.jpg', '.jpeg', '.png', '.gif'].includes(ext)) {
+                      cb(null, './src/uploads/ticket/image');
+                  } else {
+                      cb(new Error('Tipo de archivo no soportado'), '');
+                  }
+              },
+              filename: (req, file, cb) => {
+                  const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
+                  cb(null, `${randomName}${extname(file.originalname)}`);
+              },
+          }),
+          fileFilter: (req, file, cb) => {
+              // Filtros
+              const ext = extname(file.originalname).toLowerCase();
+              if (ext === '.pdf' || ['.jpg', '.jpeg', '.png', '.gif'].includes(ext)) {
+                  cb(null, true);
+              } else {
+                  cb(null, false);
+              }
+          },
+      })
+  )
   @UseGuards(AuthGuard)
   @Roles(Role.ADMIN)
-  create(@Body() createTicketDto: CreateTicketDto, @UploadedFile() file: Express.Multer.File) {
-    if (file) {
-      createTicketDto.image = file.filename;
-    }
-    if (!createTicketDto.image) {
-      delete createTicketDto.image;
-    }
-    return this.ticketsService.create(createTicketDto);
+  async create(
+      @Body() createTicketDto: CreateTicketDto,
+      @UploadedFile() archive: Express.Multer.File
+  ) {
+      if (archive) {
+          createTicketDto.archive = archive.filename;
+      }
+  
+      const newTicket = await this.ticketsService.create(createTicketDto);
+  
+      return newTicket;
   }
-
+  
   @Get()
   @ApiOperation({ summary: 'Obtener todos los tickets' })
   @ApiResponse({ status: 200, description: 'Lista de tickets' })
@@ -120,9 +144,48 @@ export class TicketsController {
   @ApiResponse({ status: 200, description: 'Ticket actualizado con éxito' })
   @ApiResponse({ status: 404, description: 'Ticket no encontrado' })
   @ApiParam({ name: 'id', description: 'ID único del ticket' })
+  @UseInterceptors(
+      FileInterceptor('archive', {
+          storage: diskStorage({
+              destination: (req, file, cb) => {
+                  const ext = extname(file.originalname).toLowerCase();
+                  if (ext === '.pdf') {
+                      cb(null, './src/uploads/ticket/pdf');
+                  } else if (['.jpg', '.jpeg', '.png', '.gif'].includes(ext)) {
+                      cb(null, './src/uploads/ticket/image');
+                  } else {
+                      cb(new Error('Tipo de archivo no soportado'), '');
+                  }
+              },
+              filename: (req, file, cb) => {
+                  const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
+                  cb(null, `${randomName}${extname(file.originalname)}`);
+              },
+          }),
+          fileFilter: (req, file, cb) => {
+              const ext = extname(file.originalname).toLowerCase();
+              if (ext === '.pdf' || ['.jpg', '.jpeg', '.png', '.gif'].includes(ext)) {
+                  cb(null, true);
+              } else {
+                  cb(null, false);
+              }
+          },
+      })
+  )
   @UseGuards(AuthGuard)
-  update(@Param('id') id: string, @Body() updateTicketDto: UpdateTicketDto) {
-    return this.ticketsService.update(+id, updateTicketDto);
+  @Roles(Role.USER)
+  async update(
+      @Param('id') id: string,
+      @Body() updateTicketDto: UpdateTicketDto,
+      @UploadedFile() archive: Express.Multer.File
+  ) {
+      if (archive) {
+          updateTicketDto.archive = archive.filename;
+      }
+  
+      const updatedTicket = await this.ticketsService.update(+id, updateTicketDto);
+  
+      return updatedTicket;
   }
 
   @Delete(':id')

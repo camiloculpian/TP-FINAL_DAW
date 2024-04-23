@@ -36,6 +36,9 @@ export class Ticket {
     @PrimaryGeneratedColumn()
     id: number;
 
+    @Column()
+    title: string;
+
     @ManyToOne(type => User, user => user.id) //User who creates the ticket. Lo tomamos del ID del usuario autenticado y autorizado para crear el ticket
     createdByUser: User;
 
@@ -82,6 +85,5 @@ export class Ticket {
     deletedAt: Date;
 
     @Column({nullable:true})
-    image: string;
-
+    archive: string;
 }
