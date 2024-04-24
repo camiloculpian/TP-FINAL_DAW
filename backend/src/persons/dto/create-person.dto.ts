@@ -1,4 +1,4 @@
-import { IsBoolean, IsDate, IsDateString, IsEmail, IsEnum, IsNumber, IsNumberString, IsOptional, IsPhoneNumber, IsString, Length, MaxLength, MinLength, isNumber, isNumberString, length } from "class-validator";
+import { IsDateString, IsEmail, IsEnum, IsNumberString, IsOptional, IsPhoneNumber, IsString, MaxLength, MinLength } from "class-validator";
 import { Gender } from "../entities/person.entity";
 
 export class CreatePersonDto {
@@ -27,7 +27,7 @@ export class CreatePersonDto {
 
     @IsPhoneNumber()
     phone: string;
-
-    @IsString()  
-    profilePicture?: string;
+    
+    @IsOptional()
+    profilePictureFile?: Express.Multer.File;
 }
