@@ -32,7 +32,7 @@ export class TicketsService {
   async findAll(userId: number) {
     try {
       const user = await this.userService.getRolesById(userId);
-      if (user.roles.includes('admin')) {
+      if (user.roles.includes(Role.ADMIN)) {
         return await this.ticketRepository.find();
       } else {
         return await this.ticketRepository.find({
@@ -101,7 +101,7 @@ export class TicketsService {
       }
   
       return ticket;
-      
+
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException('Error al buscar el ticket');
