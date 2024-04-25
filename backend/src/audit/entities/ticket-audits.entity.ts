@@ -1,28 +1,52 @@
 import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column } from "typeorm";
-import { Ticket } from "src/tickets/entities/ticket.entity";
+import { Ticket, TicketPriority, TicketStatus } from "src/tickets/entities/ticket.entity";
 import { User } from "../../users/entities/user.entity";
 // FALTA HACER MODULE Y SERVICE
+
+export enum Operation {
+    CREATE= "CREATE",
+    UPDATE= "UPDATE",
+    DETETE= "DELETE"
+}
 
 @Entity()
 export class TicketAudit {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(() => Ticket, ticket => ticket.id)
-    @JoinColumn({ name: "id" }) // TICKET_ID
+    @ManyToOne(() => Ticket, (ticket) => ticket.id)
+    @JoinColumn() // TICKET_ID
     ticket: Ticket;
 
-    @ManyToOne(() => User, user => user.id)
-    @JoinColumn({ name: "createdBy" })
-    createdBy: User;
+    @Column()
+    description : string;
 
-    @ManyToOne(() => User, user => user.id)
-    @JoinColumn({ name: "modifiedBy" })
-    modifiedBy: User;
+    @ManyToOne(() => User, (user) => user.id)
+    @JoinColumn()
+    asignedToUser: User;
+
+    @Column({
+        type: "enum",
+        enum: TicketPriority
+    })
+    priority: TicketPriority;
+
+    @ManyToOne(() => User, (user) => user.id)
+    @JoinColumn()
+    modifiedByUser: User;
 
     @Column()
-    createdAt: Date;
+    modifiedAt: Date;
 
-    @Column()
-    updatedAt: Date;
+    @Column({
+        type: "enum",
+        enum: TicketStatus
+    })
+    status: TicketStatus
+
+    @Column({
+        type: "enum",
+        enum: Operation
+    })
+    operation: Operation
 }
