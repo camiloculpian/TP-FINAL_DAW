@@ -177,13 +177,14 @@ export class TicketsController {
   async update(
       @Param('id') id: string,
       @Body() updateTicketDto: UpdateTicketDto,
-      @UploadedFile() archive: Express.Multer.File
+      @UploadedFile() archive: Express.Multer.File,
+      @CurrentUser('sub') userId: number
   ) {
       if (archive) {
           updateTicketDto.archive = archive.filename;
       }
   
-      const updatedTicket = await this.ticketsService.update(+id, updateTicketDto);
+      const updatedTicket = await this.ticketsService.update(+id, updateTicketDto, userId);
   
       return updatedTicket;
   }
