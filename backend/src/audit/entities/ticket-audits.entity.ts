@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column } from "typeorm";
-import { Ticket } from "src/tickets/entities/ticket.entity";
+import { Ticket } from "../../tickets/entities/ticket.entity";
 import { User } from "../../users/entities/user.entity";
 
 export enum TicketPriority{  // No se si ira asi #duda
@@ -15,6 +15,7 @@ export enum TicketStatus{
 }
 
 // FALTA HACER MODULE Y SERVICE
+
 @Entity()
 export class TicketAudit {
     @PrimaryGeneratedColumn()
