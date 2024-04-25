@@ -26,7 +26,6 @@ export class CreateUserDto {
     @IsDateString()
     birthDate: Date;
 
-    //@IsBoolean() /**TRUE: MALE FALSE: FEMALE*/ç
     @IsEnum(Gender)
     gender: Gender;
 
