@@ -82,7 +82,7 @@ export class TicketsService {
       const isAdmin = user.roles.includes(Role.ADMIN);
       
       // Verificar si el usuario es un despachador
-      const isDispatcher = user.roles.includes(Role.DISPATCHER);
+      //const isDispatcher = user.roles.includes(Role.DISPATCHER);
   
       // Buscar el ticket por su ID
       const ticket = await this.ticketRepository.findOne({
@@ -94,13 +94,14 @@ export class TicketsService {
         throw new NotFoundException('Ticket no encontrado');
       }
   
-      if (!isAdmin && ticket.asignedToUser.id !== userId && !isDispatcher) {
+      if (!isAdmin && ticket.asignedToUser.id !== userId /* && !isDispatcher */) {
         // Si el usuario no es administrador, ni el usuario asignado al ticket, ni un despachador,
         // no está autorizado a ver este ticket
         throw new UnauthorizedException('No está autorizado a ver este ticket');
       }
   
       return ticket;
+      
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException('Error al buscar el ticket');

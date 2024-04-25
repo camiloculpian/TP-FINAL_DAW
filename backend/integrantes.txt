@@ -2,3 +2,27 @@ Camilo Culpian
 Emiliano Jara
 Natasha Szmagalski Koroll
 Gaston Monzo
+
+
+
+CREATE TABLE `ticketauditory` (
+	`id` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+	`ticketId` INT(10) NULL DEFAULT NULL,
+	`description` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`currentUserId` INT(10) NULL DEFAULT NULL,
+	`priority` ENUM('LOW','MEDIUM','HIGH') NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`modifiedByUserId` INT(10) NULL DEFAULT NULL,
+	`modifiedDate` DATE NULL DEFAULT NULL,
+	`state` ENUM('OPEN','IN_PROGRESS','RESOLVED') NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`operation` ENUM('NEW','EDIT','DELETE') NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	PRIMARY KEY (`id`) USING BTREE,
+	INDEX `FK_ticketauditory_ticket` (`ticketId`) USING BTREE,
+	INDEX `FK_ticketauditory_user` (`currentUserId`) USING BTREE,
+	INDEX `FK_ticketauditory_user_2` (`modifiedByUserId`) USING BTREE,
+	CONSTRAINT `FK_ticketauditory_ticket` FOREIGN KEY (`ticketId`) REFERENCES `ticket` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT `FK_ticketauditory_user` FOREIGN KEY (`currentUserId`) REFERENCES `user` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT `FK_ticketauditory_user_2` FOREIGN KEY (`modifiedByUserId`) REFERENCES `user` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+;
