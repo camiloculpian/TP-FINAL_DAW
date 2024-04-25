@@ -8,4 +8,4 @@ import { TicketAudit } from "./entities/ticket-audits.entity";
     // providers: [TicketAuditsService],
     exports: [TypeOrmModule],
   })
-  export class UsersModule {}
+  export class TicketAuditsModule {}
