@@ -6,7 +6,6 @@ import { Repository } from 'typeorm';
 import { Ticket } from './entities/ticket.entity';
 import { UsersService } from 'src/users/users.service';
 import { Role } from 'src/auth/enums/role.enum'; // Assuming Role enum is imported
-import { FindOneOptions } from 'typeorm';
 import { InternalServerErrorException, NotFoundException, UnauthorizedException } from '@nestjs/common';
 
 
@@ -80,10 +79,10 @@ export class TicketsService {
       const user = await this.userService.getRolesById(userId);
       
       // Verificar si el usuario tiene rol de administrador
-      const isAdmin = user.roles.includes('admin');
+      const isAdmin = user.roles.includes(Role.ADMIN);
       
       // Verificar si el usuario es un despachador
-      const isDispatcher = user.roles.includes('dispatcher');
+      const isDispatcher = user.roles.includes(Role.DISPATCHER);
   
       // Buscar el ticket por su ID
       const ticket = await this.ticketRepository.findOne({
@@ -122,7 +121,7 @@ export class TicketsService {
   async update(id: number, updateTicketDto: UpdateTicketDto, userId: number) {
     try {
       const user = await this.userService.getRolesById(userId);
-      const isAdmin = user.roles.includes('admin');
+      const isAdmin = user.roles.includes(Role.ADMIN);
 
       const ticket = await this.ticketRepository.findOne({
         where: {
