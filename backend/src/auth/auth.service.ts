@@ -27,15 +27,14 @@ export class AuthService {
 
     async login(loginUserDto: LoginUserDto){
         let user = await this.usersServive.findOneByUsernameAndPasswd(loginUserDto.username, loginUserDto.password);
-
         if(!user){
-            let userBy = await this.usersServive.findOneByDNI(loginUserDto.username);
-            user = await this.usersServive.findOneByUsernameAndPasswd(userBy?.user.username, loginUserDto.password);
-            if(!user){
-                userBy = await this.usersServive.findOneByEmail(loginUserDto.username);
+            let userBy = await this.usersServive.findOneByEmail(loginUserDto.username);
+            if(userBy){
                 user = await this.usersServive.findOneByUsernameAndPasswd(userBy?.user.username, loginUserDto.password);
-                if(!user){
-                    throw new UnauthorizedException('Invalid Credentials');
+            }else{
+                userBy = await this.usersServive.findOneByDNI(loginUserDto.username);
+                if(userBy){
+                    user = await this.usersServive.findOneByUsernameAndPasswd(userBy?.user.username, loginUserDto.password);
                 }
             }
         }
