@@ -98,13 +98,31 @@ export class UsersService {
     }
   }
 
-  // ESTAS DEVUELVEN LA CONTRASEÑA PORQUE ES USADA PARA LA AUTENTICACION! ----------------------------------------
+  async findOneByUsernameAndPasswd(username: string, password: string) {
+    try {
+      return await this.userRepository.findOne(
+        {
+          where: {
+            username: username,
+            password: password
+          },
+          relations: {
+            person: true,
+          },
+        }
+      );
+    } catch (e) {
+      console.log(e)
+      return e;
+    }
+  }
+
   async findOneByUsername(username: string) {
     try {
       return await this.userRepository.findOne(
         {
           where: {
-            username: username
+            username: username,
           },
           relations: {
             person: true,
@@ -152,7 +170,7 @@ export class UsersService {
       return e;
     }
   }
-  // ESTAS DEVUELVEN LA CONTRASEÑA PORQUE ES USADA PARA LA AUTENTICACION! ----------------------------------------
+  
 
   async update(id: number, updateUserDto: UpdateUserDto) {
     const queryRunner = this.dataSource.createQueryRunner();
