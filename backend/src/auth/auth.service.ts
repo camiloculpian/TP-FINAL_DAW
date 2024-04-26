@@ -26,17 +26,20 @@ export class AuthService {
     }
 
     async login(loginUserDto: LoginUserDto){
-        let user = await this.usersServive.findOneByUsername(loginUserDto.username);
+        let user = await this.usersServive.findOneByUsernameAndPasswd(loginUserDto.username, loginUserDto.password);
+
         if(!user){
-            user = await this.usersServive.findOneByDNI(loginUserDto.username);
+            let userBy = await this.usersServive.findOneByDNI(loginUserDto.username);
+            user = await this.usersServive.findOneByUsernameAndPasswd(userBy?.user.username, loginUserDto.password);
             if(!user){
-                user = await this.usersServive.findOneByEmail(loginUserDto.username);
+                userBy = await this.usersServive.findOneByEmail(loginUserDto.username);
+                user = await this.usersServive.findOneByUsernameAndPasswd(userBy?.user.username, loginUserDto.password);
                 if(!user){
                     throw new UnauthorizedException('Invalid Credentials');
                 }
             }
         }
-        if(user && user.password == loginUserDto.password || user.user.password == loginUserDto.password ){
+        if(user /*&& user.password == loginUserDto.password || user.user.password == loginUserDto.password */){
             if(user.user){
                 const payload = {sub:user.user.id}
                 const jwt = await this.jwtService.signAsync(payload)

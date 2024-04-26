@@ -176,7 +176,7 @@ export class TicketsController {
       })
   )
   @UseGuards(AuthGuard)
-  @Roles(Role.USER)
+  @Roles(Role.USER, Role.ADMIN)
   async update(
       @Param('id') id: string,
       @Body() updateTicketDto: UpdateTicketDto,
@@ -186,7 +186,7 @@ export class TicketsController {
       if (archive) {
           updateTicketDto.archive = archive.filename;
       }
-  
+      
       const updatedTicket = await this.ticketsService.update(+id, updateTicketDto, userId);
   
       return updatedTicket;

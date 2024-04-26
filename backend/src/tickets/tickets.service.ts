@@ -138,8 +138,8 @@ export class TicketsService {
   // Modificaciones hechas de update ↑
   async update(id: number, updateTicketDto: UpdateTicketDto, userId: number) {
     try {
-      const user = await this.userService.getRolesById(userId);
-      const isAdmin = user.roles.includes(Role.ADMIN);
+      // El usuario que solicita la operacion de actualizacion
+      const user = await this.userService.findOne(userId);
 
       const ticket = await this.ticketRepository.findOne({
         where: {
@@ -151,18 +151,30 @@ export class TicketsService {
         throw new NotFoundException('Ticket no encontrado');
       }
 
-      ticket.lastModifiedByUser = user.userId;
-
-      if (isAdmin || Number(ticket.asignedToUser) === userId) {
-        // Si el usuario es un administrador o es el asignado al ticket,
-        // permitir la actualización de todos los campos del ticket
-        await this.ticketRepository.update(id, updateTicketDto);
+      if (user.roles.includes(Role.ADMIN)) {
+        // Chequeo si existe el usuario al que le quiero re-asignar el ticket asignedToUserId
+        // El usuario que al que pertenece el ticket
+        const userAsignedTo = await this.userService.findOne(updateTicketDto.asignedToUserId);
+        if (!userAsignedTo) {
+            throw new NotFoundException('User who you wants to asign the ticket not exist!');
+        }
+        // Si el usuario es un administrador, permitir la actualización de todos los datos
+        ticket.description = updateTicketDto.description;
+        ticket.status = updateTicketDto.status;
+        ticket.priority = updateTicketDto.priority;
+        ticket.status = updateTicketDto.status;
+        ticket.service = updateTicketDto.service;
+        ticket.lastModified = new Date(Date.now());
+        ticket.asignedToUser = userAsignedTo;
+        ticket.asignedByUser = user;
+        ticket.lastModifiedByUser = user;
+        await this.ticketRepository.update(id, ticket);
         return { message: `Ticket #${id} actualizado` };
       } else {
-        // Si el usuario no es un administrador y no es el asignado al ticket,
-        // permitir la actualización solo de la descripción y el estado
+        // Si el usuario no es un administrador actualización solo de la descripción y el estado
         const { description, status } = updateTicketDto;
-        await this.ticketRepository.update(id, { description, status });
+        const lastModified = new Date(Date.now());
+        await this.ticketRepository.update(id, { description, status , lastModified});
         return { message: `Ticket #${id} actualizado (solo descripción y estado)` };
       }
     } catch (error) {
