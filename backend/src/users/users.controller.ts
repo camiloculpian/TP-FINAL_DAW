@@ -19,13 +19,13 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
   @Post()
+  @UseGuards(AuthGuard)
+  @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Crear un nuevo usuario' })
   @HttpCode(HttpStatus.CREATED)
   @ApiResponse({ status: HttpStatus.CREATED, description: 'Usuario creado con éxito' })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Datos inválidos' })
   @ApiBody({ type: CreateUserDto })
-  //@UseGuards(AuthGuard)
-  //@Roles(Role.ADMIN)
   @UseInterceptors(FileInterceptor('profilePicture', {
     storage: diskStorage({
       destination: './uploads/users',
@@ -43,6 +43,7 @@ export class UsersController {
   }
 
   @Get()
+  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Obtener todos los usuarios' })
   @ApiResponse({ status: 200, description: 'Lista de usuarios' })
   findAll() {
@@ -50,6 +51,7 @@ export class UsersController {
   }
 
   @Get(':id')
+  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Obtener un usuario por ID' })
   @ApiResponse({ status: 200, description: 'Usuario encontrado' })
   @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
@@ -59,6 +61,7 @@ export class UsersController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Actualizar un usuario' })
   @ApiResponse({ status: 200, description: 'Usuario actualizado con éxito' })
   @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
@@ -74,7 +77,6 @@ export class UsersController {
           },
       }),
   }))
-  @UseGuards(AuthGuard)
   update(
       @Param('id') id: number,
       @Body() updateUserDto: UpdateUserDto,
@@ -85,7 +87,7 @@ export class UsersController {
       if (file) {
           updateUserDto.profilePicture = file.filename;
       }
-  
+      // este chuequeo y operacion deberia hacerse en el servicio
       if (currentUser.role === Role.ADMIN) {
           return this.usersService.update(+id, updateUserDto);
       } else if (currentUser.id === id) {
@@ -101,13 +103,13 @@ export class UsersController {
   
   // Solo permite a administradores cambiar los roles de usuario
   @Patch(':id/role')
+  @UseGuards(AuthGuard)
+  @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Actualizar el rol de un usuario' })
   @ApiResponse({ status: 200, description: 'Rol del usuario actualizado con éxito' })
   @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
   @ApiParam({ name: 'id', description: 'ID único del usuario' })
-  @ApiBody({ type: UpdateUserRolesDto })
-  @UseGuards(AuthGuard)
-  @Roles(Role.ADMIN) 
+  @ApiBody({ type: UpdateUserRolesDto }) 
   updateUserRole(
       @Param('id') id: number,
       @Body() updateUserRolesDto: UpdateUserRolesDto,
@@ -116,12 +118,12 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard)
+  @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Eliminar un usuario' })
   @ApiResponse({ status: 200, description: 'Usuario eliminado con éxito' })
   @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
   @ApiParam({ name: 'id', description: 'ID único del usuario' })
-  @UseGuards(AuthGuard)
-  @Roles(Role.ADMIN)
   remove(@Param('id') id: number) {
     return this.usersService.remove(+id);
   }

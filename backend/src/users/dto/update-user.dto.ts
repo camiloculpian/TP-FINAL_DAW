@@ -2,6 +2,7 @@ import { PartialType } from '@nestjs/mapped-types';
 import { CreateUserDto } from './create-user.dto';
 import { IsBoolean,IsUrl, IsEnum, IsDateString, IsEmail, IsHash, IsNumberString, IsOptional, IsPhoneNumber, IsString, MaxLength, MinLength } from 'class-validator';
 import { Gender } from "src/persons/entities/person.entity";
+import { Role } from 'src/auth/enums/role.enum';
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
     @IsString()
@@ -11,6 +12,11 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
     @IsHash('sha512')
     @IsOptional()
     password?: string;
+
+    // Chequear que para esto sea admin
+    // @IsEnum(Role)
+    // @IsOptional()
+    // roles?:Role
 
     @IsString()
     @IsOptional()

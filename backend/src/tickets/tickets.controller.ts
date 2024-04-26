@@ -65,7 +65,6 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
-import { Ticket } from './entities/ticket.entity';
 import { UsersService } from 'src/users/users.service';
 
 @ApiTags('Tickets')
@@ -76,6 +75,9 @@ export class TicketsController {
     private readonly userService: UsersService
 
   @Post()
+  // CREA UN TICKET
+  @UseGuards(AuthGuard)
+  @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Crear un nuevo ticket' })
   @ApiResponse({ status: 201, description: 'Ticket creado con éxito' })
   @ApiResponse({ status: 400, description: 'Datos inválidos' })
@@ -109,8 +111,6 @@ export class TicketsController {
           },
       })
   )
-  @UseGuards(AuthGuard)
-  @Roles(Role.ADMIN)
   async create(
       @Body() createTicketDto: CreateTicketDto,
       @UploadedFile() archive: Express.Multer.File,
@@ -124,25 +124,28 @@ export class TicketsController {
   }
   
   @Get()
+  // OBTIENE TODOS LOS TICKETS DE UN USUARIO
+  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Obtener todos los tickets' })
   @ApiResponse({ status: 200, description: 'Lista de tickets' })
-  @UseGuards(AuthGuard)
   findAll( @CurrentUser('sub') userId: number) {
     console.log(userId); // ACA TENGO LOS DATOS DEL USUARIO
     return this.ticketsService.findAll(userId);
   }
 
   @Get(':id')
+  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Obtener un ticket por ID' })
   @ApiResponse({ status: 200, description: 'Ticket encontrado' })
   @ApiResponse({ status: 404, description: 'Ticket no encontrado' })
   @ApiParam({ name: 'id', description: 'ID único del ticket' })
-  @UseGuards(AuthGuard)
   findOne(@Param('id') id: string, @CurrentUser('sub') userId: number) {
     return this.ticketsService.findOne(+id, +userId);
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard)
+  @Roles(Role.USER, Role.ADMIN)
   @ApiOperation({ summary: 'Actualizar un ticket' })
   @ApiResponse({ status: 200, description: 'Ticket actualizado con éxito' })
   @ApiResponse({ status: 404, description: 'Ticket no encontrado' })
@@ -175,8 +178,6 @@ export class TicketsController {
           },
       })
   )
-  @UseGuards(AuthGuard)
-  @Roles(Role.USER, Role.ADMIN)
   async update(
       @Param('id') id: string,
       @Body() updateTicketDto: UpdateTicketDto,
@@ -193,12 +194,13 @@ export class TicketsController {
   }
 
   @Delete(':id')
+  // Elimina un ticket
+  @UseGuards(AuthGuard)
+  @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Eliminar un ticket' })
   @ApiResponse({ status: 200, description: 'Ticket eliminado con éxito' })
   @ApiResponse({ status: 404, description: 'Ticket no encontrado' })
   @ApiParam({ name: 'id', description: 'ID único del ticket' })
-  @UseGuards(AuthGuard)
-  @Roles(Role.ADMIN)
   remove(@Param('id') id: string) {
     return this.ticketsService.remove(+id);
   }
