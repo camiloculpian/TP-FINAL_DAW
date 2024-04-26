@@ -65,6 +65,7 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
+import { Ticket } from './entities/ticket.entity';
 
 @ApiTags('Tickets')
 @Controller('tickets')
@@ -109,13 +110,13 @@ export class TicketsController {
   @Roles(Role.ADMIN)
   async create(
       @Body() createTicketDto: CreateTicketDto,
-      @UploadedFile() archive: Express.Multer.File
+      @UploadedFile() archive: Express.Multer.File,
+      @CurrentUser('sub') userId: number
   ) {
       if (archive) {
           createTicketDto.archive = archive.filename;
       }
-  
-      const newTicket = await this.ticketsService.create(createTicketDto);
+      const newTicket = await this.ticketsService.create(createTicketDto, userId);
   
       return newTicket;
   }

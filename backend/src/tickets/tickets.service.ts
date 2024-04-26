@@ -20,9 +20,17 @@ export class TicketsService {
     private readonly userService: UsersService
   ) { }
 
-  async create(createTicketDto: CreateTicketDto) {
+  async create(createTicketDto: CreateTicketDto, userId: number) {
+    
     try {
-      return await this.ticketRepository.save(createTicketDto);
+      const user = await this.userService.getRolesById(userId);
+      const ticket = this.ticketRepository.create({
+        ... createTicketDto
+      });
+      ticket.asignedByUser = user.userId;
+      ticket.lastModifiedByUser = user.userId;
+
+      return await this.ticketRepository.save(ticket);
     } catch (e) {
       console.log(e);
       return e;
@@ -134,7 +142,9 @@ export class TicketsService {
         throw new NotFoundException('Ticket no encontrado');
       }
 
-      if (isAdmin || ticket.asignedToUser.id === userId) {
+      ticket.lastModifiedByUser = user.userId;
+
+      if (isAdmin || Number(ticket.asignedToUser) === userId) {
         // Si el usuario es un administrador o es el asignado al ticket,
         // permitir la actualización de todos los campos del ticket
         await this.ticketRepository.update(id, updateTicketDto);

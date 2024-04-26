@@ -75,6 +75,9 @@ export class Ticket {
     @Column({nullable:true})
     lastModified: Date;
 
+    @ManyToOne(type => User, user => user.id, { nullable: true }) // User who modify the ticket last time. Chequear que exista y sea valido
+    lastModifiedByUser: User;
+
     @Column({
         type: "timestamp",
         default: () => "now()"
