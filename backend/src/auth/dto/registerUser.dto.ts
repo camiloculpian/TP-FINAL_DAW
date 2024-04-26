@@ -1,5 +1,5 @@
 import { Transform } from "class-transformer";
-import { IsDateString, IsNumberString, IsHash, IsEmail, IsPhoneNumber, IsString, MaxLength, MinLength, IsUrl, IsEnum } from "class-validator";
+import { IsDateString,IsOptional, IsNumberString, IsHash, IsEmail, IsPhoneNumber, IsString, MaxLength, MinLength, IsUrl, IsEnum } from "class-validator";
 import { Gender } from "src/persons/entities/person.entity";
 
 export class RegisterUserDto {
@@ -36,6 +36,7 @@ export class RegisterUserDto {
     @IsPhoneNumber()
     phone: string;
 
-    @IsString()  
-    profilePicture?: string;
+    @IsString()
+    @IsOptional()
+    profilePicture?: string;  
 }
