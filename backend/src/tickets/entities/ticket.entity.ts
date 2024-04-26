@@ -1,4 +1,3 @@
-import { IsDate } from "class-validator";
 import { User } from "../../users/entities/user.entity";
 import { Column, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
