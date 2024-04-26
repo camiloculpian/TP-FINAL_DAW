@@ -1,5 +1,6 @@
 import { Transform } from "class-transformer";
 import { IsBoolean, IsDateString, IsDefined, IsOptional, IsEmail, IsHash, IsNumberString, IsPhoneNumber, IsString, MaxLength, MinLength, IsUrl, isString, isEnum, IsEnum } from "class-validator";
+import { Role } from "src/auth/enums/role.enum";
 import { Gender } from "src/persons/entities/person.entity";
 export class CreateUserDto {
     @Transform(({value}) => value.trim())
@@ -8,6 +9,10 @@ export class CreateUserDto {
 
     @IsHash('sha512')
     password: string;
+
+    @IsOptional()
+    @IsEnum(Role)  
+    role?: Role;
 
     @IsString()
     name: string;
@@ -34,7 +39,6 @@ export class CreateUserDto {
 
     @IsPhoneNumber()
     phone: string;
-
 
     @IsOptional()
     @IsString()  
