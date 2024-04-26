@@ -11,19 +11,19 @@ export class AuthService {
         private readonly jwtService: JwtService,
     ){}
 
-    async register(registerUserDto: RegisterUserDto){
-        try{
-            if(this.usersServive.findOneByUsername(registerUserDto.username) 
-                || this.usersServive.findOneByDNI(registerUserDto.dni)
-                || this.usersServive.findOneByEmail(registerUserDto.email))
-            {
-                throw new BadRequestException('User already exists!') //TO-DO: Conyarntrolar uno por uno y pasar el error puntual (Ej.: ese email ya esta en uso, etc...)
-            }
-            return await this.usersServive.create(registerUserDto);
-        }catch (e){
-            return e;
-        }
-    }
+    // async register(registerUserDto: RegisterUserDto){
+    //     try{
+    //         if(this.usersServive.findOneByUsername(registerUserDto.username) 
+    //             || this.usersServive.findOneByDNI(registerUserDto.dni)
+    //             || this.usersServive.findOneByEmail(registerUserDto.email))
+    //         {
+    //             throw new BadRequestException('User already exists!') //TO-DO: Conyarntrolar uno por uno y pasar el error puntual (Ej.: ese email ya esta en uso, etc...)
+    //         }
+    //         return await this.usersServive.create(registerUserDto);
+    //     }catch (e){
+    //         return e;
+    //     }
+    // }
 
     async login(loginUserDto: LoginUserDto){
         let user = await this.usersServive.findOneByUsernameAndPasswd(loginUserDto.username, loginUserDto.password);

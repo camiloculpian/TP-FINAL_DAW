@@ -144,6 +144,7 @@ export class TicketsController {
   }
 
   @Patch(':id')
+  // Actualiza un ticket
   @UseGuards(AuthGuard)
   @Roles(Role.USER, Role.ADMIN)
   @ApiOperation({ summary: 'Actualizar un ticket' })
