@@ -39,18 +39,8 @@ export class AuthService {
                 }
             }
         }
-        if(user /*&& user.password == loginUserDto.password || user.user.password == loginUserDto.password */){
-            if(user.user){
-                const payload = {sub:user.user.id}
-                const jwt = await this.jwtService.signAsync(payload)
-                return ({
-                    nombre:user.name+' '+user.lastName,
-                    username:user.user.username,
-                    rol:user.user.rol,
-                    jwt:jwt
-                });
-            }else{ 
-                const payload = {sub:user.id}
+        if(user){
+            const payload = {sub:user.id}
                 const token = await this.jwtService.signAsync(payload)
                 return ({
                     nombre:user.person.name+' '+user.person.lastName,
@@ -58,7 +48,6 @@ export class AuthService {
                     rol:user.rol,
                     token:token
                 });
-            }
         }else{
             throw new UnauthorizedException('Invalid Credentials');
         }
