@@ -18,7 +18,7 @@ export class CreateTicketDto {
     service: TicketsService;
 
     @IsNumberString()
-    assignedToUserId: number;
+    asignedToUserId: number;
 
     @IsOptional()
     archive?: string;

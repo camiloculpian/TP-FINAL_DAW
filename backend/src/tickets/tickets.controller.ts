@@ -53,7 +53,7 @@
 
 
 // tickets modified v1.1
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UseGuards, NotFoundException, Inject } from '@nestjs/common';
 import { TicketsService } from './tickets.service';
 import { CreateTicketDto } from './dto/create-ticket.dto';
 import { UpdateTicketDto } from './dto/update-ticket.dto';
@@ -66,11 +66,14 @@ import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
 import { Ticket } from './entities/ticket.entity';
+import { UsersService } from 'src/users/users.service';
 
 @ApiTags('Tickets')
 @Controller('tickets')
 export class TicketsController {
   constructor(private readonly ticketsService: TicketsService) { }
+  @Inject(UsersService)
+    private readonly userService: UsersService
 
   @Post()
   @ApiOperation({ summary: 'Crear un nuevo ticket' })
@@ -117,7 +120,6 @@ export class TicketsController {
           createTicketDto.archive = archive.filename;
       }
       const newTicket = await this.ticketsService.create(createTicketDto, userId);
-  
       return newTicket;
   }
   

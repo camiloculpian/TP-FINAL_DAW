@@ -89,6 +89,7 @@ export class UsersService {
           relations: {
             person: true,
           },
+          select: ["id", "username", 'roles', 'profilePicture']
         }
       );
     } catch (e) {
@@ -97,6 +98,7 @@ export class UsersService {
     }
   }
 
+  // ESTAS DEVUELVEN LA CONTRASEÑA PORQUE ES USADA PARA LA AUTENTICACION! ----------------------------------------
   async findOneByUsername(username: string) {
     try {
       return await this.userRepository.findOne(
@@ -150,6 +152,7 @@ export class UsersService {
       return e;
     }
   }
+  // ESTAS DEVUELVEN LA CONTRASEÑA PORQUE ES USADA PARA LA AUTENTICACION! ----------------------------------------
 
   async update(id: number, updateUserDto: UpdateUserDto) {
     const queryRunner = this.dataSource.createQueryRunner();

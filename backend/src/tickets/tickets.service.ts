@@ -23,13 +23,23 @@ export class TicketsService {
   async create(createTicketDto: CreateTicketDto, userId: number) {
     
     try {
-      const user = await this.userService.getRolesById(userId);
+      // El usuario que crea el ticket
+      const user = await this.userService.findOne(userId);
       const ticket = this.ticketRepository.create({
         ... createTicketDto
       });
-      ticket.asignedByUser = user.userId;
-      ticket.lastModifiedByUser = user.userId;
+      // Chequeo si existe el usuario al que le quiero asignar el ticket asignedToUserId
+      // El usuario que al que pertenece el ticket
+      const userAsignedTo = await this.userService.findOne(createTicketDto.asignedToUserId);
 
+      if (!userAsignedTo) {
+          throw new NotFoundException('User who you wants to asign the ticket not exist!');
+      }
+      console.log(userAsignedTo);
+      ticket.asignedToUser = userAsignedTo;
+      ticket.asignedByUser = user;
+      ticket.createdByUser = user;
+      ticket.lastModifiedByUser = user;
       return await this.ticketRepository.save(ticket);
     } catch (e) {
       console.log(e);
