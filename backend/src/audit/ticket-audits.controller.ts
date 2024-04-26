@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UseGuards } from "@nestjs/common";
+import { Controller, Get, Post, Body, UseGuards, Param } from "@nestjs/common";
 import { ApiTags, ApiOperation, ApiResponse } from "@nestjs/swagger";
 import { TicketAuditsService } from "./ticket-audits.service";
 import { AuthGuard } from "src/auth/auth.guard";
@@ -12,13 +12,13 @@ import { Roles } from "src/auth/decorators/roles.decorator";
 export class TicketAuditsController {
     constructor(private readonly ticketAuditsService: TicketAuditsService) { }
 
-    @Get()
+    @Get(':id')
     @ApiOperation({ summary: "Obtener todos los registros de auditoría de tickets" })
     @ApiResponse({ status: 200, description: "Lista de registros de auditoría" })
     @UseGuards(AuthGuard)
     @Roles(Role.ADMIN)
-    findAll() {
-        return this.ticketAuditsService.findAll();
+    findAll(@Param('id') id: string) {
+        return this.ticketAuditsService.findAll(id);
     }
 
     // @Post()

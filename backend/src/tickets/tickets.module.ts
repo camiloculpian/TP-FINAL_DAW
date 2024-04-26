@@ -12,5 +12,6 @@ import { UsersModule } from 'src/users/users.module';
   ],
   controllers: [TicketsController],
   providers: [TicketsService],
+  exports: [TypeOrmModule, TicketsService],
 })
 export class TicketsModule {}
