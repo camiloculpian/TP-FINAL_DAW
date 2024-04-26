@@ -35,7 +35,6 @@ export class TicketsService {
       if (!userAsignedTo) {
           throw new NotFoundException('User who you wants to asign the ticket not exist!');
       }
-      console.log(userAsignedTo);
       ticket.asignedToUser = userAsignedTo;
       ticket.asignedByUser = user;
       ticket.createdByUser = user;
