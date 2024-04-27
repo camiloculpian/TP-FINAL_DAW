@@ -2,8 +2,6 @@ import { PartialType } from '@nestjs/mapped-types';
 import { Transform } from 'class-transformer';
 import { CreateTicketDto } from './create-ticket.dto';
 import {
-    IsBoolean,
-    IsDateString,
     IsEnum,
     IsNumberString,
     IsOptional,
