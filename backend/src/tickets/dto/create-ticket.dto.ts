@@ -1,9 +1,20 @@
-import { Transform } from "class-transformer";
-import { IsBoolean, IsDateString, IsEnum, IsNumberString, IsOptional, IsString } from "class-validator";
-import { TicketPriority, TicketsService, TicketStatus } from "../entities/ticket.entity";
+import { Transform } from 'class-transformer';
+import {
+    IsBoolean,
+    IsDateString,
+    IsEnum,
+    IsNumberString,
+    IsOptional,
+    IsString,
+} from 'class-validator';
+import {
+    TicketPriority,
+    TicketsService,
+    TicketStatus,
+} from '../entities/ticket.entity';
 
 export class CreateTicketDto {
-    @Transform(({value}) => value.trim())
+    @Transform(({ value }) => value.trim())
     @IsString()
     title: string;
 

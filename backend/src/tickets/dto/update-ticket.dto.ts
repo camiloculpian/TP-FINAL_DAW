@@ -1,11 +1,22 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { Transform } from "class-transformer";
+import { Transform } from 'class-transformer';
 import { CreateTicketDto } from './create-ticket.dto';
-import { IsBoolean, IsDateString, IsEnum, IsNumberString, IsOptional, IsString } from "class-validator";
-import { TicketPriority, TicketsService, TicketStatus } from "../entities/ticket.entity";
+import {
+    IsBoolean,
+    IsDateString,
+    IsEnum,
+    IsNumberString,
+    IsOptional,
+    IsString,
+} from 'class-validator';
+import {
+    TicketPriority,
+    TicketsService,
+    TicketStatus,
+} from '../entities/ticket.entity';
 
 export class UpdateTicketDto extends PartialType(CreateTicketDto) {
-    @Transform(({value}) => value.trim())
+    @Transform(({ value }) => value.trim())
     @IsString()
     @IsOptional()
     title?: string;
