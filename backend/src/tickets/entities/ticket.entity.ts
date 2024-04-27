@@ -88,7 +88,7 @@ export class Ticket {
     })
     createdAt: Date;
 
-    @DeleteDateColumn()
+    @DeleteDateColumn({ select: false })
     deletedAt: Date;
 
     @Column({ nullable: true })

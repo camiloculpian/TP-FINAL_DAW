@@ -25,7 +25,7 @@ export class User {
     @JoinColumn()
     person: Person;
 
-    @DeleteDateColumn()
+    @DeleteDateColumn({ select: false })
     deletedAt: Date;
 
     @OneToMany(type => Ticket, ticket => ticket.createdByUser) // All tickets created by this user
