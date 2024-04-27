@@ -19,7 +19,7 @@ export class AuthController {
     // @Post('register')
     // @UseInterceptors(FileInterceptor('profilePicture', {
     //     storage: diskStorage({
-    //         destination: './uploads/profiles',
+    //         destination: './uploads-profiles/profiles',
     //         filename: (req, file, cb) => {
     //             const randomName = Array(32).fill(null).map(()=>(Math.round(Math.random()*16)).toString(16)).join('');
     //             return cb(null, `${randomName}${extname(file.originalname)}`);

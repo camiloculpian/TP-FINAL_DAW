@@ -54,7 +54,7 @@ export class UsersController {
   @UseInterceptors(
     FileInterceptor('profilePicture', {
       storage: diskStorage({
-        destination: './uploads/users',
+        destination: './uploads-profiles/users',
         filename: (req, file, cb) => {
           const randomName = Array(32)
             .fill(null)
@@ -124,7 +124,7 @@ export class UsersController {
   @UseInterceptors(
     FileInterceptor('profilePicture', {
       storage: diskStorage({
-        destination: './uploads/users',
+        destination: './uploads-profiles/users',
         filename: (req, file, cb) => {
           const randomName = Array(32)
             .fill(null)
