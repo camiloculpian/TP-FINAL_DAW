@@ -1,7 +1,5 @@
 import { Transform } from 'class-transformer';
 import {
-    IsBoolean,
-    IsDateString,
     IsEnum,
     IsNumberString,
     IsOptional,
@@ -10,7 +8,6 @@ import {
 import {
     TicketPriority,
     TicketsService,
-    TicketStatus,
 } from '../entities/ticket.entity';
 
 export class CreateTicketDto {

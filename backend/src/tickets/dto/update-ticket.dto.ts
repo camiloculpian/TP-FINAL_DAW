@@ -40,6 +40,7 @@ export class UpdateTicketDto extends PartialType(CreateTicketDto) {
     @IsOptional()
     archive?: string;
 
-    // tuve que agregar status aca, si se saca tirar error, aviso por las dudas
-    status: TicketStatus;
+    @IsEnum(TicketStatus)
+    @IsOptional()
+    status?: TicketStatus;
 }
