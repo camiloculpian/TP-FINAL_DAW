@@ -1,76 +1,12 @@
 import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column } from "typeorm";
 import { Ticket, TicketPriority, TicketStatus } from "src/tickets/entities/ticket.entity";
 import { User } from "../../users/entities/user.entity";
-// FALTA HACER MODULE Y SERVICE
 
 export enum Operation {
     CREATE= "CREATE",
     UPDATE= "UPDATE",
-    DETETE= "DELETE"
+    DELETE= "DELETE"
 }
-
-// DROP TRIGGER trigger_ticket_update;
-
-// DELIMITER //
-
-// CREATE TRIGGER trigger_ticket_update
-// AFTER UPDATE ON ticket
-// FOR EACH ROW
-// BEGIN
-//     INSERT INTO ticket_audit (
-//         ticketId,
-//         description,
-//         asignedToUserId,
-//         modifiedByUserId,
-//         priority,
-//         status,
-//         modifiedAt,
-//         operation
-//     )
-//     VALUES (
-//         NEW.id,
-//         NEW.description,
-//         NEW.asignedToUserId,
-//         NEW.lastModifiedByUserId,
-//         NEW.priority,
-//         NEW.status,
-//         CURRENT_DATE(),
-//         'UPDATE'
-//     );
-// END;
-// //
-
-// DROP TRIGGER trigger_ticket_create;
-
-// DELIMITER //
-
-// CREATE TRIGGER trigger_ticket_create
-// AFTER INSERT ON ticket
-// FOR EACH ROW
-// BEGIN
-//     INSERT INTO ticket_audit (
-//         ticketId,
-//         description,
-//         asignedToUserId,
-//         modifiedByUserId,
-//         priority,
-//         status,
-//         modifiedAt,
-//         operation
-//     )
-//     VALUES (
-//         NEW.id,
-//         NEW.description,
-//         NEW.asignedToUserId,
-//         NEW.lastModifiedByUserId,
-//         NEW.priority,
-//         NEW.status,
-//         CURRENT_DATE(),
-//         'CREATE'
-//     );
-// END;
-// //
-
 @Entity()
 export class TicketAudit {
     @PrimaryGeneratedColumn()

@@ -53,42 +53,42 @@ export class TicketsService {
   //Parametros de busqueda
   async findAll(userId: number, service?: string, status?: TicketStatus, assignedToUserId?: number, page?: number, limit?: number) {
     try {
-        const user = await this.userService.findOne(userId);
-        let queryBuilder = this.ticketRepository.createQueryBuilder('ticket')
-            .leftJoinAndSelect('ticket.asignedToUser', 'asignedToUser');
+      const user = await this.userService.findOne(userId);
+      let queryBuilder = this.ticketRepository.createQueryBuilder('ticket')
+        .leftJoinAndSelect('ticket.asignedToUser', 'asignedToUser');
 
-        if (service) {
-            queryBuilder = queryBuilder.andWhere('ticket.service = :service', { service });
-        }
+      if (service) {
+        queryBuilder = queryBuilder.andWhere('ticket.service = :service', { service });
+      }
 
-        if (status) {
-            queryBuilder = queryBuilder.andWhere('ticket.status = :status', { status });
-        }
+      if (status) {
+        queryBuilder = queryBuilder.andWhere('ticket.status = :status', { status });
+      }
 
-        if (assignedToUserId) {
-            queryBuilder = queryBuilder.andWhere('ticket.asignedToUser.id = :assignedToUserId', { assignedToUserId });
-        }
+      if (assignedToUserId) {
+        queryBuilder = queryBuilder.andWhere('ticket.asignedToUser.id = :assignedToUserId', { assignedToUserId });
+      }
 
-        // Si el usuario tiene rol de administrador, puede ver todos los tickets
-        // De lo contrario, solo puede ver los tickets asignados a él
-        if (!user.roles.includes(Role.ADMIN)) {
-            queryBuilder = queryBuilder.andWhere('ticket.asignedToUser.id = :userId', { userId });
-            queryBuilder = queryBuilder.andWhere('ticket.status != "RESOLVED"');
-        }
+      // Si el usuario tiene rol de administrador, puede ver todos los tickets
+      // De lo contrario, solo puede ver los tickets asignados a él
+      if (!user.roles.includes(Role.ADMIN)) {
+        queryBuilder = queryBuilder.andWhere('ticket.asignedToUser.id = :userId', { userId });
+        queryBuilder = queryBuilder.andWhere('ticket.status != "RESOLVED"');
+      }
 
-        // Configuración de la cantidad de registros visibles
-        if (page && limit) {
-            const offset = (page - 1) * limit;
-            queryBuilder = queryBuilder.skip(offset).take(limit); 
-        }
+      // Configuración de la cantidad de registros visibles
+      if (page && limit) {
+        const offset = (page - 1) * limit;
+        queryBuilder = queryBuilder.skip(offset).take(limit);
+      }
 
-        const tickets = await queryBuilder.getMany();
-        return tickets;
+      const tickets = await queryBuilder.getMany();
+      return tickets;
     } catch (error) {
-        console.error('Error fetching tickets:', error);
-        throw new InternalServerErrorException('Failed to fetch tickets');
+      console.error('Error fetching tickets:', error);
+      throw new InternalServerErrorException('Failed to fetch tickets');
     }
-}
+  }
 
 
   // original code
@@ -201,9 +201,9 @@ export class TicketsService {
         ticket.lastModifiedByUser = user;
         await this.ticketRepository.update(id, ticket);
         return { message: `Ticket #${id} actualizado` };
-      } else{
+      } else {
         // Si el usuario no es un administrador actualización solo de la descripción y el estado, salvo que el estado sea RESOLVED
-        if(ticket.status == TicketStatus.RESOLVED) {
+        if (ticket.status == TicketStatus.RESOLVED) {
           throw new BadRequestException('Ticket ya resuelto');
         }
         const { description, status } = updateTicketDto;
@@ -225,10 +225,16 @@ export class TicketsService {
 
   async remove(id: number) {
     try {
-      return await this.ticketRepository.softDelete(id);
-    } catch (e) {
-      console.log(e);
-      return e;
+      const result = await this.ticketRepository.softDelete(id);
+
+      if (result.affected && result.affected > 0) {
+        return { message: 'El ticket ha sido eliminado con éxito' };
+      } else {
+        throw new NotFoundException(`No se encontró un ticket con el ID: ${id}`);
+      }
+    } catch (error) {
+      console.error('Error al eliminar el ticket:', error);
+      throw new InternalServerErrorException('Error al eliminar el ticket');
     }
   }
 }
