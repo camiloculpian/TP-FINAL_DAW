@@ -21,7 +21,6 @@ import {
     ApiTags,
     ApiOperation,
     ApiResponse,
-    ApiBody,
     ApiParam,
 } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -201,7 +200,7 @@ export class TicketsController {
     // Elimina un ticket: solo ADMIN
     @Delete(':id')
     @UseGuards(AuthGuard)
-    @Roles(Role.ADMIN)
+    @Roles(Role.ADMIN, Role.USER)
     @ApiOperation({ summary: 'Eliminar un ticket' })
     @ApiResponse({ status: 200, description: 'Ticket eliminado con éxito' })
     @ApiResponse({ status: 404, description: 'Ticket no encontrado' })
