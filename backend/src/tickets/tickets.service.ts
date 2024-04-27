@@ -50,6 +50,7 @@ export class TicketsService {
     }
   }
 
+  //Parametros de busqueda
   async findAll(userId: number, service?: string, status?: TicketStatus, assignedToUserId?: number, page?: number, limit?: number) {
     try {
         const user = await this.userService.findOne(userId);
@@ -76,8 +77,8 @@ export class TicketsService {
 
         // Configuración de la cantidad de registros visibles
         if (page && limit) {
-            const offset = (page - 1) * limit; // Calcula el número de registros a omitir
-            queryBuilder = queryBuilder.skip(offset).take(limit); // Aplica paginación
+            const offset = (page - 1) * limit;
+            queryBuilder = queryBuilder.skip(offset).take(limit); 
         }
 
         const tickets = await queryBuilder.getMany();
