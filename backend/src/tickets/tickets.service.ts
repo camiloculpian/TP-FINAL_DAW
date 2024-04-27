@@ -50,24 +50,44 @@ export class TicketsService {
     }
   }
 
-  async findAll(userId: number) {
+  async findAll(userId: number, service?: string, status?: TicketStatus, assignedToUserId?: number, page?: number, limit?: number) {
     try {
-      const user = await this.userService.findOne(userId);
-      if (user.roles.includes(Role.ADMIN)) {
-        return await this.ticketRepository.find();
-      } else {
-        return await this.ticketRepository.find({
-          where: {
-            asignedToUser: user,
-            status: Not(TicketStatus.RESOLVED)
-          },loadRelationIds:true
-        });
-      }
-    } catch (e) {
-      console.log(e);
-      return e;
+        const user = await this.userService.findOne(userId);
+        let queryBuilder = this.ticketRepository.createQueryBuilder('ticket')
+            .leftJoinAndSelect('ticket.asignedToUser', 'asignedToUser');
+
+        if (service) {
+            queryBuilder = queryBuilder.andWhere('ticket.service = :service', { service });
+        }
+
+        if (status) {
+            queryBuilder = queryBuilder.andWhere('ticket.status = :status', { status });
+        }
+
+        if (assignedToUserId) {
+            queryBuilder = queryBuilder.andWhere('ticket.asignedToUser.id = :assignedToUserId', { assignedToUserId });
+        }
+
+        // Si el usuario tiene rol de administrador, puede ver todos los tickets
+        // De lo contrario, solo puede ver los tickets asignados a él
+        if (!user.roles.includes(Role.ADMIN)) {
+            queryBuilder = queryBuilder.andWhere('ticket.asignedToUser.id = :userId', { userId });
+        }
+
+        // Configuración de la cantidad de registros visibles
+        if (page && limit) {
+            const offset = (page - 1) * limit; // Calcula el número de registros a omitir
+            queryBuilder = queryBuilder.skip(offset).take(limit); // Aplica paginación
+        }
+
+        const tickets = await queryBuilder.getMany();
+        return tickets;
+    } catch (error) {
+        console.error('Error fetching tickets:', error);
+        throw new InternalServerErrorException('Failed to fetch tickets');
     }
-  }
+}
+
 
   // original code
   // async findOne(id: number, userId: number) {

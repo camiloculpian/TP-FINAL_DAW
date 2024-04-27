@@ -13,6 +13,7 @@ import {
     Inject,
     BadRequestException,
     InternalServerErrorException,
+    Query
 } from '@nestjs/common';
 import { TicketsService } from './tickets.service';
 import { CreateTicketDto } from './dto/create-ticket.dto';
@@ -31,6 +32,7 @@ import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
 import { UsersService } from 'src/users/users.service';
+import { TicketStatus } from '../tickets/entities/ticket.entity';
 
 @ApiTags('Tickets')
 @Controller('tickets')
@@ -98,20 +100,27 @@ export class TicketsController {
             throw new BadRequestException('Error creating ticket');
         }
     }
-//Falta filtrar x criterios
-
-    // Obtiene todos los tickets de un usuario
+    
+    //Falta filtrar x criterios
+    // Obtiene todos los tickets de un usuario. Filtros: id de usuario asignado, status, service
     @Get()
     @UseGuards(AuthGuard)
     @ApiOperation({ summary: 'Obtener todos los tickets' })
     @ApiResponse({ status: 200, description: 'Lista de tickets' })
-    async findAll(@CurrentUser('sub') userId: number) {
-        try {
-            return await this.ticketsService.findAll(userId);
-        } catch (error) {
-            console.error('Error fetching tickets:', error);
-            throw new InternalServerErrorException('Failed to fetch tickets');
-        }
+    async findAll(
+      @CurrentUser('sub') userId: number,
+      @Query('service') service?: string,
+      @Query('status') status?: TicketStatus,
+      @Query('assignedToUserId') assignedToUserId?: number,
+      @Query('page') page?: number,
+      @Query('limit') limit?: number,
+    ) {
+      try {
+        return await this.ticketsService.findAll(userId, service, status, assignedToUserId, page, limit);
+      } catch (error) {
+        console.error('Error fetching tickets:', error);
+        throw new InternalServerErrorException('Failed to fetch tickets');
+      }
     }
 
     // Buscar tickets
