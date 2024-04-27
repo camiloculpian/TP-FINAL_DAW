@@ -1,8 +1,16 @@
-import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Get,
+    HttpException,
+    HttpStatus,
+    Post,
+    Request,
+    UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { AuthGuard } from './auth.guard';
-
 
 @Controller('auth')
 export class AuthController {
@@ -22,26 +30,60 @@ export class AuthController {
     //     @Body() registerUserDto: RegisterUserDto,
     //     @UploadedFile() file: Express.Multer.File,
     // ){
-    //     if(file){
-    //         registerUserDto.profilePicture = file.filename;
+    //     try {
+    //         if(file){
+    //             registerUserDto.profilePicture = file.filename;
+    //         }
+    //         return this.authService.register(registerUserDto);
+    //     } catch (error) {
+    //         console.error('Error durante el registro:', error);
+    //         throw new HttpException(
+    //             {
+    //                 status: HttpStatus.INTERNAL_SERVER_ERROR,
+    //                 error: 'No se pudo completar el registro. Inténtalo de nuevo.',
+    //             },
+    //             HttpStatus.INTERNAL_SERVER_ERROR,
+    //         );
     //     }
-    //     return this.authService.register(registerUserDto);
     // }
 
+
     @Post('login')
-    login(
-        @Body()
-        loginUserDto: LoginUserDto,
+    async login(
+        @Body() loginUserDto: LoginUserDto,
     ) {
-        return this.authService.login(loginUserDto);
+        try {
+            return await this.authService.login(loginUserDto);
+        } catch (error) {
+            console.error('Error durante el inicio de sesión:', error);
+            throw new HttpException(
+                {
+                    status: HttpStatus.UNAUTHORIZED,
+                    error: 'No se pudo iniciar sesión. Verifica tus credenciales.',
+                },
+                HttpStatus.UNAUTHORIZED,
+            );
+        }
     }
+
 
     @Get('profile')
     @UseGuards(AuthGuard)
-    profile(
-        @Request()
-        req
+    async profile(
+        @Request() req
     ) {
-        return this.authService.getProfile(req.user.sub);
+        try {
+            return await this.authService.getProfile(req.user.sub);
+        } catch (error) {
+            console.error('Error al obtener el perfil:', error);
+            throw new HttpException(
+                {
+                    status: HttpStatus.INTERNAL_SERVER_ERROR,
+                    error: 'Hubo un problema al obtener el perfil.',
+                },
+                HttpStatus.INTERNAL_SERVER_ERROR,
+            );
+        }
     }
+
 }
