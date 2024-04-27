@@ -147,8 +147,8 @@ export class TicketsService {
       }
 
       return ticket;
-    } catch (error) {
-      console.log(error);
+    } catch (e) {
+      console.log(e);
       throw new InternalServerErrorException('Error al buscar el ticket');
     }
   }
