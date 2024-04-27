@@ -99,6 +99,7 @@ export class TicketsController {
             throw new BadRequestException('Error creating ticket');
         }
     }
+//Falta filtrar x criterios
 
     // Obtiene todos los tickets de un usuario
     @Get()
