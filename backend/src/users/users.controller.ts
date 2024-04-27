@@ -38,7 +38,7 @@ export class UsersController {
 
   @Post()
   @UseGuards(AuthGuard)
-  @Roles(Role.ADMIN)
+  //@Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Crear un nuevo usuario' })
   @HttpCode(HttpStatus.CREATED)
   @ApiResponse({

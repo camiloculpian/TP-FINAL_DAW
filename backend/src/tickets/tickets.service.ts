@@ -171,7 +171,6 @@ export class TicketsService {
         ticket.description = updateTicketDto.description;
         ticket.status = updateTicketDto.status;
         ticket.priority = updateTicketDto.priority;
-        ticket.status = updateTicketDto.status;
         ticket.service = updateTicketDto.service;
         ticket.lastModified = new Date(Date.now());
         ticket.asignedToUser = userAsignedTo;
