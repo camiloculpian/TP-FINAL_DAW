@@ -73,6 +73,7 @@ export class TicketsService {
         // De lo contrario, solo puede ver los tickets asignados a él
         if (!user.roles.includes(Role.ADMIN)) {
             queryBuilder = queryBuilder.andWhere('ticket.asignedToUser.id = :userId', { userId });
+            queryBuilder = queryBuilder.andWhere('ticket.status != "RESOLVED"');
         }
 
         // Configuración de la cantidad de registros visibles
@@ -138,7 +139,7 @@ export class TicketsService {
 
       if (
         !isAdmin &&
-        ticket.asignedToUser.id !== userId && ticket.status == TicketStatus.RESOLVED
+        ticket.asignedToUser.id !== userId || ticket.status == TicketStatus.RESOLVED
       ) {
         // Si el usuario no es administrador, ni el usuario asignado al ticket, y el ticket esta resuelto,
         // no está autorizado a ver este ticket
