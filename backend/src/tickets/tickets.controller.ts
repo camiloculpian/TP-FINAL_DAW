@@ -101,7 +101,6 @@ export class TicketsController {
         }
     }
     
-    //Falta filtrar x criterios
     // Obtiene todos los tickets de un usuario. Filtros: id de usuario asignado, status, service
     @Get()
     @UseGuards(AuthGuard)
