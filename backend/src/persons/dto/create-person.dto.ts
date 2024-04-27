@@ -29,7 +29,8 @@ export class CreatePersonDto {
     @IsDateString()
     birthDate: Date;
 
-    @IsEnum(Gender) /**TRUE: MALE FALSE: FEMALE*/ gender: Gender;
+    @IsEnum(Gender) /**TRUE: MALE FALSE: FEMALE*/ 
+    gender: Gender;
 
     @IsEmail()
     email: string;

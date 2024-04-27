@@ -6,6 +6,6 @@ export const CurrentUser = createParamDecorator(
     if (!user) {
       return null;
     }
-    return data ? user[data] : user; // extract a specific property only if specified or get a user object
+    return data ? user[data] : user; // extract a specific property only if specified or get a user object (extraer una propiedad específica solo si se especifica o obtener un objeto de usuario)
   },
 );

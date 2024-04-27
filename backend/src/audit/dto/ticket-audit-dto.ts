@@ -10,4 +10,3 @@ export class TicketAuditDto extends PartialType(TicketAudit) {
   campo?: string;
 }
 
-// FALTA HACER MODULE Y SERVICE

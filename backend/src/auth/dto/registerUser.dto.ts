@@ -39,7 +39,8 @@ export class RegisterUserDto {
     @IsDateString()
     birthDate: Date;
 
-    @IsEnum(Gender) /**TRUE: MALE FALSE: FEMALE*/ gender: Gender;
+    @IsEnum(Gender) /**TRUE: MALE FALSE: FEMALE*/
+    gender: Gender;
 
     @IsEmail()
     email: string;

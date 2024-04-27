@@ -137,8 +137,7 @@ export class TicketsController {
             }
             return ticket;
         } catch (e) {
-            //console.error(`Error fetching ticket with ID ${id}:`, error);
-            //return (e);
+
             throw new NotFoundException('Ticket not found');
         }
     }

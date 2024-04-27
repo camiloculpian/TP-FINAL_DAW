@@ -23,7 +23,6 @@ export class UsersService {
     private dataSource: DataSource
   ) { }
 
-  // FORMA 2: FUNCA OKOK
   async create(createUserDto: CreateUserDto) {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
@@ -172,36 +171,6 @@ export class UsersService {
       return e;
     }
   }
-
-  // code v1.1
-  // async update(id: number, updateUserDto: UpdateUserDto) {
-  //   const queryRunner = this.dataSource.createQueryRunner();
-  //   await queryRunner.connect();
-  //   await queryRunner.startTransaction();
-  //   try {
-  //     const user = await this.userRepository.findOne(
-  //       {
-  //         where: {
-  //           id: id
-  //         },
-  //         relations: {
-  //           person: true
-  //         },
-  //       }
-  //     );
-  //     await this.userRepository.save({ ...user, ...updateUserDto });
-  //     await this.personRepository.save({ ...user.person, ...updateUserDto });
-  //     await queryRunner.commitTransaction();
-  //     return ({ status: 'OK', message: 'OK: Los datos del usuario se actualizaron de forma correcta' });
-
-  //   } catch (error) {
-  //     await queryRunner.rollbackTransaction();
-  //     console.log(error.message);
-  //     throw error;
-  //   } finally {
-  //     await queryRunner.release();
-  //   }
-  // }
 
   // code modified 1.2 ---> si es user no me deja cambiar ni foto de perfil ni contraseña
   async update(id: number, updateUserDto: UpdateUserDto, currentUser: any, file: Express.Multer.File) {

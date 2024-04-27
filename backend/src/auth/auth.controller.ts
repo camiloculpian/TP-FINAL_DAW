@@ -47,7 +47,6 @@ export class AuthController {
     //     }
     // }
 
-
     @Post('login')
     async login(
         @Body() loginUserDto: LoginUserDto,
@@ -65,7 +64,6 @@ export class AuthController {
             );
         }
     }
-
 
     @Get('profile')
     @UseGuards(AuthGuard)
