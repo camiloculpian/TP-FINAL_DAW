@@ -203,7 +203,7 @@ export class UsersService {
   //   }
   // }
 
-  // code modified 1.2
+  // code modified 1.2 ---> si es user no me deja cambiar ni foto de perfil ni contraseña
   async update(id: number, updateUserDto: UpdateUserDto, currentUser: any, file: Express.Multer.File) {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();

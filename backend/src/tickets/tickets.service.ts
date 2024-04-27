@@ -21,6 +21,7 @@ export class TicketsService {
     private readonly userService: UsersService,
   ) { }
 
+  // Creacion de Tickets: solo admin
   async create(createTicketDto: CreateTicketDto, userId: number) {
     try {
       // El usuario que crea el ticket
@@ -90,33 +91,7 @@ export class TicketsService {
     }
   }
 
-
-  // original code
-  // async findOne(id: number, userId: number) {
-  //   // TO-DO: Si no es admin y el ticket existe mostrar ERROR, NO esta autorizado a ver este ticket
-  //   // TO-DO: el rol dispatcher puede ver todos los tickets?
-  //   try{
-  //     const user = await this.userService.getRolesById(userId);
-  //     if(user.roles.includes('admin')){
-  //       return await this.ticketRepository.find({
-  //         where:{
-  //           id: id
-  //         },
-  //       });
-  //     }else{
-  //       return await this.ticketRepository.find({
-  //         where:{
-  //           id: id,
-  //           asignedToUser: user
-  //         },
-  //       });
-  //     }
-  //   }catch(e){
-  //     console.log(e)
-  //     return e;
-  //   }
-  // }
-
+  // Mostar tickets
   async findOne(id: number, userId: number) {
     try {
       const user = await this.userService.findOne(userId);
@@ -153,17 +128,8 @@ export class TicketsService {
     }
   }
 
-  // update(id: number, updateTicketDto: UpdateTicketDto) {
-  //   return `This action updates a #${id} ticket`;
-  //   // CONDICIONES:
-  //   // Si el que modifica tiene rol "admin" puede modificar TODO de TODOS los tickets
-  //   // Si el que modifica tiene rol "usuario" solo puede:
-  //   // - Modificar descripcion SUS tickets
-  //   // - Modificar estado SUS tickets
-  //   // si modifico asignedToUser tengo que guardar el valor de quien asigno el ticket en asignedByUser
-  // }
 
-  // Modificaciones hechas de update ↑
+  // Actualizar ticket: Admin (todos los campos) User (solo archive, description and status)
   async update(id: number, updateTicketDto: UpdateTicketDto, userId: number) {
     try {
       // El usuario que solicita la operacion de actualizacion
@@ -202,19 +168,22 @@ export class TicketsService {
         await this.ticketRepository.update(id, ticket);
         return { message: `Ticket #${id} actualizado` };
       } else {
-        // Si el usuario no es un administrador actualización solo de la descripción y el estado, salvo que el estado sea RESOLVED
+        // Si el usuario no es un administrador, actualización solo de la descripción, el estado y el archivo, salvo que el estado sea RESOLVED
         if (ticket.status == TicketStatus.RESOLVED) {
           throw new BadRequestException('Ticket ya resuelto');
         }
-        const { description, status } = updateTicketDto;
+
+        const { description, status, archive } = updateTicketDto;
         const lastModified = new Date(Date.now());
+
         await this.ticketRepository.update(id, {
           description,
           status,
+          archive,
           lastModified,
         });
         return {
-          message: `Ticket #${id} actualizado (solo descripción y estado)`,
+          message: `Ticket #${id} actualizado (descripción, estado y archivo)`,
         };
       }
     } catch (error) {

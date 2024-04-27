@@ -90,3 +90,5 @@ BEGIN
 END;
 //
 DELIMITER ;
+
+--- Cuando se elimina un ticket deberia aparecer DELETE y aparece UPDATE ---
