@@ -1,8 +1,7 @@
 DROP TRIGGER trigger_ticket_update;
 
 DELIMITER //
-
-CREATE TRIGGER trigger_ticket_update
+CREATE TRIGGER IF NOT EXISTS trigger_ticket_update
 AFTER UPDATE ON ticket
 FOR EACH ROW
 BEGIN
@@ -28,12 +27,12 @@ BEGIN
     );
 END;
 //
+DELIMITER ;
 
-DROP TRIGGER trigger_ticket_create;
+DROP TRIGGER IF EXISTS trigger_ticket_create;
 
 DELIMITER //
-
-CREATE TRIGGER trigger_ticket_create
+CREATE TRIGGER IF NOT EXISTS trigger_ticket_create
 AFTER INSERT ON ticket
 FOR EACH ROW
 BEGIN
@@ -59,3 +58,4 @@ BEGIN
     );
 END;
 //
+DELIMITER ;
