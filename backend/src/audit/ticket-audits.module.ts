@@ -28,7 +28,7 @@ export class TicketAuditsModule implements OnModuleInit{
     await queryRunner.release();
   }
   onModuleInit(){ 
-    console.log("NO SE COMO INICIALIZAR AUTOMATICAMENTE LOS TRIGGERS DE AUDITORIA")
+    //console.log("NO SE COMO INICIALIZAR AUTOMATICAMENTE LOS TRIGGERS DE AUDITORIA")
     //this.createAuditTriggers();
   }
 }
