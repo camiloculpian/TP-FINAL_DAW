@@ -5,8 +5,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { DataSource, Repository } from 'typeorm';
 import { Person } from '../persons/entities/person.entity';
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { UpdateUserRolesDto } from './dto/update-userRoles.dto ';
+import { Role } from 'src/auth/enums/role.enum';
+
 
 @Injectable()
 export class UsersService {
@@ -171,51 +173,84 @@ export class UsersService {
     }
   }
 
-  /*  update(
-    @Param('id') id: number,
-    @Body() updateUserDto: UpdateUserDto,
-    @CurrentUser() currentUser: any,
-    @UploadedFile() file: Express.Multer.File,
-  ) {
-    // si es administrador
-    if (file) {
-      updateUserDto.profilePicture = file.filename;
-    }
-    // este chuequeo y operacion deberia hacerse en el servicio
-    if (currentUser.role === Role.ADMIN) {
-      return this.usersService.update(+id, updateUserDto);
-    } else if (currentUser.id === id) {
-      const allowedUpdates = {
-        password: updateUserDto.password, //Si el usuario es el mismo que se está actualizando, solo permite password y profilePicture
-        profilePicture: updateUserDto.profilePicture,
-      };
-      return this.usersService.update(+id, allowedUpdates);
-    } else {
-      throw new Error('No tienes permiso para modificar a este usuario');
-    }
-  } 
-  */
+  // code v1.1
+  // async update(id: number, updateUserDto: UpdateUserDto) {
+  //   const queryRunner = this.dataSource.createQueryRunner();
+  //   await queryRunner.connect();
+  //   await queryRunner.startTransaction();
+  //   try {
+  //     const user = await this.userRepository.findOne(
+  //       {
+  //         where: {
+  //           id: id
+  //         },
+  //         relations: {
+  //           person: true
+  //         },
+  //       }
+  //     );
+  //     await this.userRepository.save({ ...user, ...updateUserDto });
+  //     await this.personRepository.save({ ...user.person, ...updateUserDto });
+  //     await queryRunner.commitTransaction();
+  //     return ({ status: 'OK', message: 'OK: Los datos del usuario se actualizaron de forma correcta' });
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
+  //   } catch (error) {
+  //     await queryRunner.rollbackTransaction();
+  //     console.log(error.message);
+  //     throw error;
+  //   } finally {
+  //     await queryRunner.release();
+  //   }
+  // }
+
+  // code modified 1.2
+  async update(id: number, updateUserDto: UpdateUserDto, currentUser: any, file: Express.Multer.File) {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
     try {
-      const user = await this.userRepository.findOne(
+      // Obtener el usuario que se está actualizando
+      const userToUpdate = await this.userRepository.findOne(
         {
-          where: {
-            id: id
-          },
-          relations: {
-            person: true
-          },
+          where:{id:id},
+          relations:{person:true}
         }
       );
-      await this.userRepository.save({ ...user, ...updateUserDto });
-      await this.personRepository.save({ ...user.person, ...updateUserDto });
+      if (!userToUpdate) {
+        throw new NotFoundException('Usuario no encontrado');
+      }
+  
+      // Verificar si el usuario actual tiene permiso de administrador
+      const isAdmin = currentUser.role === Role.ADMIN;
+  
+      // Verificar si el usuario actual está actualizando su propio perfil
+      const isCurrentUser = currentUser.id === id;
+  
+      // Verificar si se cargó un archivo
+      if (file) {
+        updateUserDto.profilePicture = file.filename;
+      }
+  
+      // Verificar si el usuario actual tiene permiso para actualizar el usuario
+      if (!isAdmin && !isCurrentUser) {
+        throw new ForbiddenException('No tienes permiso para modificar este usuario');
+      }
+  
+      // Solo permitir la actualización de la contraseña y la imagen de perfil si el usuario está actualizando su propio perfil
+      if (!isAdmin && isCurrentUser) {
+        updateUserDto = {
+          password: updateUserDto.password,
+          profilePicture: updateUserDto.profilePicture,
+        };
+      }
+  
+      // Actualizar el usuario y su perfil asociado
+      await this.userRepository.save({ ...userToUpdate, ...updateUserDto });
+      await this.personRepository.save({ ...userToUpdate.person, ...updateUserDto });
+  
       await queryRunner.commitTransaction();
-      return ({ status: 'OK', message: 'OK: Los datos del usuario se actualizaron de forma correcta' });
-
+  
+      return { status: 'OK', message: 'Los datos del usuario se actualizaron correctamente' };
     } catch (error) {
       await queryRunner.rollbackTransaction();
       console.log(error.message);
@@ -224,6 +259,7 @@ export class UsersService {
       await queryRunner.release();
     }
   }
+  
 
   async updateRole(id: number, updateUserRolesDto: UpdateUserRolesDto) {
     try {

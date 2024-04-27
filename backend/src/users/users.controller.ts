@@ -114,28 +114,38 @@ export class UsersController {
       }),
     }),
   )
+  // original code / anterior
+  // update(
+  //   @Param('id') id: number,
+  //   @Body() updateUserDto: UpdateUserDto,
+  //   @CurrentUser() currentUser: any,
+  //   @UploadedFile() file: Express.Multer.File,
+  // ) {
+  //   // si es administrador
+  //   if (file) {
+  //     updateUserDto.profilePicture = file.filename;
+  //   }
+  //   // este chuequeo y operacion deberia hacerse en el servicio
+  //   if (currentUser.role === Role.ADMIN) {
+  //     return this.usersService.update(+id, updateUserDto);
+  //   } else if (currentUser.id === id) {
+  //     const allowedUpdates = {
+  //       password: updateUserDto.password, //Si el usuario es el mismo que se está actualizando, solo permite password y profilePicture
+  //       profilePicture: updateUserDto.profilePicture,
+  //     };
+  //     return this.usersService.update(+id, allowedUpdates);
+  //   } else {
+  //     throw new Error('No tienes permiso para modificar a este usuario');
+  //   }
+  // }
+
   update(
     @Param('id') id: number,
     @Body() updateUserDto: UpdateUserDto,
     @CurrentUser() currentUser: any,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    // si es administrador
-    if (file) {
-      updateUserDto.profilePicture = file.filename;
-    }
-    // este chuequeo y operacion deberia hacerse en el servicio
-    if (currentUser.role === Role.ADMIN) {
-      return this.usersService.update(+id, updateUserDto);
-    } else if (currentUser.id === id) {
-      const allowedUpdates = {
-        password: updateUserDto.password, //Si el usuario es el mismo que se está actualizando, solo permite password y profilePicture
-        profilePicture: updateUserDto.profilePicture,
-      };
-      return this.usersService.update(+id, allowedUpdates);
-    } else {
-      throw new Error('No tienes permiso para modificar a este usuario');
-    }
+    return this.usersService.update(id, updateUserDto, currentUser, file);
   }
 
   // Solo permite a administradores cambiar los roles de usuario
