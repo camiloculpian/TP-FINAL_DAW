@@ -36,11 +36,12 @@ import { CurrentUser } from '../auth/decorators/currentUser.decorator';
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
+  //Creacion de Usuarios: Solo puede crear el administrador 
   @Post()
   @UseGuards(AuthGuard)
-  //@Roles(Role.ADMIN)
-  @ApiOperation({ summary: 'Crear un nuevo usuario' })
+  @Roles(Role.ADMIN)
   @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({ summary: 'Crear un nuevo usuario' })
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: 'Usuario creado con éxito',
@@ -59,39 +60,60 @@ export class UsersController {
             .fill(null)
             .map(() => Math.round(Math.random() * 16).toString(16))
             .join('');
-          return cb(null, `${randomName}${extname(file.originalname)}`);
+          cb(null, `${randomName}${extname(file.originalname)}`);
         },
       }),
     }),
   )
-  create(
+  async create(
     @Body() createUserDto: CreateUserDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    if (file) {
-      createUserDto.profilePicture = file.filename;
+    try {
+      if (file) {
+        createUserDto.profilePicture = file.filename;
+      }
+      const newUser = await this.usersService.create(createUserDto);
+      return newUser;
+    } catch (error) {
+      console.error('Error al crear usuario:', error);
+      throw new Error('Error al crear usuario');
     }
-    return this.usersService.create(createUserDto);
   }
 
+  // Traer todos los usuarios
   @Get()
   @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Obtener todos los usuarios' })
   @ApiResponse({ status: 200, description: 'Lista de usuarios' })
-  findAll() {
-    return this.usersService.findAll();
+  async findAll() {
+    try {
+      const users = await this.usersService.findAll();
+      return users;
+    } catch (error) {
+      console.error('Error al obtener todos los usuarios:', error);
+      throw new Error('Error al obtener todos los usuarios');
+    }
   }
 
+  // Traer usuarios por ID
   @Get(':id')
   @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Obtener un usuario por ID' })
   @ApiResponse({ status: 200, description: 'Usuario encontrado' })
   @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
   @ApiParam({ name: 'id', description: 'ID único del usuario' })
-  findOne(@Param('id') id: number) {
-    return this.usersService.findOne(+id);
+  async findOne(@Param('id') id: number) {
+    try {
+      const user = await this.usersService.findOne(+id);
+      return user;
+    } catch (error) {
+      console.error('Error al obtener usuario por ID:', error);
+      throw new Error('Error al obtener usuario por ID');
+    }
   }
 
+  // Actualizar usuarios: Admin (todos los campos) User (solo password, profilePicture and )
   @Patch(':id')
   @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Actualizar un usuario' })
@@ -99,7 +121,6 @@ export class UsersController {
   @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
   @ApiParam({ name: 'id', description: 'ID único del usuario' })
   @ApiBody({ type: UpdateUserDto })
-  // subida de archivos
   @UseInterceptors(
     FileInterceptor('profilePicture', {
       storage: diskStorage({
@@ -114,41 +135,21 @@ export class UsersController {
       }),
     }),
   )
-  // original code / anterior
-  // update(
-  //   @Param('id') id: number,
-  //   @Body() updateUserDto: UpdateUserDto,
-  //   @CurrentUser() currentUser: any,
-  //   @UploadedFile() file: Express.Multer.File,
-  // ) {
-  //   // si es administrador
-  //   if (file) {
-  //     updateUserDto.profilePicture = file.filename;
-  //   }
-  //   // este chuequeo y operacion deberia hacerse en el servicio
-  //   if (currentUser.role === Role.ADMIN) {
-  //     return this.usersService.update(+id, updateUserDto);
-  //   } else if (currentUser.id === id) {
-  //     const allowedUpdates = {
-  //       password: updateUserDto.password, //Si el usuario es el mismo que se está actualizando, solo permite password y profilePicture
-  //       profilePicture: updateUserDto.profilePicture,
-  //     };
-  //     return this.usersService.update(+id, allowedUpdates);
-  //   } else {
-  //     throw new Error('No tienes permiso para modificar a este usuario');
-  //   }
-  // }
-
-  update(
+  async update(
     @Param('id') id: number,
     @Body() updateUserDto: UpdateUserDto,
     @CurrentUser() currentUser: any,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    return this.usersService.update(id, updateUserDto, currentUser, file);
+    try {
+      return await this.usersService.update(id, updateUserDto, currentUser, file);
+    } catch (error) {
+      console.error('Error al actualizar usuario:', error);
+      throw new Error('Error al actualizar usuario');
+    }
   }
 
-  // Solo permite a administradores cambiar los roles de usuario
+  // Actualizar roles: solo tipo Admin
   @Patch(':id/role')
   @UseGuards(AuthGuard)
   @Roles(Role.ADMIN)
@@ -160,13 +161,19 @@ export class UsersController {
   @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
   @ApiParam({ name: 'id', description: 'ID único del usuario' })
   @ApiBody({ type: UpdateUserRolesDto })
-  updateUserRole(
+  async updateUserRole(
     @Param('id') id: number,
     @Body() updateUserRolesDto: UpdateUserRolesDto,
   ) {
-    return this.usersService.updateRole(id, updateUserRolesDto);
+    try {
+      return await this.usersService.updateRole(id, updateUserRolesDto);
+    } catch (error) {
+      console.error('Error al actualizar el rol del usuario:', error);
+      throw new Error('Error al actualizar el rol del usuario');
+    }
   }
 
+  // Eliminar usuario: rol Admin
   @Delete(':id')
   @UseGuards(AuthGuard)
   @Roles(Role.ADMIN)
@@ -174,7 +181,13 @@ export class UsersController {
   @ApiResponse({ status: 200, description: 'Usuario eliminado con éxito' })
   @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
   @ApiParam({ name: 'id', description: 'ID único del usuario' })
-  remove(@Param('id') id: number) {
-    return this.usersService.remove(+id);
+  async remove(@Param('id') id: number) {
+    try {
+      await this.usersService.remove(id);
+      return { message: 'Usuario eliminado con éxito' };
+    } catch (error) {
+      console.error('Error al eliminar usuario:', error);
+      throw new Error('Error al eliminar usuario');
+    }
   }
 }
