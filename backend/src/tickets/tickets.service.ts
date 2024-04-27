@@ -1,9 +1,9 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { CreateTicketDto } from './dto/create-ticket.dto';
 import { UpdateTicketDto } from './dto/update-ticket.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Ticket } from './entities/ticket.entity';
+import { Not, Repository } from 'typeorm';
+import { Ticket, TicketStatus } from './entities/ticket.entity';
 import { UsersService } from 'src/users/users.service';
 import { Role } from 'src/auth/enums/role.enum'; // Assuming Role enum is imported
 import {
@@ -52,14 +52,15 @@ export class TicketsService {
 
   async findAll(userId: number) {
     try {
-      const user = await this.userService.getRolesById(userId);
+      const user = await this.userService.findOne(userId);
       if (user.roles.includes(Role.ADMIN)) {
         return await this.ticketRepository.find();
       } else {
         return await this.ticketRepository.find({
           where: {
             asignedToUser: user,
-          },
+            status: Not(TicketStatus.RESOLVED)
+          },loadRelationIds:true
         });
       }
     } catch (e) {
@@ -96,7 +97,7 @@ export class TicketsService {
 
   async findOne(id: number, userId: number) {
     try {
-      const user = await this.userService.getRolesById(userId);
+      const user = await this.userService.findOne(userId);
 
       // Verificar si el usuario tiene rol de administrador
       const isAdmin = user.roles.includes(Role.ADMIN);
@@ -116,9 +117,9 @@ export class TicketsService {
 
       if (
         !isAdmin &&
-        ticket.asignedToUser.id !== userId /* && !isDispatcher */
+        ticket.asignedToUser.id !== userId && ticket.status == TicketStatus.RESOLVED
       ) {
-        // Si el usuario no es administrador, ni el usuario asignado al ticket, ni un despachador,
+        // Si el usuario no es administrador, ni el usuario asignado al ticket, y el ticket esta resuelto,
         // no está autorizado a ver este ticket
         throw new UnauthorizedException('No está autorizado a ver este ticket');
       }
@@ -178,8 +179,11 @@ export class TicketsService {
         ticket.lastModifiedByUser = user;
         await this.ticketRepository.update(id, ticket);
         return { message: `Ticket #${id} actualizado` };
-      } else {
-        // Si el usuario no es un administrador actualización solo de la descripción y el estado
+      } else{
+        // Si el usuario no es un administrador actualización solo de la descripción y el estado, salvo que el estado sea RESOLVED
+        if(ticket.status == TicketStatus.RESOLVED) {
+          throw new BadRequestException('Ticket ya resuelto');
+        }
         const { description, status } = updateTicketDto;
         const lastModified = new Date(Date.now());
         await this.ticketRepository.update(id, {
