@@ -6,34 +6,38 @@ import { Repository } from 'typeorm';
 import { Ticket } from './entities/ticket.entity';
 import { UsersService } from 'src/users/users.service';
 import { Role } from 'src/auth/enums/role.enum'; // Assuming Role enum is imported
-import { InternalServerErrorException, NotFoundException, UnauthorizedException } from '@nestjs/common';
-
-
+import {
+  InternalServerErrorException,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 
 @Injectable()
 export class TicketsService {
-
   constructor(
     @InjectRepository(Ticket)
     private readonly ticketRepository: Repository<Ticket>,
     @Inject(UsersService)
-    private readonly userService: UsersService
+    private readonly userService: UsersService,
   ) { }
 
   async create(createTicketDto: CreateTicketDto, userId: number) {
-    
     try {
       // El usuario que crea el ticket
       const user = await this.userService.findOne(userId);
       const ticket = this.ticketRepository.create({
-        ... createTicketDto
+        ...createTicketDto,
       });
       // Chequeo si existe el usuario al que le quiero asignar el ticket asignedToUserId
       // El usuario que al que pertenece el ticket
-      const userAsignedTo = await this.userService.findOne(createTicketDto.asignedToUserId);
+      const userAsignedTo = await this.userService.findOne(
+        createTicketDto.asignedToUserId,
+      );
 
       if (!userAsignedTo) {
-          throw new NotFoundException('User who you wants to asign the ticket not exist!');
+        throw new NotFoundException(
+          'User who you wants to asign the ticket not exist!',
+        );
       }
       ticket.asignedToUser = userAsignedTo;
       ticket.asignedByUser = user;
@@ -54,12 +58,12 @@ export class TicketsService {
       } else {
         return await this.ticketRepository.find({
           where: {
-            asignedToUser: user
+            asignedToUser: user,
           },
         });
       }
     } catch (e) {
-      console.log(e)
+      console.log(e);
       return e;
     }
   }
@@ -90,41 +94,42 @@ export class TicketsService {
   //   }
   // }
 
-  
   async findOne(id: number, userId: number) {
     try {
       const user = await this.userService.getRolesById(userId);
-      
+
       // Verificar si el usuario tiene rol de administrador
       const isAdmin = user.roles.includes(Role.ADMIN);
-      
+
       // Verificar si el usuario es un despachador
       //const isDispatcher = user.roles.includes(Role.DISPATCHER);
-  
+
       // Buscar el ticket por su ID
       const ticket = await this.ticketRepository.findOne({
         where: { id },
         relations: ['asignedToUser'], // Opcional: cargar relación de usuario asignado
       });
-  
+
       if (!ticket) {
         throw new NotFoundException('Ticket no encontrado');
       }
-  
-      if (!isAdmin && ticket.asignedToUser.id !== userId /* && !isDispatcher */) {
+
+      if (
+        !isAdmin &&
+        ticket.asignedToUser.id !== userId /* && !isDispatcher */
+      ) {
         // Si el usuario no es administrador, ni el usuario asignado al ticket, ni un despachador,
         // no está autorizado a ver este ticket
         throw new UnauthorizedException('No está autorizado a ver este ticket');
       }
-  
-      return ticket;
 
+      return ticket;
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException('Error al buscar el ticket');
     }
   }
-  
+
   // update(id: number, updateTicketDto: UpdateTicketDto) {
   //   return `This action updates a #${id} ticket`;
   //   // CONDICIONES:
@@ -154,9 +159,13 @@ export class TicketsService {
       if (user.roles.includes(Role.ADMIN)) {
         // Chequeo si existe el usuario al que le quiero re-asignar el ticket asignedToUserId
         // El usuario que al que pertenece el ticket
-        const userAsignedTo = await this.userService.findOne(updateTicketDto.asignedToUserId);
+        const userAsignedTo = await this.userService.findOne(
+          updateTicketDto.asignedToUserId,
+        );
         if (!userAsignedTo) {
-            throw new NotFoundException('User who you wants to asign the ticket not exist!');
+          throw new NotFoundException(
+            'User who you wants to asign the ticket not exist!',
+          );
         }
         // Si el usuario es un administrador, permitir la actualización de todos los datos
         ticket.description = updateTicketDto.description;
@@ -174,8 +183,14 @@ export class TicketsService {
         // Si el usuario no es un administrador actualización solo de la descripción y el estado
         const { description, status } = updateTicketDto;
         const lastModified = new Date(Date.now());
-        await this.ticketRepository.update(id, { description, status , lastModified});
-        return { message: `Ticket #${id} actualizado (solo descripción y estado)` };
+        await this.ticketRepository.update(id, {
+          description,
+          status,
+          lastModified,
+        });
+        return {
+          message: `Ticket #${id} actualizado (solo descripción y estado)`,
+        };
       }
     } catch (error) {
       console.log(error);
@@ -187,7 +202,7 @@ export class TicketsService {
     try {
       return await this.ticketRepository.softDelete(id);
     } catch (e) {
-      console.log(e)
+      console.log(e);
       return e;
     }
   }

@@ -1,10 +1,16 @@
 import { User } from '../../users/entities/user.entity';
-import { Column, DeleteDateColumn, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    Column,
+    DeleteDateColumn,
+    Entity,
+    OneToOne,
+    PrimaryGeneratedColumn,
+} from 'typeorm';
 
 export enum Gender {
-    MALE = "male",
-    FEMALE = "female",
-    OTHER = "other"
+    MALE = 'male',
+    FEMALE = 'female',
+    OTHER = 'other',
 }
 
 @Entity()
@@ -12,39 +18,39 @@ export class Person {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({nullable:false})
+    @Column({ nullable: false })
     name: string;
 
-    @Column({nullable:false})
+    @Column({ nullable: false })
     lastName: string;
 
-    @Column({unique:true, nullable:false})
+    @Column({ unique: true, nullable: false })
     dni: string;
 
-    @Column({nullable:false})
+    @Column({ nullable: false })
     address: string;
 
-    @Column({nullable:false})
+    @Column({ nullable: false })
     birthDate: Date;
 
     @Column({
-        type:"enum",
+        type: 'enum',
         enum: Gender,
-        default: Gender.MALE
+        default: Gender.MALE,
     })
     gender: Gender;
 
-    @Column({unique:true})
+    @Column({ unique: true })
     email: string;
 
     @Column()
     phone: string;
-    
+
     @DeleteDateColumn()
     deletedAt: Date;
 
     @OneToOne(() => User, (user) => user.person) // specify inverse side as a second parameter
-    user: User
+    user: User;
 
     @Column()
     profilePicture: string;

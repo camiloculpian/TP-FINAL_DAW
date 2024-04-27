@@ -7,66 +7,63 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class PersonsService {
-
   constructor(
     @InjectRepository(Person)
-    private readonly personRepository: Repository<Person>
-  ){}
+    private readonly personRepository: Repository<Person>,
+  ) { }
 
   async create(createPersonDto: CreatePersonDto) {
-    try{
+    try {
       return await this.personRepository.save(createPersonDto);
-    }catch (e){
+    } catch (e) {
       console.log(e);
       return e;
     }
   }
 
   async findAll() {
-    try{
+    try {
       return await this.personRepository.find({
         // relations: {
         //     user: true,
         // },
       });
-    }catch(e){
-      console.log(e)
+    } catch (e) {
+      console.log(e);
       return e;
     }
   }
 
   async findOne(id: number) {
-    try{
-      return await this.personRepository.find(
-        {
-          where:{
-            id: id
-          },
-          // relations: {
-          //     user: true,
-          // },
-        }
-      );
-    }catch(e){
-      console.log(e)
+    try {
+      return await this.personRepository.find({
+        where: {
+          id: id,
+        },
+        // relations: {
+        //     user: true,
+        // },
+      });
+    } catch (e) {
+      console.log(e);
       return e;
     }
   }
 
   async update(id: number, updatePersonDto: UpdatePersonDto) {
-    try{
+    try {
       return await this.personRepository.update(id, updatePersonDto);
-    }catch(e){
-      console.log(e)
+    } catch (e) {
+      console.log(e);
       return e;
     }
   }
 
   async remove(id: number) {
-    try{
-      return await this.personRepository.softDelete({id});
-    }catch(e){
-      console.log(e)
+    try {
+      return await this.personRepository.softDelete({ id });
+    } catch (e) {
+      console.log(e);
       return e;
     }
   }

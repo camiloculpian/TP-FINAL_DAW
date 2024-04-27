@@ -8,12 +8,12 @@ import { TicketsService } from "src/tickets/tickets.service";
 import { TicketsModule } from "src/tickets/tickets.module";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([TicketAudit]),
+  imports: [TypeOrmModule.forFeature([TicketAudit]),
     UsersModule,
     TicketsModule
   ],
-    controllers: [TicketAuditsController],
-    providers: [TicketAuditsService],
-    exports: [TypeOrmModule],
-  })
-  export class TicketAuditsModule {}
+  controllers: [TicketAuditsController],
+  providers: [TicketAuditsService],
+  exports: [TypeOrmModule],
+})
+export class TicketAuditsModule { }

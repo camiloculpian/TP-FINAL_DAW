@@ -11,21 +11,21 @@ export class TicketAuditsService {
         private readonly ticketAuditsRepository: Repository<TicketAudit>,
         @Inject(TicketsService)
         private readonly ticketsService
-      ) { }
+    ) { }
 
-    async findAll(id){
+    async findAll(id) {
         let ticket = await this.ticketsService.findOne(id);
-        try{
+        try {
             return await this.ticketAuditsRepository.find({
-                relations:{
-                    asignedToUser:true,
-                    modifiedByUser:true,
-                    ticket:true
-                },where:{
-                    ticket:ticket
+                relations: {
+                    asignedToUser: true,
+                    modifiedByUser: true,
+                    ticket: true
+                }, where: {
+                    ticket: ticket
                 }
             });
-        }catch(e){
+        } catch (e) {
             return e;
         }
     }

@@ -36,7 +36,7 @@ export class UsersService {
         throw new BadRequestException('**ERROR: Person with email already exists');
       }
 
-  
+
       // Check for existing person with DNI
       if (createUserDto.dni) {
         const existingPersonByDNI = await this.personRepository.findOne({
@@ -170,7 +170,7 @@ export class UsersService {
       return e;
     }
   }
-  
+
 
   async update(id: number, updateUserDto: UpdateUserDto) {
     const queryRunner = this.dataSource.createQueryRunner();

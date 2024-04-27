@@ -11,10 +11,10 @@ import { TicketsModule } from 'src/tickets/tickets.module';
   imports: [
     UsersModule,
     JwtModule.register({
-      global:true,
-      secret:jwtConstants.secret,
-      signOptions:{expiresIn:'1d'}
-    })
+      global: true,
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: '1d' },
+    }),
   ],
   controllers: [AuthController],
   providers: [AuthService],

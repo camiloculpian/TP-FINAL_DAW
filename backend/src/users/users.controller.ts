@@ -1,8 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, UseGuards, UseInterceptors, UploadedFile } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpCode,
+  HttpStatus,
+  UseGuards,
+  UseInterceptors,
+  UploadedFile,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBody,
+  ApiParam,
+} from '@nestjs/swagger';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/enums/role.enum';
 import { UpdateUserRolesDto } from './dto/update-userRoles.dto ';
@@ -11,7 +30,6 @@ import { extname } from 'path';
 import { diskStorage } from 'multer';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CurrentUser } from '../auth/decorators/currentUser.decorator';
-
 
 @ApiTags('Users')
 @Controller('users')
@@ -23,19 +41,33 @@ export class UsersController {
   @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Crear un nuevo usuario' })
   @HttpCode(HttpStatus.CREATED)
-  @ApiResponse({ status: HttpStatus.CREATED, description: 'Usuario creado con éxito' })
-  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Datos inválidos' })
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: 'Usuario creado con éxito',
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Datos inválidos',
+  })
   @ApiBody({ type: CreateUserDto })
-  @UseInterceptors(FileInterceptor('profilePicture', {
-    storage: diskStorage({
-      destination: './uploads/users',
-      filename: (req, file, cb) => {
-        const randomName = Array(32).fill(null).map(()=>(Math.round(Math.random()*16)).toString(16)).join('');
-        return cb(null, `${randomName}${extname(file.originalname)}`);
-      },
+  @UseInterceptors(
+    FileInterceptor('profilePicture', {
+      storage: diskStorage({
+        destination: './uploads/users',
+        filename: (req, file, cb) => {
+          const randomName = Array(32)
+            .fill(null)
+            .map(() => Math.round(Math.random() * 16).toString(16))
+            .join('');
+          return cb(null, `${randomName}${extname(file.originalname)}`);
+        },
+      }),
     }),
-  }))
-  create(@Body() createUserDto: CreateUserDto, @UploadedFile() file: Express.Multer.File) {
+  )
+  create(
+    @Body() createUserDto: CreateUserDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
     if (file) {
       createUserDto.profilePicture = file.filename;
     }
@@ -68,53 +100,61 @@ export class UsersController {
   @ApiParam({ name: 'id', description: 'ID único del usuario' })
   @ApiBody({ type: UpdateUserDto })
   // subida de archivos
-  @UseInterceptors(FileInterceptor('profilePicture', {
+  @UseInterceptors(
+    FileInterceptor('profilePicture', {
       storage: diskStorage({
-          destination: './uploads/users',
-          filename: (req, file, cb) => {
-              const randomName = Array(32).fill(null).map(()=>(Math.round(Math.random()*16)).toString(16)).join('');
-              cb(null, `${randomName}${extname(file.originalname)}`);
-          },
+        destination: './uploads/users',
+        filename: (req, file, cb) => {
+          const randomName = Array(32)
+            .fill(null)
+            .map(() => Math.round(Math.random() * 16).toString(16))
+            .join('');
+          cb(null, `${randomName}${extname(file.originalname)}`);
+        },
       }),
-  }))
+    }),
+  )
   update(
-      @Param('id') id: number,
-      @Body() updateUserDto: UpdateUserDto,
-      @CurrentUser() currentUser: any,
-      @UploadedFile() file: Express.Multer.File
-  ) {    
+    @Param('id') id: number,
+    @Body() updateUserDto: UpdateUserDto,
+    @CurrentUser() currentUser: any,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
     // si es administrador
-      if (file) {
-          updateUserDto.profilePicture = file.filename;
-      }
-      // este chuequeo y operacion deberia hacerse en el servicio
-      if (currentUser.role === Role.ADMIN) {
-          return this.usersService.update(+id, updateUserDto);
-      } else if (currentUser.id === id) {
-          const allowedUpdates = {
-              password: updateUserDto.password, //Si el usuario es el mismo que se está actualizando, solo permite password y profilePicture
-              profilePicture: updateUserDto.profilePicture,
-          };
-          return this.usersService.update(+id, allowedUpdates);
-      } else {
-          throw new Error('No tienes permiso para modificar a este usuario');
-      }
+    if (file) {
+      updateUserDto.profilePicture = file.filename;
+    }
+    // este chuequeo y operacion deberia hacerse en el servicio
+    if (currentUser.role === Role.ADMIN) {
+      return this.usersService.update(+id, updateUserDto);
+    } else if (currentUser.id === id) {
+      const allowedUpdates = {
+        password: updateUserDto.password, //Si el usuario es el mismo que se está actualizando, solo permite password y profilePicture
+        profilePicture: updateUserDto.profilePicture,
+      };
+      return this.usersService.update(+id, allowedUpdates);
+    } else {
+      throw new Error('No tienes permiso para modificar a este usuario');
+    }
   }
-  
+
   // Solo permite a administradores cambiar los roles de usuario
   @Patch(':id/role')
   @UseGuards(AuthGuard)
   @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Actualizar el rol de un usuario' })
-  @ApiResponse({ status: 200, description: 'Rol del usuario actualizado con éxito' })
+  @ApiResponse({
+    status: 200,
+    description: 'Rol del usuario actualizado con éxito',
+  })
   @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
   @ApiParam({ name: 'id', description: 'ID único del usuario' })
-  @ApiBody({ type: UpdateUserRolesDto }) 
+  @ApiBody({ type: UpdateUserRolesDto })
   updateUserRole(
-      @Param('id') id: number,
-      @Body() updateUserRolesDto: UpdateUserRolesDto,
+    @Param('id') id: number,
+    @Body() updateUserRolesDto: UpdateUserRolesDto,
   ) {
-      return this.usersService.updateRole(id, updateUserRolesDto);
+    return this.usersService.updateRole(id, updateUserRolesDto);
   }
 
   @Delete(':id')

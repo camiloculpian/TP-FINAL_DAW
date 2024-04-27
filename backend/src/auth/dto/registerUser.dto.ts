@@ -1,9 +1,21 @@
-import { Transform } from "class-transformer";
-import { IsDateString,IsOptional, IsNumberString, IsHash, IsEmail, IsPhoneNumber, IsString, MaxLength, MinLength, IsUrl, IsEnum } from "class-validator";
-import { Gender } from "src/persons/entities/person.entity";
+import { Transform } from 'class-transformer';
+import {
+    IsDateString,
+    IsOptional,
+    IsNumberString,
+    IsHash,
+    IsEmail,
+    IsPhoneNumber,
+    IsString,
+    MaxLength,
+    MinLength,
+    IsUrl,
+    IsEnum,
+} from 'class-validator';
+import { Gender } from 'src/persons/entities/person.entity';
 
 export class RegisterUserDto {
-    @Transform(({value}) => value.trim())
+    @Transform(({ value }) => value.trim())
     @IsString()
     username: string;
 
@@ -19,16 +31,15 @@ export class RegisterUserDto {
     @IsNumberString()
     @MinLength(7)
     @MaxLength(8)
-    dni:string;
+    dni: string;
 
     @IsString()
     address: string;
 
     @IsDateString()
     birthDate: Date;
-    
-    @IsEnum(Gender) /**TRUE: MALE FALSE: FEMALE*/
-    gender: Gender;
+
+    @IsEnum(Gender) /**TRUE: MALE FALSE: FEMALE*/ gender: Gender;
 
     @IsEmail()
     email: string;
@@ -38,5 +49,5 @@ export class RegisterUserDto {
 
     @IsString()
     @IsOptional()
-    profilePicture?: string;  
+    profilePicture?: string;
 }

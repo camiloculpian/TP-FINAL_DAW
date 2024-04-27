@@ -1,5 +1,15 @@
-import { IsDateString, IsEmail, IsEnum, IsNumberString, IsOptional, IsPhoneNumber, IsString, MaxLength, MinLength } from "class-validator";
-import { Gender } from "../entities/person.entity";
+import {
+    IsDateString,
+    IsEmail,
+    IsEnum,
+    IsNumberString,
+    IsOptional,
+    IsPhoneNumber,
+    IsString,
+    MaxLength,
+    MinLength,
+} from 'class-validator';
+import { Gender } from '../entities/person.entity';
 
 export class CreatePersonDto {
     @IsString()
@@ -11,7 +21,7 @@ export class CreatePersonDto {
     @IsNumberString()
     @MinLength(7)
     @MaxLength(8)
-    dni:string;
+    dni: string;
 
     @IsString()
     address: string;
@@ -19,15 +29,14 @@ export class CreatePersonDto {
     @IsDateString()
     birthDate: Date;
 
-    @IsEnum(Gender) /**TRUE: MALE FALSE: FEMALE*/
-    gender: Gender;
+    @IsEnum(Gender) /**TRUE: MALE FALSE: FEMALE*/ gender: Gender;
 
     @IsEmail()
     email: string;
 
     @IsPhoneNumber()
     phone: string;
-    
+
     @IsString()
     @IsOptional()
     profilePicture?: string;

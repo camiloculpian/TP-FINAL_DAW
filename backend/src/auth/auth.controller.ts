@@ -6,7 +6,7 @@ import { AuthGuard } from './auth.guard';
 
 @Controller('auth')
 export class AuthController {
-    constructor(private readonly authService: AuthService){}
+    constructor(private readonly authService: AuthService) { }
 
     // @Post('register')
     // @UseInterceptors(FileInterceptor('profilePicture', {
@@ -32,7 +32,7 @@ export class AuthController {
     login(
         @Body()
         loginUserDto: LoginUserDto,
-    ){
+    ) {
         return this.authService.login(loginUserDto);
     }
 
@@ -41,7 +41,7 @@ export class AuthController {
     profile(
         @Request()
         req
-    ){
+    ) {
         return this.authService.getProfile(req.user.sub);
     }
 }

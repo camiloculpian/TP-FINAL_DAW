@@ -3,7 +3,7 @@ import { IsBoolean, IsDateString, IsDefined, IsOptional, IsEmail, IsHash, IsNumb
 import { Role } from "src/auth/enums/role.enum";
 import { Gender } from "src/persons/entities/person.entity";
 export class CreateUserDto {
-    @Transform(({value}) => value.trim())
+    @Transform(({ value }) => value.trim())
     @IsString()
     username: string;
 
@@ -11,7 +11,7 @@ export class CreateUserDto {
     password: string;
 
     @IsOptional()
-    @IsEnum(Role)  
+    @IsEnum(Role)
     role?: Role;
 
     @IsString()
@@ -23,7 +23,7 @@ export class CreateUserDto {
     @IsNumberString()
     @MinLength(7)
     @MaxLength(8)
-    dni:string;
+    dni: string;
 
     @IsString()
     address: string;
@@ -41,6 +41,6 @@ export class CreateUserDto {
     phone: string;
 
     @IsOptional()
-    @IsString()  
+    @IsString()
     profilePicture?: string;
 }

@@ -1,6 +1,6 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateUserDto } from './create-user.dto';
-import { IsBoolean,IsUrl, IsEnum, IsDateString, IsEmail, IsHash, IsNumberString, IsOptional, IsPhoneNumber, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsBoolean, IsUrl, IsEnum, IsDateString, IsEmail, IsHash, IsNumberString, IsOptional, IsPhoneNumber, IsString, MaxLength, MinLength } from 'class-validator';
 import { Gender } from "src/persons/entities/person.entity";
 import { Role } from 'src/auth/enums/role.enum';
 
@@ -30,7 +30,7 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
     @MinLength(7)
     @MaxLength(8)
     @IsOptional()
-    dni?:string;
+    dni?: string;
 
     @IsString()
     @IsOptional()
@@ -42,7 +42,7 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
 
     @IsEnum(Gender)
     @IsOptional()
-    gender?: Gender;  
+    gender?: Gender;
 
     @IsEmail()
     @IsOptional()
@@ -53,7 +53,7 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
     phone?: string;
 
     @IsOptional()
-    @IsString()  
+    @IsString()
     profilePicture?: string;
 }
 
