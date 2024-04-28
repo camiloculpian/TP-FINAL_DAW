@@ -173,7 +173,7 @@ export class UsersService {
   }
 
   // code modified 1.2 ---> si es user no me deja cambiar ni foto de perfil ni contraseña
-  async update(id: number, updateUserDto: UpdateUserDto, currentUser: any, file: Express.Multer.File) {
+  async update(id: number, updateUserDto: UpdateUserDto, currentUser: Role, file: Express.Multer.File) {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
@@ -190,10 +190,10 @@ export class UsersService {
       }
   
       // Verificar si el usuario actual tiene permiso de administrador
-      const isAdmin = currentUser.role === Role.ADMIN;
+      const isAdmin = currentUser === Role.ADMIN;
   
       // Verificar si el usuario actual está actualizando su propio perfil
-      const isCurrentUser = currentUser.id === id;
+      const isCurrentUser = userToUpdate.id === id;
   
       // Verificar si se cargó un archivo
       if (file) {
