@@ -37,6 +37,6 @@ export class User {
     @OneToMany(type => Ticket, ticket => ticket.createdByUser) //All tickets asigned to this user
     asignedTickets: Ticket[];
 
-    @Column({ nullable: true })
+    @Column({ nullable: true, default:null })
     profilePicture: string;
 }
