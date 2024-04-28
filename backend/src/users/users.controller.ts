@@ -138,7 +138,7 @@ export class UsersController {
   async update(
     @Param('id') id: number,
     @Body() updateUserDto: UpdateUserDto,
-    @CurrentUser() currentUser: any,
+    @CurrentUser('sub') currentUser: number,
     @UploadedFile() file: Express.Multer.File,
   ) {
     try {

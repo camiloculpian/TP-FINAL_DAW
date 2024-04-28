@@ -173,7 +173,11 @@ export class UsersService {
   }
 
   // code modified 1.2 ---> solo deja que el usuario de tipo user actualice los campos, cuando el usuario tipo admin deberia tambien poder actualizar los campos.
-  async update(id: number, updateUserDto: UpdateUserDto, currentUser: Role, file: Express.Multer.File) {
+  async update(id: number, updateUserDto: UpdateUserDto, currentUser: number, file: Express.Multer.File) {
+    const user= await this.userRepository.findOne( {where: {
+      id: currentUser
+    }});
+    console.log(currentUser)
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
@@ -190,10 +194,10 @@ export class UsersService {
       }
   
       // Verificar si el usuario actual tiene permiso de administrador
-      const isAdmin = currentUser === Role.ADMIN;
+      const isAdmin = user.roles === Role.ADMIN;
   
       // Verificar si el usuario actual está actualizando su propio perfil
-      const isCurrentUser = userToUpdate.id === id;
+      const isCurrentUser = user.id === id;
   
       // Verificar si se cargó un archivo
       if (file) {
