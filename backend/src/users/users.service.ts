@@ -172,7 +172,7 @@ export class UsersService {
     }
   }
 
-  // code modified 1.2 ---> si es user no me deja cambiar ni foto de perfil ni contraseña
+  // code modified 1.2 ---> solo deja que el usuario de tipo user actualice los campos, cuando el usuario tipo admin deberia tambien poder actualizar los campos.
   async update(id: number, updateUserDto: UpdateUserDto, currentUser: Role, file: Express.Multer.File) {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
