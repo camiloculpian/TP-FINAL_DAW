@@ -14,9 +14,9 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
     password?: string;
 
     // Chequear que para esto sea admin
-    // @IsEnum(Role)
-    // @IsOptional()
-    // roles?:Role
+    @IsEnum(Role)
+    @IsOptional()
+    roles?:Role
 
     @IsString()
     @IsOptional()
