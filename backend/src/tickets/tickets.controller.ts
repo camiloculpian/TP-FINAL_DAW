@@ -142,7 +142,7 @@ export class TicketsController {
         }
     }
 
-    // Actualiza los tickets: un usuario ADMIN puede actualizar TODOS los campos y un USER solo descripcion, archive y status (REVISAR!)
+    // Actualiza los tickets: un usuario ADMIN puede actualizar TODOS los campos y un USER solo descripcion, archive y status 
     @Patch(':id')
     @UseGuards(AuthGuard)
     @Roles(Role.USER, Role.ADMIN)
