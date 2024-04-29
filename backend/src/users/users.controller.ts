@@ -170,7 +170,8 @@ export class UsersController {
       return await this.usersService.updateRole(id, updateUserRolesDto);
     } catch (error) {
       console.error('Error al actualizar el rol del usuario:', error);
-      throw new Error('Error al actualizar el rol del usuario');
+      //throw new Error('Error al actualizar el rol del usuario');
+      return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
     }
   }
 
