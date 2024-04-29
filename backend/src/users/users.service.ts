@@ -214,6 +214,7 @@ export class UsersService {
           password: updateUserDto.password,
           profilePicture: updateUserDto.profilePicture,
         };
+        
       }
   
       // Actualizar el usuario y su perfil asociado
