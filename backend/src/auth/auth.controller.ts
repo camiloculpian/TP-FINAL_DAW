@@ -55,13 +55,7 @@ export class AuthController {
             return await this.authService.login(loginUserDto);
         } catch (error) {
             console.error('Error durante el inicio de sesión:', error);
-            throw new HttpException(
-                {
-                    status: HttpStatus.UNAUTHORIZED,
-                    error: 'No se pudo iniciar sesión. Verifica tus credenciales.',
-                },
-                HttpStatus.UNAUTHORIZED,
-            );
+            return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
         }
     }
 
@@ -74,13 +68,7 @@ export class AuthController {
             return await this.authService.getProfile(req.user.sub);
         } catch (error) {
             console.error('Error al obtener el perfil:', error);
-            throw new HttpException(
-                {
-                    status: HttpStatus.INTERNAL_SERVER_ERROR,
-                    error: 'Hubo un problema al obtener el perfil.',
-                },
-                HttpStatus.INTERNAL_SERVER_ERROR,
-            );
+            return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
         }
     }
 

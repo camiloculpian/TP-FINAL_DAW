@@ -32,13 +32,8 @@ export class TicketAuditsController {
         try {
             return this.ticketAuditsService.findAll(id);
         } catch (error) {
-            throw new HttpException(
-                {
-                    status: HttpStatus.INTERNAL_SERVER_ERROR,
-                    error: 'Hubo un problema al obtener los registros de auditoría.',
-                },
-                HttpStatus.INTERNAL_SERVER_ERROR,
-            );
+            console.error('Error al obtener registros:', error);
+            return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
         }
     }
 }

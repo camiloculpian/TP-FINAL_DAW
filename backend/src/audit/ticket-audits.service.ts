@@ -1,37 +1,3 @@
-// import { Inject, Injectable } from "@nestjs/common";
-// import { InjectRepository } from "@nestjs/typeorm";
-// import { Repository } from "typeorm";
-// import { TicketAudit } from "./entities/ticket-audits.entity";
-// import { TicketsService } from "src/tickets/tickets.service";
-
-// @Injectable()
-// export class TicketAuditsService {
-//     constructor(
-//         @InjectRepository(TicketAudit)
-//         private readonly ticketAuditsRepository: Repository<TicketAudit>,
-//         @Inject(TicketsService)
-//         private readonly ticketsService
-//     ) { }
-
-//     async findAll(id) {
-//         let ticket = await this.ticketsService.findOne(id);
-//         try {
-//             return await this.ticketAuditsRepository.find({
-//                 relations: {
-//                     asignedToUser: true,
-//                     modifiedByUser: true,
-//                     ticket: true
-//                 }, where: {
-//                     ticket: ticket
-//                 }
-//             });
-//         } catch (e) {
-//             return e;
-//         }
-//     }
-// }
-
-// CODE MODIFIED V1.1
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
@@ -45,7 +11,6 @@ export class TicketAuditsService {
         private readonly ticketAuditsRepository: Repository<TicketAudit>
     ) { }
     
-    // si paso el id como number, tira error en where ticket, por defecto ahora esta en any
     async findAll(id): Promise<TicketAudit[]> {
         
         try {
@@ -69,7 +34,6 @@ export class TicketAuditsService {
             throw new Error('Error al crear registro de auditoría');
         }
     }
-    // si paso id de tipo bumber da error, por defecto en any
     async update(id, ticketAuditDto: TicketAuditDto): Promise<TicketAudit> {
         try {
             const existingAudit = await this.ticketAuditsRepository.findOne(id);

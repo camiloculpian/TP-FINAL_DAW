@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Not, Repository } from 'typeorm';
 import { Ticket, TicketStatus } from './entities/ticket.entity';
 import { UsersService } from 'src/users/users.service';
-import { Role } from 'src/auth/enums/role.enum'; // Assuming Role enum is imported
+import { Role } from 'src/auth/enums/role.enum'; // Importacion del Roles
 import {
   InternalServerErrorException,
   NotFoundException,

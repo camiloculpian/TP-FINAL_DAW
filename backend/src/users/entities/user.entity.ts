@@ -28,13 +28,13 @@ export class User {
     @DeleteDateColumn({ select: false })
     deletedAt: Date;
 
-    @OneToMany(type => Ticket, ticket => ticket.createdByUser) // All tickets created by this user
+    @OneToMany(type => Ticket, ticket => ticket.createdByUser) // Todos los tickets creados por este usuario
     createdTickets: Ticket[];
 
-    @OneToMany(type => Ticket, ticket => ticket.createdByUser) //All tickets asigned by this user to other users
+    @OneToMany(type => Ticket, ticket => ticket.createdByUser) // Todos los tickets asignados por este usuario a otros usuarios
     asignedToTickets: Ticket[];
 
-    @OneToMany(type => Ticket, ticket => ticket.createdByUser) //All tickets asigned to this user
+    @OneToMany(type => Ticket, ticket => ticket.createdByUser) // Todos los tickets asignados a este usuario
     asignedTickets: Ticket[];
 
     @Column({ nullable: true, default:null })

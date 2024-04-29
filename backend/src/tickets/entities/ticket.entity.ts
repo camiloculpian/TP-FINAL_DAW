@@ -43,13 +43,13 @@ export class Ticket {
     @Column()
     title: string;
 
-    @ManyToOne((type) => User, (user) => user.id) //User who creates the ticket. Lo tomamos del ID del usuario autenticado y autorizado para crear el ticket
+    @ManyToOne((type) => User, (user) => user.id) // Usuario que crea el ticket. Se toma del ID del usuario autenticado y autorizado para crear el ticket
     createdByUser: User;
 
-    @ManyToOne((type) => User, (user) => user.id) //User who asigns the ticket to other user (on first will be the admin, but then other user can re-asign)) Lo tomamos del ID del usuario autenticado y autorizado para reasignar el ticket
+    @ManyToOne((type) => User, (user) => user.id) // Usuario que asigna el ticket a otro usuario (al principio será el administrador, pero luego otro usuario puede reasignar). Se toma del ID del usuario autenticado y autorizado para reasignar el ticket
     asignedByUser: User;
 
-    @ManyToOne((type) => User, (user) => user.id) //User who owns the ticket. Chequear que exista y sea valido
+    @ManyToOne((type) => User, (user) => user.id) // Usuario propietario del ticket. Chequear que exista y sea válido
     asignedToUser: User;
 
     @Column()
@@ -79,7 +79,7 @@ export class Ticket {
     @Column({ nullable: true })
     lastModified: Date;
 
-    @ManyToOne((type) => User, (user) => user.id, { nullable: true }) // User who modify the ticket last time. Chequear que exista y sea valido
+    @ManyToOne((type) => User, (user) => user.id, { nullable: true }) // Usuario que modificó el ticket por última vez. Chequear que exista y sea válido
     lastModifiedByUser: User;
 
     @Column({
