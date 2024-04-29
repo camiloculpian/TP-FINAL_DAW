@@ -96,8 +96,8 @@ export class TicketsController {
             );
             return newTicket;
         } catch (error) {
-            console.error('Error creating ticket:', error);
-            throw new BadRequestException('Error creating ticket');
+            console.error('Error al crear ticket:', error);
+            return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
         }
     }
     
@@ -116,10 +116,10 @@ export class TicketsController {
     ) {
       try {
         return await this.ticketsService.findAll(userId, service, status, assignedToUserId, page, limit);
-      } catch (error) {
-        console.error('Error fetching tickets:', error);
-        throw new InternalServerErrorException('Failed to fetch tickets');
-      }
+    } catch (error) {
+        console.error('Error al obtener tickets:', error);
+        return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
+    }
     }
 
     // Buscar tickets
@@ -133,12 +133,12 @@ export class TicketsController {
         try {
             const ticket = await this.ticketsService.findOne(+id, userId);
             if (!ticket) {
-                throw new NotFoundException('Ticket not found');
+                throw new NotFoundException('Ticket no encontrado');
             }
             return ticket;
-        } catch (e) {
-
-            throw new NotFoundException('Ticket not found');
+        } catch (error) {
+            console.error(`Error al buscar ticket con ID ${id}:`, error);
+            return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
         }
     }
 
@@ -197,12 +197,12 @@ export class TicketsController {
                 userId,
             );
             if (!updatedTicket) {
-                throw new NotFoundException('Ticket not found');
+                throw new NotFoundException('Ticket no encontrado');
             }
             return updatedTicket;
         } catch (error) {
-            console.error(`Error updating ticket with ID ${id}:`, error);
-            throw new InternalServerErrorException('Failed to update ticket');
+            console.error(`Error al actualizar ticket con ID ${id}:`, error);
+            return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
         }
     }
 
@@ -218,12 +218,12 @@ export class TicketsController {
         try {
             const removedTicket = await this.ticketsService.remove(+id);
             if (!removedTicket) {
-                throw new NotFoundException('Ticket not found');
+                throw new NotFoundException('Ticket no encontrado');
             }
             return removedTicket;
         } catch (error) {
-            console.error(`Error removing ticket with ID ${id}`, error);
-            throw new NotFoundException('Ticket not found');
+            console.error(`Error al eliminar ticket con ID ${id}:`, error);
+            return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
         }
     }
 }

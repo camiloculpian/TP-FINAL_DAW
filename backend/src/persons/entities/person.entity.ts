@@ -49,7 +49,7 @@ export class Person {
     @DeleteDateColumn({ select: false })
     deletedAt: Date;
 
-    @OneToOne(() => User, (user) => user.person) // specify inverse side as a second parameter
+    @OneToOne(() => User, (user) => user.person) // especificar el lado inverso como segundo parámetro
     user: User;
 
     @Column({nullable:true, default:null})

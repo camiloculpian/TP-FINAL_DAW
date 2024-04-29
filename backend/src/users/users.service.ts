@@ -28,7 +28,7 @@ export class UsersService {
     await queryRunner.connect();
     await queryRunner.startTransaction();
     try {
-      // Check for existing person with email
+      // Chequeo si existe persona con ese gmail
       const existingPersonByEmail = await this.personRepository.findOne({
         where: { email: createUserDto.email },
       });
@@ -38,7 +38,7 @@ export class UsersService {
       }
 
 
-      // Check for existing person with DNI
+      // Chequeo si existe persona con ese dni
       if (createUserDto.dni) {
         const existingPersonByDNI = await this.personRepository.findOne({
           where: { dni: createUserDto.dni },
@@ -49,7 +49,7 @@ export class UsersService {
         }
       }
 
-      // Save person and user if all checks pass
+      // Guarda la persona y el usuario si pasan todas las comprobaciones
       const person = await this.personRepository.save({ ...createUserDto });
       const user = await this.userRepository.save({ ...createUserDto, person });
 
@@ -172,7 +172,6 @@ export class UsersService {
     }
   }
 
-  // code modified 1.2 ---> solo deja que el usuario de tipo user actualice los campos, cuando el usuario tipo admin deberia tambien poder actualizar los campos.
   async update(id: number, updateUserDto: UpdateUserDto, currentUser: number, file: Express.Multer.File) {
     const user= await this.userRepository.findOne( {where: {
       id: currentUser

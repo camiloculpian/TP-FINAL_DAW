@@ -76,7 +76,7 @@ export class UsersController {
       return newUser;
     } catch (error) {
       console.error('Error al crear usuario:', error);
-      throw new Error('Error al crear usuario');
+      return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
     }
   }
 
@@ -91,7 +91,7 @@ export class UsersController {
       return users;
     } catch (error) {
       console.error('Error al obtener todos los usuarios:', error);
-      throw new Error('Error al obtener todos los usuarios');
+      return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
     }
   }
 
@@ -108,7 +108,7 @@ export class UsersController {
       return user;
     } catch (error) {
       console.error('Error al obtener usuario por ID:', error);
-      throw new Error('Error al obtener usuario por ID');
+      return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
     }
   }
 
@@ -144,7 +144,6 @@ export class UsersController {
       return await this.usersService.update(id, updateUserDto, currentUser, file);
     } catch (error) {
       console.error('Error al actualizar usuario:', error);
-      //throw new Error('Error al actualizar usuario');
       return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
     }
   }
@@ -169,7 +168,6 @@ export class UsersController {
       return await this.usersService.updateRole(id, updateUserRolesDto);
     } catch (error) {
       console.error('Error al actualizar el rol del usuario:', error);
-      //throw new Error('Error al actualizar el rol del usuario');
       return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
     }
   }
@@ -188,7 +186,7 @@ export class UsersController {
       return { message: 'Usuario eliminado con éxito' };
     } catch (error) {
       console.error('Error al eliminar usuario:', error);
-      throw new Error('Error al eliminar usuario');
+      return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
     }
   }
 }
