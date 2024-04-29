@@ -145,7 +145,8 @@ export class UsersController {
       return await this.usersService.update(id, updateUserDto, currentUser, file);
     } catch (error) {
       console.error('Error al actualizar usuario:', error);
-      throw new Error('Error al actualizar usuario');
+      //throw new Error('Error al actualizar usuario');
+      return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
     }
   }
 

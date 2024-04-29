@@ -177,7 +177,6 @@ export class UsersService {
     const user= await this.userRepository.findOne( {where: {
       id: currentUser
     }});
-    console.log(currentUser)
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
