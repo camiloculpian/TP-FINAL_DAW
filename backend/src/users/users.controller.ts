@@ -35,7 +35,6 @@ import { CurrentUser } from '../auth/decorators/currentUser.decorator';
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
-
   //Creacion de Usuarios: Solo puede crear el administrador 
   @Post()
   @UseGuards(AuthGuard)
