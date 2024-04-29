@@ -157,6 +157,7 @@ export class TicketsService {
           );
         }
         // Si el usuario es un administrador, permitir la actualización de todos los datos
+        ticket.title = updateTicketDto.title;
         ticket.description = updateTicketDto.description;
         ticket.status = updateTicketDto.status;
         ticket.priority = updateTicketDto.priority;
