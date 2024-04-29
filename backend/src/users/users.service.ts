@@ -210,10 +210,13 @@ export class UsersService {
   
       // Solo permitir la actualización de la contraseña y la imagen de perfil si el usuario está actualizando su propio perfil
       if (!isAdmin && isCurrentUser) {
-        if(updateUserDto.password||updateUserDto.profilePicture) {
+        if(updateUserDto.username||updateUserDto.password||updateUserDto.profilePicture||updateUserDto.email||updateUserDto.phone) {
           updateUserDto = {
+            username: updateUserDto.username,
             password: updateUserDto.password,
             profilePicture: updateUserDto.profilePicture,
+            email: updateUserDto.email,
+            phone: updateUserDto.phone,
           };
         }else{
           throw new ForbiddenException('No tienes permiso para modificar este campo');
