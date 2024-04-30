@@ -2,7 +2,6 @@ import {
     Body,
     Controller,
     Get,
-    HttpException,
     HttpStatus,
     Post,
     Request,
@@ -11,6 +10,7 @@ import {
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { AuthGuard } from './auth.guard';
+import { Response, responseType } from 'src/common/responses/responses';
 
 @Controller('auth')
 export class AuthController {
@@ -68,7 +68,8 @@ export class AuthController {
             return await this.authService.getProfile(req.user.sub);
         } catch (error) {
             console.error('Error al obtener el perfil:', error);
-            return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
+            //return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
+            return new Response(HttpStatus.UNAUTHORIZED, responseType.ERROR, error?.message);
         }
     }
 
