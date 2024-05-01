@@ -95,10 +95,10 @@ export class TicketsController {
                 userId,
             );
             //return newTicket;
-            return new Response({status:HttpStatus.OK,statusCode:HttpStatus.OK, responseType:responseType.OK, message:'El ticket fue añadido de manera correcta', data:newTicket});
+            return new Response({responseType:responseType.OK, message:'El ticket fue añadido de manera correcta', data:newTicket});
         } catch (error) {
             console.error('Error al crear ticket:', error);
-            return new Response({status:error.status,statusCode:error.statusCode, responseType:responseType.ERROR, message:error.message});
+            return new Response({responseType:responseType.ERROR, message:error.message});
             //return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
         }
     }

@@ -5,6 +5,7 @@ import {
     HttpStatus,
     Post,
     Request,
+    UnauthorizedException,
     UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
@@ -53,11 +54,12 @@ export class AuthController {
     ) {
         try {
             //return await this.authService.login(loginUserDto);
-            return new Response({status:HttpStatus.OK,statusCode:HttpStatus.OK, responseType:responseType.OK, message:'BIENVENIDO!',data:await this.authService.login(loginUserDto)});
+            return new Response({responseType:responseType.OK, message:'Bienvenido!',data:await this.authService.login(loginUserDto)});
         } catch (error) {
             console.error('Error durante el inicio de sesión:', error);
             //return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
-            return new Response({status:HttpStatus.UNAUTHORIZED,statusCode:HttpStatus.UNAUTHORIZED, responseType:responseType.ERROR, message:error?.message});
+            //return new Response({status:HttpStatus.UNAUTHORIZED,statusCode:HttpStatus.UNAUTHORIZED, responseType:responseType.ERROR, message:error?.message});
+            throw new UnauthorizedException({message:error.message,responseType:responseType.UNAUTH});
         }
     }
 
@@ -71,7 +73,7 @@ export class AuthController {
         } catch (error) {
             console.error('Error al obtener el perfil:', error);
             //return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
-            return new Response({status:HttpStatus.UNAUTHORIZED,statusCode:HttpStatus.UNAUTHORIZED, responseType:responseType.ERROR, message:error?.message});
+            throw error
         }
     }
 

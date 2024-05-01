@@ -12,23 +12,17 @@ export enum responseType{
 }
 
 export interface ResponseOptions<Entitt = any> {
-    status: HttpStatus;
-    statusCode: HttpStatus;
     responseType: responseType;
     message: string;
     data?: Entitt;
 }
 
 export class Response{
-    public status:HttpStatus;
-    public statusCode:HttpStatus;
     public responseType:string;
     public message:string;
     public data:JSON;
 
     constructor(options: ResponseOptions){
-        this.status=options.status;
-        this.statusCode=options.statusCode;
         this.responseType=options.responseType;
         this.message=options.message;
         this.data=options.data;
