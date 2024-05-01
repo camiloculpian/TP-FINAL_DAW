@@ -2,8 +2,8 @@ import {
     Body,
     Controller,
     Get,
-    HttpException,
     HttpStatus,
+    HttpException,
     Post,
     Request,
     UseGuards,
@@ -13,6 +13,7 @@ import {
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { AuthGuard } from './auth.guard';
+import { Response, responseType } from 'src/common/responses/responses';
 
 import { FileInterceptor } from '@nestjs/platform-express';
 import { RegisterUserDto } from '../auth/dto/registerUser.dto'; // Asegúrate de importar el DTO de registro
@@ -107,7 +108,8 @@ export class AuthController {
             return await this.authService.getProfile(req.user.sub);
         } catch (error) {
             console.error('Error al obtener el perfil:', error);
-            return { 'status': 'ERROR', 'message': error.message, 'statusCode': error.statusCode };
+            //return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
+            return new Response(HttpStatus.UNAUTHORIZED, responseType.ERROR, error?.message);
         }
     }
 
