@@ -11,9 +11,8 @@ import {
     UseGuards,
     NotFoundException,
     Inject,
-    BadRequestException,
-    InternalServerErrorException,
-    Query
+    Query,
+    HttpStatus
 } from '@nestjs/common';
 import { TicketsService } from './tickets.service';
 import { CreateTicketDto } from './dto/create-ticket.dto';
@@ -33,6 +32,7 @@ import { Role } from 'src/auth/enums/role.enum';
 import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
 import { UsersService } from 'src/users/users.service';
 import { TicketStatus } from '../tickets/entities/ticket.entity';
+import { Response, responseType } from 'src/common/responses/responses';
 
 @ApiTags('Tickets')
 @Controller('tickets')
@@ -94,10 +94,12 @@ export class TicketsController {
                 createTicketDto,
                 userId,
             );
-            return newTicket;
+            //return newTicket;
+            return new Response({status:HttpStatus.OK,statusCode:HttpStatus.OK, responseType:responseType.OK, message:'El ticket fue añadido de manera correcta', data:newTicket});
         } catch (error) {
             console.error('Error al crear ticket:', error);
-            return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
+            return new Response({status:error.status,statusCode:error.statusCode, responseType:responseType.ERROR, message:error.message});
+            //return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
         }
     }
     
