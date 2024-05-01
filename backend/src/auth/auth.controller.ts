@@ -7,10 +7,18 @@ import {
     Post,
     Request,
     UseGuards,
+    UseInterceptors,
+    UploadedFile
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { AuthGuard } from './auth.guard';
+
+import { FileInterceptor } from '@nestjs/platform-express';
+import { RegisterUserDto } from '../auth/dto/registerUser.dto'; // Asegúrate de importar el DTO de registro
+
+import { diskStorage } from 'multer'; // Importa diskStorage desde multer
+import { extname } from 'path'; 
 
 @Controller('auth')
 export class AuthController {
@@ -47,6 +55,37 @@ export class AuthController {
     //     }
     // }
 
+    // FUNCA OKOK
+    @Post('register')
+    @UseInterceptors(FileInterceptor('profilePicture', {
+        storage: diskStorage({
+            destination: './uploads-profiles/profiles',
+            filename: (req, file, cb) => {
+                const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
+                return cb(null, `${randomName}${extname(file.originalname)}`);
+            },
+        }),
+    }))
+    async register(
+        @Body() registerUserDto: RegisterUserDto,
+        @UploadedFile() file: Express.Multer.File,
+    ) {
+        try {
+            const result = await this.authService.register(registerUserDto);
+            return { status: 'SUCCESS', data: result };
+        } catch (error) {
+            console.error('Error durante la registacion', error);
+            throw new HttpException(
+                {
+                    status: HttpStatus.BAD_REQUEST,
+                    error: error.message,
+                },
+                HttpStatus.BAD_REQUEST,
+            );
+        }
+    }
+
+
     @Post('login')
     async login(
         @Body() loginUserDto: LoginUserDto,
@@ -55,7 +94,7 @@ export class AuthController {
             return await this.authService.login(loginUserDto);
         } catch (error) {
             console.error('Error durante el inicio de sesión:', error);
-            return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
+            return { 'status': 'ERROR', 'message': error.message, 'statusCode': error.statusCode };
         }
     }
 
@@ -68,7 +107,7 @@ export class AuthController {
             return await this.authService.getProfile(req.user.sub);
         } catch (error) {
             console.error('Error al obtener el perfil:', error);
-            return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
+            return { 'status': 'ERROR', 'message': error.message, 'statusCode': error.statusCode };
         }
     }
 
