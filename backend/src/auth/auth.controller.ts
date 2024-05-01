@@ -52,10 +52,12 @@ export class AuthController {
         @Body() loginUserDto: LoginUserDto,
     ) {
         try {
-            return await this.authService.login(loginUserDto);
+            //return await this.authService.login(loginUserDto);
+            return new Response({status:HttpStatus.OK,statusCode:HttpStatus.OK, responseType:responseType.OK, message:'BIENVENIDO!',data:await this.authService.login(loginUserDto)});
         } catch (error) {
             console.error('Error durante el inicio de sesión:', error);
-            return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
+            //return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
+            return new Response({status:HttpStatus.UNAUTHORIZED,statusCode:HttpStatus.UNAUTHORIZED, responseType:responseType.ERROR, message:error?.message});
         }
     }
 
@@ -69,7 +71,7 @@ export class AuthController {
         } catch (error) {
             console.error('Error al obtener el perfil:', error);
             //return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
-            return new Response(HttpStatus.UNAUTHORIZED, responseType.ERROR, error?.message);
+            return new Response({status:HttpStatus.UNAUTHORIZED,statusCode:HttpStatus.UNAUTHORIZED, responseType:responseType.ERROR, message:error?.message});
         }
     }
 

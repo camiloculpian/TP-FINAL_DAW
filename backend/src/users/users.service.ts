@@ -99,6 +99,7 @@ export class UsersService {
     }
   }
 
+  // Cambiar y gacer uso de findOneByEmail y findOneByDNI para retornar el usuario
   async findOneByUsernameAndPasswd(username: string, password: string) {
     try {
       return await this.userRepository.findOne(
