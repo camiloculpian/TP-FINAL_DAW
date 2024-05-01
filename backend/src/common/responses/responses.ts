@@ -1,3 +1,5 @@
+// Clase para estandarizar y normalizar respuestas del controlador...
+
 import { HttpStatus } from "@nestjs/common";
 
 export enum responseType{
