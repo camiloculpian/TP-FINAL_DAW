@@ -115,7 +115,11 @@ export class TicketsService {
       }
       return ticket;
     } catch (e) {
-      throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
+      if(e instanceof BadRequestException || e instanceof UnauthorizedException){
+        throw e;
+      }else{
+        throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
+      }
     }
   }
 
@@ -162,6 +166,9 @@ export class TicketsService {
         if (ticket.status == TicketStatus.RESOLVED) {
           throw new BadRequestException({status:responseStatus.ERROR,message:'Ticket ya resuelto'});
         }
+        if(updateTicketDto.asignedToUserId  || updateTicketDto.priority  || updateTicketDto.service  || updateTicketDto.title){
+          throw new UnauthorizedException({status:responseStatus.ERROR,message:'Usted no esta autorizado a cambiar: Usuario asignado, prioridad, servicio o titulo'});
+        }
 
         const { description, status, archive } = updateTicketDto;
         const lastModified = new Date(Date.now());
@@ -178,7 +185,11 @@ export class TicketsService {
         });
       }
     } catch (e) {
-      throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
+      if(e instanceof BadRequestException || e instanceof UnauthorizedException){
+        throw e;
+      }else{
+        throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
+      }
     }
   }
 

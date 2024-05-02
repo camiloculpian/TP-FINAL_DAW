@@ -193,17 +193,15 @@ export class TicketsController {
         @CurrentUser('sub') userId: number,
     ) {
         try {
-            if (archive) {
-                updateTicketDto.archive = archive.filename;
-            }
-            return await this.ticketsService.update(
-                +id,
-                updateTicketDto,
-                userId,
-            );
+                if (archive) {
+                    updateTicketDto.archive = archive.filename;
+                }
+                return await this.ticketsService.update(
+                    +id,
+                    updateTicketDto,
+                    userId,
+                );
         } catch (e) {
-            console.error(`Error al actualizar ticket con ID ${id}:`, e);
-            //return {'status':'ERROR','message':e.message,'statusCode':e.statusCode};
             throw e;
         }
     }
