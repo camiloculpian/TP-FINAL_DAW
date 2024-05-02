@@ -36,7 +36,7 @@ export class TicketsService {
       );
 
       if (!userAsignedTo) {
-        throw new BadRequestException({status:responseStatus.ERROR,message:'User who you wants to asign the ticket not exist!'});
+        throw new BadRequestException({status:responseStatus.ERROR,message:'El usuario al que se le quiere asignar el ticket no existe'});
       }
       ticket.asignedToUser = userAsignedTo;
       ticket.asignedByUser = user;
