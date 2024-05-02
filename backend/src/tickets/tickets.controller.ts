@@ -97,7 +97,7 @@ export class TicketsController {
         //      -las previstas, o sea las que lanzamos nosotros por ej. no esta autorizado o algun otro chequeo las definimos en el SERVICIO!!!!
         //          y deben de tener la forma por ej. throw new BadRequestException({status:responseStatus.ERROR,message:'User who you wants to asign the ticket not exist!'});
         //
-        //      -las no previstas, o sea por ej se corto la comunicacion con el servicio de la base de datos solo lanzamos e!!!
+        //      -las no previstas, o sea por ej se corto la comunicacion con el servicio de la base de datos o los chequeos del dto solo lanzamos e!!!
         try {
             if (archive) {
                 createTicketDto.archive = archive.filename;
