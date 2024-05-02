@@ -29,7 +29,6 @@ export class PersonsService {
         // },
       });
     } catch (e) {
-      console.log(e);
       return e;
     }
   }
@@ -45,7 +44,6 @@ export class PersonsService {
         // },
       });
     } catch (e) {
-      console.log(e);
       return e;
     }
   }
