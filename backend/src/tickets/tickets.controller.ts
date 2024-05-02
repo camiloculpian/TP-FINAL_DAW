@@ -12,7 +12,8 @@ import {
     NotFoundException,
     Inject,
     Query,
-    HttpStatus
+    HttpStatus,
+    HttpException
 } from '@nestjs/common';
 import { TicketsService } from './tickets.service';
 import { CreateTicketDto } from './dto/create-ticket.dto';
@@ -94,12 +95,9 @@ export class TicketsController {
                 createTicketDto,
                 userId,
             );
-            //return newTicket;
             return new Response({responseType:responseType.OK, message:'El ticket fue añadido de manera correcta', data:newTicket});
-        } catch (error) {
-            console.error('Error al crear ticket:', error);
-            return new Response({responseType:responseType.ERROR, message:error.message});
-            //return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
+        } catch (e) {
+            throw e;
         }
     }
     
@@ -118,9 +116,8 @@ export class TicketsController {
     ) {
       try {
         return await this.ticketsService.findAll(userId, service, status, assignedToUserId, page, limit);
-    } catch (error) {
-        console.error('Error al obtener tickets:', error);
-        return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
+    } catch (e) {
+        throw e;
     }
     }
 

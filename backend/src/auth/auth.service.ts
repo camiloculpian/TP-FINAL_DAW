@@ -30,44 +30,53 @@ export class AuthService {
     // }
 
     async login(loginUserDto: LoginUserDto) {
-        let user = await this.usersServive.findOneByUsernameAndPasswd(
-            loginUserDto.username,
-            loginUserDto.password,
-        );
-        if (!user) {
-            let userBy = await this.usersServive.findOneByEmail(
+        try{
+            let user = await this.usersServive.findOneByUsernameAndPasswd(
                 loginUserDto.username,
+                loginUserDto.password,
             );
-            if (userBy) {
-                user = await this.usersServive.findOneByUsernameAndPasswd(
-                    userBy?.user.username,
-                    loginUserDto.password,
+            if (!user) {
+                let userBy = await this.usersServive.findOneByEmail(
+                    loginUserDto.username,
                 );
-            } else {
-                userBy = await this.usersServive.findOneByDNI(loginUserDto.username);
                 if (userBy) {
                     user = await this.usersServive.findOneByUsernameAndPasswd(
                         userBy?.user.username,
                         loginUserDto.password,
                     );
+                } else {
+                    userBy = await this.usersServive.findOneByDNI(loginUserDto.username);
+                    if (userBy) {
+                        user = await this.usersServive.findOneByUsernameAndPasswd(
+                            userBy?.user.username,
+                            loginUserDto.password,
+                        );
+                    }
                 }
             }
+            if (user) {
+                const payload = { sub: user.id };
+                const token = await this.jwtService.signAsync(payload);
+                return {
+                    nombre: user.person.name + ' ' + user.person.lastName,
+                    username: user.username,
+                    rol: user.rol,
+                    token: token,
+                };
+            } else {
+                throw new UnauthorizedException('Invalid Credentials');
+            }
+        }catch(e){
+            throw e;
         }
-        if (user) {
-            const payload = { sub: user.id };
-            const token = await this.jwtService.signAsync(payload);
-            return {
-                nombre: user.person.name + ' ' + user.person.lastName,
-                username: user.username,
-                rol: user.rol,
-                token: token,
-            };
-        } else {
-            throw new UnauthorizedException('Invalid Credentials');
-        }
+        
     }
 
     async getProfile(userId: number) {
-        return await this.usersServive.findOne(userId);
+        try{
+            return await this.usersServive.findOne(userId);
+        }catch (e){
+            throw e;
+        }
     }
 }

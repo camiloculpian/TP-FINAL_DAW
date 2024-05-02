@@ -12,6 +12,7 @@ import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { AuthGuard } from './auth.guard';
 import { Response, responseType } from 'src/common/responses/responses';
+import { CurrentUser } from './decorators/currentUser.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -53,27 +54,21 @@ export class AuthController {
         @Body() loginUserDto: LoginUserDto,
     ) {
         try {
-            //return await this.authService.login(loginUserDto);
             return new Response({responseType:responseType.OK, message:'Bienvenido!',data:await this.authService.login(loginUserDto)});
-        } catch (error) {
-            console.error('Error durante el inicio de sesión:', error);
-            //return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
-            //return new Response({status:HttpStatus.UNAUTHORIZED,statusCode:HttpStatus.UNAUTHORIZED, responseType:responseType.ERROR, message:error?.message});
-            throw new UnauthorizedException({message:error.message,responseType:responseType.UNAUTH});
+        } catch (e) {
+            throw new UnauthorizedException({message:e.message,responseType:responseType.UNAUTH});
         }
     }
 
     @Get('profile')
     @UseGuards(AuthGuard)
     async profile(
-        @Request() req
+        @CurrentUser('sub') userId: number
     ) {
         try {
-            return await this.authService.getProfile(req.user.sub);
-        } catch (error) {
-            console.error('Error al obtener el perfil:', error);
-            //return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
-            throw error
+            return await this.authService.getProfile(userId);
+        } catch (e) {
+            throw e
         }
     }
 
