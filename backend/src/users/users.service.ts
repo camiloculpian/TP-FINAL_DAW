@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -8,6 +8,7 @@ import { Person } from '../persons/entities/person.entity';
 import { BadRequestException, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { UpdateUserRolesDto } from './dto/update-userRoles.dto ';
 import { Role } from 'src/auth/enums/role.enum';
+import { responseStatus } from 'src/common/responses/responses';
 
 
 @Injectable()
@@ -95,7 +96,7 @@ export class UsersService {
       );
     } catch (e) {
       console.log(e)
-      return e;
+      throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
     }
   }
 
@@ -115,7 +116,7 @@ export class UsersService {
       );
     } catch (e) {
       console.log(e)
-      return e;
+      throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
     }
   }
 
@@ -133,7 +134,7 @@ export class UsersService {
       );
     } catch (e) {
       console.log(e)
-      return e;
+      throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
     }
   }
 
@@ -151,7 +152,7 @@ export class UsersService {
       );
     } catch (e) {
       console.log(e)
-      return e;
+      throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
     }
   }
 
@@ -169,7 +170,7 @@ export class UsersService {
       );
     } catch (e) {
       console.log(e)
-      return e;
+      throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
     }
   }
 
@@ -230,10 +231,10 @@ export class UsersService {
       await queryRunner.commitTransaction();
   
       return { status: 'OK', message: 'Los datos del usuario se actualizaron correctamente' };
-    } catch (error) {
+    } catch (e) {
       await queryRunner.rollbackTransaction();
-      console.log(error.message);
-      throw error;
+      console.log(e.message);
+      throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
     } finally {
       await queryRunner.release();
     }

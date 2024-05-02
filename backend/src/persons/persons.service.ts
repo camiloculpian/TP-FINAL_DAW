@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Person } from './entities/person.entity';
 import { Repository } from 'typeorm';
+import { responseStatus } from 'src/common/responses/responses';
 
 @Injectable()
 export class PersonsService {
@@ -17,7 +18,7 @@ export class PersonsService {
       return await this.personRepository.save(createPersonDto);
     } catch (e) {
       console.log(e);
-      return e;
+      throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
     }
   }
 
@@ -29,7 +30,7 @@ export class PersonsService {
         // },
       });
     } catch (e) {
-      return e;
+      throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
     }
   }
 
@@ -44,7 +45,7 @@ export class PersonsService {
         // },
       });
     } catch (e) {
-      return e;
+      throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
     }
   }
 
@@ -53,7 +54,7 @@ export class PersonsService {
       return await this.personRepository.update(id, updatePersonDto);
     } catch (e) {
       console.log(e);
-      return e;
+      throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
     }
   }
 
@@ -62,7 +63,7 @@ export class PersonsService {
       return await this.personRepository.softDelete({ id });
     } catch (e) {
       console.log(e);
-      return e;
+      throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
     }
   }
 }

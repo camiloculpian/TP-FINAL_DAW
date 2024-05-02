@@ -62,7 +62,7 @@ export class AuthService {
                 return {
                     nombre: user.person.name + ' ' + user.person.lastName,
                     username: user.username,
-                    rol: user.rol,
+                    roles: user.roles,
                     token: token,
                 };
             } else {
