@@ -13,7 +13,10 @@ import {
     Inject,
     Query,
     HttpStatus,
-    HttpException
+    HttpException,
+    ImATeapotException,
+    NotImplementedException,
+    BadRequestException
 } from '@nestjs/common';
 import { TicketsService } from './tickets.service';
 import { CreateTicketDto } from './dto/create-ticket.dto';
@@ -97,7 +100,7 @@ export class TicketsController {
             );
             return new Response({responseType:responseType.OK, message:'El ticket fue añadido de manera correcta', data:newTicket});
         } catch (e) {
-            throw e;
+            throw new BadRequestException({status:responseType.ERROR,message:e.message})
         }
     }
     
@@ -117,7 +120,7 @@ export class TicketsController {
       try {
         return await this.ticketsService.findAll(userId, service, status, assignedToUserId, page, limit);
     } catch (e) {
-        throw e;
+        throw new BadRequestException({status:responseType.ERROR,message:e.message})
     }
     }
 
@@ -136,7 +139,7 @@ export class TicketsController {
             }
             return ticket;
         } catch (e) {
-            throw e;
+            throw new BadRequestException({status:responseType.ERROR,message:e.message})
         }
     }
 
@@ -198,9 +201,10 @@ export class TicketsController {
                 throw new NotFoundException('Ticket no encontrado');
             }
             return updatedTicket;
-        } catch (error) {
-            console.error(`Error al actualizar ticket con ID ${id}:`, error);
-            return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
+        } catch (e) {
+            console.error(`Error al actualizar ticket con ID ${id}:`, e);
+            //return {'status':'ERROR','message':e.message,'statusCode':e.statusCode};
+            throw new BadRequestException({status:responseType.ERROR,message:e.message})
         }
     }
 
@@ -219,9 +223,10 @@ export class TicketsController {
                 throw new NotFoundException('Ticket no encontrado');
             }
             return removedTicket;
-        } catch (error) {
-            console.error(`Error al eliminar ticket con ID ${id}:`, error);
-            return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
+        } catch (e) {
+            // console.error(`Error al eliminar ticket con ID ${id}:`, e);
+            // return {'status':'ERROR','message':e.message,'statusCode':e.statusCode};
+            throw new BadRequestException({status:responseType.ERROR,message:e.message})
         }
     }
 }

@@ -123,8 +123,8 @@ export class TicketsService {
 
       return ticket;
     } catch (e) {
-      console.log(e);
-      throw new InternalServerErrorException('Error al buscar el ticket');
+      //console.log(e);
+      return e;
     }
   }
 
