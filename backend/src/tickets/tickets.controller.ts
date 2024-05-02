@@ -90,6 +90,14 @@ export class TicketsController {
         @UploadedFile() archive: Express.Multer.File,
         @CurrentUser('sub') userId: number,
     ) {
+        // MANEJO DE ERRORES Y RESPUESTAS
+        // las respuestas es sencillo pq las devolvemos con una instancia de la clase Response
+        // las excepciones deberiamos devolverlas en dos tipos: 
+        //
+        //      -las previstas, o sea las que lanzamos nosotros por ej. no esta autorizado o algun otro chequeo las definimos en el SERVICIO!!!!
+        //          y deben de tener la forma por ej. throw new BadRequestException({status:responseStatus.ERROR,message:'User who you wants to asign the ticket not exist!'});
+        //
+        //      -las no previstas, o sea por ej se corto la comunicacion con el servicio de la base de datos solo lanzamos e!!!
         try {
             if (archive) {
                 createTicketDto.archive = archive.filename;
@@ -100,7 +108,7 @@ export class TicketsController {
             );
             return new Response({status:responseStatus.OK, message:'El ticket fue añadido de manera correcta', data:newTicket});
         } catch (e) {
-            throw new BadRequestException({status:responseStatus.ERROR,message:e.message})
+            throw e;
         }
     }
     
@@ -117,11 +125,11 @@ export class TicketsController {
       @Query('page') page?: number,
       @Query('limit') limit?: number,
     ) {
-      try {
-        return await this.ticketsService.findAll(userId, service, status, assignedToUserId, page, limit);
-    } catch (e) {
-        throw new BadRequestException({status:responseStatus.ERROR,message:e.message})
-    }
+        try {
+            return await this.ticketsService.findAll(userId, service, status, assignedToUserId, page, limit);
+        } catch (e) {
+            throw new BadRequestException({status:responseStatus.ERROR,message:e.message})
+        }
     }
 
     // Buscar tickets
@@ -139,7 +147,7 @@ export class TicketsController {
             }
             return ticket;
         } catch (e) {
-            throw new BadRequestException({status:responseStatus.ERROR,message:e.message})
+            throw new BadRequestException({status:responseStatus.ERROR,message:e.message});
         }
     }
 
@@ -224,9 +232,7 @@ export class TicketsController {
             }
             return removedTicket;
         } catch (e) {
-            // console.error(`Error al eliminar ticket con ID ${id}:`, e);
-            // return {'status':'ERROR','message':e.message,'statusCode':e.statusCode};
-            throw new BadRequestException({status:responseStatus.ERROR,message:e.message})
+            throw new BadRequestException({status:responseStatus.ERROR,message:e.message});
         }
     }
 }
