@@ -159,11 +159,15 @@ export class TicketsService {
         ticket.asignedToUser = userAsignedTo;
         ticket.asignedByUser = user;
         ticket.lastModifiedByUser = user;
-        return new Response({
-          status:responseStatus.OK,
-          message: `Ticket #${id} actualizado correctamente`,
-          data:await this.ticketRepository.update(id, ticket)
-        });
+        let resp = await this.ticketRepository.update(id, ticket);
+        if(resp.affected=1){
+          return new Response({
+            status:responseStatus.OK,
+            message: `Ticket #${id} actualizado correctamente`
+          });
+        }else{
+          throw new BadRequestException({status:responseStatus.ERROR,message:`Hubo un problema actualizando el tichet #${id}`});
+        }
       } else {
         // Si el usuario no es un administrador, actualización solo de la descripción, el estado y el archivo, salvo que el estado sea RESOLVED
         if (ticket.status == TicketStatus.RESOLVED) {
@@ -176,16 +180,20 @@ export class TicketsService {
         const { description, status, archive } = updateTicketDto;
         const lastModified = new Date(Date.now());
 
-        return new Response({
-          status:responseStatus.OK,
-          message: `Ticket #${id} actualizado correctamente`,
-          data:await this.ticketRepository.update(id, {
-            description,
-            status,
-            archive,
-            lastModified,
-          })
+        let resp = await this.ticketRepository.update(id, {
+          description,
+          status,
+          archive,
+          lastModified,
         });
+        if(resp.affected=1){
+          return new Response({
+            status:responseStatus.OK,
+            message: `Ticket #${id} actualizado correctamente`
+          });
+        }else{
+          throw new BadRequestException({status:responseStatus.ERROR,message:`Hubo un problema actualizando el tichet #${id}`});
+        }
       }
     } catch (e) {
       if(e instanceof BadRequestException || e instanceof UnauthorizedException){
@@ -205,7 +213,7 @@ export class TicketsService {
         throw new BadRequestException({status:responseStatus.ERROR, message:`No se encontró un ticket con el ID: ${id}`});
       }
     } catch (e) {
-      if(e instanceof BadRequestException){
+      if(e instanceof BadRequestException || e instanceof UnauthorizedException){
         throw e;
       }else{
         throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
