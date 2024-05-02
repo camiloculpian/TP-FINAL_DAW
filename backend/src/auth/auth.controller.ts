@@ -56,7 +56,7 @@ export class AuthController {
         try {
             return new Response({status:responseStatus.OK, message:'Bienvenido!',data:await this.authService.login(loginUserDto)});
         } catch (e) {
-            throw new UnauthorizedException({message:e.message,status:responseStatus.UNAUTH});
+            throw e
         }
     }
 

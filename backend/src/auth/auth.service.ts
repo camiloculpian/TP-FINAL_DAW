@@ -1,12 +1,14 @@
 import {
     BadRequestException,
     Injectable,
+    InternalServerErrorException,
     UnauthorizedException,
 } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { RegisterUserDto } from './dto/registerUser.dto';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { JwtService } from '@nestjs/jwt';
+import { responseStatus } from 'src/common/responses/responses';
 
 @Injectable()
 export class AuthService {
@@ -64,7 +66,7 @@ export class AuthService {
                     token: token,
                 };
             } else {
-                throw new UnauthorizedException('Invalid Credentials');
+                new UnauthorizedException({status:responseStatus.UNAUTH,message:'Credenciales invalidas'});
             }
         }catch(e){
             throw e;
@@ -76,7 +78,7 @@ export class AuthService {
         try{
             return await this.usersServive.findOne(userId);
         }catch (e){
-            throw e;
+            throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
         }
     }
 }
