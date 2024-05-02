@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, UnauthorizedException} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -58,10 +58,14 @@ export class UsersService {
       // console.log(user);
       return 'Successfully created user';
 
-    } catch (error) {
+    } catch (e) {
       await queryRunner.rollbackTransaction();
-      console.log(error.message);
-      throw error;
+      console.log(e.message);
+      if(e instanceof BadRequestException){
+        throw e;
+      }else{
+        throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
+      }
     } finally {
       await queryRunner.release();
     }
@@ -77,7 +81,7 @@ export class UsersService {
       })
     } catch (e) {
       console.log(e)
-      return e;
+      throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
     }
   }
   // busca uno by id
@@ -234,7 +238,11 @@ export class UsersService {
     } catch (e) {
       await queryRunner.rollbackTransaction();
       console.log(e.message);
-      throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
+      if(e instanceof BadRequestException || e instanceof UnauthorizedException){
+        throw e;
+      }else{
+        throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
+      }
     } finally {
       await queryRunner.release();
     }
@@ -247,7 +255,7 @@ export class UsersService {
       return ({ statusCode: 200, status: 'OK', message: 'OK: El rol del usuario se actualizó de forma correcta' });
     } catch (e) {
       console.log(e)
-      return ({ statusCode: e.statusCode, status: 'ERROR', message: e.message });
+      throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
     }
   }
 
@@ -256,11 +264,11 @@ export class UsersService {
       return await this.userRepository.softDelete(id);
     } catch (e) {
       console.log(e)
-      return e;
+      throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
     }
   }
 
-  async getRolesById(id: number) {
+  private async getRolesById(id: number) {
     try {
       return await this.userRepository.findOne(
         {
@@ -274,7 +282,7 @@ export class UsersService {
       );
     } catch (e) {
       console.log(e)
-      return e;
+      throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
     }
   }
 }
