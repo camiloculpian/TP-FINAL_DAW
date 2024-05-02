@@ -135,9 +135,8 @@ export class TicketsController {
                 throw new NotFoundException('Ticket no encontrado');
             }
             return ticket;
-        } catch (error) {
-            console.error(`Error al buscar ticket con ID ${id}:`, error);
-            return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
+        } catch (e) {
+            throw e;
         }
     }
 
