@@ -36,7 +36,7 @@ export class TicketsService {
       );
 
       if (!userAsignedTo) {
-        return new NotFoundException(
+        throw new NotFoundException(
           'User who you wants to asign the ticket not exist!',
         );
       }
@@ -46,8 +46,7 @@ export class TicketsService {
       ticket.lastModifiedByUser = user;
       return await this.ticketRepository.save(ticket);
     } catch (e) {
-      console.log(e);
-      return e;
+      throw e;
     }
   }
 

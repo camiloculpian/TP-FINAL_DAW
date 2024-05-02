@@ -36,7 +36,7 @@ import { Role } from 'src/auth/enums/role.enum';
 import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
 import { UsersService } from 'src/users/users.service';
 import { TicketStatus } from '../tickets/entities/ticket.entity';
-import { Response, responseType } from 'src/common/responses/responses';
+import { Response, responseStatus } from 'src/common/responses/responses';
 
 @ApiTags('Tickets')
 @Controller('tickets')
@@ -98,9 +98,9 @@ export class TicketsController {
                 createTicketDto,
                 userId,
             );
-            return new Response({responseType:responseType.OK, message:'El ticket fue añadido de manera correcta', data:newTicket});
+            return new Response({status:responseStatus.OK, message:'El ticket fue añadido de manera correcta', data:newTicket});
         } catch (e) {
-            throw new BadRequestException({status:responseType.ERROR,message:e.message})
+            throw new BadRequestException({status:responseStatus.ERROR,message:e.message})
         }
     }
     
@@ -120,7 +120,7 @@ export class TicketsController {
       try {
         return await this.ticketsService.findAll(userId, service, status, assignedToUserId, page, limit);
     } catch (e) {
-        throw new BadRequestException({status:responseType.ERROR,message:e.message})
+        throw new BadRequestException({status:responseStatus.ERROR,message:e.message})
     }
     }
 
@@ -139,7 +139,7 @@ export class TicketsController {
             }
             return ticket;
         } catch (e) {
-            throw new BadRequestException({status:responseType.ERROR,message:e.message})
+            throw new BadRequestException({status:responseStatus.ERROR,message:e.message})
         }
     }
 
@@ -204,7 +204,7 @@ export class TicketsController {
         } catch (e) {
             console.error(`Error al actualizar ticket con ID ${id}:`, e);
             //return {'status':'ERROR','message':e.message,'statusCode':e.statusCode};
-            throw new BadRequestException({status:responseType.ERROR,message:e.message})
+            throw new BadRequestException({status:responseStatus.ERROR,message:e.message})
         }
     }
 
@@ -226,7 +226,7 @@ export class TicketsController {
         } catch (e) {
             // console.error(`Error al eliminar ticket con ID ${id}:`, e);
             // return {'status':'ERROR','message':e.message,'statusCode':e.statusCode};
-            throw new BadRequestException({status:responseType.ERROR,message:e.message})
+            throw new BadRequestException({status:responseStatus.ERROR,message:e.message})
         }
     }
 }

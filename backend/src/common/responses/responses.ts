@@ -1,6 +1,6 @@
 // Clase para estandarizar y normalizar respuestas del controlador...
 
-export enum responseType{
+export enum responseStatus{
     OK= 'OK',
     ERROR= 'ERROR',
     WARN= 'WARN',
@@ -9,18 +9,18 @@ export enum responseType{
 }
 
 export interface ResponseOptions<Entitt = any> {
-    responseType: responseType;
+    status: responseStatus;
     message: string;
     data?: Entitt;
 }
 
 export class Response{
-    public responseType:string;
+    public status:string;
     public message:string;
     public data:JSON;
 
     constructor(options: ResponseOptions){
-        this.responseType=options.responseType;
+        this.status=options.status;
         this.message=options.message;
         this.data=options.data;
     }

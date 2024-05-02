@@ -11,7 +11,7 @@ import {
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { AuthGuard } from './auth.guard';
-import { Response, responseType } from 'src/common/responses/responses';
+import { Response, responseStatus } from 'src/common/responses/responses';
 import { CurrentUser } from './decorators/currentUser.decorator';
 
 @Controller('auth')
@@ -54,9 +54,9 @@ export class AuthController {
         @Body() loginUserDto: LoginUserDto,
     ) {
         try {
-            return new Response({responseType:responseType.OK, message:'Bienvenido!',data:await this.authService.login(loginUserDto)});
+            return new Response({status:responseStatus.OK, message:'Bienvenido!',data:await this.authService.login(loginUserDto)});
         } catch (e) {
-            throw new UnauthorizedException({message:e.message,responseType:responseType.UNAUTH});
+            throw new UnauthorizedException({message:e.message,status:responseStatus.UNAUTH});
         }
     }
 
