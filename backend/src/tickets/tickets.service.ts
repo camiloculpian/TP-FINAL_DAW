@@ -8,7 +8,6 @@ import { UsersService } from 'src/users/users.service';
 import { Role } from 'src/auth/enums/role.enum'; // Importacion del Roles
 import {
   InternalServerErrorException,
-  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { Response, responseStatus } from 'src/common/responses/responses';
@@ -114,10 +113,9 @@ export class TicketsService {
         // no está autorizado a ver este ticket
         throw new UnauthorizedException({status:responseStatus.ERROR,message:'No está autorizado a ver este ticket'});
       }
-
       return ticket;
     } catch (e) {
-      return e;
+      throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
     }
   }
 

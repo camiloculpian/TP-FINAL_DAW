@@ -141,13 +141,9 @@ export class TicketsController {
     @ApiParam({ name: 'id', description: 'ID único del ticket' })
     async findOne(@Param('id') id: string, @CurrentUser('sub') userId: number) {
         try {
-            const ticket = await this.ticketsService.findOne(+id, userId);
-            if (!ticket) {
-                throw new NotFoundException('Ticket no encontrado');
-            }
-            return ticket;
+            return await this.ticketsService.findOne(+id, userId);
         } catch (e) {
-            throw new BadRequestException({status:responseStatus.ERROR,message:e.message});
+            throw e;
         }
     }
 
@@ -200,19 +196,15 @@ export class TicketsController {
             if (archive) {
                 updateTicketDto.archive = archive.filename;
             }
-            const updatedTicket = await this.ticketsService.update(
+            return await this.ticketsService.update(
                 +id,
                 updateTicketDto,
                 userId,
             );
-            if (!updatedTicket) {
-                throw new NotFoundException('Ticket no encontrado');
-            }
-            return updatedTicket;
         } catch (e) {
             console.error(`Error al actualizar ticket con ID ${id}:`, e);
             //return {'status':'ERROR','message':e.message,'statusCode':e.statusCode};
-            throw new BadRequestException({status:responseStatus.ERROR,message:e.message})
+            throw e;
         }
     }
 
@@ -226,13 +218,9 @@ export class TicketsController {
     @ApiParam({ name: 'id', description: 'ID único del ticket' })
     async remove(@Param('id') id: string) {
         try {
-            const removedTicket = await this.ticketsService.remove(+id);
-            if (!removedTicket) {
-                throw new NotFoundException('Ticket no encontrado');
-            }
-            return removedTicket;
+            return await this.ticketsService.remove(+id);
         } catch (e) {
-            throw new BadRequestException({status:responseStatus.ERROR,message:e.message});
+            throw e;
         }
     }
 }
