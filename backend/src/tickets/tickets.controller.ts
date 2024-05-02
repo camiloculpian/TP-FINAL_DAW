@@ -11,9 +11,12 @@ import {
     UseGuards,
     NotFoundException,
     Inject,
-    BadRequestException,
-    InternalServerErrorException,
-    Query
+    Query,
+    HttpStatus,
+    HttpException,
+    ImATeapotException,
+    NotImplementedException,
+    BadRequestException
 } from '@nestjs/common';
 import { TicketsService } from './tickets.service';
 import { CreateTicketDto } from './dto/create-ticket.dto';
@@ -33,6 +36,7 @@ import { Role } from 'src/auth/enums/role.enum';
 import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
 import { UsersService } from 'src/users/users.service';
 import { TicketStatus } from '../tickets/entities/ticket.entity';
+import { Response, responseStatus } from 'src/common/responses/responses';
 
 @ApiTags('Tickets')
 @Controller('tickets')
@@ -86,6 +90,14 @@ export class TicketsController {
         @UploadedFile() archive: Express.Multer.File,
         @CurrentUser('sub') userId: number,
     ) {
+        // MANEJO DE ERRORES Y RESPUESTAS
+        // las respuestas es sencillo pq las devolvemos con una instancia de la clase Response
+        // las excepciones deberiamos devolverlas en dos tipos: 
+        //
+        //      -las previstas, o sea las que lanzamos nosotros por ej. no esta autorizado o algun otro chequeo las definimos en el SERVICIO!!!!
+        //          y deben de tener la forma por ej. throw new BadRequestException({status:responseStatus.ERROR,message:'User who you wants to asign the ticket not exist!'});
+        //
+        //      -las no previstas, o sea por ej se corto la comunicacion con el servicio de la base de datos o los chequeos del dto solo lanzamos e!!!
         try {
             if (archive) {
                 createTicketDto.archive = archive.filename;
@@ -94,10 +106,9 @@ export class TicketsController {
                 createTicketDto,
                 userId,
             );
-            return newTicket;
-        } catch (error) {
-            console.error('Error al crear ticket:', error);
-            return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
+            return new Response({status:responseStatus.OK, message:'El ticket fue añadido de manera correcta', data:newTicket});
+        } catch (e) {
+            throw e;
         }
     }
     
@@ -114,12 +125,11 @@ export class TicketsController {
       @Query('page') page?: number,
       @Query('limit') limit?: number,
     ) {
-      try {
-        return await this.ticketsService.findAll(userId, service, status, assignedToUserId, page, limit);
-    } catch (error) {
-        console.error('Error al obtener tickets:', error);
-        return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
-    }
+        try {
+            return await this.ticketsService.findAll(userId, service, status, assignedToUserId, page, limit);
+        } catch (e) {
+            throw new BadRequestException({status:responseStatus.ERROR,message:e.message})
+        }
     }
 
     // Buscar tickets
@@ -131,14 +141,9 @@ export class TicketsController {
     @ApiParam({ name: 'id', description: 'ID único del ticket' })
     async findOne(@Param('id') id: string, @CurrentUser('sub') userId: number) {
         try {
-            const ticket = await this.ticketsService.findOne(+id, userId);
-            if (!ticket) {
-                throw new NotFoundException('Ticket no encontrado');
-            }
-            return ticket;
-        } catch (error) {
-            console.error(`Error al buscar ticket con ID ${id}:`, error);
-            return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
+            return await this.ticketsService.findOne(+id, userId);
+        } catch (e) {
+            throw e;
         }
     }
 
@@ -188,21 +193,16 @@ export class TicketsController {
         @CurrentUser('sub') userId: number,
     ) {
         try {
-            if (archive) {
-                updateTicketDto.archive = archive.filename;
-            }
-            const updatedTicket = await this.ticketsService.update(
-                +id,
-                updateTicketDto,
-                userId,
-            );
-            if (!updatedTicket) {
-                throw new NotFoundException('Ticket no encontrado');
-            }
-            return updatedTicket;
-        } catch (error) {
-            console.error(`Error al actualizar ticket con ID ${id}:`, error);
-            return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
+                if (archive) {
+                    updateTicketDto.archive = archive.filename;
+                }
+                return await this.ticketsService.update(
+                    +id,
+                    updateTicketDto,
+                    userId,
+                );
+        } catch (e) {
+            throw e;
         }
     }
 
@@ -216,14 +216,9 @@ export class TicketsController {
     @ApiParam({ name: 'id', description: 'ID único del ticket' })
     async remove(@Param('id') id: string) {
         try {
-            const removedTicket = await this.ticketsService.remove(+id);
-            if (!removedTicket) {
-                throw new NotFoundException('Ticket no encontrado');
-            }
-            return removedTicket;
-        } catch (error) {
-            console.error(`Error al eliminar ticket con ID ${id}:`, error);
-            return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
+            return await this.ticketsService.remove(+id);
+        } catch (e) {
+            throw e;
         }
     }
 }

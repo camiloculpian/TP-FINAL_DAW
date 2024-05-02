@@ -1,6 +1,7 @@
 import {
     BadRequestException,
     Injectable,
+    InternalServerErrorException,
     UnauthorizedException,
     HttpStatus,
     HttpException
@@ -9,6 +10,7 @@ import { UsersService } from '../users/users.service';
 import { RegisterUserDto } from './dto/registerUser.dto';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { JwtService } from '@nestjs/jwt';
+import { responseStatus } from 'src/common/responses/responses';
 
 @Injectable()
 export class AuthService {
@@ -66,44 +68,61 @@ export class AuthService {
 
 
     async login(loginUserDto: LoginUserDto) {
-        let user = await this.usersServive.findOneByUsernameAndPasswd(
-            loginUserDto.username,
-            loginUserDto.password,
-        );
-        if (!user) {
-            let userBy = await this.usersServive.findOneByEmail(
+        try{
+            let user = await this.usersServive.findOneByUsernameAndPasswd(
                 loginUserDto.username,
+                loginUserDto.password,
             );
-            if (userBy) {
-                user = await this.usersServive.findOneByUsernameAndPasswd(
-                    userBy?.user.username,
-                    loginUserDto.password,
+            if (!user) {
+                let userBy = await this.usersServive.findOneByEmail(
+                    loginUserDto.username,
                 );
-            } else {
-                userBy = await this.usersServive.findOneByDNI(loginUserDto.username);
                 if (userBy) {
                     user = await this.usersServive.findOneByUsernameAndPasswd(
                         userBy?.user.username,
                         loginUserDto.password,
                     );
+                } else {
+                    userBy = await this.usersServive.findOneByDNI(loginUserDto.username);
+                    if (userBy) {
+                        user = await this.usersServive.findOneByUsernameAndPasswd(
+                            userBy?.user.username,
+                            loginUserDto.password,
+                        );
+                    }
                 }
             }
+            if (user) {
+                const payload = { sub: user.id };
+                const token = await this.jwtService.signAsync(payload);
+                return {
+                    nombre: user.person.name + ' ' + user.person.lastName,
+                    username: user.username,
+                    roles: user.roles,
+                    token: token,
+                };
+            } else {
+                new UnauthorizedException({status:responseStatus.UNAUTH,message:'Credenciales invalidas'});
+            }
+        }catch(e){
+            if(e instanceof BadRequestException || e instanceof UnauthorizedException){
+                throw e;
+            }else{
+                throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
+            }
         }
-        if (user) {
-            const payload = { sub: user.id };
-            const token = await this.jwtService.signAsync(payload);
-            return {
-                nombre: user.person.name + ' ' + user.person.lastName,
-                username: user.username,
-                rol: user.rol,
-                token: token,
-            };
-        } else {
-            throw new UnauthorizedException('Invalid Credentials');
-        }
+        
     }
 
     async getProfile(userId: number) {
-        return await this.usersServive.findOne(userId);
+        try{
+            return await this.usersServive.findOne(userId);
+        }catch (e){
+            if(e instanceof BadRequestException || e instanceof UnauthorizedException){
+                throw e;
+            }else{
+                throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
+            }
+        }
     }
 }

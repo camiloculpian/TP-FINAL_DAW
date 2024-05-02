@@ -6,6 +6,7 @@ import {
     HttpException,
     Post,
     Request,
+    UnauthorizedException,
     UseGuards,
     UseInterceptors,
     UploadedFile
@@ -13,7 +14,8 @@ import {
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { AuthGuard } from './auth.guard';
-import { Response, responseType } from 'src/common/responses/responses';
+import { Response, responseStatus } from 'src/common/responses/responses';
+import { CurrentUser } from './decorators/currentUser.decorator';
 
 import { FileInterceptor } from '@nestjs/platform-express';
 import { RegisterUserDto } from '../auth/dto/registerUser.dto'; // Asegúrate de importar el DTO de registro
@@ -92,24 +94,21 @@ export class AuthController {
         @Body() loginUserDto: LoginUserDto,
     ) {
         try {
-            return await this.authService.login(loginUserDto);
-        } catch (error) {
-            console.error('Error durante el inicio de sesión:', error);
-            return { 'status': 'ERROR', 'message': error.message, 'statusCode': error.statusCode };
+            return new Response({status:responseStatus.OK, message:'Bienvenido!',data:await this.authService.login(loginUserDto)});
+        } catch (e) {
+            throw e
         }
     }
 
     @Get('profile')
     @UseGuards(AuthGuard)
     async profile(
-        @Request() req
+        @CurrentUser('sub') userId: number
     ) {
         try {
-            return await this.authService.getProfile(req.user.sub);
-        } catch (error) {
-            console.error('Error al obtener el perfil:', error);
-            //return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
-            return new Response(HttpStatus.UNAUTHORIZED, responseType.ERROR, error?.message);
+            return await this.authService.getProfile(userId);
+        } catch (e) {
+            throw e
         }
     }
 

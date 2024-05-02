@@ -8,9 +8,9 @@ import { UsersService } from 'src/users/users.service';
 import { Role } from 'src/auth/enums/role.enum'; // Importacion del Roles
 import {
   InternalServerErrorException,
-  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
+import { Response, responseStatus } from 'src/common/responses/responses';
 
 @Injectable()
 export class TicketsService {
@@ -36,9 +36,7 @@ export class TicketsService {
       );
 
       if (!userAsignedTo) {
-        throw new NotFoundException(
-          'User who you wants to asign the ticket not exist!',
-        );
+        throw new BadRequestException({status:responseStatus.ERROR,message:'El usuario al que se le quiere asignar el ticket no existe'});
       }
       ticket.asignedToUser = userAsignedTo;
       ticket.asignedByUser = user;
@@ -46,8 +44,7 @@ export class TicketsService {
       ticket.lastModifiedByUser = user;
       return await this.ticketRepository.save(ticket);
     } catch (e) {
-      console.log(e);
-      return e;
+      throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
     }
   }
 
@@ -85,9 +82,8 @@ export class TicketsService {
 
       const tickets = await queryBuilder.getMany();
       return tickets;
-    } catch (error) {
-      console.error('Error fetching tickets:', error);
-      throw new InternalServerErrorException('Failed to fetch tickets');
+    } catch (e) {
+      throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
     }
   }
 
@@ -99,9 +95,6 @@ export class TicketsService {
       // Verificar si el usuario tiene rol de administrador
       const isAdmin = user.roles.includes(Role.ADMIN);
 
-      // Verificar si el usuario es un despachador
-      //const isDispatcher = user.roles.includes(Role.DISPATCHER);
-
       // Buscar el ticket por su ID
       const ticket = await this.ticketRepository.findOne({
         where: { id },
@@ -109,7 +102,7 @@ export class TicketsService {
       });
 
       if (!ticket) {
-        throw new NotFoundException('Ticket no encontrado');
+        throw new BadRequestException({status:responseStatus.ERROR,message:'Ticket no encontrado'});
       }
 
       if (
@@ -118,13 +111,15 @@ export class TicketsService {
       ) {
         // Si el usuario no es administrador, ni el usuario asignado al ticket, y el ticket esta resuelto,
         // no está autorizado a ver este ticket
-        throw new UnauthorizedException('No está autorizado a ver este ticket');
+        throw new UnauthorizedException({status:responseStatus.ERROR,message:'No está autorizado a ver este ticket'});
       }
-
       return ticket;
     } catch (e) {
-      console.log(e);
-      throw new InternalServerErrorException('Error al buscar el ticket');
+      if(e instanceof BadRequestException || e instanceof UnauthorizedException){
+        throw e;
+      }else{
+        throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
+      }
     }
   }
 
@@ -142,7 +137,7 @@ export class TicketsService {
       });
 
       if (!ticket) {
-        throw new NotFoundException('Ticket no encontrado');
+        throw new BadRequestException({status:responseStatus.ERROR,message:'El ticket que desea actualizar no existe'});
       }
 
       if (user.roles.includes(Role.ADMIN)) {
@@ -152,12 +147,10 @@ export class TicketsService {
           updateTicketDto.asignedToUserId,
         );
         if (!userAsignedTo) {
-          throw new NotFoundException(
-            'User who you wants to asign the ticket not exist!',
-          );
+          throw new BadRequestException({status:responseStatus.ERROR,message:'El usuario al que se le quiere asignar el ticket no existe'});
         }
         // Si el usuario es un administrador, permitir la actualización de todos los datos
-        ticket.title = updateTicketDto.title; // Este no estaba 
+        ticket.title = updateTicketDto.title;
         ticket.description = updateTicketDto.description;
         ticket.status = updateTicketDto.status;
         ticket.priority = updateTicketDto.priority;
@@ -166,45 +159,65 @@ export class TicketsService {
         ticket.asignedToUser = userAsignedTo;
         ticket.asignedByUser = user;
         ticket.lastModifiedByUser = user;
-        await this.ticketRepository.update(id, ticket);
-        return { message: `Ticket #${id} actualizado` };
+        let resp = await this.ticketRepository.update(id, ticket);
+        if(resp.affected=1){
+          return new Response({
+            status:responseStatus.OK,
+            message: `Ticket #${id} actualizado correctamente`
+          });
+        }else{
+          throw new BadRequestException({status:responseStatus.ERROR,message:`Hubo un problema actualizando el tichet #${id}`});
+        }
       } else {
         // Si el usuario no es un administrador, actualización solo de la descripción, el estado y el archivo, salvo que el estado sea RESOLVED
         if (ticket.status == TicketStatus.RESOLVED) {
-          throw new BadRequestException('Ticket ya resuelto');
+          throw new BadRequestException({status:responseStatus.ERROR,message:'Ticket ya resuelto'});
+        }
+        if(updateTicketDto.asignedToUserId  || updateTicketDto.priority  || updateTicketDto.service  || updateTicketDto.title){
+          throw new UnauthorizedException({status:responseStatus.ERROR,message:'Usted no esta autorizado a cambiar: Usuario asignado, prioridad, servicio y/o titulo'});
         }
 
         const { description, status, archive } = updateTicketDto;
         const lastModified = new Date(Date.now());
 
-        await this.ticketRepository.update(id, {
+        let resp = await this.ticketRepository.update(id, {
           description,
           status,
           archive,
           lastModified,
         });
-        return {
-          message: `Ticket #${id} actualizado (descripción, estado y archivo)`,
-        };
+        if(resp.affected=1){
+          return new Response({
+            status:responseStatus.OK,
+            message: `Ticket #${id} actualizado correctamente`
+          });
+        }else{
+          throw new BadRequestException({status:responseStatus.ERROR,message:`Hubo un problema actualizando el tichet #${id}`});
+        }
       }
-    } catch (error) {
-      console.log(error);
-      throw new InternalServerErrorException('Error al actualizar el ticket');
+    } catch (e) {
+      if(e instanceof BadRequestException || e instanceof UnauthorizedException){
+        throw e;
+      }else{
+        throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
+      }
     }
   }
 
   async remove(id: number) {
     try {
       const result = await this.ticketRepository.softDelete(id);
-
       if (result.affected && result.affected > 0) {
-        return { message: 'El ticket ha sido eliminado con éxito' };
+        return new Response({status:responseStatus.OK, message: `El ticket ID: ${id} ha sido eliminado con éxito`});
       } else {
-        throw new NotFoundException(`No se encontró un ticket con el ID: ${id}`);
+        throw new BadRequestException({status:responseStatus.ERROR, message:`No se encontró un ticket con el ID: ${id}`});
       }
-    } catch (error) {
-      console.error('Error al eliminar el ticket:', error);
-      throw new InternalServerErrorException('Error al eliminar el ticket');
+    } catch (e) {
+      if(e instanceof BadRequestException || e instanceof UnauthorizedException){
+        throw e;
+      }else{
+        throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
+      }
     }
   }
 }

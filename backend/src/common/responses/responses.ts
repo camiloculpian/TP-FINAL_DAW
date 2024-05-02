@@ -1,6 +1,6 @@
-import { HttpStatus } from "@nestjs/common";
+// Clase para estandarizar y normalizar respuestas del controlador...
 
-export enum responseType{
+export enum responseStatus{
     OK= 'OK',
     ERROR= 'ERROR',
     WARN= 'WARN',
@@ -8,17 +8,21 @@ export enum responseType{
     UNAUTH= 'UNAUTH',
 }
 
+export interface ResponseOptions<Entitt = any> {
+    status: responseStatus;
+    message: string;
+    data?: Entitt;
+}
+
 export class Response{
-    public statusCode:HttpStatus;
-    public type:string;
+    public status:string;
     public message:string;
     public data:JSON;
 
-    constructor(statusCode:HttpStatus,type:responseType,message:string,data?:JSON){
-        statusCode=statusCode;
-        type=type;
-        message=message;
-        data=data;
+    constructor(options: ResponseOptions){
+        this.status=options.status;
+        this.message=options.message;
+        this.data=options.data;
     }
 
 }
