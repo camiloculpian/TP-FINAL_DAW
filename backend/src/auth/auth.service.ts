@@ -69,7 +69,11 @@ export class AuthService {
                 new UnauthorizedException({status:responseStatus.UNAUTH,message:'Credenciales invalidas'});
             }
         }catch(e){
-            throw e;
+            if(e instanceof BadRequestException || e instanceof UnauthorizedException){
+                throw e;
+            }else{
+                throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
+            }
         }
         
     }
@@ -78,7 +82,11 @@ export class AuthService {
         try{
             return await this.usersServive.findOne(userId);
         }catch (e){
-            throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
+            if(e instanceof BadRequestException || e instanceof UnauthorizedException){
+                throw e;
+            }else{
+                throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
+            }
         }
     }
 }
