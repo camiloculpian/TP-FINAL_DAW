@@ -5,8 +5,6 @@ import {
     HttpStatus,
     HttpException,
     Post,
-    Request,
-    UnauthorizedException,
     UseGuards,
     UseInterceptors,
     UploadedFile
@@ -14,7 +12,6 @@ import {
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { AuthGuard } from './auth.guard';
-import { Response, responseStatus } from 'src/common/responses/responses';
 import { CurrentUser } from './decorators/currentUser.decorator';
 
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -22,12 +19,10 @@ import { RegisterUserDto } from '../auth/dto/registerUser.dto'; // Asegúrate de
 
 import { diskStorage } from 'multer'; // Importa diskStorage desde multer
 import { extname } from 'path'; 
-import { I18n, I18nContext, I18nService } from 'nestjs-i18n';
-import { I18nTranslations } from 'src/generated/i18n.generated';
 
 @Controller('auth')
 export class AuthController {
-    constructor(private readonly authService: AuthService, private readonly i18n: I18nService) { }
+    constructor(private readonly authService: AuthService) { }
 
     // @Post('register')
     // @UseInterceptors(FileInterceptor('profilePicture', {
