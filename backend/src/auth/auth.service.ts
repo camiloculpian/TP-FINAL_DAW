@@ -2,9 +2,7 @@ import {
     BadRequestException,
     Injectable,
     InternalServerErrorException,
-    UnauthorizedException,
-    HttpStatus,
-    HttpException
+    UnauthorizedException
 } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { RegisterUserDto } from './dto/registerUser.dto';
@@ -43,18 +41,21 @@ export class AuthService {
             const existingUserByEmail = await this.usersServive.findOneByEmail(registerUserDto.email);
 
             if (existingUserByUsername) {
-                throw new BadRequestException(this.i18n.t('auth.UsernameError',{ lang:   I18nContext.current().lang }));
+                throw new BadRequestException(this.i18n.t('lang.auth.UsernameError',{ lang:   I18nContext.current().lang }));
             }
 
             if (existingUserByDNI) {
-                throw new BadRequestException(this.i18n.t('auth.DNIError',{ lang:   I18nContext.current().lang }));
+                throw new BadRequestException(this.i18n.t('lang.auth.DNIError',{ lang:   I18nContext.current().lang }));
             }
 
             if (existingUserByEmail) {
-                throw new BadRequestException(this.i18n.t('auth.mailError',{ lang:   I18nContext.current().lang }));
+                throw new BadRequestException(this.i18n.t('lang.auth.mailError',{ lang:   I18nContext.current().lang }));
             }
-
-            return await this.usersServive.create(registerUserDto);
+            return new Response({
+                status:responseStatus.OK,
+                message:this.i18n.t('lang.auth.Success',{ lang:   I18nContext.current().lang }),
+                data:await this.usersServive.create(registerUserDto)
+            });
 
         } catch (e) {
             if(e instanceof BadRequestException){
@@ -109,7 +110,7 @@ export class AuthService {
                 // };
                 return new Response({
                     status:responseStatus.OK,
-                    message:this.i18n.t('auth.Wellcome',{ lang:   I18nContext.current().lang }),
+                    message:this.i18n.t('lang.auth.Wellcome',{ lang:   I18nContext.current().lang }),
                     data:{
                         nombre: user.person.name + ' ' + user.person.lastName,
                         username: user.username,
@@ -118,7 +119,7 @@ export class AuthService {
                     }
                 });
             } else {
-                throw new UnauthorizedException({status:responseStatus.UNAUTH,message:this.i18n.t('auth.WrongLogin',{ lang:   I18nContext.current().lang })});
+                throw new UnauthorizedException({status:responseStatus.UNAUTH,message:this.i18n.t('lang.auth.WrongLogin',{ lang:   I18nContext.current().lang })});
             }
         }catch(e){
             if(e instanceof BadRequestException || e instanceof UnauthorizedException){

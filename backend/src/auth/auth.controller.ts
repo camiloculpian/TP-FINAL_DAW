@@ -71,16 +71,9 @@ export class AuthController {
         @UploadedFile() file: Express.Multer.File,
     ) {
         try {
-            const result = await this.authService.register(registerUserDto);
-            return { status: 'SUCCESS', data: result };
-        } catch (error) {
-            throw new HttpException(
-                {
-                    status: HttpStatus.BAD_REQUEST,
-                    error: error.message,
-                },
-                HttpStatus.BAD_REQUEST,
-            );
+            return await this.authService.register(registerUserDto);
+        } catch (e) {
+            throw e;
         }
     }
 

@@ -5,12 +5,15 @@
 import { Path } from "nestjs-i18n";
 /* prettier-ignore */
 export type I18nTranslations = {
-    "auth": {
-        "Wellcome": string;
-        "UsernameError": string;
-        "DNIError": string;
-        "mailError": string;
-        "WrongLogin": string;
+    "lang": {
+        "auth": {
+            "Wellcome": string;
+            "Success.": string;
+            "UsernameError": string;
+            "DNIError": string;
+            "mailError": string;
+            "WrongLogin": string;
+        };
     };
 };
 /* prettier-ignore */

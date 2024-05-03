@@ -1,0 +1,12 @@
+{
+    "auth":{
+        "Wellcome": "Bienvenido",
+        "Success.": "Registro exitoso.",
+        "UsernameError": "Nombre de usuario NO disponible.",
+        "DNIError": "Ese DNI ya se encuentra registrado.",
+        "mailError": "Ese e-m@il ya se encuentra registrado.",
+        "WrongLogin": "Usuario y/o contraseña incorrectos."
+    }
+
+
+}
