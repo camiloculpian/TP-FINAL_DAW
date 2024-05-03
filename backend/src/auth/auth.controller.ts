@@ -5,7 +5,8 @@ import {
     Post,
     UseGuards,
     UseInterceptors,
-    UploadedFile
+    UploadedFile,
+    UseFilters
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/loginUser.dto';
@@ -17,6 +18,7 @@ import { RegisterUserDto } from '../auth/dto/registerUser.dto'; // Asegúrate de
 
 import { diskStorage } from 'multer'; // Importa diskStorage desde multer
 import { extname } from 'path'; 
+import { HttpExceptionFilter } from './decorators/httpExceptionFilter.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -75,7 +77,7 @@ export class AuthController {
         }
     }
 
-
+    @UseFilters(new HttpExceptionFilter())
     @Post('login')
     async login(
         @Body() loginUserDto: LoginUserDto
