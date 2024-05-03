@@ -3,16 +3,25 @@ import {
     Controller,
     Get,
     HttpStatus,
+    HttpException,
     Post,
     Request,
     UnauthorizedException,
     UseGuards,
+    UseInterceptors,
+    UploadedFile
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { AuthGuard } from './auth.guard';
 import { Response, responseStatus } from 'src/common/responses/responses';
 import { CurrentUser } from './decorators/currentUser.decorator';
+
+import { FileInterceptor } from '@nestjs/platform-express';
+import { RegisterUserDto } from '../auth/dto/registerUser.dto'; // Asegúrate de importar el DTO de registro
+
+import { diskStorage } from 'multer'; // Importa diskStorage desde multer
+import { extname } from 'path'; 
 
 @Controller('auth')
 export class AuthController {
@@ -48,6 +57,37 @@ export class AuthController {
     //         );
     //     }
     // }
+
+    // FUNCA OKOK
+    @Post('register')
+    @UseInterceptors(FileInterceptor('profilePicture', {
+        storage: diskStorage({
+            destination: './uploads-profiles/profiles',
+            filename: (req, file, cb) => {
+                const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
+                return cb(null, `${randomName}${extname(file.originalname)}`);
+            },
+        }),
+    }))
+    async register(
+        @Body() registerUserDto: RegisterUserDto,
+        @UploadedFile() file: Express.Multer.File,
+    ) {
+        try {
+            const result = await this.authService.register(registerUserDto);
+            return { status: 'SUCCESS', data: result };
+        } catch (error) {
+            console.error('Error durante la registacion', error);
+            throw new HttpException(
+                {
+                    status: HttpStatus.BAD_REQUEST,
+                    error: error.message,
+                },
+                HttpStatus.BAD_REQUEST,
+            );
+        }
+    }
+
 
     @Post('login')
     async login(
