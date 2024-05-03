@@ -14,6 +14,13 @@ export type I18nTranslations = {
             "mailError": string;
             "WrongLogin": string;
         };
+        "persons": {};
+        "users": {
+            "User": string;
+            "Password": string;
+        };
+        "tickets": {};
+        "audit": {};
     };
 };
 /* prettier-ignore */
