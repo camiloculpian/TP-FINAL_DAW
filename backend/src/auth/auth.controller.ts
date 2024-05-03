@@ -95,7 +95,7 @@ export class AuthController {
         @Body() loginUserDto: LoginUserDto
     ) {
         try {
-            return new Response({status:responseStatus.OK, message:this.i18n.t('auth.Wellcome',{ lang:   I18nContext.current().lang }),data:await this.authService.login(loginUserDto)});
+            return this.authService.login(loginUserDto);
         } catch (e) {
             throw e
         }

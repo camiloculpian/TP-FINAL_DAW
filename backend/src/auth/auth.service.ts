@@ -10,7 +10,7 @@ import { UsersService } from '../users/users.service';
 import { RegisterUserDto } from './dto/registerUser.dto';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { JwtService } from '@nestjs/jwt';
-import { responseStatus } from 'src/common/responses/responses';
+import { Response, responseStatus } from 'src/common/responses/responses';
 import { I18nContext, I18nService } from 'nestjs-i18n';
 
 @Injectable()
@@ -101,14 +101,24 @@ export class AuthService {
             if (user) {
                 const payload = { sub: user.id };
                 const token = await this.jwtService.signAsync(payload);
-                return {
-                    nombre: user.person.name + ' ' + user.person.lastName,
-                    username: user.username,
-                    roles: user.roles,
-                    token: token,
-                };
+                // return {
+                //     nombre: user.person.name + ' ' + user.person.lastName,
+                //     username: user.username,
+                //     roles: user.roles,
+                //     token: token,
+                // };
+                return new Response({
+                    status:responseStatus.OK,
+                    message:this.i18n.t('auth.Wellcome',{ lang:   I18nContext.current().lang }),
+                    data:{
+                        nombre: user.person.name + ' ' + user.person.lastName,
+                        username: user.username,
+                        roles: user.roles,
+                        token: token,
+                    }
+                });
             } else {
-                new UnauthorizedException({status:responseStatus.UNAUTH,message:this.i18n.t('auth.WrongLogin',{ lang:   I18nContext.current().lang })});
+                throw new UnauthorizedException({status:responseStatus.UNAUTH,message:this.i18n.t('auth.WrongLogin',{ lang:   I18nContext.current().lang })});
             }
         }catch(e){
             if(e instanceof BadRequestException || e instanceof UnauthorizedException){
