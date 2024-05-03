@@ -162,6 +162,7 @@ export class TicketsService {
         let resp = await this.ticketRepository.update(id, ticket);
         if(resp.affected=1){
           return new Response({
+            statusCode:201,
             status:responseStatus.OK,
             message: `Ticket #${id} actualizado correctamente`
           });
@@ -188,6 +189,7 @@ export class TicketsService {
         });
         if(resp.affected=1){
           return new Response({
+            statusCode:201,
             status:responseStatus.OK,
             message: `Ticket #${id} actualizado correctamente`
           });
@@ -208,7 +210,7 @@ export class TicketsService {
     try {
       const result = await this.ticketRepository.softDelete(id);
       if (result.affected && result.affected > 0) {
-        return new Response({status:responseStatus.OK, message: `El ticket ID: ${id} ha sido eliminado con éxito`});
+        return new Response({statusCode:201,status:responseStatus.OK, message: `El ticket ID: ${id} ha sido eliminado con éxito`});
       } else {
         throw new BadRequestException({status:responseStatus.ERROR, message:`No se encontró un ticket con el ID: ${id}`});
       }

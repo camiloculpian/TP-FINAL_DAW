@@ -6,13 +6,11 @@ import { responseStatus } from 'src/common/responses/responses';
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: any, host: ArgumentsHost) {
-    console.log(exception);
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
     const status = exception.getStatus();
-    //if(exception?.message=!exception?.response?.message)
-    const message = exception?.response?.message;
+    const message = exception?.response?.message.toString();
 
     response
       .status(status)

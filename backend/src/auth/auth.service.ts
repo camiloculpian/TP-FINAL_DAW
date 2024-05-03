@@ -52,6 +52,7 @@ export class AuthService {
                 throw new BadRequestException(this.i18n.t('lang.auth.mailError',{ lang:   I18nContext.current().lang }));
             }
             return new Response({
+                statusCode:201,
                 status:responseStatus.OK,
                 message:this.i18n.t('lang.auth.Success',{ lang:   I18nContext.current().lang }),
                 data:await this.usersServive.create(registerUserDto)
@@ -109,6 +110,7 @@ export class AuthService {
                 //     token: token,
                 // };
                 return new Response({
+                    statusCode:201,
                     status:responseStatus.OK,
                     message:this.i18n.t('lang.auth.Wellcome',{ lang:   I18nContext.current().lang }),
                     data:{

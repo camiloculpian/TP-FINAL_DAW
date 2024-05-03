@@ -106,7 +106,7 @@ export class TicketsController {
                 createTicketDto,
                 userId,
             );
-            return new Response({status:responseStatus.OK, message:'El ticket fue añadido de manera correcta', data:newTicket});
+            return new Response({statusCode:201,status:responseStatus.OK, message:'El ticket fue añadido de manera correcta', data:newTicket});
         } catch (e) {
             throw e;
         }
