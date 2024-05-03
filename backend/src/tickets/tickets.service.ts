@@ -11,6 +11,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Response, responseStatus } from 'src/common/responses/responses';
+import { I18nContext, I18nService } from 'nestjs-i18n';
 
 @Injectable()
 export class TicketsService {
@@ -19,6 +20,7 @@ export class TicketsService {
     private readonly ticketRepository: Repository<Ticket>,
     @Inject(UsersService)
     private readonly userService: UsersService,
+    private readonly i18n: I18nService
   ) { }
 
   // Creacion de Tickets: solo admin
@@ -164,7 +166,8 @@ export class TicketsService {
           return new Response({
             statusCode:201,
             status:responseStatus.OK,
-            message: `Ticket #${id} actualizado correctamente`
+            message: this.i18n.t('lang.tickets.UpdateOK',{args: { id: id },lang: I18nContext.current().lang})
+            //message: `Ticket #${id} actualizado correctamente`
           });
         }else{
           throw new BadRequestException({status:responseStatus.ERROR,message:`Hubo un problema actualizando el tichet #${id}`});

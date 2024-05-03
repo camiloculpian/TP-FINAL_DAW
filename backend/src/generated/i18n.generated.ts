@@ -19,7 +19,9 @@ export type I18nTranslations = {
             "User": string;
             "Password": string;
         };
-        "tickets": {};
+        "tickets": {
+            "UpdateOK": string;
+        };
         "audit": {};
     };
 };
