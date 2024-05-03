@@ -22,10 +22,12 @@ import { RegisterUserDto } from '../auth/dto/registerUser.dto'; // Asegúrate de
 
 import { diskStorage } from 'multer'; // Importa diskStorage desde multer
 import { extname } from 'path'; 
+import { I18n, I18nContext, I18nService } from 'nestjs-i18n';
+import { I18nTranslations } from 'src/generated/i18n.generated';
 
 @Controller('auth')
 export class AuthController {
-    constructor(private readonly authService: AuthService) { }
+    constructor(private readonly authService: AuthService, private readonly i18n: I18nService) { }
 
     // @Post('register')
     // @UseInterceptors(FileInterceptor('profilePicture', {
@@ -77,7 +79,6 @@ export class AuthController {
             const result = await this.authService.register(registerUserDto);
             return { status: 'SUCCESS', data: result };
         } catch (error) {
-            console.error('Error durante la registacion', error);
             throw new HttpException(
                 {
                     status: HttpStatus.BAD_REQUEST,
@@ -91,10 +92,10 @@ export class AuthController {
 
     @Post('login')
     async login(
-        @Body() loginUserDto: LoginUserDto,
+        @Body() loginUserDto: LoginUserDto
     ) {
         try {
-            return new Response({status:responseStatus.OK, message:'Bienvenido!',data:await this.authService.login(loginUserDto)});
+            return new Response({status:responseStatus.OK, message:this.i18n.t('auth.Wellcome',{ lang:   I18nContext.current().lang }),data:await this.authService.login(loginUserDto)});
         } catch (e) {
             throw e
         }

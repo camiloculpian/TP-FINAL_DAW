@@ -11,12 +11,14 @@ import { RegisterUserDto } from './dto/registerUser.dto';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { JwtService } from '@nestjs/jwt';
 import { responseStatus } from 'src/common/responses/responses';
+import { I18nContext, I18nService } from 'nestjs-i18n';
 
 @Injectable()
 export class AuthService {
     constructor(
         private readonly usersServive: UsersService,
         private readonly jwtService: JwtService,
+        private readonly i18n: I18nService
     ) { }
 
     // async register(registerUserDto: RegisterUserDto){
@@ -41,28 +43,32 @@ export class AuthService {
             const existingUserByEmail = await this.usersServive.findOneByEmail(registerUserDto.email);
 
             if (existingUserByUsername) {
-                throw new BadRequestException('Username already exists!');
+                throw new BadRequestException(this.i18n.t('auth.UsernameError',{ lang:   I18nContext.current().lang }));
             }
 
             if (existingUserByDNI) {
-                throw new BadRequestException('DNI already exists!');
+                throw new BadRequestException(this.i18n.t('auth.DNIError',{ lang:   I18nContext.current().lang }));
             }
 
             if (existingUserByEmail) {
-                throw new BadRequestException('Email already exists!');
+                throw new BadRequestException(this.i18n.t('auth.mailError',{ lang:   I18nContext.current().lang }));
             }
 
             return await this.usersServive.create(registerUserDto);
 
-        } catch (error) {
-            //console.error('Error durante la registracion:', error);
-            throw new HttpException(
-                {
-                    status: HttpStatus.INTERNAL_SERVER_ERROR,
-                    error: 'Registración No completada,  Existe un usuario con el mismo usuario email y dni. Intentar de nuevo.',
-                },
-                HttpStatus.INTERNAL_SERVER_ERROR,
-            );
+        } catch (e) {
+            if(e instanceof BadRequestException){
+                throw e;
+            }else{
+                throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
+            }
+            // throw new HttpException(
+            //     {
+            //         status: HttpStatus.INTERNAL_SERVER_ERROR,
+            //         error: 'Registración No completada,  Existe un usuario con el mismo usuario email y dni. Intentar de nuevo.',
+            //     },
+            //     HttpStatus.INTERNAL_SERVER_ERROR,
+            // );
         }
     }
 
@@ -102,7 +108,7 @@ export class AuthService {
                     token: token,
                 };
             } else {
-                new UnauthorizedException({status:responseStatus.UNAUTH,message:'Credenciales invalidas'});
+                new UnauthorizedException({status:responseStatus.UNAUTH,message:this.i18n.t('auth.WrongLogin',{ lang:   I18nContext.current().lang })});
             }
         }catch(e){
             if(e instanceof BadRequestException || e instanceof UnauthorizedException){
