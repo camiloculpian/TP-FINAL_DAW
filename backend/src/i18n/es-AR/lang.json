@@ -14,7 +14,10 @@
         "Password": "Contraseña"
     },
     "tickets":{
-        "UpdateOK":"Ticket ID: {id} actualizado correctamente"
+        "CreateOK":"Se ha creado el ticket ID: {id}.",
+        "UpdateOK":"Ticket ID: {id} actualizado correctamente",
+        "ReasignToUserError":"El usuario al que se le quiere asignar el ticket no existe",
+        "TicketNotFound":"Ticket no encontrado."
     },
     "audit":{
     }

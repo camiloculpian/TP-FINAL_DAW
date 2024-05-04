@@ -26,25 +26,31 @@ export class TicketsService {
   // Creacion de Tickets: solo admin
   async create(createTicketDto: CreateTicketDto, userId: number) {
     try {
+      // Primero los chequeos, y si todo esta OK creao el ticket
       // El usuario que crea el ticket
       const user = await this.userService.findOne(userId);
-      const ticket = this.ticketRepository.create({
-        ...createTicketDto,
-      });
-      // Chequeo si existe el usuario al que le quiero asignar el ticket asignedToUserId
       // El usuario que al que pertenece el ticket
       const userAsignedTo = await this.userService.findOne(
         createTicketDto.asignedToUserId,
       );
-
       if (!userAsignedTo) {
-        throw new BadRequestException({status:responseStatus.ERROR,message:'El usuario al que se le quiere asignar el ticket no existe'});
+        throw new BadRequestException({status:responseStatus.ERROR,message:this.i18n.t('lang.tickets.ReasignToUserError',{lang: I18nContext.current().lang})});
       }
+      // Si todo es OK!
+      let ticket = this.ticketRepository.create({
+        ...createTicketDto,
+      });
       ticket.asignedToUser = userAsignedTo;
       ticket.asignedByUser = user;
       ticket.createdByUser = user;
       ticket.lastModifiedByUser = user;
-      return await this.ticketRepository.save(ticket);
+      ticket = await this.ticketRepository.save(ticket);
+      return new Response({
+        statusCode:201,
+        status:responseStatus.OK,
+        message: this.i18n.t('lang.tickets.CreateOK',{args: { id: ticket.id },lang: I18nContext.current().lang}),
+        data: ticket,
+      });
     } catch (e) {
       throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
     }
@@ -83,7 +89,14 @@ export class TicketsService {
       }
 
       const tickets = await queryBuilder.getMany();
-      return tickets;
+      //RETORNAR RESPUESTA
+      return new Response({
+        statusCode:201,
+        status:responseStatus.OK,
+        message: null,
+        data: tickets,
+      });
+      //return tickets;
     } catch (e) {
       throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
     }
@@ -94,9 +107,6 @@ export class TicketsService {
     try {
       const user = await this.userService.findOne(userId);
 
-      // Verificar si el usuario tiene rol de administrador
-      const isAdmin = user.roles.includes(Role.ADMIN);
-
       // Buscar el ticket por su ID
       const ticket = await this.ticketRepository.findOne({
         where: { id },
@@ -104,18 +114,21 @@ export class TicketsService {
       });
 
       if (!ticket) {
-        throw new BadRequestException({status:responseStatus.ERROR,message:'Ticket no encontrado'});
+        throw new BadRequestException({status:responseStatus.ERROR,message:this.i18n.t('lang.tickets.TicketNotFound',{lang: I18nContext.current().lang})});
       }
 
-      if (
-        !isAdmin &&
-        ticket.asignedToUser.id !== userId || ticket.status == TicketStatus.RESOLVED
-      ) {
+      if (!user.roles.includes(Role.ADMIN) && (ticket.asignedToUser.id !== userId || ticket.status == TicketStatus.RESOLVED)) {
+        //console.log(!user.roles.includes(Role.ADMIN)+'AND ('+(ticket.asignedToUser.id !== userId)+' || '+(ticket.status == TicketStatus.RESOLVED)+' = '+(!user.roles.includes(Role.ADMIN) && (ticket.asignedToUser.id !== userId || ticket.status == TicketStatus.RESOLVED)));
         // Si el usuario no es administrador, ni el usuario asignado al ticket, y el ticket esta resuelto,
         // no está autorizado a ver este ticket
         throw new UnauthorizedException({status:responseStatus.ERROR,message:'No está autorizado a ver este ticket'});
       }
-      return ticket;
+      return new Response({
+        statusCode:201,
+        status:responseStatus.OK,
+        message: null,
+        data: ticket,
+      });
     } catch (e) {
       if(e instanceof BadRequestException || e instanceof UnauthorizedException){
         throw e;
@@ -149,7 +162,7 @@ export class TicketsService {
           updateTicketDto.asignedToUserId,
         );
         if (!userAsignedTo) {
-          throw new BadRequestException({status:responseStatus.ERROR,message:'El usuario al que se le quiere asignar el ticket no existe'});
+          throw new BadRequestException({status:responseStatus.ERROR,message:this.i18n.t('lang.tickets.ReasignToUserError',{lang: I18nContext.current().lang})});
         }
         // Si el usuario es un administrador, permitir la actualización de todos los datos
         ticket.title = updateTicketDto.title;

@@ -20,7 +20,10 @@ export type I18nTranslations = {
             "Password": string;
         };
         "tickets": {
+            "CreateOK": string;
             "UpdateOK": string;
+            "ReasignToUserError": string;
+            "TicketNotFound": string;
         };
         "audit": {};
     };
