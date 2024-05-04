@@ -93,7 +93,7 @@ export class TicketsService {
       return new Response({
         statusCode:201,
         status:responseStatus.OK,
-        message: null,
+        message: "OK",
         data: tickets,
       });
       //return tickets;
@@ -126,7 +126,7 @@ export class TicketsService {
       return new Response({
         statusCode:201,
         status:responseStatus.OK,
-        message: null,
+        message: "OK",
         data: ticket,
       });
     } catch (e) {
