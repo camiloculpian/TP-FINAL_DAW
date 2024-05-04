@@ -16,6 +16,8 @@
     "tickets":{
         "CreateOK":"Se ha creado el ticket ID: {id}.",
         "UpdateOK":"Ticket ID: {id} actualizado correctamente",
+        "CreateError":"Ocurrio un error al crear el ticket.",
+        "UpdateError":"Ocurrio un error al actualizar el ticket ID: {id}.",
         "ReasignToUserError":"El usuario al que se le quiere asignar el ticket no existe",
         "TicketNotFound":"Ticket no encontrado."
     },

@@ -152,7 +152,7 @@ export class TicketsService {
       });
 
       if (!ticket) {
-        throw new BadRequestException({status:responseStatus.ERROR,message:'El ticket que desea actualizar no existe'});
+        throw new BadRequestException({status:responseStatus.ERROR,message:this.i18n.t('lang.tickets.TicketNotFound',{lang: I18nContext.current().lang})});
       }
 
       if (user.roles.includes(Role.ADMIN)) {
@@ -179,11 +179,11 @@ export class TicketsService {
           return new Response({
             statusCode:201,
             status:responseStatus.OK,
-            message: this.i18n.t('lang.tickets.UpdateOK',{args: { id: id },lang: I18nContext.current().lang})
+            message: this.i18n.t('lang.tickets.UpdateOK',{args: { id: id }, lang: I18nContext.current().lang})
             //message: `Ticket #${id} actualizado correctamente`
           });
         }else{
-          throw new BadRequestException({status:responseStatus.ERROR,message:`Hubo un problema actualizando el tichet #${id}`});
+          throw new BadRequestException({status:responseStatus.ERROR,message:this.i18n.t('lang.tickets.UpdateError',{args: { id: ticket.id }, lang: I18nContext.current().lang})});
         }
       } else {
         // Si el usuario no es un administrador, actualización solo de la descripción, el estado y el archivo, salvo que el estado sea RESOLVED
@@ -210,7 +210,7 @@ export class TicketsService {
             message: `Ticket #${id} actualizado correctamente`
           });
         }else{
-          throw new BadRequestException({status:responseStatus.ERROR,message:`Hubo un problema actualizando el tichet #${id}`});
+          throw new BadRequestException({status:responseStatus.ERROR,message:this.i18n.t('lang.tickets.UpdateError',{args: { id: ticket.id }, lang: I18nContext.current().lang})});
         }
       }
     } catch (e) {
@@ -228,7 +228,7 @@ export class TicketsService {
       if (result.affected && result.affected > 0) {
         return new Response({statusCode:201,status:responseStatus.OK, message: `El ticket ID: ${id} ha sido eliminado con éxito`});
       } else {
-        throw new BadRequestException({status:responseStatus.ERROR, message:`No se encontró un ticket con el ID: ${id}`});
+        throw new BadRequestException({status:responseStatus.ERROR, message:this.i18n.t('lang.tickets.TicketNotFound',{lang: I18nContext.current().lang})});
       }
     } catch (e) {
       if(e instanceof BadRequestException || e instanceof UnauthorizedException){

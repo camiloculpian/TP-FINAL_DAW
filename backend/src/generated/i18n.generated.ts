@@ -22,6 +22,8 @@ export type I18nTranslations = {
         "tickets": {
             "CreateOK": string;
             "UpdateOK": string;
+            "CreateError": string;
+            "UpdateError": string;
             "ReasignToUserError": string;
             "TicketNotFound": string;
         };
