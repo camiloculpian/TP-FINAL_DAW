@@ -1,0 +1,24 @@
+{
+    "auth": {
+        "Wellcome": "Welcome",
+        "Success.": "Successful registration.",
+        "UsernameError": "Username NOT available.",
+        "DNIError": "This ID is already registered.",
+        "mailError": "This email is already registered.",
+        "WrongLogin": "Incorrect username and/or password."
+    },
+    "persons": {},
+    "users": {
+        "User": "User",
+        "Password": "Password"
+    },
+    "tickets": {
+        "CreateOK": "Ticket ID: {id} has been created.",
+        "UpdateOK": "Ticket ID: {id} updated successfully",
+        "CreateError": "An error occurred while creating the ticket.",
+        "UpdateError": "An error occurred while updating ticket ID: {id}.",
+        "ReasignToUserError": "The user to whom the ticket is to be assigned does not exist",
+        "TicketNotFound": "Ticket not found."
+    },
+    "audit": {}
+}

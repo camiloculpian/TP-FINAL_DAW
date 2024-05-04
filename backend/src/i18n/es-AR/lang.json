@@ -7,8 +7,7 @@
         "mailError": "Ese e-m@il ya se encuentra registrado.",
         "WrongLogin": "Usuario y/o contraseña incorrectos."
     },
-    "persons":{
-    },
+    "persons":{},
     "users":{
         "User": "Usuario",
         "Password": "Contraseña"
@@ -21,6 +20,5 @@
         "ReasignToUserError":"El usuario al que se le quiere asignar el ticket no existe",
         "TicketNotFound":"Ticket no encontrado."
     },
-    "audit":{
-    }
+    "audit":{}
 }

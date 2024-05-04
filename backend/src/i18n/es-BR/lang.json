@@ -1,0 +1,24 @@
+{
+    "auth": {
+        "Wellcome": "Bem-vindo",
+        "Success.": "Registro bem-sucedido.",
+        "UsernameError": "Nome de usuário NÃO disponível.",
+        "DNIError": "Este CPF já está registrado.",
+        "mailError": "Este e-mail já está registrado.",
+        "WrongLogin": "Usuário e/ou senha incorretos."
+    },
+    "persons": {},
+    "users": {
+        "User": "Usuário",
+        "Password": "Senha"
+    },
+    "tickets": {
+        "CreateOK": "O ticket ID: {id} foi criado.",
+        "UpdateOK": "Ticket ID: {id} atualizado com sucesso",
+        "CreateError": "Ocorreu um erro ao criar o ticket.",
+        "UpdateError": "Ocorreu um erro ao atualizar o ticket ID: {id}.",
+        "ReasignToUserError": "O usuário para o qual o ticket deve ser atribuído não existe",
+        "TicketNotFound": "Ticket não encontrado."
+    },
+    "audit": {}
+}
