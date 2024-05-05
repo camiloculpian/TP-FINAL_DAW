@@ -1,0 +1,192 @@
+.notifOverlay{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.301);
+    /* padding: 40px; */
+    padding-top: 150px;
+    align-items: flex-start;
+    justify-content: center;
+    z-index: 200;
+}
+
+.notificationContent{
+    display: flex;
+    flex-direction: column;
+    /* margin-top: 20px; */
+    min-width: 300px;
+    /*min-height: 100px; */
+    position: relative;
+    /* border-radius: 15px; */
+    padding: 15px;
+    font-weight: 400;
+    font-size: large;
+    z-index: 200;
+}
+
+.notificationINFO{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    background-color: rgb(155, 195, 231);
+    /* border: solid 1px rgb(28, 71, 95); */
+    /* color: rgb(28, 71, 95); */
+    border: #174a97;
+    color: #174a97;
+    border-radius: 10px;
+}
+
+.iconINFO{
+    fill: #174a97;
+    /* fill: rgb(28, 71, 95); */
+}
+
+.buttonCloseINFO{
+    fill: #174a97;
+    /* fill: rgb(28, 71, 95); */
+}
+
+
+.INFOPromtLine{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.INFOPromtLine button{
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #0479e7;
+    border: 1px solid rgb(181, 228, 255);
+    color: rgb(181, 222, 255);
+}
+
+.INFOPromtLine button:hover{
+    cursor: pointer;
+    background-color: rgb(181, 213, 255);
+    border: 1px solid #0479e7;
+    color: #0494e7;
+}
+
+.notificationWARN{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    background-color: rgb(255, 244, 181);
+    /* border: solid 1px rgb(28, 71, 95); */
+    /* color: rgb(28, 71, 95); */
+    border: #e7b204;
+    color: #e7b204;
+    border-radius: 10px;
+}
+
+.iconWARN{
+    fill: #e7b204;
+    /* fill: rgb(28, 71, 95); */
+}
+
+.buttonCloseWARN{
+    fill: #e7b204;
+    /* fill: rgb(28, 71, 95); */
+}
+
+.buttonCloseWARN:hover{
+    fill: #46310b;
+    /* fill: rgb(28, 71, 95); */
+}
+
+.WARNPromtLine{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.WARNPromtLine button{
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #e7b204;
+    border: 1px solid rgb(255, 244, 181);
+    color: rgb(255, 244, 181);
+}
+
+.WARNPromtLine button:hover{
+    cursor: pointer;
+    background-color: rgb(255, 244, 181);
+    border: 1px solid #e7b204;
+    color: #e7b204;
+}
+
+.notificationOK{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    background-color: rgb(195, 230, 195);
+    /* border: solid 1px rgb(28, 71, 95); */
+    /* color: rgb(28, 71, 95); */
+    border: #248f15;
+    color: #248f15;
+    border-radius: 10px;
+}
+
+.iconOK{
+    fill: #248f15;
+    /* fill: rgb(28, 71, 95); */
+}
+
+.buttonCloseOK{
+    fill: #248f15;
+    /* fill: rgb(28, 71, 95); */
+}
+
+.buttonCloseOK:hover{
+    fill: #11420a;
+    /* fill: rgb(28, 71, 95); */
+}
+
+.notificationERROR{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    background-color: rgb(224, 159, 159);
+    /* border: solid 1px rgb(28, 71, 95); */
+    /* color: rgb(28, 71, 95); */
+    border: #971717;
+    color: #971717;
+    border-radius: 10px;
+}
+
+.iconERROR{
+    fill: #971717;
+    /* fill: rgb(28, 71, 95); */
+}
+
+.buttonCloseERROR{
+    fill: #971717;
+    /* fill: rgb(28, 71, 95); */
+}
+
+.buttonCloseERROR:hover{
+    fill: #440b0b;
+    /* fill: rgb(28, 71, 95); */
+}
+
+.buttonCloseNotification{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease all;
+    border-radius: 5px;
+}
+
+.buttonCloseNotification svg{
+    padding: 10%;
+}
+
+.buttonCloseNotification:hover{
+    /* background: #F2F2F2; */
+    /* fill: #000000; */
+}
