@@ -18,7 +18,7 @@ export enum notificationType{
 })
 export class NotifyComponent {
   @Input()
-  notificationType=notificationType.OK;
+  notificationType=notificationType.INFO;
   @Input()
   message:string='';
   @Input()

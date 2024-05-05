@@ -1,6 +1,11 @@
 @if(show){
     <div class='notifOverlay'>
         <div class='notification{{notificationType}}'>
+            @if (notificationType!='WAIT') {
+                <div class='notificationHeader'>
+                    <i class="closeButton fa-solid fa-xmark" (click)="show=false"></i>
+                </div>
+            }
             <div class='notificationContent'>
                 @if (notificationType=='INFO'||notificationType=='WAIT'||notificationType=='OK') {
                     <i class="notifyIcon fa-solid fa-circle-info"></i>
