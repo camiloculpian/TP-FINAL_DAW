@@ -23,5 +23,4 @@ export class NotifyComponent {
   message:string='';
   @Input()
   show:boolean=true;
-
 }
