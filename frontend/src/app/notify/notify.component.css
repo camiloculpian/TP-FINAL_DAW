@@ -15,10 +15,60 @@
     z-index: 200;
 }
 
+.notification{
+    max-width: 30%;
+}
+
+.notificationHeader{
+    display: flex;
+    flex-direction: row;
+    align-items:flex-end;
+    margin: auto;
+    /* width: 100%;
+    height: 100%; */
+}
+
+.notificationHeader .section1{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    width: 10%;
+    background-color: #179717;
+}
+
+.notificationHeader .sectionNotifyMessage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+}
+
+.notificationHeader .sectionNotifyMessage p{
+    margin: auto;
+    font-weight: 600;
+}
+
+.notificationHeader .sectionButtons{
+    display: flex;
+    justify-content: right;
+    align-items:start;
+    width: 10%;
+}
+
+.notificationHeader .closeButton{
+    padding: 5px 10px 0 0;
+}
+
+.notificationHeader .closeButton:hover{
+    filter: brightness(80%);
+    cursor:pointer;
+}
+
 .notificationContent{
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
     /* margin-top: 20px; */
     min-width: 300px;
     /*min-height: 100px; */
@@ -28,6 +78,24 @@
     font-weight: 400;
     font-size: large;
     z-index: 200;
+}
+
+.notifyIcon{
+    font-size: 2.5em;
+    line-height: .03125em;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    /* fill: rgb(28, 71, 95); */
+}
+
+.notificationDEFAULT{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    background-color: rgb(224, 224, 224);
+    /* border: solid 1px rgb(28, 71, 95); */
+    /* color: rgb(28, 71, 95); */
+    border: #6b6b6b;
+    color: #696969;
+    border-radius: 10px;
 }
 
 .notificationWAIT{
@@ -49,20 +117,6 @@
     color: #174a97;
     border-radius: 10px;
 }
-
-.notifyIcon{
-    font-size: 2.5em;
-    line-height: .03125em;
-    margin-top: 30px;
-    margin-bottom: 15px;
-    /* fill: rgb(28, 71, 95); */
-}
-
-.buttonCloseINFO{
-    fill: #174a97;
-    /* fill: rgb(28, 71, 95); */
-}
-
 
 .INFOPromtLine{
     display: flex;
@@ -95,21 +149,6 @@
     border: #e7b204;
     color: #e7b204;
     border-radius: 10px;
-}
-
-.iconWARN{
-    fill: #e7b204;
-    /* fill: rgb(28, 71, 95); */
-}
-
-.buttonCloseWARN{
-    fill: #e7b204;
-    /* fill: rgb(28, 71, 95); */
-}
-
-.buttonCloseWARN:hover{
-    fill: #46310b;
-    /* fill: rgb(28, 71, 95); */
 }
 
 .WARNPromtLine{
@@ -145,21 +184,6 @@
     border-radius: 10px;
 }
 
-.iconOK{
-    fill: #248f15;
-    /* fill: rgb(28, 71, 95); */
-}
-
-.buttonCloseOK{
-    fill: #248f15;
-    /* fill: rgb(28, 71, 95); */
-}
-
-.buttonCloseOK:hover{
-    fill: #11420a;
-    /* fill: rgb(28, 71, 95); */
-}
-
 .notificationERROR{
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     background-color: rgb(224, 159, 159);
@@ -170,53 +194,12 @@
     border-radius: 10px;
 }
 
-.iconERROR{
-    fill: #971717;
-    /* fill: rgb(28, 71, 95); */
-}
-
-.buttonCloseERROR{
-    fill: #971717;
-    /* fill: rgb(28, 71, 95); */
-}
-
-.buttonCloseERROR:hover{
-    fill: #440b0b;
-    /* fill: rgb(28, 71, 95); */
-}
-
-.notificationHeader{
-}
-
-.notificationHeader .closeButton{
-    float: right;
-    padding: 5px 10px 0 0;
-}
-
-.notificationHeader .closeButton:hover{
-    color: rgba(0,0,0,0.6);
-    cursor:pointer;
-}
-
-
-.buttonCloseNotification{
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 30px;
-    height: 30px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s ease all;
-    border-radius: 5px;
-}
-
-.buttonCloseNotification svg{
-    padding: 10%;
-}
-
-.buttonCloseNotification:hover{
-    /* background: #F2F2F2; */
-    /* fill: #000000; */
+.notificationUNAUTH{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    background-color: rgb(224, 159, 159);
+    /* border: solid 1px rgb(28, 71, 95); */
+    /* color: rgb(28, 71, 95); */
+    border: #971717;
+    color: #971717;
+    border-radius: 10px;
 }

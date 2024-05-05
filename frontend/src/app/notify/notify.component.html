@@ -1,21 +1,29 @@
 @if(show){
     <div class='notifOverlay'>
-        <div class='notification{{status}}'>
-            @if (status!='WAIT') {
-                <div class='notificationHeader'>
-                    <i class="closeButton fa-solid fa-xmark" (click)="show=false"></i>
-                </div>
-            }
-            <div class='notificationContent'>
-                @if (status=='INFO'||status=='WAIT'||status=='OK') {
-                    <i class="notifyIcon fa-solid fa-circle-info"></i>
-                }@else if(status=='ERROR'){
-                    <i class="notifyIcon fa-solid fa-circle-exclamation"></i>
-                }@else{
-                    <i class="notifyIcon fa-solid fa-triangle-exclamation"></i>
+        <div class="notification">
+            <div class='notificationDEFAULT notification{{status}}'>
+                @if (status!='WAIT') {
+                    <div class='notificationHeader'>
+                        <section class="section1"></section>
+                        <section class="sectionNotifyMessage"><p>{{title}}</p></section>
+                        <section class="sectionButtons"><i class="closeButton fa-solid fa-xmark" (click)="show=false"></i></section>
+                    </div>
                 }
-                <p>{{message}}</p>
-            </div>                
+                <div class='notificationContent'>
+                    @switch (status) {
+                        @case ('WAIT'){<i class="notifyIcon fa-solid fa-circle-info"></i>}
+                        @case ('OK'){<i class="notifyIcon fa-solid fa-circle-check"></i>}
+                        @case ('ERROR') {<i class="notifyIcon fa-solid fa-circle-exclamation"></i>}
+                        @case ('WARN') {<i class="notifyIcon fa-solid fa-triangle-exclamation"></i>}
+                        @case ('INFO'){<i class="notifyIcon fa-solid fa-circle-info"></i>}
+                        <!-- @case ('UNAUTH') {<i class="notifyIcon fa-solid fa-hand-middle-finger"></i>} -->
+                        <!-- @case ('UNAUTH') {<i class="notifyIcon fa-solid fa-hand"></i>} -->
+                        @case ('UNAUTH') {<i class="notifyIcon fa-solid fa-ban"></i>}
+                        @default {<i class="notifyIcon fa-solid fa-circle-info"></i>}
+                    }
+                    <p>{{message}}</p>
+                </div>                
+            </div>
         </div>
     </div>
 }
