@@ -1,0 +1,59 @@
+<app-header />
+<div class="carrusel">
+    <!-- home.component.html -->
+    @if (images) {
+    <ngb-carousel class="imagesCarousel">
+        <ng-template ngbSlide>
+            <div class="picsum-img-wrapper">
+                <img [src]="images[0]" alt="Random first slide" />
+            </div>
+            <div class="carousel-caption">
+                <h3>First slide label</h3>
+                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+            </div>
+        </ng-template>
+        <ng-template ngbSlide>
+            <div class="picsum-img-wrapper">
+                <img [src]="images[1]" alt="Random second slide" />
+            </div>
+            <div class="carousel-caption">
+                <h3>Second slide label</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+        </ng-template>
+        <ng-template ngbSlide>
+            <div class="picsum-img-wrapper">
+                <img [src]="images[2]" alt="Random third slide" />
+            </div>
+            <div class="carousel-caption">
+                <h3>Third slide label</h3>
+                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+            </div>
+        </ng-template>
+    </ngb-carousel>
+    }
+
+</div>
+<div class="banerCompueExpress">
+    <img src="assets/banner1.gif" alt="banerDeEmpresa">
+</div>
+<div class="espaciado1"></div>
+<section class="slogan">
+    <h1 class="slog1">
+        “Tu solución llega con sabor Argentino
+    </h1>
+    <div class="espaciado3"></div>
+    <h1 class="slog2">
+        Tu PC como nueva, en cada visita.”
+    </h1>
+</section>
+<div class="espaciado1"></div>
+<article class="infoEmpresa">
+    <p>
+        Somos una empresa líder en el mercado, comprometida con la excelencia y la innovación. Nuestro equipo de
+        expertos ofrece soluciones integrales para que tu equipo informático funcione a la perfección. Con nosotros,
+        tu satisfacción es nuestra prioridad y tu computadora personal, nuestro compromiso.
+    </p>
+</article>
+<div class="espaciado1"></div>
+<app-footer />

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NotifyComponent } from './notify/notify.component';
+import { NotifyComponent } from './notify/notify.component';;
+import { HomeComponent } from './pages/home/home.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NotifyComponent],
+  imports: [RouterOutlet, NotifyComponent,HomeComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

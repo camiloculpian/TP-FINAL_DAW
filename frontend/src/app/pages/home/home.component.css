@@ -1,0 +1,115 @@
+.imagesCarousel img{
+    
+    max-width: 1920px;
+    width: 100%;
+    height: auto;
+
+    object-fit: cover;
+    
+}
+
+.banerCompueExpress {
+    display: flex;
+    flex-direction: column;
+    margin: 10px auto;
+    width: 50%;
+}
+/* animacion pal logo */
+@keyframes rotacion360 {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.banerCompueExpress img {
+    animation: rotacion360 5s linear infinite;
+}
+
+
+.slog1 {
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 10%;
+    font-size: 70px;
+}
+
+.slog2 {
+    display: flex;
+    justify-content: flex-end;
+    padding-left: 30%;
+    margin-right: 5%;
+    font-size: 70px;
+}
+
+/* animacion pal slogan */
+@keyframes deslizarDerecha {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes deslizarIzquierda {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.slogan {
+    padding-top: 20vh;
+    padding-bottom: 20vh;
+    background-color: #F39200;
+    overflow: hidden;
+}
+
+.slog1 {
+    animation: deslizarDerecha 5s ease-in-out forwards infinite;
+}
+
+.slog2 {
+    animation: deslizarIzquierda 5s ease-in-out forwards infinite;
+}
+
+
+.espaciado1 {
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.espaciado2 {
+    margin-top: 75px;
+    margin-bottom: 75px;
+}
+
+.espaciado3 {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+
+.infoEmpresa p {
+    display: flex;
+    flex-direction: row;
+
+    margin-left: 10%;
+    margin-right: 10%;
+
+    font-size: 30px;
+    justify-content: center;
+    text-align: center;
+}

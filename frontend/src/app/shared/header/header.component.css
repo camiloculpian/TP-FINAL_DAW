@@ -1,0 +1,21 @@
+.barra{
+    font-size: 20px !important;
+    font-weight: 500 !important;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    
+    margin: 0px !important;
+    /* background: linear-gradient(to bottom, #4DABE2, #FFFFFF); */
+    /* background: linear-gradient(to bottom, #4DABE2 50%, #FFFFFF 100%); */
+    background: linear-gradient(to bottom, #162bbb 0%, #65a4c8 100%);
+    /* #65a4c8 */
+    
+}
+
+.barra a{
+    color: white;
+}
+a:hover{
+    font-size: 30px;
+    color: #F39200 !important;
+}
