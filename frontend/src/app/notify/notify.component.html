@@ -1,20 +1,20 @@
 @if(show){
     <div class='notifOverlay'>
-        <div class='notification{{notificationType}}'>
-            @if (notificationType!='WAIT') {
+        <div class='notification{{status}}'>
+            @if (status!='WAIT') {
                 <div class='notificationHeader'>
                     <i class="closeButton fa-solid fa-xmark" (click)="show=false"></i>
                 </div>
             }
             <div class='notificationContent'>
-                @if (notificationType=='INFO'||notificationType=='WAIT'||notificationType=='OK') {
+                @if (status=='INFO'||status=='WAIT'||status=='OK') {
                     <i class="notifyIcon fa-solid fa-circle-info"></i>
-                }@else if(notificationType=='ERROR'){
+                }@else if(status=='ERROR'){
                     <i class="notifyIcon fa-solid fa-circle-exclamation"></i>
                 }@else{
                     <i class="notifyIcon fa-solid fa-triangle-exclamation"></i>
                 }
-                <p>Esta es una notificacion</p>
+                <p>{{message}}</p>
             </div>                
         </div>
     </div>

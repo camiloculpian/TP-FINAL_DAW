@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-export enum notificationType{
+export enum notificationStatus{
   OK = 'OK',
   WARN = 'WARN',
   ERROR = 'ERROR',
@@ -18,7 +18,7 @@ export enum notificationType{
 })
 export class NotifyComponent {
   @Input()
-  notificationType=notificationType.INFO;
+  status=notificationStatus.INFO;
   @Input()
   message:string='';
   @Input()
