@@ -1,9 +1,18 @@
-<div class='notifOverlay'>
-    <div class='notificationERROR'>
-        <div class='notificationContent'>
-            <i class="notifyIcon fa-solid fa-circle-exclamation"></i>
-            <p>Esta es una notificacion de espera</p>
-        </div>                
+@if(show){
+    <div class='notifOverlay'>
+        <div class='notification{{notificationType}}'>
+            <div class='notificationContent'>
+                @if (notificationType=='INFO'||notificationType=='WAIT'||notificationType=='OK') {
+                    <i class="notifyIcon fa-solid fa-circle-info"></i>
+                }@else if(notificationType=='ERROR'){
+                    <i class="notifyIcon fa-solid fa-circle-exclamation"></i>
+                }@else{
+                    <i class="notifyIcon fa-solid fa-triangle-exclamation"></i>
+                }
+                <p>Esta es una notificacion</p>
+            </div>                
+        </div>
     </div>
-</div>
+}
+
 

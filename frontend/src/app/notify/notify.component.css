@@ -30,6 +30,16 @@
     z-index: 200;
 }
 
+.notificationWAIT{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    background-color: rgb(155, 195, 231);
+    /* border: solid 1px rgb(28, 71, 95); */
+    /* color: rgb(28, 71, 95); */
+    border: #174a97;
+    color: #174a97;
+    border-radius: 10px;
+}
+
 .notificationINFO{
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     background-color: rgb(155, 195, 231);
