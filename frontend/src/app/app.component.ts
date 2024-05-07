@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NotifyComponent } from './modules/notify/notify.component';;
+import { NotifyComponent } from './components/notify/notify.component';;
 import { HomeComponent } from './pages/home/home.component';
 
 @Component({
