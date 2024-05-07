@@ -1,3 +1,23 @@
 .loginLayout{
-    
+    height: 100%;
+    min-height: fit-content;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: blueviolet; */
+}
+
+.loginLayout .loginBox{
+    display: flex;
+    height: 300px;
+    width: 500px;
+    /* background-color: brown; */
+    margin-top: 9%;
+    padding: 1%;
+    border: 1px solid;
+    border-color: darkgray;
+    background-color: lightgray;
+    border-radius: 10px;
+    box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.5);
 }
