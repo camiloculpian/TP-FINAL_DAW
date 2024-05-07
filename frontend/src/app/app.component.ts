@@ -11,5 +11,7 @@ import { HomeComponent } from './pages/home/home.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'frontend';
+  title = 'frontend DAW';
+  // El Usuario Actual
+  currentUser={};
 }
