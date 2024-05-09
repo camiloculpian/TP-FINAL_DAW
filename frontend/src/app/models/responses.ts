@@ -1,4 +1,4 @@
-// import { HttpStatusCode } from "@angular/common/http";
+import { HttpStatusCode } from "@angular/common/http";
 
 export enum responseStatus{
     OK= 'OK',
@@ -9,20 +9,21 @@ export enum responseStatus{
 }
 
 export interface ResponseOptions {
-    statusCode:string;
-    status: responseStatus;
-    message: string;
-    data?: any;
+    statusCode?:number;
+    status?: responseStatus;
+    message?: string;
+    data?: JSON;
 }
 
 
 export class Response{
-    statusCode:string;
-    status:string;
-    message:string;
-    data:any|undefined;
+    statusCode?:number|undefined;
+    status?:string|undefined;
+    message?:string|undefined;
+    data?:JSON|undefined;
 
     constructor(options: ResponseOptions){
+        console.log(options);
         this.statusCode=options.statusCode;
         this.status=options.status;
         this.message=options.message;

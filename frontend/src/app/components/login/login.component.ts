@@ -2,6 +2,8 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { sha512 } from 'js-sha512';
 import { LoginService } from './login.service';
+import { Response } from '../../models/responses';
+import { HttpStatusCode } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -40,7 +42,25 @@ export class LoginComponent {
       this.message='Password no puede estar vacio'
     }else{
       //resp:Response = this.loginService.login(String(this.userForm.value.username), sha512(String(this.userForm.value.password)));
-      console.log(this.loginService.login(String(this.userForm.value.username), sha512(String(this.userForm.value.password))))
+      this.loginService.login(String(this.userForm.value.username), sha512(String(this.userForm.value.password)))
+      .subscribe(
+        {
+          next: (resp) => {
+            if(resp.statusCode==201){
+              this.message='Login correcto';
+            }
+          },
+          error: (err) => {
+            console.log(err.error)
+            if (err.status==401){
+              this.message=err.error.message;
+            }else{
+              this.message='**ERROR: '+err.error.message;
+              //notificar con Notify
+            }
+          },
+        }
+      );
     }
     // console.log(this.userForm.value.username);
     // let username=String(this.userForm.value.username);
