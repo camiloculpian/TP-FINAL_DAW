@@ -40,4 +40,8 @@ export class LoginService {
     return localStorage.getItem('user') !== null;
     //Queda Verificar con el backend que el token sea valido!
   }
+
+  getCurrentUser(){
+    return localStorage.getItem('user');
+  }
 }
