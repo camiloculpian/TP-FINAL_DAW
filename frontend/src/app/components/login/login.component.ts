@@ -47,7 +47,7 @@ export class LoginComponent {
             if(resp.statusCode==201){
               console.log(resp.data);
               localStorage.setItem('user', JSON.stringify(resp.data));
-              this.router.navigate(['/app']);
+              this.router.navigate(['/notify']);
             }
           },
           error: (err) => {
