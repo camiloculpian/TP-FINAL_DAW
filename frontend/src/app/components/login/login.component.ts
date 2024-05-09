@@ -40,31 +40,40 @@ export class LoginComponent {
     }else if(!this.userForm.value.password){
       this.message='Password no puede estar vacio'
     }else{
-      this.loginService.login(String(this.userForm.value.username), sha512(String(this.userForm.value.password)))
-      .subscribe(
-        {
-          next: (resp) => {
-            if(resp.statusCode==201){
-              console.log(resp.data);
-              localStorage.setItem('user', JSON.stringify(resp.data));
-              this.router.navigate(['/notify']);
-            }
-          },
-          error: (err) => {
-            console.log(err.error)
-            if (err.status==401){
-              this.message=err.error.message;
-            }else{
-              this.message='**ERROR: '+err.error.message;
-              //notificar con Notify
-            }
-          },
+    //   this.loginService.login(String(this.userForm.value.username), sha512(String(this.userForm.value.password)))
+    //   .subscribe(
+    //     {
+    //       next: (resp) => {
+    //         if(resp.statusCode==201){
+    //           localStorage.setItem('user', JSON.stringify(resp.data));
+    //           this.router.navigate(['/notify']);
+    //         }
+    //       },
+    //       error: (err) => {
+    //         if (err.status==401){
+    //           this.message=err.error.message;
+    //         }else{
+    //           this.message='**ERROR: '+err.error.message;
+    //           //notificar con Notify
+    //         }
+    //       },
+    //     }
+    //   );
+    // }
+    this.loginService.login(String(this.userForm.value.username), sha512(String(this.userForm.value.password)))
+    .subscribe({
+      next: (resp) => {
+        if(resp.statusCode==201){
+          localStorage.setItem('user', JSON.stringify(resp.data));
+          this.router.navigate(['/notify']);
         }
-      );
-    }
-    // console.log(this.userForm.value.username);
+      },error: (err) => {
+        console.log('**CUAK!'+JSON.stringify(err.error));
+        this.message='**ERROR: '+err.error.message;
+      }
+    })
+  }
     // let username=String(this.userForm.value.username);
     // let password=sha512(String(this.userForm.value.password))    
   }
-
 }

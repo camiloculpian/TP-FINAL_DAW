@@ -9,7 +9,7 @@ export enum responseStatus{
 }
 
 export interface ResponseOptions {
-    statusCode?:number;
+    statusCode?:HttpStatusCode;
     status?: responseStatus;
     message?: string;
     data?: JSON;
@@ -17,7 +17,7 @@ export interface ResponseOptions {
 
 
 export class Response{
-    statusCode?:number|undefined;
+    statusCode?:HttpStatusCode|undefined;
     status?:string|undefined;
     message?:string|undefined;
     data?:JSON|undefined;
