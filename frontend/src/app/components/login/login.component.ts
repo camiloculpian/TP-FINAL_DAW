@@ -1,9 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { sha512 } from 'js-sha512';
 import { LoginService } from './login.service';
-import { Response } from '../../models/responses';
-import { HttpStatusCode } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +20,7 @@ export class LoginComponent {
   });
 
   constructor(
-    // private _httpReq:HttpClient
+    private router:Router,
     private loginService : LoginService
   ) {}
 
@@ -41,13 +40,14 @@ export class LoginComponent {
     }else if(!this.userForm.value.password){
       this.message='Password no puede estar vacio'
     }else{
-      //resp:Response = this.loginService.login(String(this.userForm.value.username), sha512(String(this.userForm.value.password)));
       this.loginService.login(String(this.userForm.value.username), sha512(String(this.userForm.value.password)))
       .subscribe(
         {
           next: (resp) => {
             if(resp.statusCode==201){
-              this.message='Login correcto';
+              console.log(resp.data);
+              localStorage.setItem('user', JSON.stringify(resp.data));
+              this.router.navigate(['/app']);
             }
           },
           error: (err) => {
