@@ -22,6 +22,7 @@ export class LoginService {
   // }
 
   login(username: string, password: string) {
+    // CAMBIAR LAS RUTAS A UN ARCHIVO!!!
     return this._httpReq.post<Response>("http://localhost:3000/api/v1/auth/login", {"username":username, "password":password})
         .pipe(map(resp => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
