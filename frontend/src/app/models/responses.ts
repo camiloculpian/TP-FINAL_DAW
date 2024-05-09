@@ -16,18 +16,17 @@ export interface ResponseOptions {
 }
 
 
-class Response{
-    // statusCode:string;
-    // status:string;
-    // message:string;
-    // data:any|undefined;
+export class Response{
+    statusCode:string;
+    status:string;
+    message:string;
+    data:any|undefined;
 
-    // constructor(options: ResponseOptions){
-    //     this.statusCode=options.statusCode;
-    //     this.status=options.status;
-    //     this.message=options.message;
-    //     this.data=options.data;
-    // }
+    constructor(options: ResponseOptions){
+        this.statusCode=options.statusCode;
+        this.status=options.status;
+        this.message=options.message;
+        this.data=options.data;
+    }
 
 }
-export {Response}
