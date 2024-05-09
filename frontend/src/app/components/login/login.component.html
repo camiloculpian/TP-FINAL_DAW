@@ -1,15 +1,25 @@
-<h3>Login</h3>
-<form>
-    <div class="">
-        <div class="">
-            <label>Username:</label><input type="text">
-        </div>
-        <div class="">
-            <label>Password:</label><input type="text">
-        </div>
-        <div>
-            <input type="submit" value="Login">
-        </div>
+ <div class="login-component">
+    <div class="loginTitle">
+        <h3>Login</h3>
     </div>
-</form>
-
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <div class="entryBox">
+            <div class="entryLine">
+                <label>Username:</label><input type="text" formControlName="username" (keyup)="onUsernameChange()">
+            </div>
+            <div class="entryLine">
+                <label>Password:</label><input type="password" formControlName="password" (keyup)="onPasswordChange()">
+            </div>
+        </div>
+        <div class="actionLine">
+            <button type="submit" value="Login">Submit</button>
+        </div>
+        <div class="notification">
+            @if(this.message.length>=1){
+                <div class="alert alert-danger">
+                    <strong>Error!</strong> {{this.message}}
+                </div>
+            }
+        </div>
+    </form>
+</div>

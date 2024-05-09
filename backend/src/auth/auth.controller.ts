@@ -83,6 +83,7 @@ export class AuthController {
         @Body() loginUserDto: LoginUserDto
     ) {
         try {
+            console.log(loginUserDto);
             return this.authService.login(loginUserDto);
         } catch (e) {
             throw e
