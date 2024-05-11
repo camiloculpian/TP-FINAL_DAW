@@ -20,6 +20,14 @@ export type I18nTranslations = {
         "users": {
             "User": string;
             "Password": string;
+            "CreateOK": string;
+            "UpdateOK": string;
+            "CreateError": string;
+            "UpdateError": string;
+            "DeleteOK": string;
+            "DeleteError": string;
+            "UserNotFound": string;
+            "ReadOK": string;
         };
         "tickets": {
             "CreateOK": string;

@@ -30,7 +30,8 @@ import { extname } from 'path';
 import { diskStorage } from 'multer';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CurrentUser } from '../auth/decorators/currentUser.decorator';
-import { I18nService } from 'nestjs-i18n';
+import { I18nContext, I18nService } from 'nestjs-i18n';
+import { Response, responseStatus } from 'src/common/responses/responses';
 
 @ApiTags('Users')
 @Controller('users')
@@ -76,8 +77,12 @@ export class UsersController {
       if (file) {
         createUserDto.profilePicture = file.filename;
       }
-      const newUser = await this.usersService.create(createUserDto);
-      return newUser;
+      return new Response({
+        statusCode:201,
+        status:responseStatus.OK,
+        message:this.i18n.t('lang.users.CreateOK',{ lang:   I18nContext.current().lang }),
+        data: await this.usersService.create(createUserDto)
+      });
     } catch (error) {
       console.error('Error al crear usuario:', error);
       return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
@@ -91,9 +96,12 @@ export class UsersController {
   @ApiResponse({ status: 200, description: 'Lista de usuarios' })
   async findAll() {
     try {
-      const users = await this.usersService.findAll();
-      
-      return users;
+      return new Response({
+        statusCode:201,
+        status:responseStatus.OK,
+        message:this.i18n.t('lang.users.ReadOK',{ lang:   I18nContext.current().lang }),
+        data: await this.usersService.findAll()
+      });
     } catch (error) {
       console.error('Error al obtener todos los usuarios:', error);
       return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
@@ -109,8 +117,12 @@ export class UsersController {
   @ApiParam({ name: 'id', description: 'ID único del usuario' })
   async findOne(@Param('id') id: number) {
     try {
-      const user = await this.usersService.findOne(+id);
-      return user;
+      return new Response({
+        statusCode:201,
+        status:responseStatus.OK,
+        message:this.i18n.t('lang.users.ReadOK',{ lang:   I18nContext.current().lang }),
+        data: await this.usersService.findOne(+id)
+      });
     } catch (error) {
       console.error('Error al obtener usuario por ID:', error);
       return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
@@ -146,7 +158,12 @@ export class UsersController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     try {
-      return await this.usersService.update(id, updateUserDto, currentUser, file);
+      return new Response({
+        statusCode:201,
+        status:responseStatus.OK,
+        message:this.i18n.t('lang.users.UpdateOK',{ lang:   I18nContext.current().lang }),
+        data: await this.usersService.update(id, updateUserDto, currentUser, file)
+      });
     } catch (error) {
       console.error('Error al actualizar usuario:', error);
       return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
@@ -170,7 +187,12 @@ export class UsersController {
     @Body() updateUserRolesDto: UpdateUserRolesDto,
   ) {
     try {
-      return await this.usersService.updateRole(id, updateUserRolesDto);
+      return new Response({
+        statusCode:201,
+        status:responseStatus.OK,
+        message:this.i18n.t('lang.users.rolUpdateOK',{ lang:   I18nContext.current().lang }),
+        data: await this.usersService.updateRole(id, updateUserRolesDto)
+      });
     } catch (error) {
       console.error('Error al actualizar el rol del usuario:', error);
       return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
@@ -187,11 +209,15 @@ export class UsersController {
   @ApiParam({ name: 'id', description: 'ID único del usuario' })
   async remove(@Param('id') id: number) {
     try {
-      await this.usersService.remove(id);
-      return { message: 'Usuario eliminado con éxito' };
-    } catch (error) {
-      console.error('Error al eliminar usuario:', error);
-      return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
+      return new Response({
+        statusCode:201,
+        status:responseStatus.OK,
+        message:this.i18n.t('lang.users.DeleteOK',{ lang:   I18nContext.current().lang }),
+        data: await this.usersService.remove(id)
+      });
+    } catch (e) {
+      console.error('Error al eliminar usuario:', e);
+      return {'status':'ERROR','message':e.message,'statusCode':e.statusCode};
     }
   }
 }

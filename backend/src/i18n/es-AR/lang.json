@@ -11,7 +11,15 @@
     "persons":{},
     "users":{
         "User": "Usuario",
-        "Password": "Contraseña"
+        "Password": "Contraseña",
+        "CreateOK":"Se ha creado el usuario ID: {id}.",
+        "UpdateOK":"Usuario ID: {id} actualizado correctamente",
+        "CreateError":"Ocurrio un error al crear el usuario.",
+        "UpdateError":"Ocurrio un error al actualizar el usuario ID: {id}.",
+        "DeleteOK":"Usuario ID: {id} eliminado correctamente",
+        "DeleteError":"Ocurrio un error al eliminar el usuario ID: {id}.",
+        "UserNotFound":"Usuario no encontrado.",
+        "ReadOK":"OK"
     },
     "tickets":{
         "CreateOK":"Se ha creado el ticket ID: {id}.",
