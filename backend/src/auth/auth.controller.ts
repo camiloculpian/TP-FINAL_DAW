@@ -19,43 +19,16 @@ import { RegisterUserDto } from '../auth/dto/registerUser.dto'; // Asegúrate de
 import { diskStorage } from 'multer'; // Importa diskStorage desde multer
 import { extname } from 'path'; 
 import { HttpExceptionFilter } from './decorators/httpExceptionFilter.decorator';
+import { Response, responseStatus } from 'src/common/responses/responses';
+import { I18nContext, I18nService } from 'nestjs-i18n';
 
 @Controller('auth')
 export class AuthController {
-    constructor(private readonly authService: AuthService) { }
+    constructor(
+        private readonly authService: AuthService,
+        private readonly i18n: I18nService
+    ) { }
 
-    // @Post('register')
-    // @UseInterceptors(FileInterceptor('profilePicture', {
-    //     storage: diskStorage({
-    //         destination: './uploads-profiles/profiles',
-    //         filename: (req, file, cb) => {
-    //             const randomName = Array(32).fill(null).map(()=>(Math.round(Math.random()*16)).toString(16)).join('');
-    //             return cb(null, `${randomName}${extname(file.originalname)}`);
-    //         },
-    //     }),
-    // }))
-    // register(
-    //     @Body() registerUserDto: RegisterUserDto,
-    //     @UploadedFile() file: Express.Multer.File,
-    // ){
-    //     try {
-    //         if(file){
-    //             registerUserDto.profilePicture = file.filename;
-    //         }
-    //         return this.authService.register(registerUserDto);
-    //     } catch (error) {
-    //         console.error('Error durante el registro:', error);
-    //         throw new HttpException(
-    //             {
-    //                 status: HttpStatus.INTERNAL_SERVER_ERROR,
-    //                 error: 'No se pudo completar el registro. Inténtalo de nuevo.',
-    //             },
-    //             HttpStatus.INTERNAL_SERVER_ERROR,
-    //         );
-    //     }
-    // }
-
-    // FUNCA OKOK
     @Post('register')
     @UseInterceptors(FileInterceptor('profilePicture', {
         storage: diskStorage({
@@ -71,7 +44,12 @@ export class AuthController {
         @UploadedFile() file: Express.Multer.File,
     ) {
         try {
-            return await this.authService.register(registerUserDto);
+            return new Response({
+                statusCode:201,
+                status:responseStatus.OK,
+                message:this.i18n.t('lang.auth.Success',{ lang:   I18nContext.current().lang }),
+                data:await this.authService.register(registerUserDto)
+            });
         } catch (e) {
             throw e;
         }
@@ -83,8 +61,12 @@ export class AuthController {
         @Body() loginUserDto: LoginUserDto
     ) {
         try {
-            console.log(loginUserDto);
-            return this.authService.login(loginUserDto);
+            return new Response({
+                statusCode:201,
+                status:responseStatus.OK,
+                message:this.i18n.t('lang.auth.Success',{ lang:   I18nContext.current().lang }),
+                data:await this.authService.login(loginUserDto)
+            });
         } catch (e) {
             throw e
         }
@@ -96,7 +78,12 @@ export class AuthController {
     @CurrentUser('sub') userId: number
     ) {
         try {
-            return await this.authService.getProfile(userId);
+            return new Response({
+                statusCode:201,
+                status:responseStatus.OK,
+                message:this.i18n.t('lang.auth.WellcomeBack',{ lang:   I18nContext.current().lang }),
+                data:await this.authService.getProfile(userId)
+            });
         } catch (e) {
             throw e
         }
@@ -108,7 +95,12 @@ export class AuthController {
     @CurrentUser('sub') userId: number
     ) {
         try {
-            return await this.authService.getUser(userId);
+            return new Response({
+                statusCode:201,
+                status:responseStatus.OK,
+                message:this.i18n.t('lang.auth.WellcomeBack',{ lang:   I18nContext.current().lang }),
+                data:await this.authService.getUser(userId)
+            });
         } catch (e) {
             throw e
         }

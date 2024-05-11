@@ -19,20 +19,6 @@ export class AuthService {
         private readonly i18n: I18nService
     ) { }
 
-    // async register(registerUserDto: RegisterUserDto){
-    //     try{
-    //         if(this.usersServive.findOneByUsername(registerUserDto.username)
-    //             || this.usersServive.findOneByDNI(registerUserDto.dni)
-    //             || this.usersServive.findOneByEmail(registerUserDto.email))
-    //         {
-    //             throw new BadRequestException('User already exists!') //TO-DO: Conyarntrolar uno por uno y pasar el error puntual (Ej.: ese email ya esta en uso, etc...)
-    //         }
-    //         return await this.usersServive.create(registerUserDto);
-    //     }catch (e){
-    //         return e;
-    //     }
-    // }
-
     // FUNCA OKOK
     async register(registerUserDto: RegisterUserDto) {
         try {
@@ -51,26 +37,13 @@ export class AuthService {
             if (existingUserByEmail) {
                 throw new BadRequestException(this.i18n.t('lang.auth.mailError',{ lang:   I18nContext.current().lang }));
             }
-            return new Response({
-                statusCode:201,
-                status:responseStatus.OK,
-                message:this.i18n.t('lang.auth.Success',{ lang:   I18nContext.current().lang }),
-                data:await this.usersServive.create(registerUserDto)
-            });
-
+            return await this.usersServive.create(registerUserDto);
         } catch (e) {
             if(e instanceof BadRequestException){
                 throw e;
             }else{
                 throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
             }
-            // throw new HttpException(
-            //     {
-            //         status: HttpStatus.INTERNAL_SERVER_ERROR,
-            //         error: 'Registración No completada,  Existe un usuario con el mismo usuario email y dni. Intentar de nuevo.',
-            //     },
-            //     HttpStatus.INTERNAL_SERVER_ERROR,
-            // );
         }
     }
 
@@ -103,23 +76,12 @@ export class AuthService {
             if (user) {
                 const payload = { sub: user.id };
                 const token = await this.jwtService.signAsync(payload);
-                // return {
-                //     nombre: user.person.name + ' ' + user.person.lastName,
-                //     username: user.username,
-                //     roles: user.roles,
-                //     token: token,
-                // };
-                return new Response({
-                    statusCode:201,
-                    status:responseStatus.OK,
-                    message:this.i18n.t('lang.auth.Wellcome',{ lang:   I18nContext.current().lang }),
-                    data:{
-                        nombre: user.person.name + ' ' + user.person.lastName,
-                        username: user.username,
-                        roles: user.roles,
-                        token: token,
-                    }
-                });
+                return {
+                    nombre: user.person.name + ' ' + user.person.lastName,
+                    username: user.username,
+                    roles: user.roles,
+                    token: token,
+                };
             } else {
                 throw new UnauthorizedException({status:responseStatus.UNAUTH,message:this.i18n.t('lang.auth.WrongLogin',{ lang:   I18nContext.current().lang })});
             }
@@ -150,17 +112,12 @@ export class AuthService {
             const payload = { sub: userId };
             const token = await this.jwtService.signAsync(payload);
             let user = await this.usersServive.findOne(userId);
-            return new Response({
-                statusCode:201,
-                status:responseStatus.OK,
-                message:this.i18n.t('lang.auth.WellcomeBack',{ lang:   I18nContext.current().lang }),
-                data:{
-                    nombre: user.person.name + ' ' + user.person.lastName,
-                    username: user.username,
-                    roles: user.roles,
-                    token: token,
-                }
-            });
+            return {
+                nombre: user.person.name + ' ' + user.person.lastName,
+                username: user.username,
+                roles: user.roles,
+                token: token,
+            }
         }catch (e){
             if(e instanceof BadRequestException || e instanceof UnauthorizedException){
                 throw e;

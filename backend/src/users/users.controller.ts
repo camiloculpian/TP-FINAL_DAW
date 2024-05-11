@@ -30,11 +30,15 @@ import { extname } from 'path';
 import { diskStorage } from 'multer';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CurrentUser } from '../auth/decorators/currentUser.decorator';
+import { I18nService } from 'nestjs-i18n';
 
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) { }
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly i18n: I18nService
+  ) { }
   //Creacion de Usuarios: Solo puede crear el administrador 
   @Post()
   @UseGuards(AuthGuard)
@@ -88,6 +92,7 @@ export class UsersController {
   async findAll() {
     try {
       const users = await this.usersService.findAll();
+      
       return users;
     } catch (error) {
       console.error('Error al obtener todos los usuarios:', error);
