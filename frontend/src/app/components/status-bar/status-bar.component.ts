@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { LoginService } from '../login/login.service';
+import { User } from '../../models/users';
 
 @Component({
   selector: 'app-status-bar',
@@ -10,9 +11,11 @@ import { LoginService } from '../login/login.service';
 })
 export class StatusBarComponent {
   // OBVIAMENTE ESTO LO TENEMOS QUE TOMAR DESDE EL USUARIO LOGUEADO!!!!
-  currentUser:{}|null={};
+  currentUser:User|undefined=undefined;
   constructor(private loginService : LoginService) {
+
     this.currentUser = JSON.parse(String(loginService.getCurrentUser()));
+
   }
 
 }

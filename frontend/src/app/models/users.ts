@@ -1,24 +1,19 @@
 export interface UsernameOptions {
-    id?:number|undefined;
+    nombre?:string|undefined;
     username?:string|undefined;
-    password?:string|undefined;
     roles?:string|undefined;
-    profile?:{}|undefined;
+    token?:string|undefined;
 }
 
 export class User{
-    id?:number|undefined;
+    nombre?:string|undefined;
     username?:string|undefined;
-    password?:string|undefined;
     roles?:string|undefined;
-    profile?:{}|undefined;
+    token?:string|undefined;
     constructor(options: UsernameOptions){
-        console.log(options);
-        this.id=options.id;
+        this.nombre=options.nombre;
         this.username=options.username;
-        this.password=options.password;
         this.roles=options.roles;
-        this.profile=options.profile;
+        this.token=options.token;
     }
-
 }

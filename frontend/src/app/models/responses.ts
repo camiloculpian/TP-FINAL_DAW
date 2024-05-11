@@ -23,7 +23,6 @@ export class Response{
     data?:JSON|undefined;
 
     constructor(options: ResponseOptions){
-        console.log(options);
         this.statusCode=options.statusCode;
         this.status=options.status;
         this.message=options.message;
