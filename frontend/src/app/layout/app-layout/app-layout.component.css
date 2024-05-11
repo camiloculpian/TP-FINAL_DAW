@@ -8,8 +8,8 @@
 .app-layout-statusbar{
     background-color: rgb(255, 251, 0);
     align-content: center;
-    padding-left: 3em;
-    padding-right: 3em;
+    /* padding-left: 3em;
+    padding-right: 3em; */
     width: 100%;
     min-height: 30px;
 }

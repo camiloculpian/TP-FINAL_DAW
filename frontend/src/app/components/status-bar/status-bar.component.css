@@ -1,0 +1,26 @@
+.status-bar{
+    display: flex;
+    flex-direction: row;
+}
+
+.section-user-info{
+    display: flex;
+    flex-direction: row;
+    width: 30%;
+    padding-left: 2em;
+}
+
+.section-central{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
+.section-logout{
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    padding-right: 2em;
+}
