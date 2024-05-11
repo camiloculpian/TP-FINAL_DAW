@@ -40,7 +40,7 @@ export class LoginComponent {
     }else if(!this.userForm.value.password){
       this.message='Password no puede estar vacio'
     }else{
-      this.loginService.login(String(this.userForm.value.username), sha512(String(this.userForm.value.password)))
+      this.loginService.logIn(String(this.userForm.value.username), sha512(String(this.userForm.value.password)))
       .subscribe({
         next: (resp) => {
           if(resp.statusCode==201){

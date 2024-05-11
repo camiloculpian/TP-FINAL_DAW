@@ -21,7 +21,7 @@ export class LoginService {
   //   return this._httpReq.post<Response>("http://localhost:3000/api/v1/auth/login", {"username":username, "password":password})
   // }
 
-  login(username: string, password: string) {
+  logIn(username: string, password: string) {
     // CAMBIAR LAS RUTAS A UN ARCHIVO!!!
     return this._httpReq.post<Response>("http://localhost:3000/api/v1/auth/login", {"username":username, "password":password})
         .pipe(map(resp => {
@@ -32,7 +32,7 @@ export class LoginService {
         }))
 }
 
-  logout(){
+  logOut(){
     this.responseSubject.next(null);
     localStorage.removeItem('user');
   }
