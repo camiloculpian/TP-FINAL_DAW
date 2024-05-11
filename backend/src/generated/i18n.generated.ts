@@ -14,6 +14,7 @@ export type I18nTranslations = {
             "mailError": string;
             "WrongLogin": string;
             "WellcomeBack": string;
+            "Success": string;
         };
         "persons": {};
         "users": {
