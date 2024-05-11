@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, of } from 'rxjs';
 import { Response } from '../../models/responses';
@@ -38,8 +38,30 @@ export class LoginService {
   }
 
   isLoggedIn(){
-    return localStorage.getItem('user') !== null;
-    //Queda Verificar con el backend que el token sea valido!
+    let user:any = localStorage.getItem('user');
+    if( user !== null){
+      this._httpReq.get<Response>(
+        `http://localhost:3000/api/v1/auth/verify`,
+        {
+          headers: new HttpHeaders ({   
+              "Authorization": String("Bearer "+JSON.parse(user).token),
+          }),
+        }
+      ).subscribe({
+        next: (resp) => {
+          console.log(JSON.stringify(resp))
+          localStorage.setItem('user', JSON.stringify(resp.data));
+          return true;
+        },
+        error: (err)  =>{
+          console.log('**CUAK!'+JSON.stringify(err.error));
+          return false;
+        }
+      })
+      //Queda Verificar con el backend que el token sea valido!
+      return true;
+    }
+    return false;
   }
 
   getCurrentUser(){

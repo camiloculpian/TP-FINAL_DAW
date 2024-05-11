@@ -144,4 +144,29 @@ export class AuthService {
             }
         }
     }
+
+    async getUser(userId: number){
+        try{
+            const payload = { sub: userId };
+            const token = await this.jwtService.signAsync(payload);
+            let user = await this.usersServive.findOne(userId);
+            return new Response({
+                statusCode:201,
+                status:responseStatus.OK,
+                message:this.i18n.t('lang.auth.WellcomeBack',{ lang:   I18nContext.current().lang }),
+                data:{
+                    nombre: user.person.name + ' ' + user.person.lastName,
+                    username: user.username,
+                    roles: user.roles,
+                    token: token,
+                }
+            });
+        }catch (e){
+            if(e instanceof BadRequestException || e instanceof UnauthorizedException){
+                throw e;
+            }else{
+                throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
+            }
+        }
+    }
 }

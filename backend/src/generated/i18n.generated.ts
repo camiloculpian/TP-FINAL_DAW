@@ -13,6 +13,7 @@ export type I18nTranslations = {
             "DNIError": string;
             "mailError": string;
             "WrongLogin": string;
+            "WellcomeBack": string;
         };
         "persons": {};
         "users": {

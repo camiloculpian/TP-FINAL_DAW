@@ -1,6 +1,7 @@
 {
     "auth":{
         "Wellcome": "Bienvenido",
+        "WellcomeBack": "Bienvenido de nuevo!",
         "Success.": "Registro exitoso.",
         "UsernameError": "Nombre de usuario NO disponible.",
         "DNIError": "Ese DNI ya se encuentra registrado.",

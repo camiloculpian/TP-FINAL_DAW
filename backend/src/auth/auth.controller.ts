@@ -93,7 +93,7 @@ export class AuthController {
     @Get('profile')
     @UseGuards(AuthGuard)
     async profile(
-        @CurrentUser('sub') userId: number
+    @CurrentUser('sub') userId: number
     ) {
         try {
             return await this.authService.getProfile(userId);
@@ -102,4 +102,15 @@ export class AuthController {
         }
     }
 
+    @Get('verify')
+    @UseGuards(AuthGuard)
+    async verify(
+    @CurrentUser('sub') userId: number
+    ) {
+        try {
+            return await this.authService.getUser(userId);
+        } catch (e) {
+            throw e
+        }
+    }
 }
