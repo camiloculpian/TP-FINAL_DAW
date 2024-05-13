@@ -17,9 +17,21 @@ export class AppLayoutComponent {
     private router:Router,
     private loginService : LoginService
   ){
-    if(this.loginService.isLoggedIn()){
-      this.currentUser = this.loginService.getCurrentUser()
-    }else{
+    try{
+      this.loginService.isLoggedIn()?.subscribe({
+          next: (resp) => {
+            // console.log(JSON.stringify(resp))
+            console.log('------------->**OK!'+JSON.stringify(resp.data));
+            localStorage.setItem('user', JSON.stringify(resp.data));
+            return true;
+          },
+          error: (err)  =>{
+            console.log('MUST RETURN FALSE--------->**CUAK!'+JSON.stringify(err.error));
+            console.log('**CUAK! NO estas autorizado a andar por aca!');
+            this.router.navigate(['/login']);
+          }
+        })
+    }catch(e){
       console.log('**CUAK! NO estas autorizado a andar por aca!');
       this.router.navigate(['/login']);
     }
