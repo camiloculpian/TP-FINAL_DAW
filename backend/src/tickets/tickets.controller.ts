@@ -37,11 +37,17 @@ import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
 import { UsersService } from 'src/users/users.service';
 import { TicketStatus } from '../tickets/entities/ticket.entity';
 import { Response, responseStatus } from 'src/common/responses/responses';
+import { I18nContext, I18nService } from 'nestjs-i18n';
+
+//TO-DO aca tengo que tomar lo que devuelve el service y crear una Response. Proncipio SOLID
 
 @ApiTags('Tickets')
 @Controller('tickets')
 export class TicketsController {
-    constructor(private readonly ticketsService: TicketsService) { }
+    constructor(
+        private readonly ticketsService: TicketsService,
+        private readonly i18n: I18nService
+    ) { }
     @Inject(UsersService)
     private readonly userService: UsersService;
 
@@ -97,18 +103,23 @@ export class TicketsController {
         //      -las previstas, o sea las que lanzamos nosotros por ej. no esta autorizado o algun otro chequeo las definimos en el SERVICIO!!!!
         //          y deben de tener la forma por ej. throw new BadRequestException({status:responseStatus.ERROR,message:'User who you wants to asign the ticket not exist!'});
         //
-        //      -las no previstas, o sea por ej se corto la comunicacion con el servicio de la base de datos o los chequeos del dto solo lanzamos e!!!
+        //      -las no previstas, o sea por ej se corto la comunicacion con el servicio de la base de datos o los chequeos del dto solo lanzamos 'e'!!!
         try {
             if (archive) {
                 createTicketDto.archive = archive.filename;
             }
-            const newTicket = await this.ticketsService.create(
+            const ticket = await this.ticketsService.create(
                 createTicketDto,
                 userId,
             );
-            return new Response({statusCode:201,status:responseStatus.OK, message:'El ticket fue añadido de manera correcta', data:newTicket});
+            return new Response({
+                statusCode:201,
+                status:responseStatus.OK,
+                message:this.i18n.t('lang.tickets.CreateOK',{args: { id: ticket.id },lang: I18nContext.current().lang}),
+                data:ticket
+            });
         } catch (e) {
-            throw e;
+            throw new BadRequestException({status:responseStatus.ERROR,message:e.message})
         }
     }
     

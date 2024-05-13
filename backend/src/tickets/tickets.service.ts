@@ -45,12 +45,13 @@ export class TicketsService {
       ticket.createdByUser = user;
       ticket.lastModifiedByUser = user;
       ticket = await this.ticketRepository.save(ticket);
-      return new Response({
-        statusCode:201,
-        status:responseStatus.OK,
-        message: this.i18n.t('lang.tickets.CreateOK',{args: { id: ticket.id },lang: I18nContext.current().lang}),
-        data: ticket,
-      });
+      // return new Response({
+      //   statusCode:201,
+      //   status:responseStatus.OK,
+      //   message: this.i18n.t('lang.tickets.CreateOK',{args: { id: ticket.id },lang: I18nContext.current().lang}),
+      //   data: ticket,
+      // });
+      return ticket;
     } catch (e) {
       throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
     }

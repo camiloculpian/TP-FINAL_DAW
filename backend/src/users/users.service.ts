@@ -38,7 +38,6 @@ export class UsersService {
         throw new BadRequestException('**ERROR: Person with email already exists');
       }
 
-
       // Chequeo si existe persona con ese dni
       if (createUserDto.dni) {
         const existingPersonByDNI = await this.personRepository.findOne({
