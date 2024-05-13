@@ -1,6 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, of } from 'rxjs';
+import { BehaviorSubject, map, Observable, of, throwError } from 'rxjs';
 import { Response } from '../../models/responses';
 
 @Injectable({
@@ -39,7 +39,7 @@ export class LoginService {
 
   isLoggedIn():Observable<any>|undefined{
     let user:any = localStorage.getItem('user');
-    if( user !== null){
+    if( user != null){
       return this._httpReq.get<Response>(
         `http://localhost:3000/api/v1/auth/verify`,
         {
@@ -48,8 +48,9 @@ export class LoginService {
           }),
         }
       )
+    }else{
+      return throwError(() => new Error('UNAUTORIZED'));
     }
-    return undefined;
   }
 
   getCurrentUser(){

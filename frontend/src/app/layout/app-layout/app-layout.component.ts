@@ -20,7 +20,6 @@ export class AppLayoutComponent {
     try{
       this.loginService.isLoggedIn()?.subscribe({
           next: (resp) => {
-            // console.log(JSON.stringify(resp))
             console.log('------------->**OK!'+JSON.stringify(resp.data));
             localStorage.setItem('user', JSON.stringify(resp.data));
             return true;
@@ -28,8 +27,10 @@ export class AppLayoutComponent {
           error: (err)  =>{
             console.log('MUST RETURN FALSE--------->**CUAK!'+JSON.stringify(err.error));
             console.log('**CUAK! NO estas autorizado a andar por aca!');
+            localStorage.removeItem('user');
             this.router.navigate(['/login']);
-          }
+            return true;
+          },
         })
     }catch(e){
       console.log('**CUAK! NO estas autorizado a andar por aca!');
