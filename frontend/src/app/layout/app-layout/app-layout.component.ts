@@ -12,7 +12,7 @@ import { AppMenuComponent } from '../../components/app-menu/app-menu.component';
   styleUrl: './app-layout.component.css'
 })
 export class AppLayoutComponent {
-  private currentUser:{}|null=null;
+  // private currentUser:{}|null=null;
   constructor(
     private router:Router,
     private loginService : LoginService
@@ -20,12 +20,12 @@ export class AppLayoutComponent {
     try{
       this.loginService.isLoggedIn()?.subscribe({
           next: (resp) => {
-            console.log('------------->**OK!'+JSON.stringify(resp.data));
+            console.log('**OK!'+JSON.stringify(resp.data));
             localStorage.setItem('user', JSON.stringify(resp.data));
             return true;
           },
           error: (err)  =>{
-            console.log('MUST RETURN FALSE--------->**CUAK!'+JSON.stringify(err.error));
+            console.log('**CUAK!'+JSON.stringify(err.error));
             console.log('**CUAK! NO estas autorizado a andar por aca!');
             localStorage.removeItem('user');
             this.router.navigate(['/login']);
