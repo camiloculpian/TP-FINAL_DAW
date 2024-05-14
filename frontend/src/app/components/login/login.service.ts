@@ -24,33 +24,52 @@ export class LoginService {
   logIn(username: string, password: string) {
     // CAMBIAR LAS RUTAS A UN ARCHIVO!!!
     return this._httpReq.post<Response>("http://localhost:3000/api/v1/auth/login", {"username":username, "password":password})
-        .pipe(map(resp => {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('user', JSON.stringify(resp.data));
-            this.responseSubject.next(resp);
-            return resp;
-        }))
-}
+      .pipe(map(resp => {
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          localStorage.setItem('user', JSON.stringify(resp.data));
+          this.responseSubject.next(resp);
+          return resp;
+      })
+    )
+  }
 
   logOut(){
     this.responseSubject.next(null);
     localStorage.removeItem('user');
   }
 
+  // isLoggedIn():Observable<any>|undefined{
+  //   let user:any = localStorage.getItem('user');
+  //   if( user != null){
+  //     return this._httpReq.get<Response>(
+  //       `http://localhost:3000/api/v1/auth/verify`,
+  //       {
+  //         headers: new HttpHeaders ({   
+  //             "Authorization": String("Bearer "+JSON.parse(user).token),
+  //         }),
+  //       }
+  //     )
+  //   }else{
+  //     return throwError(() => new Error('UNAUTORIZED'));
+  //   }
+  // }
+
   isLoggedIn():Observable<any>|undefined{
     let user:any = localStorage.getItem('user');
-    if( user != null){
-      return this._httpReq.get<Response>(
-        `http://localhost:3000/api/v1/auth/verify`,
-        {
-          headers: new HttpHeaders ({   
-              "Authorization": String("Bearer "+JSON.parse(user).token),
-          }),
-        }
+    return this._httpReq.get<Response>(
+            `http://localhost:3000/api/v1/auth/verify`,
+            {
+              headers: new HttpHeaders ({   
+                  "Authorization": String("Bearer "+JSON.parse(user).token),
+              }),
+            })
+        .pipe(map(resp => {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('user', JSON.stringify(resp.data));
+            this.responseSubject.next(resp);
+            return resp;
+        })
       )
-    }else{
-      return throwError(() => new Error('UNAUTORIZED'));
-    }
   }
 
   getCurrentUser(){

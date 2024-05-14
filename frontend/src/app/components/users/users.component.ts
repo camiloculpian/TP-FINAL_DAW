@@ -29,7 +29,6 @@ export class UsersComponent implements OnInit{
       }),
     }).subscribe({
       next: (resp => {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
             this.response = resp;
             this.usersList = this.response.data;
             console.log(this.response);
