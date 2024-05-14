@@ -1,6 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
 import { Response } from '../../models/responses';
 import { User } from '../../models/users';
 
