@@ -31,7 +31,7 @@ export class UsersComponent implements OnInit{
       next: (resp => {
             this.response = resp;
             this.usersList = this.response.data;
-            console.log(this.response);
+            console.log(this.usersList);
         }),
         error: (err)  =>{
           this.response=err;
