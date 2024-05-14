@@ -45,7 +45,6 @@ export class LoginComponent {
         next: (resp) => {
           if(resp.statusCode==201){
             localStorage.setItem('user', JSON.stringify(resp.data));
-            console.log('**CUAK! A VER SI SE MUESTRA ESTO!');
             this.router.navigate(['/app']);
           }
         },error: (err) => {

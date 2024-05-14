@@ -14,8 +14,8 @@ import { AppMenuComponent } from '../../components/app-menu/app-menu.component';
 export class AppLayoutComponent {
   // private currentUser:{}|null=null;
   constructor(
-    private router:Router,
-    private loginService : LoginService
+    // private router:Router,
+    // private loginService : LoginService
   ){
     // try{
     //   this.loginService.isLoggedIn()?.subscribe({
