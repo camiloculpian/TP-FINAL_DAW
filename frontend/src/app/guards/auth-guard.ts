@@ -4,9 +4,10 @@ import { inject } from '@angular/core';
 
 export const authGuard: CanActivateFn = (route, state) => {
   if(inject(LoginService).isLoggedIn()){
-    console.log('NO ESTAS LOGUEADO');
+    console.log('ESTAS LOGUEADO');
     return true;
   }else{
+    console.log('NOESTAS LOGUEADO');
     inject(Router).navigate(['/login']);
     return false;
   }
