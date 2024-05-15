@@ -1,0 +1,29 @@
+/* Por defecto, la tabla se muestra normalmente */
+.tablaGas {
+    width: 100%;
+    border-collapse: collapse;
+    /* Combina los bordes de las celdas */
+}
+
+/* Media query para pantallas de menos de 1000px */
+@media screen and (max-width: 1000px) {
+
+    .tablaGas th,
+    .tablaGas td {
+        display: none;
+        /* Oculta todas las celdas de la tabla */
+    }
+
+    /* Muestra solo la 3era, 4ta, 5ta y última columna */
+    .tablaGas th:nth-child(3),
+    .tablaGas td:nth-child(3),
+    .tablaGas th:nth-child(4),
+    .tablaGas td:nth-child(4),
+    .tablaGas th:nth-child(5),
+    .tablaGas td:nth-child(5),
+    .tablaGas th:last-child,
+    .tablaGas td:last-child {
+        display: table-cell;
+        /* Muestra solo las celdas seleccionadas */
+    }
+}

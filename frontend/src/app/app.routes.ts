@@ -7,12 +7,15 @@ import { TicketsComponent } from './components/tickets/tickets.component';
 import { UsersComponent } from './components/users/users.component';
 import { AuditsComponent } from './components/audits/audits.component';
 import { NgModule } from '@angular/core';
+import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
     
     { path: '', component: HomeComponent },
     { path: 'login', component: LoginLayoutComponent },
-    { path: 'app', component: AppLayoutComponent,
+    // {path: 'app', component: AppLayoutComponent, canActivate: [AuthGuard]},
+    { path: 'app', component: AppLayoutComponent, 
+        canActivate: [authGuard],
         children: [
             {path: 'users',component: UsersComponent},
             {path: 'tickets',component: TicketsComponent},

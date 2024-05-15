@@ -1,8 +1,10 @@
 export interface UsernameOptions {
+    id: number;
     nombre?:string|undefined;
     username?:string|undefined;
     roles?:string|undefined;
     token?:string|undefined;
+    
 }
 
 export class User{

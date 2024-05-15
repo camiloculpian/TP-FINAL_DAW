@@ -3,11 +3,12 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { sha512 } from 'js-sha512';
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,NgIf],
   providers: [LoginService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
