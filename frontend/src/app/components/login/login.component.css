@@ -1,87 +1,17 @@
+.gradient-custom-2 {
+  background: radial-gradient(circle at 50% -20.71%, #97bdff 0, #3c78f2 50%, #003886 100%);
 
-.loginTitle{
-    display: flex;
-    justify-content: center;
 }
 
-.login-component{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+@media (min-width: 768px) {
+  .gradient-form {
+    height: 100vh !important;
+  }
 }
 
-.login-component form{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-/* aca no te toma las propiedades de loginTitle */
-.login-component .loginTitle{
-    display: flex;
-    width: 100%;
-    align-items: center;
-    align-content: center;
-    flex-grow: 0;
-}
-
-.login-component .entryBox{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    align-content: center;
-    flex-grow:2;
-}
-
-.login-component .entryLine{
-    display: flex;
-    margin: 3px;
-    align-items: center;
-    align-content: center;
-    flex-grow:1;
-    
-}
-
-.login-component .entryLine label{
-    margin-right: 5px;
-}
-.login-component .actionLine{
-    margin-top: 5em;
-}
-
-.login-component .entryLine input{
-    border-radius: 5px;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    box-shadow: none;
-
-    width: 300px;
-}
-
-input::placeholder{
-    color: #4DABE2;
-}
-
-.login-component button{
-    width: 30%;
-    border-radius: 25px;
-    padding: 5px 5px 5px 5px;
-    border: none;
-    border: 1px solid darkgrey;
-    box-shadow: 3px 3px 5px grey;
-    
-}
-
-.actionLine{
-    display: flex;
-    justify-content: center;
-}
-
-
-.login-component button:hover{
-    background-color: #F39200;;
-    border: 1px solid cornflowerblue;
-
+@media (min-width: 769px) {
+  .gradient-custom-2 {
+    border-top-right-radius: .3rem;
+    border-bottom-right-radius: .3rem;
+  }
 }
