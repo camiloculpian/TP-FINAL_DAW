@@ -72,6 +72,7 @@ export class UsersService {
 
   // busca todos
   async findAll() {
+    //si es usuario normal que solo muestre el mio TOMAR EJEMPLO DE TICKETS!!!
     try {
       return await this.userRepository.find({
         relations: {
