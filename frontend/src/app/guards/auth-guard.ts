@@ -20,13 +20,16 @@ export const authGuard: CanActivateFn = (
 ) => {
   const authService = inject(LoginService);
   const router = inject(Router);
-
   return authService.isLoggedIn().pipe(
     map((resp) => {
+      console.log('**OK!'+JSON.stringify(resp.data));
       localStorage.setItem('user', JSON.stringify(resp.data));
       return true
     }),
-    catchError(() => {
+    catchError((err) => {
+      console.log('**CUAK!'+JSON.stringify(err));
+      console.log('**CUAK! NO estas autorizado a andar por aca!');
+      localStorage.removeItem('user');
       return router.navigate(['/login']);
     })
   );
