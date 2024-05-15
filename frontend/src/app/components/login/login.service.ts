@@ -42,21 +42,21 @@ export class LoginService {
     localStorage.removeItem('user');
   }
 
-  // isLoggedIn():Observable<Response>{
-  //   let user:any = localStorage.getItem('user');
-  //   if( user != null){
-  //     return this._httpReq.get<Response>(
-  //       `http://localhost:3000/api/v1/auth/verify`,
-  //       {
-  //         headers: new HttpHeaders ({   
-  //             "Authorization": String("Bearer "+JSON.parse(user).token),
-  //         }),
-  //       }
-  //     )
-  //   }else{
-  //     return throwError(() => new Error('UNAUTORIZED'));
-  //   }
-  // }
+  isLoggedIn():Observable<Response>{
+    let user:any = localStorage.getItem('user');
+    if( user != null){
+      return this._httpReq.get<Response>(
+        `http://localhost:3000/api/v1/auth/verify`,
+        {
+          headers: new HttpHeaders ({   
+              "Authorization": String("Bearer "+JSON.parse(user).token),
+          }),
+        }
+      )
+    }else{
+      return throwError(() => new Error('UNAUTORIZED'));
+    }
+  }
 
   // isLoggedIn():boolean{
   //   try{
@@ -99,13 +99,13 @@ export class LoginService {
   //     return false;
   //   }
 
-  isLoggedIn():boolean{
-    if(localStorage.getItem('user')){
-      return true;
-    }else{
-      return false;
-    }
-  }
+  // isLoggedIn():boolean{
+  //   if(localStorage.getItem('user')){
+  //     return true;
+  //   }else{
+  //     return false;
+  //   }
+  // }
 
   getCurrentUser(){
     return localStorage.getItem('user');
