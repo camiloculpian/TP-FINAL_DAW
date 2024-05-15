@@ -1,14 +1,18 @@
- <div class="login-component">
+ <!-- <div class="login-component">
     <div class="loginTitle">
         <h3>Login</h3>
     </div>
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
         <div class="entryBox">
             <div class="entryLine">
-                <label>Username:</label><input type="text" formControlName="username" (keyup)="onUsernameChange()">
+                <label></label><input
+                placeholder="                -----  Username  -----"
+                type="text" formControlName="username" (keyup)="onUsernameChange()">
             </div>
             <div class="entryLine">
-                <label>Password:</label><input type="password" formControlName="password" (keyup)="onPasswordChange()">
+                <label></label><input 
+                placeholder="                     *******************"
+                type="password" formControlName="password" (keyup)="onPasswordChange()">
             </div>
         </div>
         <div class="actionLine">
@@ -22,4 +26,36 @@
             }
         </div>
     </form>
-</div>
+</div> -->
+
+
+<div class="login-component">
+    <div class="loginTitle">
+      <h3>Login</h3>
+    </div>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <div class="entryBox">
+        <div class="entryLine">
+          <label></label>
+          <input placeholder="                      Enter username"
+          type="text" formControlName="username" (keyup)="onUsernameChange()">
+        </div>
+        <div class="entryLine">
+          <label></label>
+          <input placeholder="                      Enter password"
+          type="password" formControlName="password" (keyup)="onPasswordChange()">
+        </div>
+      </div>
+      <div class="actionLine">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+    <div class="notification">
+      <ng-container *ngIf="message.length >= 1">
+        <div class="alert alert-danger">
+          <strong>Error!</strong> {{ message }}
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  
