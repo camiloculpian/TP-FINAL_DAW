@@ -146,14 +146,14 @@ export class TicketsComponent implements OnInit {
   ngOnInit(): void {
     console.log('ngOnInit()');
     try{
-      let user:CurrentUser = JSON.parse(String(localStorage.getItem('user')));
-      if(!user){
+      let currentUser:CurrentUser = JSON.parse(String(localStorage.getItem('user')));
+      if(!currentUser){
         this.router.navigate(['/login']);
         return;
       }
   
       const headers = new HttpHeaders({
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${currentUser.token}`,
       });
       
       // obtencion de todos los tickets
@@ -220,9 +220,9 @@ export class TicketsComponent implements OnInit {
 
   // Borrar el ticket
   deleteTicket(ticketId: number): void {
-    const user: User = JSON.parse(String(localStorage.getItem('user')));
+    const currentUser: CurrentUser = JSON.parse(String(localStorage.getItem('user')));
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${user.token}`,
+      Authorization: `Bearer ${currentUser.token}`,
     });
 
     this._httpReq.delete(`http://localhost:3000/api/v1/tickets/${ticketId}`, { headers })
