@@ -59,7 +59,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Response } from '../../models/responses';
-import { CurrentUser } from '../../models/users';
+import { CurrentUser, User } from '../../models/users';
 import { Router } from '@angular/router';
 import { NgFor, NgForOf, NgIf } from '@angular/common';
 import Swal from 'sweetalert2';
@@ -144,17 +144,10 @@ export class TicketsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-<<<<<<< HEAD
     console.log('ngOnInit()');
     try{
       let user:CurrentUser = JSON.parse(String(localStorage.getItem('user')));
       if(!user){
-=======
-    
-    try {
-      const user: User = JSON.parse(String(localStorage.getItem('user')));
-      if (!user) {
->>>>>>> aea55049f4f087d8e506de531ad2b22d36b45d47
         this.router.navigate(['/login']);
         return;
       }
