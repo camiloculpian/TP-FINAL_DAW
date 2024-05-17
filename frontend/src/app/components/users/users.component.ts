@@ -57,6 +57,7 @@ import { Response } from '../../models/responses';
 import { CommonModule, NgForOf } from '@angular/common';
 import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
+import { User } from '../../models/users';
 
 export interface UsernameOptions {
   id: number;
@@ -64,25 +65,6 @@ export interface UsernameOptions {
   username?: string | undefined;
   roles?: string | undefined;
   token?: string | undefined;
-}
-
-export class User {
-  id: number | any;
-  token?: string | undefined;
-  person?: {
-    address?: string | undefined;
-    birthDate?: string | undefined;
-    dni?: string | undefined;
-    email?: string | undefined;
-    gender?: string | undefined;
-    lastName?: string | undefined;
-    name?: string | undefined;
-    phone?: string | undefined;
-    profilePicture?: string | null;
-  };
-  profilePicture?: string | null;
-  roles?: string | undefined;
-  username?: string | undefined;
 }
 
 @Component({

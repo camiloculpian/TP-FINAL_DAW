@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { LoginService } from '../login/login.service';
-import { User } from '../../models/users';
+import { CurrentUser } from '../../models/users';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class StatusBarComponent {
   // OBVIAMENTE ESTO LO TENEMOS QUE TOMAR DESDE EL USUARIO LOGUEADO!!!!
-  currentUser:User|undefined=undefined;
+  currentUser:CurrentUser|undefined=undefined;
   constructor(
     private router:Router,
     private loginService : LoginService

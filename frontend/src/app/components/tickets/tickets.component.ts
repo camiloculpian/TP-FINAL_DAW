@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Response } from '../../models/responses';
-import { User } from '../../models/users';
+import { CurrentUser } from '../../models/users';
 import { Router } from '@angular/router';
 
 @Component({
@@ -25,7 +25,7 @@ export class TicketsComponent implements OnInit{
   ngOnInit(): void {
     console.log('ngOnInit()');
     try{
-      let user:User = JSON.parse(String(localStorage.getItem('user')));
+      let user:CurrentUser = JSON.parse(String(localStorage.getItem('user')));
       if(!user){
         this.router.navigate(['/login']);
       }

@@ -7,7 +7,7 @@ export interface UsernameOptions {
     
 }
 
-export class User{
+export class CurrentUser{
     nombre?:string|undefined;
     username?:string|undefined;
     roles?:string|undefined;
@@ -19,3 +19,22 @@ export class User{
         this.token=options.token;
     }
 }
+
+export class User {
+    id: number | any;
+    token?: string | undefined;
+    person?: {
+      address?: string | undefined;
+      birthDate?: string | undefined;
+      dni?: string | undefined;
+      email?: string | undefined;
+      gender?: string | undefined;
+      lastName?: string | undefined;
+      name?: string | undefined;
+      phone?: string | undefined;
+      profilePicture?: string | null;
+    };
+    profilePicture?: string | null;
+    roles?: string | undefined;
+    username?: string | undefined;
+  }
