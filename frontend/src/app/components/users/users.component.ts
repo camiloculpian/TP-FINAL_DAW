@@ -93,7 +93,7 @@ export class User {
     <div class="container">
     <div class="container mt-4">
       <h3>Agregar Nuevo Usuario</h3>
-        <form>
+        <form >
           <!-- Username -->
           <div class="mb-3">
             <label for="username" class="form-label">Username:</label>
@@ -127,7 +127,7 @@ export class User {
             <label for="profilePicture" class="form-label">Profile Picture:</label>
             <input type="file" class="form-control" id="profilePicture" name="profilePicture" accept="image/*">
           </div>
-          <button type="submit" class="btn btn-primary">Agregar Nuevo</button>
+          <button type="submit" class="btn btn-primary" >Agregar Nuevo</button>
         </form>
       </div>
 
@@ -157,7 +157,7 @@ export class User {
             <td>{{ user.person?.email }}</td>
             <td>{{ user.person?.phone }}</td>
             <td>
-              <button class="btn btn-danger" (click)="deleteUser(user.id)">Despedir</button>
+              <button class="btn btn-danger" (click)="deleteUser(user.id)">X</button>
             </td>
           </tr>
           <tr *ngIf="usersList?.length === 0">
@@ -176,6 +176,9 @@ export class UsersComponent implements OnInit {
   // cambie la lista de user en vez de undefined, lo deje como lista vacia...
   public usersList: User[] | [];
   public response: Response | null;
+  //newUser: User = new User;
+  //newUser:User | undefined;
+  newUser!: User;
 
   constructor(private _httpReq: HttpClient) {
     this.response = null;
@@ -255,8 +258,10 @@ export class UsersComponent implements OnInit {
     });
   }
 
-
   // AGREGAR
+
+  
+  
 }
 
 
