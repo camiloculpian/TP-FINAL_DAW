@@ -58,7 +58,6 @@ import { sha512 } from "js-sha512";
                 
                 }
             },(err) => {
-                //console.log('**CUAK!'+JSON.stringify(err.response));
                 console.log(err.error.message);
             }
         )
