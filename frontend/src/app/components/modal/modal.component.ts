@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalService } from './modal.service';
 
 export class ModalConfig {
+  userId?:number=0;
   title?: string = '';
   description?: string = '';
   save?: Function = () => {};

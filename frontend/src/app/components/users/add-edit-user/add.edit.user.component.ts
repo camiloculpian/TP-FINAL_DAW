@@ -1,5 +1,5 @@
 import { CommonModule, NgForOf } from "@angular/common";
-import { Component, Inject, OnInit } from "@angular/core";
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from "@angular/core";
 import { NgbHighlight } from "@ng-bootstrap/ng-bootstrap";
 import { ModalComponent } from "../../modal/modal.component";
 import { UsersService } from "../users.service";
@@ -17,12 +17,14 @@ import { sha512 } from "js-sha512";
   export class AddEditUsersComponent implements OnInit {
     userForm : FormGroup;
     private response:Response|null = null;
-    private userId:number|null=null;
+    @Output() messageEventOut = new EventEmitter<string>();
+    @Input() userId:number=0;
+    
     constructor(
         private usersService:UsersService,
         private fbuilder: FormBuilder,
-        // @Inject('userId') private userId?: number|null,
     ) {
+        console.log('useId = '+this.userId);
         this.userForm = this.fbuilder.group({
             username: new FormControl('', Validators.required),
             password: new FormControl('', Validators.required),
@@ -47,20 +49,23 @@ import { sha512 } from "js-sha512";
         
     }
 
-    onAddUser(e:Event){
+    onSave(e:Event){
         e.preventDefault();
         let formObj = this.userForm.getRawValue();
         formObj.password = sha512(String(formObj.password));
         console.log(JSON.stringify(formObj));
-        this.usersService.addUser(JSON.parse(JSON.stringify(formObj))).subscribe(
-            (resp) => {
-                if(resp.statusCode==201){
-                
+        if(this.userId){
+            // existe hay que editarlo!
+        }else{
+            this.usersService.addUser(JSON.parse(JSON.stringify(formObj))).subscribe(
+                (resp) => {
+                    if(resp.statusCode==201){
+                    
+                    }
+                },(err) => {
+                    console.log(err.error.message);
                 }
-            },(err) => {
-                console.log(err.error.message);
-            }
-        )
-        //this.usersService.addUser(this.user).subscribe(resp => this.response = resp);
+            )
+        }
     }
   }

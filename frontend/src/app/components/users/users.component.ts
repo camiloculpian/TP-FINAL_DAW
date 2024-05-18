@@ -52,7 +52,7 @@
 
 // CODE MODIFIED 1.1: Tranquilo no se asuste chamigo, despues modularizamos...
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Response } from '../../models/responses';
 import { CommonModule, NgForOf } from '@angular/common';
 import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
@@ -62,11 +62,12 @@ import { ModalService } from '../modal/modal.service';
 import { ModalComponent } from '../modal/modal.component';
 import { UsersService } from './users.service';
 import { AddEditUsersComponent } from './add-edit-user/add.edit.user.component';
+import { FormBuilder, FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, NgForOf, NgbHighlight, ModalComponent, AddEditUsersComponent],
+  imports: [CommonModule, NgForOf, NgbHighlight, ModalComponent, AddEditUsersComponent,FormsModule],
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
@@ -74,39 +75,41 @@ import { AddEditUsersComponent } from './add-edit-user/add.edit.user.component';
 // Tranca, despues modularizamos... Por ahora la tablita esta aca para no estar yendo de un archiv
 // a otro, para mayor practicidad y rapidez
 export class UsersComponent implements OnInit {
+
   // cambie la lista de user en vez de undefined, lo deje como lista vacia...
   public usersList: User[] | [];
   public response: Response | null;
   //newUser: User = new User;
   //newUser:User | undefined;
-  newUser!: User;
+  enableEdit:boolean=false;
+  enableEditIndex:number=0;
+  userForm : FormGroup;
+
+  username:string|undefined;
 
   constructor(
     private _httpReq: HttpClient,
     private modalService:ModalService,
+    private fbuilder: FormBuilder,
   ) {
     this.response = null;
     this.usersList = [];
+    this.userForm = this.fbuilder.group({
+      username: new FormControl('', Validators.required),
+      name: new FormControl('', Validators.required),
+      lastName: new FormControl('', Validators.required),
+      // dni: new FormControl('', Validators.required),
+      // birthDate: new FormControl('', Validators.required),
+      role: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required,Validators.email]),
+      phone: new FormControl('', Validators.required),
+      // address: new FormControl('', Validators.required),
+      // gender: new FormControl('', Validators.required),
+    });
   }
   // OBTENCION DE TODOS LOS USERS
   ngOnInit(): void {
-    // console.log('ngOnInit()');
-    // let user: User = JSON.parse(String(localStorage.getItem('user')));
-    // this._httpReq.get<Response>("http://localhost:3000/api/v1/users", {
-    //   headers: new HttpHeaders({
-    //     "Authorization": String("Bearer " + user.token),
-    //   }),
-    // }).subscribe({
-    //   next: (resp) => {
-    //     this.response = resp;
-    //     this.usersList = this.response.data as unknown as User[]; // Cast to User[]
-    //     console.log(this.usersList);
-    //   },
-    //   error: (err) => {
-    //     this.response = err;
-    //     console.log(this.response);
-    //   }
-    // });
+    
     this.getUsers();
   }
 
@@ -187,19 +190,32 @@ export class UsersComponent implements OnInit {
   }
 
   editUser(userId:number){
-    this.openModal(userId);
+    //recorres la tabla, poner como editables los campos y poner un boton guardar...
+  }
+
+  addUser(){
+    this.openModalAdd();
   }
   // AGREGAR
-
-  openModal(userId:number) {
-    console.log('------------------> openModal()')
-    console.log('userId: ', userId)
+  openModalAdd() {
     this.modalService.open({
-      title: 'test',
+      title: 'Añadir Usuario',
+
     });
-    console.log('<------------------ openModal()')
   }
-  
+
+    enableEditMethod(e:Event, i:number){
+      this.enableEdit = true;
+      this.enableEditIndex = i;
+      e.preventDefault();
+      console.log(i);
+    }
+
+    onEditUser(item:any){
+      item.isEdit=true;
+
+    }
+
 }
 
 
