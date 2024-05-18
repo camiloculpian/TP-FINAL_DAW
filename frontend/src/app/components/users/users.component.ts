@@ -52,22 +52,19 @@
 
 // CODE MODIFIED 1.1: Tranquilo no se asuste chamigo, despues modularizamos...
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Response } from '../../models/responses';
 import { CommonModule, NgForOf } from '@angular/common';
-import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
+import { NgbHighlight, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { CurrentUser, User } from '../../models/users';
-import { ModalService } from '../modal/modal.service';
-import { ModalComponent } from '../modal/modal.component';
-import { UsersService } from './users.service';
 import { AddEditUsersComponent } from './add-edit-user/add.edit.user.component';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, NgForOf, NgbHighlight, ModalComponent, AddEditUsersComponent,FormsModule],
+  imports: [CommonModule, NgForOf, NgbHighlight, AddEditUsersComponent,FormsModule],
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
@@ -75,50 +72,36 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
 // Tranca, despues modularizamos... Por ahora la tablita esta aca para no estar yendo de un archiv
 // a otro, para mayor practicidad y rapidez
 export class UsersComponent implements OnInit {
-
+  private modalService = inject(NgbModal);
   // cambie la lista de user en vez de undefined, lo deje como lista vacia...
   public usersList: User[] | [];
   public response: Response | null;
-  //newUser: User = new User;
-  //newUser:User | undefined;
+
   enableEdit:boolean=false;
   enableEditIndex:number=0;
-  //userForm : FormGroup;
-  userForm = new FormGroup({
-      username: new FormControl('', Validators.required),
-      name: new FormControl('', Validators.required),
-      lastName: new FormControl('', Validators.required),
-      // dni: new FormControl('', Validators.required),
-      // birthDate: new FormControl('', Validators.required),
-      roles: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required,Validators.email]),
-      phone: new FormControl('', Validators.required),
-      // address: new FormControl('', Validators.required),
-      // gender: new FormControl('', Validators.required),
-    });
-  
+  userForm : FormGroup;
 
   username:string|undefined;
 
   constructor(
     private _httpReq: HttpClient,
-    private modalService:ModalService,
-    //private fbuilder: FormBuilder,
+    //private modalService:ModalService,
+    private fbuilder: FormBuilder,
   ) {
     this.response = null;
     this.usersList = [];
-    // this.userForm = this.fbuilder.group({
-    //   username: new FormControl('', Validators.required),
-    //   name: new FormControl('', Validators.required),
-    //   lastName: new FormControl('', Validators.required),
-    //   // dni: new FormControl('', Validators.required),
-    //   // birthDate: new FormControl('', Validators.required),
-    //   role: new FormControl('', Validators.required),
-    //   email: new FormControl('', [Validators.required,Validators.email]),
-    //   phone: new FormControl('', Validators.required),
-    //   // address: new FormControl('', Validators.required),
-    //   // gender: new FormControl('', Validators.required),
-    // });
+    this.userForm = this.fbuilder.group({
+      username: new FormControl('', Validators.required),
+      name: new FormControl('', Validators.required),
+      lastName: new FormControl('', Validators.required),
+      // dni: new FormControl('', Validators.required),
+      // birthDate: new FormControl('', Validators.required),
+      role: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required,Validators.email]),
+      phone: new FormControl('', Validators.required),
+      // address: new FormControl('', Validators.required),
+      // gender: new FormControl('', Validators.required),
+    });
   }
   // OBTENCION DE TODOS LOS USERS
   ngOnInit(): void {
@@ -199,7 +182,8 @@ export class UsersComponent implements OnInit {
   }
 
   onAddUser(){
-    console.log('---------------> OnAddUser');
+    const modalRef = this.modalService.open(AddEditUsersComponent);
+		modalRef.componentInstance.name = 'TEST';
   }
 
   editUser(userId:number){
@@ -226,11 +210,11 @@ export class UsersComponent implements OnInit {
 
     onEditUser(item:any){
       console.log(item);
+      this.enableEdit = false;
     }
 
     onChangeUser(e:any,user:any){
       user.username = e.target?.value;
-      this.enableEdit = false;
     }
 
 }

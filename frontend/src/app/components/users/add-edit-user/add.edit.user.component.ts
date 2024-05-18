@@ -1,16 +1,16 @@
 import { CommonModule, NgForOf } from "@angular/common";
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from "@angular/core";
 import { NgbHighlight } from "@ng-bootstrap/ng-bootstrap";
-import { ModalComponent } from "../../modal/modal.component";
 import { UsersService } from "../users.service";
 import { Response } from "../../../models/responses";
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { sha512 } from "js-sha512";
+import Swal from "sweetalert2";
 
 @Component({
     selector: 'app-add-edit-user',
     standalone: true,
-    imports: [ReactiveFormsModule, CommonModule, NgForOf, NgbHighlight, ModalComponent],
+    imports: [ReactiveFormsModule, CommonModule, NgForOf, NgbHighlight],
     templateUrl: './add.edit.user.component.html',
     styleUrls: ['../users.component.css']
   })
@@ -60,10 +60,17 @@ import { sha512 } from "js-sha512";
             this.usersService.addUser(JSON.parse(JSON.stringify(formObj))).subscribe(
                 (resp) => {
                     if(resp.statusCode==201){
-                    
+                        Swal.fire({
+                            title: 'Usuario añadido con éxito',
+                            icon: 'success'
+                          });
                     }
                 },(err) => {
-                    console.log(err.error.message);
+                    Swal.fire({
+                        title: 'Error al añadir usuario',
+                        text: err.error.message,
+                        icon: 'error'
+                      });
                 }
             )
         }
