@@ -62,7 +62,7 @@ import { ModalService } from '../modal/modal.service';
 import { ModalComponent } from '../modal/modal.component';
 import { UsersService } from './users.service';
 import { AddEditUsersComponent } from './add-edit-user/add.edit.user.component';
-import { FormBuilder, FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-users',
@@ -83,29 +83,42 @@ export class UsersComponent implements OnInit {
   //newUser:User | undefined;
   enableEdit:boolean=false;
   enableEditIndex:number=0;
-  userForm : FormGroup;
+  //userForm : FormGroup;
+  userForm = new FormGroup({
+      username: new FormControl('', Validators.required),
+      name: new FormControl('', Validators.required),
+      lastName: new FormControl('', Validators.required),
+      // dni: new FormControl('', Validators.required),
+      // birthDate: new FormControl('', Validators.required),
+      roles: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required,Validators.email]),
+      phone: new FormControl('', Validators.required),
+      // address: new FormControl('', Validators.required),
+      // gender: new FormControl('', Validators.required),
+    });
+  
 
   username:string|undefined;
 
   constructor(
     private _httpReq: HttpClient,
     private modalService:ModalService,
-    private fbuilder: FormBuilder,
+    //private fbuilder: FormBuilder,
   ) {
     this.response = null;
     this.usersList = [];
-    this.userForm = this.fbuilder.group({
-      username: new FormControl('', Validators.required),
-      name: new FormControl('', Validators.required),
-      lastName: new FormControl('', Validators.required),
-      // dni: new FormControl('', Validators.required),
-      // birthDate: new FormControl('', Validators.required),
-      role: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required,Validators.email]),
-      phone: new FormControl('', Validators.required),
-      // address: new FormControl('', Validators.required),
-      // gender: new FormControl('', Validators.required),
-    });
+    // this.userForm = this.fbuilder.group({
+    //   username: new FormControl('', Validators.required),
+    //   name: new FormControl('', Validators.required),
+    //   lastName: new FormControl('', Validators.required),
+    //   // dni: new FormControl('', Validators.required),
+    //   // birthDate: new FormControl('', Validators.required),
+    //   role: new FormControl('', Validators.required),
+    //   email: new FormControl('', [Validators.required,Validators.email]),
+    //   phone: new FormControl('', Validators.required),
+    //   // address: new FormControl('', Validators.required),
+    //   // gender: new FormControl('', Validators.required),
+    // });
   }
   // OBTENCION DE TODOS LOS USERS
   ngOnInit(): void {
@@ -212,8 +225,12 @@ export class UsersComponent implements OnInit {
     }
 
     onEditUser(item:any){
-      item.isEdit=true;
+      console.log(item);
+    }
 
+    onChangeUser(e:any,user:any){
+      user.username = e.target?.value;
+      this.enableEdit = false;
     }
 
 }

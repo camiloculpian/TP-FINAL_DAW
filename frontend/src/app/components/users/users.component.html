@@ -15,7 +15,7 @@
         <tbody>
           <tr id="TABLA_USUARIOS" *ngFor="let user of usersList; trackBy: trackByUserId">
             <td>{{ user.id }}</td>
-            <td *ngIf="enableEdit && enableEditIndex == user.id"><input type="text" value={{user.username}}></td>
+            <td *ngIf="enableEdit && enableEditIndex == user.id"><input type="text" value={{user.username}} id="username" (change)="onChangeUser($event,user)"></td>
             <td *ngIf="!enableEdit || (enableEdit && enableEditIndex != user.id)">{{ user.username }}</td>
 
             <td *ngIf="enableEdit && enableEditIndex == user.id"><input type="text" value={{user.roles}}></td>
