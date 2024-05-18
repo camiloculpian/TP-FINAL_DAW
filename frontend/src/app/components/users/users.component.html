@@ -15,38 +15,15 @@
         <tbody>
           <tr id="TABLA_USUARIOS" *ngFor="let user of usersList; trackBy: trackByUserId">
             <td>{{ user.id }}</td>
-            <td *ngIf="enableEdit && enableEditIndex == user.id"><input type="text" value={{user.username}} id="username" (change)="onChangeUser($event,user)"></td>
-            <td *ngIf="!enableEdit || (enableEdit && enableEditIndex != user.id)">{{ user.username }}</td>
-
-            <td *ngIf="enableEdit && enableEditIndex == user.id"><input type="text" value={{user.roles}}></td>
-            <td *ngIf="!enableEdit || (enableEdit && enableEditIndex != user.id)">{{ user.roles }}</td>
-
-            <td *ngIf="enableEdit && enableEditIndex == user.id"><input type="text" value={{user.person?.name}}></td>
-            <td *ngIf="!enableEdit || (enableEdit && enableEditIndex != user.id)">{{ user.person?.name }}</td>
-
-            <td *ngIf="enableEdit && enableEditIndex == user.id"><input type="text" value={{user.person?.lastName}}></td>
-            <td *ngIf="!enableEdit || (enableEdit && enableEditIndex != user.id)">{{ user.person?.lastName }}</td>
-
-            <td *ngIf="enableEdit && enableEditIndex == user.id"><input type="text" value={{user.person?.email}}></td>
-            <td *ngIf="!enableEdit || (enableEdit && enableEditIndex != user.id)">{{ user.person?.email }}</td>
-
-            <td *ngIf="enableEdit && enableEditIndex == user.id"><input type="text" value={{user.person?.phone}}></td>
-            <td *ngIf="!enableEdit || (enableEdit && enableEditIndex != user.id) ">{{ user.person?.phone }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.roles }}</td>
+            <td>{{ user.person?.name }}</td>
+            <td>{{ user.person?.lastName }}</td>
+            <td>{{ user.person?.email }}</td>
+            <td>{{ user.person?.phone }}</td>
             <td>
-              
-            <button *ngIf="enableEdit && enableEditIndex == user.id" (click)="enableEdit=false" class="btn btn-danger" ng-click="cancel()">
-                <i class="fa-regular fa-rectangle-xmark"></i>
-            </button>
-            <button *ngIf="enableEdit && enableEditIndex == user.id" id="saveBtn" class="btn btn-primary" (click)="onEditUser(user)" type="submit">
-                <i class="notifyIcon fa-solid fa-floppy-disk"></i>
-            </button>
-
-            <button class="btn btn-danger" *ngIf="!enableEdit" (click)="deleteUser(user.id)"><i class="notifyIcon fa-solid fa-trash-can"></i></button>
-            <button class="btn btn-warning" *ngIf="!enableEdit" (click)="enableEditMethod($event, user.id)">
-                <i class="notifyIcon fa-solid fa-user-pen"></i>
-            </button>
-
-
+              <button class="btn btn-danger" (click)="deleteUser(user.id)"><i class="notifyIcon fa-solid fa-xmark"></i></button>
+              <button class="btn btn-warning" (click)="onEditUser(user)"><i class="notifyIcon fa-solid fa-user-pen"></i></button>
             </td>
           </tr>
           <tr *ngIf="usersList?.length === 0">
@@ -55,4 +32,3 @@
         </tbody>
       </table>
       <button class="btn btn-warning" (click)="onAddUser()"><i class="notifyIcon fa-solid fa-user-pen">Add User</i></button>
-     

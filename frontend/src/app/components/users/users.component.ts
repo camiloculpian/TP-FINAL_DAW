@@ -215,6 +215,7 @@ export class UsersComponent implements OnInit {
 
     onChangeUser(e:any,user:any){
       user.username = e.target?.value;
+      
     }
 
 }

@@ -18,13 +18,13 @@ import Swal from "sweetalert2";
     userForm : FormGroup;
     private response:Response|null = null;
     @Output() messageEventOut = new EventEmitter<string>();
-    @Input() userId:number=0;
+    @Input() user:any=undefined;
     
     constructor(
         private usersService:UsersService,
         private fbuilder: FormBuilder,
     ) {
-        console.log('useId = '+this.userId);
+        console.log('useId = '+this.user);
         this.userForm = this.fbuilder.group({
             username: new FormControl('', Validators.required),
             password: new FormControl('', Validators.required),
@@ -38,8 +38,8 @@ import Swal from "sweetalert2";
             address: new FormControl('', Validators.required),
             gender: new FormControl('', Validators.required),
         });
-        if(this.userId){
-            //this.usersService.getUser(2).subscribe(resp => console.log(resp));
+        if(this.user){
+            console.log(this.user)
         }else{
             
         }
@@ -54,7 +54,7 @@ import Swal from "sweetalert2";
         let formObj = this.userForm.getRawValue();
         formObj.password = sha512(String(formObj.password));
         console.log(JSON.stringify(formObj));
-        if(this.userId){
+        if(this.user){
             // existe hay que editarlo!
         }else{
             this.usersService.addUser(JSON.parse(JSON.stringify(formObj))).subscribe(
