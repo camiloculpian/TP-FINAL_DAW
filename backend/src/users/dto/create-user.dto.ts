@@ -25,6 +25,7 @@ export class CreateUserDto {
     @MaxLength(8)
     dni: string;
 
+    @IsOptional()
     @IsString()
     address: string;
 
@@ -37,6 +38,7 @@ export class CreateUserDto {
     @IsEmail()
     email: string;
 
+    @IsOptional()
     @IsPhoneNumber()
     phone: string;
 

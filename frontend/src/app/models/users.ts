@@ -1,4 +1,4 @@
-export interface UsernameOptions {
+export interface CurrentUserOptions {
     id: number;
     nombre?:string|undefined;
     username?:string|undefined;
@@ -12,7 +12,7 @@ export class CurrentUser{
     username?:string|undefined;
     roles?:string|undefined;
     token?:string|undefined;
-    constructor(options: UsernameOptions){
+    constructor(options: CurrentUserOptions){
         this.nombre=options.nombre;
         this.username=options.username;
         this.roles=options.roles;
@@ -22,7 +22,6 @@ export class CurrentUser{
 
 export class User {
     id: number | any;
-    token?: string | undefined;
     person?: {
       address?: string | undefined;
       birthDate?: string | undefined;
@@ -37,4 +36,5 @@ export class User {
     profilePicture?: string | null;
     roles?: string | undefined;
     username?: string | undefined;
+    passsword?: string|undefined;
   }

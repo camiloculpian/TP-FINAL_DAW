@@ -26,4 +26,8 @@
         display: table-cell;
         /* Muestra solo las celdas seleccionadas */
     }
+
+    .form-control {
+        display:initial !important;
+    }
 }

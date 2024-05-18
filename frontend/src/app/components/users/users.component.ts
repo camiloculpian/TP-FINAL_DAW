@@ -57,98 +57,17 @@ import { Response } from '../../models/responses';
 import { CommonModule, NgForOf } from '@angular/common';
 import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
-import { User } from '../../models/users';
-
-export interface UsernameOptions {
-  id: number;
-  nombre?: string | undefined;
-  username?: string | undefined;
-  roles?: string | undefined;
-  token?: string | undefined;
-}
+import { CurrentUser, User } from '../../models/users';
+import { ModalService } from '../modal/modal.service';
+import { ModalComponent } from '../modal/modal.component';
+import { UsersService } from './users.service';
+import { AddEditUsersComponent } from './add-edit-user/add.edit.user.component';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, NgForOf, NgbHighlight],
-  template: `
-    <div class="container">
-    <div class="container mt-4">
-      <h3>Agregar Nuevo Usuario</h3>
-        <form >
-          <!-- Username -->
-          <div class="mb-3">
-            <label for="username" class="form-label">Username:</label>
-            <input type="text" class="form-control" id="username" name="username">
-          </div>
-          <!-- Roles -->
-          <div class="mb-3">
-            <label for="roles" class="form-label">Roles:</label>
-            <input type="text" class="form-control" id="roles" name="roles">
-          </div>
-          <!-- Gender -->
-          <div class="mb-3">
-            <label for="gender" class="form-label">Gender:</label>
-            <select class="form-select" id="gender" name="gender">
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-          </div>
-          <!-- Birth Date -->
-          <div class="mb-3">
-            <label for="birthDate" class="form-label">Birth Date:</label>
-            <input type="date" class="form-control" id="birthDate" name="birthDate">
-          </div>
-          <!-- Email -->
-          <div class="mb-3">
-            <label for="email" class="form-label">Email:</label>
-            <input type="email" class="form-control" id="email" name="email">
-          </div>
-          <!-- Profile Picture -->
-          <div class="mb-3">
-            <label for="profilePicture" class="form-label">Profile Picture:</label>
-            <input type="file" class="form-control" id="profilePicture" name="profilePicture" accept="image/*">
-          </div>
-          <button type="submit" class="btn btn-primary" >Agregar Nuevo</button>
-        </form>
-      </div>
-
-
-      
-      <h2 class="d-flex justify-content-center">Tabla con todos los Usuarios</h2>
-      <table ngb-table class="table table-dark table-striped table-hover table-responsive table-md tablaGas">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Username</th>
-            <th>Roles</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Email</th>
-            <th>Teléfono</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let user of usersList; trackBy: trackByUserId">
-            <td>{{ user.id }}</td>
-            <td>{{ user.username }}</td>
-            <td>{{ user.roles }}</td>
-            <td>{{ user.person?.name }}</td>
-            <td>{{ user.person?.lastName }}</td>
-            <td>{{ user.person?.email }}</td>
-            <td>{{ user.person?.phone }}</td>
-            <td>
-              <button class="btn btn-danger" (click)="deleteUser(user.id)">X</button>
-            </td>
-          </tr>
-          <tr *ngIf="usersList?.length === 0">
-            <td colspan="8">No se encontraron datos.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  `,
+  imports: [CommonModule, NgForOf, NgbHighlight, ModalComponent, AddEditUsersComponent],
+  templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
 
@@ -162,14 +81,41 @@ export class UsersComponent implements OnInit {
   //newUser:User | undefined;
   newUser!: User;
 
-  constructor(private _httpReq: HttpClient) {
+  constructor(
+    private _httpReq: HttpClient,
+    private modalService:ModalService,
+  ) {
     this.response = null;
     this.usersList = [];
   }
   // OBTENCION DE TODOS LOS USERS
   ngOnInit(): void {
-    console.log('ngOnInit()');
-    let user: User = JSON.parse(String(localStorage.getItem('user')));
+    // console.log('ngOnInit()');
+    // let user: User = JSON.parse(String(localStorage.getItem('user')));
+    // this._httpReq.get<Response>("http://localhost:3000/api/v1/users", {
+    //   headers: new HttpHeaders({
+    //     "Authorization": String("Bearer " + user.token),
+    //   }),
+    // }).subscribe({
+    //   next: (resp) => {
+    //     this.response = resp;
+    //     this.usersList = this.response.data as unknown as User[]; // Cast to User[]
+    //     console.log(this.usersList);
+    //   },
+    //   error: (err) => {
+    //     this.response = err;
+    //     console.log(this.response);
+    //   }
+    // });
+    this.getUsers();
+  }
+
+  trackByUserId(index: number, user: User): number {
+    return user.id;
+  }
+
+  getUsers(){
+    let user: CurrentUser = JSON.parse(String(localStorage.getItem('user')));
     this._httpReq.get<Response>("http://localhost:3000/api/v1/users", {
       headers: new HttpHeaders({
         "Authorization": String("Bearer " + user.token),
@@ -186,12 +132,6 @@ export class UsersComponent implements OnInit {
       }
     });
   }
-
-  trackByUserId(index: number, user: User): number {
-    return user.id;
-  }
-
-
   // BORRA UN USUARIO EN ESPECIFICO
   deleteUser(userId: number): void {
     // Mostrar Sweet Alert de confirmación
@@ -218,7 +158,9 @@ export class UsersComponent implements OnInit {
             console.log('User deleted:', response);
 
             // Actualiza la tabla
-            this.usersList = this.usersList.filter(u => u.id !== userId); // Filtra el usuario eliminau
+            // Esto esta mal, tiene que refrescar desde la base de datos!!!
+            // this.usersList = this.usersList.filter(u => u.id !== userId); // Filtra el usuario eliminau
+            this.getUsers();
 
             // Mostrar mensaje de éxito
             Swal.fire({
@@ -240,9 +182,23 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  onAddUser(){
+    console.log('---------------> OnAddUser');
+  }
+
+  editUser(userId:number){
+    this.openModal(userId);
+  }
   // AGREGAR
 
-  
+  openModal(userId:number) {
+    console.log('------------------> openModal()')
+    console.log('userId: ', userId)
+    this.modalService.open({
+      title: 'test',
+    });
+    console.log('<------------------ openModal()')
+  }
   
 }
 
