@@ -37,5 +37,14 @@ export class UsersService {
           })
         });
   }
+
+  editUser(user:JSON, userId:number):Observable<Response>{
+    let currentUser: CurrentUser = JSON.parse(String(localStorage.getItem('user')));
+    return this._httpReq.patch<any>(`http://localhost:3000/api/v1/users/${userId}`, user,{
+          headers: new HttpHeaders({
+            'Authorization': String('Bearer ' + currentUser.token)
+          })
+        });
+  }
   
 }

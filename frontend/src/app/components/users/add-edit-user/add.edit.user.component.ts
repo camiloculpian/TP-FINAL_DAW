@@ -66,6 +66,25 @@ import Swal from "sweetalert2";
             console.log('es edicion');
             if (this.userForm.valid) {
                 console.log("INPUT IS VALID");
+                let formObj = this.userForm.getRawValue();
+                formObj.password = sha512(String(formObj.password));
+                this.usersService.editUser(JSON.parse(JSON.stringify(formObj)), this.userId).subscribe(
+                    (resp) => {
+                        if(resp.statusCode==201){
+                            this.activeModal.close();
+                            Swal.fire({
+                                title: 'Usuario añadido con éxito',
+                                icon: 'success'
+                            });
+                        }
+                    },(err) => {
+                        Swal.fire({
+                            title: 'Error al añadir usuario',
+                            text: err.error.message,
+                            icon: 'error'
+                        });
+                    }
+                )
             } else {
                 console.log("INPUT IS INVALID");
             }
@@ -78,6 +97,8 @@ import Swal from "sweetalert2";
                 this.usersService.addUser(JSON.parse(JSON.stringify(formObj))).subscribe(
                     (resp) => {
                         if(resp.statusCode==201){
+                            this.activeModal.close();
+                            //FALTA EMITIR UN EVENTO PARA REFRESCAR LA PAGINA PADRE!!!
                             Swal.fire({
                                 title: 'Usuario añadido con éxito',
                                 icon: 'success'
