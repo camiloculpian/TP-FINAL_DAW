@@ -16,7 +16,8 @@ import Swal from "sweetalert2";
   })
   export class AddEditUsersComponent implements OnInit {
     userForm : FormGroup;
-    private response:Response|null = null;
+    userId:number=0;
+    // private response:Response|null = null;
     @Output() messageEventOut = new EventEmitter<string>();
     @Input() user:any;
     @Input() name: string|undefined;
@@ -34,15 +35,15 @@ import Swal from "sweetalert2";
             birthDate: new FormControl('', Validators.required),
             role: new FormControl('', Validators.required),
             email: new FormControl('', [Validators.required,Validators.email]),
-            phone: new FormControl('', Validators.required),
+            phone: new FormControl('', [Validators.required,/*Validators.pattern('^(\\+?)\d{3,3}-?\d{2,2}-?\d{2,2}-?\d{3,3}$')*/]),
             address: new FormControl('', Validators.required),
             gender: new FormControl('', Validators.required),
         });
     }
 
     ngOnInit(){
-        console.log(this.user)
         if(this.user){
+            this.userId=this.user.id;
             this.userForm.patchValue({
                 username: this.user.username,
                 password: this.user.password,
@@ -61,28 +62,43 @@ import Swal from "sweetalert2";
 
     onSave(e:Event){
         e.preventDefault();
-        let formObj = this.userForm.getRawValue();
-        formObj.password = sha512(String(formObj.password));
-        console.log(JSON.stringify(formObj));
-        if(this.user){
-            // existe hay que editarlo!
+        if(this.userId){
+            console.log('es edicion');
+            if (this.userForm.valid) {
+                console.log("very valid indeed");
+            } else {
+                console.log("very invalid :(");
+            }
         }else{
-            this.usersService.addUser(JSON.parse(JSON.stringify(formObj))).subscribe(
-                (resp) => {
-                    if(resp.statusCode==201){
-                        Swal.fire({
-                            title: 'Usuario añadido con éxito',
-                            icon: 'success'
-                          });
-                    }
-                },(err) => {
-                    Swal.fire({
-                        title: 'Error al añadir usuario',
-                        text: err.error.message,
-                        icon: 'error'
-                      });
+            console.log('es nuevo');
+            if (this.userForm.valid) {
+                console.log("very valid indeed");
+                let formObj = this.userForm.getRawValue();
+                formObj.password = sha512(String(formObj.password));
+                console.log(JSON.stringify(formObj));
+                if(this.user){
+                    // existe hay que editarlo!
+                }else{
+                    this.usersService.addUser(JSON.parse(JSON.stringify(formObj))).subscribe(
+                        (resp) => {
+                            if(resp.statusCode==201){
+                                Swal.fire({
+                                    title: 'Usuario añadido con éxito',
+                                    icon: 'success'
+                                });
+                            }
+                        },(err) => {
+                            Swal.fire({
+                                title: 'Error al añadir usuario',
+                                text: err.error.message,
+                                icon: 'error'
+                            });
+                        }
+                    )
                 }
-            )
+            } else {
+                console.log("very invalid :(");
+            }
         }
     }
   }
