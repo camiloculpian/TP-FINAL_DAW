@@ -65,39 +65,34 @@ import Swal from "sweetalert2";
         if(this.userId){
             console.log('es edicion');
             if (this.userForm.valid) {
-                console.log("very valid indeed");
+                console.log("INPUT IS VALID");
             } else {
-                console.log("very invalid :(");
+                console.log("INPUT IS INVALID");
             }
         }else{
             console.log('es nuevo');
             if (this.userForm.valid) {
-                console.log("very valid indeed");
+                console.log("INPUT IS INVALID");
                 let formObj = this.userForm.getRawValue();
                 formObj.password = sha512(String(formObj.password));
-                console.log(JSON.stringify(formObj));
-                if(this.user){
-                    // existe hay que editarlo!
-                }else{
-                    this.usersService.addUser(JSON.parse(JSON.stringify(formObj))).subscribe(
-                        (resp) => {
-                            if(resp.statusCode==201){
-                                Swal.fire({
-                                    title: 'Usuario añadido con éxito',
-                                    icon: 'success'
-                                });
-                            }
-                        },(err) => {
+                this.usersService.addUser(JSON.parse(JSON.stringify(formObj))).subscribe(
+                    (resp) => {
+                        if(resp.statusCode==201){
                             Swal.fire({
-                                title: 'Error al añadir usuario',
-                                text: err.error.message,
-                                icon: 'error'
+                                title: 'Usuario añadido con éxito',
+                                icon: 'success'
                             });
                         }
-                    )
-                }
+                    },(err) => {
+                        Swal.fire({
+                            title: 'Error al añadir usuario',
+                            text: err.error.message,
+                            icon: 'error'
+                        });
+                    }
+                )
             } else {
-                console.log("very invalid :(");
+                console.log("INPUT IS INVALID");
             }
         }
     }
