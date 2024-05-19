@@ -42,6 +42,12 @@ import { AllValidationErrors, getFormValidationErrors } from "../../../utils/val
 
     ngOnInit(){
         if(this.user){
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              };
             this.userForm.addControl('password', new FormControl('',Validators.minLength(8)))
             this.userId=this.user.id;
             this.userForm.patchValue({
@@ -50,7 +56,7 @@ import { AllValidationErrors, getFormValidationErrors } from "../../../utils/val
                 name: this.user.person.name,
                 lastName: this.user.person.lastName,
                 dni: this.user.person.dni,
-                birthDate: this.user.person.birthDate,
+                birthDate: this.formatDate(this.user.person.birthDate),
                 role: this.user.roles,
                 email:this.user.person.email,
                 phone:this.user.person.phone,
@@ -149,5 +155,15 @@ import { AllValidationErrors, getFormValidationErrors } from "../../../utils/val
                 }
             }
         }
+    }
+
+    private formatDate(date:string) {
+        const d = new Date(date);
+        let month = '' + (d.getMonth() + 1);
+        let day = '' + d.getDate();
+        const year = d.getFullYear();
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+        return [year, month, day].join('-');
     }
   }
