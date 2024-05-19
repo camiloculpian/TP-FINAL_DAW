@@ -94,42 +94,7 @@ export interface Ticket {
   selector: 'app-tickets',
   standalone: true,
   imports: [NgFor, NgForOf, NgIf],
-  template:`
-    <div class="tickets-container">
-  <h2>Tickets</h2>
-
-  <table ngb-table class="table table-dark table-striped table-hover table-responsive table-md tablaGas">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Priority</th>
-        <th>Service</th>
-        <th>Status</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let ticket of tickets">
-        <td>{{ ticket.id }}</td>
-        <td>{{ ticket.title }}</td>
-        <td>{{ ticket.description }}</td>
-        <td>{{ ticket.priority }}</td>
-        <td>{{ ticket.service }}</td>
-        <td>{{ ticket.status }}</td>
-        <td>
-          <button class="btn btn-danger" (click)="confirmDeleteTicket(ticket.id, ticket.status)">X</button>
-        </td>
-      </tr>
-      <tr *ngIf="tickets?.length === 0">
-            <td colspan="8">No se encontraron datos.</td>
-      </tr>
-    </tbody>
-  </table>
-
-
-  `,
+  templateUrl: './tickets.component.html',
   styleUrls: ['./tickets.component.css']
 })
 
@@ -151,39 +116,8 @@ export class TicketsComponent implements OnInit {
         this.router.navigate(['/login']);
         return;
       }
-  
-      const headers = new HttpHeaders({
-        Authorization: `Bearer ${currentUser.token}`,
-      });
-      
       // obtencion de todos los tickets
-      this._httpReq.get<Response>('http://localhost:3000/api/v1/tickets', { headers })
-        .subscribe({
-          next: (response) => {
-            if (response.status == 'success') {
-              console.log('Listo pa procesar los datiños')
-            } else if (response.data) { // procesar datos
-              this.tickets = (response.data as unknown as Ticket[]).map((ticketData: any) => {
-                // Crear un nuevo objeto Ticket a partir de ticketData
-                const ticket: Ticket = {
-                  id: ticketData.id,
-                  title: ticketData.title,
-                  description: ticketData.description, 
-                  priority: ticketData.priority,
-                  service: ticketData.service,
-                  status: ticketData.status,
-                  
-                };
-                return ticket;
-              });
-            } else {
-              console.error('error.');
-            }
-          },
-          error: (error) => {
-            console.error('Error en la busqueda tickets:', error);
-          },
-        });
+      this.getTickets();
     } catch (error) {
       console.error('Error:', error);
     }
@@ -236,6 +170,48 @@ export class TicketsComponent implements OnInit {
           console.error('Error al eliminar el ticket:', error);
         }
       });
+  }
+
+  editTicket(ticketId:number){
+
+  }
+
+  addTicket(){
+    const currentUser: CurrentUser = JSON.parse(String(localStorage.getItem('user')));
+  }
+
+  getTickets(){
+    let currentUser:CurrentUser = JSON.parse(String(localStorage.getItem('user')));
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${currentUser.token}`,
+    });
+    this._httpReq.get<Response>('http://localhost:3000/api/v1/tickets', { headers })
+        .subscribe({
+          next: (response) => {
+            if (response.status == 'success') {
+              console.log('Listo pa procesar los datiños')
+            } else if (response.data) { // procesar datos
+              this.tickets = (response.data as unknown as Ticket[]).map((ticketData: any) => {
+                // Crear un nuevo objeto Ticket a partir de ticketData
+                const ticket: Ticket = {
+                  id: ticketData.id,
+                  title: ticketData.title,
+                  description: ticketData.description, 
+                  priority: ticketData.priority,
+                  service: ticketData.service,
+                  status: ticketData.status,
+                  
+                };
+                return ticket;
+              });
+            } else {
+              console.error('error.');
+            }
+          },
+          error: (error) => {
+            console.error('Error en la busqueda tickets:', error);
+          },
+        });
   }
 
 }
