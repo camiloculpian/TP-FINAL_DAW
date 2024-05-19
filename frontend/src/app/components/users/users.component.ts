@@ -183,40 +183,14 @@ export class UsersComponent implements OnInit {
 
   onAddUser(){
     const modalRef = this.modalService.open(AddEditUsersComponent);
-		modalRef.componentInstance.name = 'TEST';
   }
 
-  editUser(userId:number){
-    //recorres la tabla, poner como editables los campos y poner un boton guardar...
+
+  onEditUser(item:any){
+    const modalRef = this.modalService.open(AddEditUsersComponent);
+		modalRef.componentInstance.name = item.id;
+    modalRef.componentInstance.user = item;
   }
-
-  addUser(){
-    this.openModalAdd();
-  }
-  // AGREGAR
-  openModalAdd() {
-    this.modalService.open({
-      title: 'Añadir Usuario',
-
-    });
-  }
-
-    enableEditMethod(e:Event, i:number){
-      this.enableEdit = true;
-      this.enableEditIndex = i;
-      e.preventDefault();
-      console.log(i);
-    }
-
-    onEditUser(item:any){
-      console.log(item);
-      this.enableEdit = false;
-    }
-
-    onChangeUser(e:any,user:any){
-      user.username = e.target?.value;
-      
-    }
 
 }
 

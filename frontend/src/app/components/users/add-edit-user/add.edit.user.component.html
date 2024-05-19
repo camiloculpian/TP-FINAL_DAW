@@ -1,26 +1,30 @@
-<div class="container">
+<div class="modal-header">
+    <h4 class="modal-title">Editando Usuario ID: {{name}}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+  <div class="container">
     <div class="container mt-4">
-
         <form [formGroup]="userForm" class="form-inline">
 
           <div class="form-group row mb-2">
             <label for="username" class="col-sm-2 col-form-label" >Username</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control-plaintext" formControlName="username" id="username" name="username">
+              <input type="text" class="form-control-plaintext" formControlName="username" id="username" name="username" >
             </div>
           </div>
 
           <div class="form-group row mb-2">
             <label for="password" class="col-sm-2 col-form-label">Password</label>
             <div class="col-sm-10">
-              <input type="password" formControlName="password" class="form-control-plaintext" id="password" name="password">
+              <input type="password" formControlName="password" class="form-control-plaintext" id="password" name="password" value="">
             </div>
           </div>
 
           <div class="form-group row mb-2">
             <label for="role" class="col-sm-2 col-form-label">Role</label>
             <div class="col-sm-10">
-              <select class="form-select" formControlName="role" id="role" name="role">
+              <select class="form-select" formControlName="role" id="role" name="role" >
                 <option value="user">User</option>
                 <option value="admin">Admin</option>
               </select>
@@ -97,4 +101,9 @@
           <button type="submit" class="btn btn-primary" (click)="onSave($event)">Guardar</button>
         </form>
     </div>
+  </div>
 </div>
+
+
+
+

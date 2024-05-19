@@ -1,6 +1,6 @@
 import { CommonModule, NgForOf } from "@angular/common";
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from "@angular/core";
-import { NgbHighlight } from "@ng-bootstrap/ng-bootstrap";
+import { Component, EventEmitter, inject, Inject, Input, OnInit, Output } from "@angular/core";
+import { NgbActiveModal, NgbHighlight } from "@ng-bootstrap/ng-bootstrap";
 import { UsersService } from "../users.service";
 import { Response } from "../../../models/responses";
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
@@ -18,13 +18,13 @@ import Swal from "sweetalert2";
     userForm : FormGroup;
     private response:Response|null = null;
     @Output() messageEventOut = new EventEmitter<string>();
-    @Input() user:any=undefined;
-    
+    @Input() user:any;
+    @Input() name: string|undefined;
+    activeModal = inject(NgbActiveModal);
     constructor(
         private usersService:UsersService,
         private fbuilder: FormBuilder,
     ) {
-        console.log('useId = '+this.user);
         this.userForm = this.fbuilder.group({
             username: new FormControl('', Validators.required),
             password: new FormControl('', Validators.required),
@@ -38,15 +38,25 @@ import Swal from "sweetalert2";
             address: new FormControl('', Validators.required),
             gender: new FormControl('', Validators.required),
         });
-        if(this.user){
-            console.log(this.user)
-        }else{
-            
-        }
     }
 
     ngOnInit(){
-        
+        console.log(this.user)
+        if(this.user){
+            this.userForm.patchValue({
+                username: this.user.username,
+                password: this.user.password,
+                name: this.user.person.name,
+                lastName: this.user.person.lastName,
+                dni: this.user.person.dni,
+                birthDate: this.user.person.birthDate,
+                role: this.user.roles,
+                email:this.user.person.email,
+                phone:this.user.person.phone,
+                gender: this.user.person.gender,
+                address:this.user.person.address,
+            });
+        }
     }
 
     onSave(e:Event){
