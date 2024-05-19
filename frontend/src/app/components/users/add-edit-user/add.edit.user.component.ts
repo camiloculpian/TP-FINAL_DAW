@@ -6,6 +6,7 @@ import { Response } from "../../../models/responses";
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { sha512 } from "js-sha512";
 import Swal from "sweetalert2";
+import { AllValidationErrors, getFormValidationErrors } from "../../../utils/validations";
 
 @Component({
     selector: 'app-add-edit-user',
@@ -17,18 +18,17 @@ import Swal from "sweetalert2";
   export class AddEditUsersComponent implements OnInit {
     userForm : FormGroup;
     userId:number=0;
-    // private response:Response|null = null;
     @Output() messageEventOut = new EventEmitter<string>();
     @Input() user:any;
     @Input() name: string|undefined;
     activeModal = inject(NgbActiveModal);
+    inputMissingMessage:string='';
     constructor(
         private usersService:UsersService,
         private fbuilder: FormBuilder,
     ) {
         this.userForm = this.fbuilder.group({
             username: new FormControl('', Validators.required),
-            password: new FormControl('', Validators.required),
             name: new FormControl('', Validators.required),
             lastName: new FormControl('', Validators.required),
             dni: new FormControl('', Validators.required),
@@ -43,6 +43,7 @@ import Swal from "sweetalert2";
 
     ngOnInit(){
         if(this.user){
+            this.userForm.addControl('password', new FormControl('',Validators.minLength(8)))
             this.userId=this.user.id;
             this.userForm.patchValue({
                 username: this.user.username,
@@ -57,6 +58,9 @@ import Swal from "sweetalert2";
                 gender: this.user.person.gender,
                 address:this.user.person.address,
             });
+        }else{
+            // La contraseña es requerida porque es para agregar uno NUEVO
+            this.userForm.addControl('password', new FormControl('',[Validators.required, Validators.minLength(8)]))
         }
     }
 
@@ -65,9 +69,15 @@ import Swal from "sweetalert2";
         if(this.userId){
             console.log('es edicion');
             if (this.userForm.valid) {
-                console.log("INPUT IS VALID");
+                this.inputMissingMessage='';
                 let formObj = this.userForm.getRawValue();
-                formObj.password = sha512(String(formObj.password));
+                if(formObj.password==''){
+                    console.log('formObj.password = '+formObj.password);
+                    delete formObj.password;
+                }else{
+                    console.log('formObj.password = '+formObj.password);
+                    formObj.password = sha512(String(formObj.password));
+                }
                 this.usersService.editUser(JSON.parse(JSON.stringify(formObj)), this.userId).subscribe(
                     (resp) => {
                         if(resp.statusCode==201){
@@ -86,12 +96,24 @@ import Swal from "sweetalert2";
                     }
                 )
             } else {
-                console.log("INPUT IS INVALID");
+                const error: AllValidationErrors|undefined = getFormValidationErrors(this.userForm.controls).shift();
+                if (error) {
+                    let text;
+                    switch (error.error_name) {
+                    case 'required': text = `${error.control_name} is required!`; break;
+                    case 'pattern': text = `${error.control_name} has wrong pattern!`; break;
+                    case 'email': text = `${error.control_name} has wrong email format!`; break;
+                    case 'minlength': text = `${error.control_name} has wrong length! Required length: ${error.error_value.requiredLength}`; break;
+                    case 'areEqual': text = `${error.control_name} must be equal!`; break;
+                    default: text = `${error.control_name}: ${error.error_name}: ${error.error_value}`;
+                    }
+                    this.inputMissingMessage = text;
+                }
             }
         }else{
             console.log('es nuevo');
             if (this.userForm.valid) {
-                console.log("INPUT IS INVALID");
+                this.inputMissingMessage='';
                 let formObj = this.userForm.getRawValue();
                 formObj.password = sha512(String(formObj.password));
                 this.usersService.addUser(JSON.parse(JSON.stringify(formObj))).subscribe(
@@ -113,7 +135,19 @@ import Swal from "sweetalert2";
                     }
                 )
             } else {
-                console.log("INPUT IS INVALID");
+                const error: AllValidationErrors|undefined = getFormValidationErrors(this.userForm.controls).shift();
+                if (error) {
+                    let text;
+                    switch (error.error_name) {
+                    case 'required': text = `${error.control_name} is required!`; break;
+                    case 'pattern': text = `${error.control_name} has wrong pattern!`; break;
+                    case 'email': text = `${error.control_name} has wrong email format!`; break;
+                    case 'minlength': text = `${error.control_name} has wrong length! Required length: ${error.error_value.requiredLength}`; break;
+                    case 'areEqual': text = `${error.control_name} must be equal!`; break;
+                    default: text = `${error.control_name}: ${error.error_name}: ${error.error_value}`;
+                    }
+                    this.inputMissingMessage = text;
+                }
             }
         }
     }

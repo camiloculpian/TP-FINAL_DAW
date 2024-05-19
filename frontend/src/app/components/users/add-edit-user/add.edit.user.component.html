@@ -103,6 +103,13 @@
     </div>
   </div>
 </div>
+<div class="modal-footer">
+  @if(this.inputMissingMessage){
+      <div class="alert alert-danger">
+          <strong>Error!</strong> {{this.inputMissingMessage}}
+      </div>
+  }
+</div>
 
 
 
