@@ -2,7 +2,6 @@ import { CommonModule, NgForOf } from "@angular/common";
 import { Component, EventEmitter, inject, Inject, Input, OnInit, Output } from "@angular/core";
 import { NgbActiveModal, NgbHighlight } from "@ng-bootstrap/ng-bootstrap";
 import { UsersService } from "../users.service";
-import { Response } from "../../../models/responses";
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { sha512 } from "js-sha512";
 import Swal from "sweetalert2";
@@ -83,7 +82,7 @@ import { AllValidationErrors, getFormValidationErrors } from "../../../utils/val
                         if(resp.statusCode==201){
                             this.activeModal.close();
                             Swal.fire({
-                                title: 'Usuario añadido con éxito',
+                                title: resp.message,
                                 icon: 'success'
                             });
                         }
