@@ -32,6 +32,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { CurrentUser } from '../auth/decorators/currentUser.decorator';
 import { I18nContext, I18nService } from 'nestjs-i18n';
 import { Response, responseStatus } from 'src/common/responses/responses';
+import { User } from './entities/user.entity';
 
 @ApiTags('Users')
 @Controller('users')
@@ -77,11 +78,12 @@ export class UsersController {
       if (file) {
         createUserDto.profilePicture = file.filename;
       }
+      const data:any = await this.usersService.create(createUserDto);
       return new Response({
         statusCode:201,
         status:responseStatus.OK,
-        message:this.i18n.t('lang.users.CreateOK',{ lang:   I18nContext.current().lang }),
-        data: await this.usersService.create(createUserDto)
+        message:this.i18n.t('lang.users.CreateOK',{args: { id: data.id }, lang:   I18nContext.current().lang }),
+        data: data
       });
     } catch (error) {
       console.error('Error al crear usuario:', error);
