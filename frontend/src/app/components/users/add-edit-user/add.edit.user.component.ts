@@ -121,7 +121,7 @@ import { AllValidationErrors, getFormValidationErrors } from "../../../utils/val
                             this.activeModal.close();
                             //FALTA EMITIR UN EVENTO PARA REFRESCAR LA PAGINA PADRE!!!
                             Swal.fire({
-                                title: 'Usuario añadido con éxito',
+                                title: resp.message,
                                 icon: 'success'
                             });
                         }
