@@ -30,7 +30,9 @@ import { CurrentUser } from "../../../models/users";
             Authorization: `Bearer ${currentUser.token}`,
         });
         this._httpReq.get<any>(`http://localhost:3000/api/v1/ticket-audits/${this.ticketId}`, {headers}).subscribe(
-            (response) => {console.log(response)},
+            (response) => {
+                this.audits = response.data;
+                console.log(this.audits)},
             (error) => {console.log(error)}
         )
     }
