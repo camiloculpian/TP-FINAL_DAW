@@ -60,4 +60,8 @@ export class AuditsComponent implements OnInit {
           },
     });
   }
+
+  viewTicketAudit(ticketId:number){
+  
+  }
 }

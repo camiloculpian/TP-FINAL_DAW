@@ -183,6 +183,7 @@ export class UsersComponent implements OnInit {
 
   onAddUser(){
     const modalRef = this.modalService.open(AddEditUsersComponent);
+    modalRef.hidden.subscribe({next:()=>(this.getUsers())});
   }
 
 
@@ -190,7 +191,7 @@ export class UsersComponent implements OnInit {
     const modalRef = this.modalService.open(AddEditUsersComponent);
 		modalRef.componentInstance.name = item.id;
     modalRef.componentInstance.user = item;
-    modalRef.result;
+    modalRef.hidden.subscribe({next:()=>(this.getUsers())});
   }
 
 }
