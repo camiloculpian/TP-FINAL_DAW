@@ -17,7 +17,7 @@ import { AllValidationErrors, getFormValidationErrors } from "../../../utils/val
   export class AddEditUsersComponent implements OnInit {
     userForm : FormGroup;
     userId:number=0;
-    @Output() messageEventOut = new EventEmitter<string>();
+    // @Output() messageEventOut = new EventEmitter<string>();
     @Input() user:any;
     @Input() name: string|undefined;
     activeModal = inject(NgbActiveModal);
@@ -70,12 +70,13 @@ import { AllValidationErrors, getFormValidationErrors } from "../../../utils/val
             if (this.userForm.valid) {
                 this.inputMissingMessage='';
                 let formObj = this.userForm.getRawValue();
-                if(formObj.password==''){
+                if(!formObj.password||formObj.password==''){
                     console.log('formObj.password = '+formObj.password);
                     delete formObj.password;
                 }else{
                     console.log('formObj.password = '+formObj.password);
                     formObj.password = sha512(String(formObj.password));
+                    console.log('formObj.password SHA512 = '+formObj.password);
                 }
                 this.usersService.editUser(JSON.parse(JSON.stringify(formObj)), this.userId).subscribe(
                     (resp) => {
