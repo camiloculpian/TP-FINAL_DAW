@@ -119,12 +119,7 @@ export class TicketsService {
         // no está autorizado a ver este ticket
         throw new UnauthorizedException({status:responseStatus.ERROR,message:'No está autorizado a ver este ticket'});
       }
-      return new Response({
-        statusCode:201,
-        status:responseStatus.OK,
-        message: "OK",
-        data: ticket,
-      });
+      return ticket;
     } catch (e) {
       if(e instanceof BadRequestException || e instanceof UnauthorizedException){
         throw e;

@@ -1,9 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Response } from '../../models/responses';
 import { CurrentUser } from '../../models/users';
 import { Ticket } from '../tickets/tickets.component';
 import { NgFor, NgForOf, NgIf } from '@angular/common';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ViewAuditsComponent } from './audit-view/audit.view.component';
 
 @Component({
   selector: 'app-audits',
@@ -13,6 +15,7 @@ import { NgFor, NgForOf, NgIf } from '@angular/common';
   styleUrl: './audits.component.css'
 })
 export class AuditsComponent implements OnInit {
+  private modalService = inject(NgbModal);
   public tickets:any=[];
   public selectedTicket: Ticket | null = null;
   public response: any | null = null; // Usar'cualquiera' para el objeto de respuesta
@@ -62,6 +65,7 @@ export class AuditsComponent implements OnInit {
   }
 
   viewTicketAudit(ticketId:number){
-  
+    const modalRef = this.modalService.open(ViewAuditsComponent);
+		modalRef.componentInstance.name = ticketId;
   }
 }

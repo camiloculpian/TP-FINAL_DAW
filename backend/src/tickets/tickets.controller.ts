@@ -157,7 +157,12 @@ export class TicketsController {
     @ApiParam({ name: 'id', description: 'ID único del ticket' })
     async findOne(@Param('id') id: string, @CurrentUser('sub') userId: number) {
         try {
-            return await this.ticketsService.findOne(+id, userId);
+            return new Response({
+                statusCode:201,
+                status:responseStatus.OK,
+                message: "OK",
+                data: await this.ticketsService.findOne(+id, userId),
+              });
         } catch (e) {
             throw new BadRequestException({status:responseStatus.ERROR,message:e.message});
         }
