@@ -88,7 +88,7 @@ export class UsersController {
       });
     } catch (error) {
       console.error('Error al crear usuario:', error);
-      return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
+      throw new BadRequestException ({'status':'ERROR','message':error.message,'statusCode':error.statusCode});
     }
   }
 
@@ -107,7 +107,7 @@ export class UsersController {
       });
     } catch (error) {
       console.error('Error al obtener todos los usuarios:', error);
-      return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
+      throw new BadRequestException ({'status':'ERROR','message':error.message,'statusCode':error.statusCode});
     }
   }
 
