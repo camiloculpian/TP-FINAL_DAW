@@ -211,7 +211,7 @@ export class TicketsComponent implements OnInit {
           error: (error) => {
             console.error('Error en la busqueda tickets:', error);
           },
-        });
+    });
   }
 
 }

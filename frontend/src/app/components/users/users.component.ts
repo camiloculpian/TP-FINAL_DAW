@@ -190,6 +190,7 @@ export class UsersComponent implements OnInit {
     const modalRef = this.modalService.open(AddEditUsersComponent);
 		modalRef.componentInstance.name = item.id;
     modalRef.componentInstance.user = item;
+    modalRef.result;
   }
 
 }

@@ -42,12 +42,6 @@ import { AllValidationErrors, getFormValidationErrors } from "../../../utils/val
 
     ngOnInit(){
         if(this.user){
-            const options = {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              };
             this.userForm.addControl('password', new FormControl('',Validators.minLength(8)))
             this.userId=this.user.id;
             this.userForm.patchValue({
