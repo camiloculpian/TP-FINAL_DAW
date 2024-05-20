@@ -89,14 +89,9 @@ export class TicketsService {
         queryBuilder = queryBuilder.skip(offset).take(limit);
       }
 
-      const tickets = await queryBuilder.getMany();
+      return await queryBuilder.getMany();
       //RETORNAR RESPUESTA
-      return new Response({
-        statusCode:201,
-        status:responseStatus.OK,
-        message: "OK",
-        data: tickets,
-      });
+
       //return tickets;
     } catch (e) {
       throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
@@ -145,7 +140,6 @@ export class TicketsService {
     try {
       // El usuario que solicita la operacion de actualizacion
       const user = await this.userService.findOne(userId);
-
       const ticket = await this.ticketRepository.findOne({
         where: {
           id: id,
@@ -205,11 +199,7 @@ export class TicketsService {
           lastModified,
         });
         if(resp.affected=1){
-          return new Response({
-            statusCode:201,
-            status:responseStatus.OK,
-            message: `Ticket #${id} actualizado correctamente`
-          });
+            return resp;
         }else{
           throw new BadRequestException({status:responseStatus.ERROR,message:this.i18n.t('lang.tickets.UpdateError',{args: { id: ticket.id }, lang: I18nContext.current().lang})});
         }

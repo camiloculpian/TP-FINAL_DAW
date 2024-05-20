@@ -137,9 +137,14 @@ export class TicketsController {
       @Query('limit') limit?: number,
     ) {
         try {
-            return await this.ticketsService.findAll(userId, service, status, assignedToUserId, page, limit);
+            return new Response({
+                statusCode:201,
+                status:responseStatus.OK,
+                message: "OK",
+                data: await this.ticketsService.findAll(userId, service, status, assignedToUserId, page, limit),
+            });
         } catch (e) {
-            throw new BadRequestException({status:responseStatus.ERROR,message:e.message})
+            throw new BadRequestException({status:responseStatus.ERROR,message:e.message});
         }
     }
 
@@ -154,7 +159,7 @@ export class TicketsController {
         try {
             return await this.ticketsService.findOne(+id, userId);
         } catch (e) {
-            throw e;
+            throw new BadRequestException({status:responseStatus.ERROR,message:e.message});
         }
     }
 
@@ -207,13 +212,14 @@ export class TicketsController {
                 if (archive) {
                     updateTicketDto.archive = archive.filename;
                 }
-                return await this.ticketsService.update(
-                    +id,
-                    updateTicketDto,
-                    userId,
-                );
+                return new Response({
+                    statusCode:201,
+                    status:responseStatus.OK,
+                    message: `Ticket #${id} actualizado correctamente`,
+                    data: await this.ticketsService.update(+id, updateTicketDto, userId,)
+                });
         } catch (e) {
-            throw e;
+            throw new BadRequestException({status:responseStatus.ERROR,message:e.message});
         }
     }
 
