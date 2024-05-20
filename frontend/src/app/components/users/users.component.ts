@@ -43,7 +43,7 @@ export class UsersComponent implements OnInit {
       lastName: new FormControl('', Validators.required),
       // dni: new FormControl('', Validators.required),
       // birthDate: new FormControl('', Validators.required),
-      role: new FormControl('', Validators.required),
+      roles: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required,Validators.email]),
       phone: new FormControl('', Validators.required),
       // address: new FormControl('', Validators.required),
