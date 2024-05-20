@@ -92,28 +92,35 @@ export class UsersController {
     }
   }
 
-  // Traer todos los usuarios
-  @Get()
-  @UseGuards(AuthGuard)
-  @ApiOperation({ summary: 'Obtener todos los usuarios' })
-  @ApiResponse({ status: 200, description: 'Lista de usuarios' })
-  async findAll() {
-    try {
-      return new Response({
-        statusCode:201,
-        status:responseStatus.OK,
-        message:this.i18n.t('lang.users.ReadOK',{ lang:   I18nContext.current().lang }),
-        data: await this.usersService.findAll()
-      });
-    } catch (error) {
-      console.error('Error al obtener todos los usuarios:', error);
-      throw new BadRequestException ({'status':'ERROR','message':error.message,'statusCode':error.statusCode});
-    }
+  
+@Get()
+@UseGuards(AuthGuard)
+@ApiOperation({ summary: 'Obtener todos los usuarios' })
+@ApiResponse({ status: 200, description: 'Lista de usuarios' })
+async findAll(@CurrentUser("sub") userId: number) {
+  try {
+    const users = await this.usersService.findAll(userId);
+    return new Response({
+      statusCode: 200,
+      status: responseStatus.OK,
+      message: this.i18n.t('lang.users.ReadOK', { lang: I18nContext.current().lang}),
+      data: users,
+    });
+  } catch (error) {
+    console.error('Error al obtener todos los usuarios:', error);
+    throw new BadRequestException({
+      'status': 'ERROR',
+      'message': error.message,
+      'statusCode': error.statusCode,
+    });
   }
+}
+  
 
   // Traer usuarios por ID
   @Get(':id')
   @UseGuards(AuthGuard)
+  @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Obtener un usuario por ID' })
   @ApiResponse({ status: 200, description: 'Usuario encontrado' })
   @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
