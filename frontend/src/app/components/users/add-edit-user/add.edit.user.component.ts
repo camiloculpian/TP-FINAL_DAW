@@ -119,7 +119,6 @@ import { AllValidationErrors, getFormValidationErrors } from "../../../utils/val
                     (resp) => {
                         if(resp.statusCode==201){
                             this.activeModal.close();
-                            //FALTA EMITIR UN EVENTO PARA REFRESCAR LA PAGINA PADRE!!!
                             Swal.fire({
                                 title: resp.message,
                                 icon: 'success'

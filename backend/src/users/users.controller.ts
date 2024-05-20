@@ -11,6 +11,7 @@ import {
   UseGuards,
   UseInterceptors,
   UploadedFile,
+  BadRequestException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -127,7 +128,7 @@ export class UsersController {
       });
     } catch (error) {
       console.error('Error al obtener usuario por ID:', error);
-      return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
+      throw new BadRequestException ({'status':'ERROR','message':error.message,'statusCode':error.statusCode});
     }
   }
 
@@ -168,7 +169,7 @@ export class UsersController {
       });
     } catch (error) {
       console.error('Error al actualizar usuario:', error);
-      return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
+      throw new BadRequestException ({'status':'ERROR','message':error.message,'statusCode':error.statusCode});
     }
   }
 
@@ -197,7 +198,7 @@ export class UsersController {
       });
     } catch (error) {
       console.error('Error al actualizar el rol del usuario:', error);
-      return {'status':'ERROR','message':error.message,'statusCode':error.statusCode};
+      throw new BadRequestException ({'status':'ERROR','message':error.message,'statusCode':error.statusCode});
     }
   }
 
@@ -219,7 +220,7 @@ export class UsersController {
       });
     } catch (e) {
       console.error('Error al eliminar usuario:', e);
-      return {'status':'ERROR','message':e.message,'statusCode':e.statusCode};
+      throw new BadRequestException ({'status':'ERROR','message':e.message,'statusCode':e.statusCode});
     }
   }
 }
