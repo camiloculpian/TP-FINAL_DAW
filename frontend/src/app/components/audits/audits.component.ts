@@ -66,6 +66,6 @@ export class AuditsComponent implements OnInit {
 
   viewTicketAudit(ticketId:number){
     const modalRef = this.modalService.open(ViewAuditsComponent);
-		modalRef.componentInstance.name = ticketId;
+		modalRef.componentInstance.ticketId = ticketId;
   }
 }

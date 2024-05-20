@@ -29,7 +29,7 @@ import { CurrentUser } from "../../../models/users";
         const headers = new HttpHeaders({
             Authorization: `Bearer ${currentUser.token}`,
         });
-        this._httpReq.get<any>(`http://localhost:3000/api/v1/ticket-audits/id:1`, {headers}).subscribe(
+        this._httpReq.get<any>(`http://localhost:3000/api/v1/ticket-audits/${this.ticketId}`, {headers}).subscribe(
             (response) => {console.log(response)},
             (error) => {console.log(error)}
         )
