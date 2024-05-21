@@ -7,7 +7,7 @@ import { TicketsComponent } from './components/tickets/tickets.component';
 import { UsersComponent } from './components/users/users.component';
 import { AuditsComponent } from './components/audits/audits.component';
 import { NgModule } from '@angular/core';
-import { authGuard } from './guards/auth-guard';
+import { authGuard, authGuardAdmin } from './guards/auth-guard';
 
 export const routes: Routes = [
     
@@ -19,7 +19,7 @@ export const routes: Routes = [
         children: [
             {path: 'users',component: UsersComponent},
             {path: 'tickets',component: TicketsComponent},
-            {path: 'audits',component: AuditsComponent}
+            {path: 'audits',component: AuditsComponent,canActivate: [authGuardAdmin]}
         ]
     },
     { path: 'notify', component: NotifyComponent}
