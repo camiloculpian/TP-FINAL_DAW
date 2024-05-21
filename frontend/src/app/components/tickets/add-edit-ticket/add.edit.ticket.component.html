@@ -8,7 +8,7 @@
         <label for="title">Title:</label>
         <input type="text" class="form-control" id="title" formControlName="title" placeholder="Enter ticket title">
       </div>
-      <div class="form-group">
+      <div class="form-group" *ngIf="this.currentUser.roles == 'admin'">
         <label for="asignedToUserId">Asignar a:</label>
         <select class="form-control" id="asignedToUserId" formControlName="asignedToUserId">
           <option *ngFor="let user of users" [value]="user.id">{{ user.person?.name+' '+user.person?.lastName }}</option>
@@ -18,7 +18,7 @@
         <label for="description">Description:</label>
         <textarea class="form-control" id="description" formControlName="description" rows="3" placeholder="Enter ticket description"></textarea>
       </div>
-      <div class="form-group" *ngIf="ticketId">
+      <div class="form-group" *ngIf="ticketId && this.currentUser.roles == 'admin'">
         <label for="priority">Priority:</label>
         <!-- Si el usuario es administrador -->
         <select class="form-control" id="priority" formControlName="priority">

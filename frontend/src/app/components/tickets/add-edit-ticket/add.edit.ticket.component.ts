@@ -91,6 +91,7 @@ export class AddEditTicketsComponent implements OnInit {
     @Input() ticketId:number|undefined;
     public ticketForm!: FormGroup;
     public users: User[] = [];
+    public currentUser!:CurrentUser;
 
     constructor(
         private router: Router,
@@ -108,9 +109,9 @@ export class AddEditTicketsComponent implements OnInit {
             service: ['HARDWARE_REPAIR'],
             asignedToUserId: ['', Validators.required]
         });
-        const currentUser: CurrentUser = JSON.parse(localStorage.getItem('user') || '{}');
+        this.currentUser = JSON.parse(localStorage.getItem('user') || '{}');
         const headers = new HttpHeaders({
-            Authorization: `Bearer ${currentUser['token']}`,
+            Authorization: `Bearer ${this.currentUser['token']}`,
         });
         this.loadUsers(headers);
         if(this.ticketId){
