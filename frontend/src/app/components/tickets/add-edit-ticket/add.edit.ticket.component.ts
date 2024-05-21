@@ -147,7 +147,7 @@ export class TicketService {
   `,
     styleUrls: []
 })
-export class AddTicketsComponent implements OnInit {
+export class AddEditTicketsComponent implements OnInit {
     public tickets: Ticket[] = [];
     public ticketForm!: FormGroup;
     public users: User[] = [];

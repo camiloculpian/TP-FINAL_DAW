@@ -1,23 +1,15 @@
 <!-- <h1>editar el archivo audit.view.component.html</h1> -->
 
 <!-- a posteriori pal boton: *ngIf="modalOpened"-->
-<button (click)="viewTicketAudit(ticketId)" class="btn btn-info" data-toggle="modal" data-target="#auditModal">Ver Auditoría</button>
-
-<div class="modal fade" id="auditModal" tabindex="-1" role="dialog" aria-labelledby="auditModalLabel"
-    aria-hidden="true" [ngClass]="{ 'show': modalOpened }">
-    <div class="modal-dialog" role="document" *ngIf="modalOpened">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="auditModalLabel">Auditoría</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
+    <div class="modal-header">
+        <h4 class="modal-title">Auditanditando Ticket ID: {{ticketId}}</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+    </div>
             <div class="modal-body">
                 <!-- Si hay datos de auditoría, mostrarlos -->
                 <div *ngIf="audits && audits.length > 0">
                     <div *ngFor="let audit of audits">
-                        <p>{{ audit.message }}</p>
+                        <p>{{ audit.operation + '|' +audit.description+ '|' + audit.asignedToUser.username}}</p>
                     </div>
                 </div>
                 <!-- Si no hay datos de auditoría, mostrar mensaje -->
@@ -26,9 +18,6 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="activeModal.dismiss('Cross click')">Cerrar</button>
             </div>
-        </div>
-    </div>
-</div>
-
+        

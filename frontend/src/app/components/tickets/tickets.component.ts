@@ -63,7 +63,7 @@ import { CurrentUser, User } from '../../models/users';
 import { Router } from '@angular/router';
 import { NgFor, NgForOf, NgIf } from '@angular/common';
 import Swal from 'sweetalert2';
-import { AddTicketsComponent } from './add-ticket.component';
+import { AddEditTicketsComponent } from './add-edit-ticket/add.edit.ticket.component';
 
 
 export enum TicketPriority {
@@ -94,7 +94,7 @@ export interface Ticket {
 @Component({
   selector: 'app-tickets',
   standalone: true,
-  imports: [NgFor, NgForOf, NgIf,AddTicketsComponent],
+  imports: [NgFor, NgForOf, NgIf,AddEditTicketsComponent],
   templateUrl: './tickets.component.html',
   styleUrls: ['./tickets.component.css']
 })

@@ -44,9 +44,9 @@
 // CODE MODIFIED V1.1
 import { NgClass, NgFor, NgIf } from "@angular/common";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Component, Input, OnInit} from "@angular/core";
+import { Component, inject, Input, OnInit} from "@angular/core";
 import { CurrentUser } from "../../../models/users";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-view-audits',
@@ -57,6 +57,7 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 })
 export class ViewAuditsComponent implements OnInit {
   @Input({ required: true }) ticketId!: number;
+  activeModal = inject(NgbActiveModal);
   public audits: any[] = [];
   public modalOpened: boolean = false;
   
@@ -78,19 +79,12 @@ export class ViewAuditsComponent implements OnInit {
 
     this._httpReq.get<any>(`http://localhost:3000/api/v1/ticket-audits/${ticketId}`, { headers }).subscribe(
       (response) => {
-        this.audits = response;
-        //this.audits = response.data;  esto devuelve un array vacio
+        //this.audits = response;
+        this.audits = response.data; // esto devuelve un array vacio
         console.log(this.audits);
-        // Marcar modalOpened como true si hay datos de auditoría
-        // if (this.audits && this.audits.length > 0) {
-        //   this.modalOpened = true;
-        // }
-        this.modalOpened = true;
       },
       (error) => {
         console.log(error);
-        // Marcar modalOpened como true incluso si hay un error para mostrar la estructura del modal
-        this.modalOpened = true;
       }
     );
   }
