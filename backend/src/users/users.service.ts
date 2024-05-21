@@ -69,20 +69,34 @@ export class UsersService {
     }
   }
 
-  // busca todos
-  async findAll() {
-    //si es usuario normal que solo muestre el mio TOMAR EJEMPLO DE TICKETS!!!
+
+  // Buscar todos: User solo su usuario. Admin todos los usuarios.
+  async findAll(userId: number) {
     try {
-      return await this.userRepository.find({
-        relations: {
-          person: true,
-        },
-      })
+      const user = await this.userRepository.findOneBy({ id: userId });
+  
+      if (!user) {
+        throw new NotFoundException(`User with ID ${userId} not found`);
+      }
+  
+      if (user.roles.includes(Role.ADMIN)) {
+        return this.userRepository.find({
+          relations: {
+            person: true,
+          },
+        });
+      } else {
+        return [user];
+      }
     } catch (e) {
-      console.log(e)
-      throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});
+      console.log(e);
+      throw new InternalServerErrorException({
+        status: responseStatus.ERROR,
+        message: e.message,
+      });
     }
   }
+
   // busca uno by id
   async findOne(id: number) {
     try {
