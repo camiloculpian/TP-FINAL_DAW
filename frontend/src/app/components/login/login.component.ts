@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { sha512 } from 'js-sha512';
 import { LoginService } from './login.service';
-import { CommonModule } from '@angular/common'; // Importar CommonModule
+import { CommonModule } from '@angular/common'; 
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
