@@ -1,35 +1,7 @@
-<!-- <div class="login-component">
-    <div class="loginTitle">
-        <h3>Login</h3>
-    </div>
-    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-        <div class="entryBox">
-            <div class="entryLine">
-                <label></label><input
-                placeholder="                -----  Username  -----"
-                type="text" formControlName="username" (keyup)="onUsernameChange()">
-            </div>
-            <div class="entryLine">
-                <label></label><input 
-                placeholder="                     *******************"
-                type="password" formControlName="password" (keyup)="onPasswordChange()">
-            </div>
-        </div>
-        <div class="actionLine">
-            <button type="submit" value="Login">Submit</button>
-        </div>
-        <div class="notification">
-            @if(this.message.length>=1){
-                <div class="alert alert-danger">
-                    <strong>Error!</strong> {{this.message}}
-                </div>
-            }
-        </div>
-    </form>
-</div>  -->
 
 
-<!-- ESTE ES EL QUE FUNCIONA -->
+
+<!-- ESTE ES EL QUE FUNCIONA __> de camilo
 <div class="login-component">
     <div class="loginTitle">
       <h3>Login</h3>
@@ -61,10 +33,11 @@
   </div>
 
 
+-->
 
-<!-- LOGIN DE TATASHA, PEEEERO NO FUNCA -->
+<!-- LOGIN YA FUNCIONA -->
 
-<!-- <div class="login-component">
+<div class="login-component">
   <section class="h-100 gradient-form">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
@@ -79,19 +52,18 @@
                     <h4 class="mt-1 mb-5 pb-1">Iniciar sesion</h4>
                   </div>
 
-                  <form>
+                  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
 
-                    <div data-mdb-input-init class="form-outline mb-4">
-                      <label class="form-label" for="form2Example11">Usuario</label>
-                      <input type="username" formControlName="username" id="form2Example11" class="form-control"
-                        placeholder="Ingrese su nombre de ususario" (keyup)="onUsernameChange()" />
+                    <div class="form-outline mb-4">
+                      <label class="form-label" for="formUsername">Usuario</label>
+                      <input type="text" formControlName="username" id="formUsername" class="form-control"
+                        placeholder="Ingrese su nombre de usuario" (keyup)="onUsernameChange()" />
                     </div>
 
-
-                    <div data-mdb-input-init class="form-outline mb-4">
-                      <label class="form-label" for="form2Example11">Contraseña</label>
-                      <input type="password" formControlName="password" id="form2Example11" class="form-control"
-                        placeholder="Ingrese su nombre de contraseña" (keyup)="onPasswordChange()" />
+                    <div class="form-outline mb-4">
+                      <label class="form-label" for="formPassword">Contraseña</label>
+                      <input type="password" formControlName="password" id="formPassword" class="form-control"
+                        placeholder="Ingrese su contraseña" (keyup)="onPasswordChange()" />
                     </div>
 
                     <div class="actionLine text-center pt-1 mb-5 pb-1">
@@ -125,4 +97,4 @@
       </div>
     </div>
   </section>
-</div> -->
+</div>
