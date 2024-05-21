@@ -224,7 +224,7 @@ export class AddEditTicketsComponent implements OnInit {
                 if (response.status !== 'success' && response.statusCode !== 201) {
                     Swal.fire('Error', 'error al crear ticket', 'error');
                 } else {
-                    Swal.fire('Success', 'Ticket creado exitosamente', 'success');
+                    Swal.fire('Success', response.message);
                     this.tickets.push(response.data);
                     this.ticketForm.reset({
                         title: '',
