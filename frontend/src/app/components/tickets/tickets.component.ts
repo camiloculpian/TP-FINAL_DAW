@@ -176,7 +176,9 @@ export class TicketsComponent implements OnInit {
   }
 
   editTicket(ticketId:number){
-
+    const modalRef = this.modalService.open(AddEditTicketsComponent);
+    modalRef.componentInstance.ticketId =ticketId;
+    modalRef.hidden.subscribe({next:()=>(this.getTickets())});
   }
 
   addTicket(){

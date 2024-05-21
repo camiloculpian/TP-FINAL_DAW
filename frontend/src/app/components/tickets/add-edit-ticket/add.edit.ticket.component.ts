@@ -1,12 +1,13 @@
 import { Component, Inject, inject, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { NgbActiveModal, NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { Observable, map } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
+import { CurrentUser, User } from '../../../models/users';
 
 // Enums
 export enum TicketPriority {
@@ -22,12 +23,6 @@ export enum TicketStatus {
 }
 
 // Interfaces
-export interface User {
-    [x: string]: any;
-    id: number;
-    username: string;
-    person:any;
-}
 
 export interface Ticket {
     id: number;
@@ -70,6 +65,10 @@ export class TicketService {
         return this.http.get<any>(this.apiUrl, { headers });
     }
 
+    getTicket(ticketId:number|undefined, headers: HttpHeaders): Observable<any> {
+        return this.http.get<any>(this.apiUrl+`/${ticketId}`, { headers });
+    }
+
     addTicket(ticket: Ticket, headers: HttpHeaders): Observable<any> {
         return this.http.post<any>(this.apiUrl, ticket, { headers });
     }
@@ -83,7 +82,7 @@ export class TicketService {
 @Component({
     selector: 'app-add-tickets',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, NgbModalModule],
+    imports: [CommonModule, ReactiveFormsModule, NgbModalModule, NgIf],
     templateUrl: `add.edit.ticket.component.html`,
     styleUrls: []
 })
@@ -102,18 +101,6 @@ export class AddEditTicketsComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        
-        const user: User = JSON.parse(localStorage.getItem('user') || '{}');
-        if (!user['token']) {
-            this.router.navigate(['/login']);
-            return;
-        }
-
-        const headers = new HttpHeaders({
-            Authorization: `Bearer ${user['token']}`,
-        });
-
-
         this.ticketForm = this.formBuilder.group({
             title: ['', Validators.required],
             description: ['', Validators.required],
@@ -121,7 +108,33 @@ export class AddEditTicketsComponent implements OnInit {
             service: ['HARDWARE_REPAIR'],
             asignedToUserId: ['', Validators.required]
         });
+        const currentUser: CurrentUser = JSON.parse(localStorage.getItem('user') || '{}');
+        const headers = new HttpHeaders({
+            Authorization: `Bearer ${currentUser['token']}`,
+        });
         this.loadUsers(headers);
+        if(this.ticketId){
+            console.log('es edicion');
+            this.ticketForm.addControl('status',new FormControl('',Validators.required));
+            this.ticketService.getTicket(this.ticketId, headers).subscribe({
+                next: (response) => {
+                    console.log(response);
+                    this.ticketForm.patchValue({
+                        title: response.data.title,
+                        description: response.data.description,
+                        priority: response.data.priority,
+                        service: response.data.service,
+                        status: response.data.status,
+                        asignedToUserId: response.data.asignedToUserId
+                    });
+                },
+                error: (err) =>{
+                    console.log(err);
+                }
+            })
+        }else{
+            console.log('es nuevon');
+        }
     }
 
     loadUsers(headers: HttpHeaders): void {

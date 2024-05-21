@@ -11,20 +11,32 @@
       <div class="form-group">
         <label for="asignedToUserId">Asignar a:</label>
         <select class="form-control" id="asignedToUserId" formControlName="asignedToUserId">
-          <option *ngFor="let user of users" [value]="user.id">{{ user.person.name+' '+user.person.lastName }}</option>
+          <option *ngFor="let user of users" [value]="user.id">{{ user.person?.name+' '+user.person?.lastName }}</option>
         </select>
       </div>
       <div class="form-group">
         <label for="description">Description:</label>
         <textarea class="form-control" id="description" formControlName="description" rows="3" placeholder="Enter ticket description"></textarea>
       </div>
-      <div class="form-group">
+      <div class="form-group" *ngIf="ticketId">
         <label for="priority">Priority:</label>
+        <!-- Si el usuario es administrador -->
         <select class="form-control" id="priority" formControlName="priority">
           <option value="LOW">Low</option>
           <option value="MEDIUM">Medium</option>
           <option value="HIGH">High</option>
         </select>
+        <!----------------------------------------->
+      </div>
+      <div class="form-group" *ngIf="ticketId">
+        <!-- Si ticketId es edicion, permitir editar el estado del ticket -->
+        <label for="status">Status:</label>
+        <select class="form-control" id="status" formControlName="status">
+            <option value="OPEN">ABIERTO</option>
+            <option value="IN_PROGRESS">EN PROGRASO</option>
+            <option value="RESOLVED">RESUELTO</option>
+          </select>
+        <!----------------------------------------->
       </div>
       <div class="form-group">
         <label for="service">Service:</label>
