@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { Observable, map } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -25,7 +25,8 @@ export enum TicketStatus {
 export interface User {
     [x: string]: any;
     id: number;
-    name: string;
+    username: string;
+    person:any;
 }
 
 export interface Ticket {
@@ -84,14 +85,9 @@ export class TicketService {
     standalone: true,
     imports: [CommonModule, ReactiveFormsModule, NgbModalModule],
     template: `
-    <div class="tickets-container">
-      <h2>Tickets</h2>
-      <button class="btn btn-primary mb-3" (click)="openCreateTicketModal(createTicketModal)">Add Ticket</button>
-
-      <ng-template #createTicketModal>
         <div class="modal-header">
           <h5 class="modal-title">Create Ticket</h5>
-          <button type="button" class="btn-close" aria-label="Close" (click)="modalRef?.close()"></button>
+          <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
         </div>
         <div class="modal-body">
           <form [formGroup]="ticketForm">
@@ -102,7 +98,7 @@ export class TicketService {
             <div class="form-group">
               <label for="asignedToUserId">Asignar a:</label>
               <select class="form-control" id="asignedToUserId" formControlName="asignedToUserId">
-                <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
+                <option *ngFor="let user of users" [value]="user.id">{{ user.person.name+' '+user.person.lastName }}</option>
               </select>
             </div>
             <div class="form-group">
@@ -139,19 +135,17 @@ export class TicketService {
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="modalRef?.close()">Close</button>
+          <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('Cancel click')">Close</button>
           <button type="button" class="btn btn-primary" (click)="addTicket()">Save Ticket</button>
         </div>
-      </ng-template>
-    </div>
   `,
     styleUrls: []
 })
 export class AddEditTicketsComponent implements OnInit {
+    activeModal = inject(NgbActiveModal);
     public tickets: Ticket[] = [];
     public ticketForm!: FormGroup;
     public users: User[] = [];
-    public modalRef: any;
 
     constructor(
         private router: Router,
@@ -159,7 +153,6 @@ export class AddEditTicketsComponent implements OnInit {
         private formBuilder: FormBuilder,
         private ticketService: TicketService,
         private userService: UserService,
-        private modalService: NgbModal
     ) { }
 
     ngOnInit(): void {
@@ -212,13 +205,9 @@ export class AddEditTicketsComponent implements OnInit {
         });
     }
 
-
-    openCreateTicketModal(content: any): void {
-        this.modalRef = this.modalService.open(content);
-    }
-
     addTicket(): void {
         if (this.ticketForm.invalid) {
+            // MOSTRAR CUAL ES EL ERROR!!!
             return;
         }
 
@@ -235,7 +224,7 @@ export class AddEditTicketsComponent implements OnInit {
                 if (response.status !== 'success' && response.statusCode !== 201) {
                     Swal.fire('Error', 'error al crear ticket', 'error');
                 } else {
-                    Swal.fire('Success', 'Ticket creado exitosamente', 'success');
+                    Swal.fire('Success', response.message);
                     this.tickets.push(response.data);
                     this.ticketForm.reset({
                         title: '',
@@ -244,11 +233,11 @@ export class AddEditTicketsComponent implements OnInit {
                         service: 'HARDWARE_REPAIR',
                         asignedToUserId: ''
                     });
-                    this.modalRef.close();
+                    this.activeModal.close();
                 }
             },
             error: (error) => {
-                Swal.fire('Error', 'Error creando el ticket', 'error');
+                Swal.fire('Error', error.error.message);
                 console.error('Error creando el ticket:', error);
             }
         });

@@ -57,13 +57,14 @@
 
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, inject } from '@angular/core';
 import { Response } from '../../models/responses';
 import { CurrentUser, User } from '../../models/users';
 import { Router } from '@angular/router';
 import { NgFor, NgForOf, NgIf } from '@angular/common';
 import Swal from 'sweetalert2';
 import { AddEditTicketsComponent } from './add-edit-ticket/add.edit.ticket.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 export enum TicketPriority {
@@ -100,6 +101,7 @@ export interface Ticket {
 })
 
 export class TicketsComponent implements OnInit {
+  private modalService = inject(NgbModal);
   public tickets:any=[]; // Usar una matriz escrita para boletos
   public selectedTicket: Ticket | null = null;
   public response: any | null = null; // Usar'cualquiera' para el objeto de respuesta
@@ -178,7 +180,9 @@ export class TicketsComponent implements OnInit {
   }
 
   addTicket(){
-    const currentUser: CurrentUser = JSON.parse(String(localStorage.getItem('user')));
+    //const currentUser: CurrentUser = JSON.parse(String(localStorage.getItem('user')));
+    const modalRef = this.modalService.open(AddEditTicketsComponent);
+    modalRef.hidden.subscribe({next:()=>(this.getTickets())});
   }
 
   getTickets(){
