@@ -61,7 +61,7 @@ export class LoginService {
 
   isAdmin(): boolean{
     console.log();
-    return JSON.parse(String(this.getCurrentUser()))?.roles == 'admin';
+    return JSON.parse(String(this.getCurrentUser()))?.roles == 'admin'
   }
 
   getCurrentUser(){
