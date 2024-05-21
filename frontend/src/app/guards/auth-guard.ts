@@ -35,11 +35,11 @@ export const authGuard: CanActivateFn = (
   );
 };
 
-export const authGuardAdmin: CanActivateFn = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-) => {
-  const authService = inject(LoginService);
-  const router = inject(Router);
-  return true;
-}
+// export const authGuardAdmin: CanActivateFn = (
+//   route: ActivatedRouteSnapshot,
+//   state: RouterStateSnapshot
+// ) => {
+//   const authService = inject(LoginService);
+//   const router = inject(Router);
+//   return authService.isAdmin();
+// }

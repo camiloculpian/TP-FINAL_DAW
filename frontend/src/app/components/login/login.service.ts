@@ -59,54 +59,10 @@ export class LoginService {
     }
   }
 
-  // isLoggedIn():boolean{
-  //   try{
-  //     console.log('______________ENTRADA_CODIGO_PROBLEMATICO______________________________');
-  //     let user:any = localStorage.getItem('user');
-  //     if(user == null){
-  //       console.log('if(user == null)');
-  //       this.isAuthenticated = false;
-  //       return false
-  //     }else{
-  //       console.log('if(user != null)');
-  //       this._httpReq.get<Response>(
-  //           `http://localhost:3000/api/v1/auth/verify`,
-  //           {
-  //             headers: new HttpHeaders ({   
-  //                 "Authorization": String("Bearer "+JSON.parse(user).token),
-  //             }),
-  //           }).pipe(timeout(20000)).subscribe({
-  //                   next: (resp) => {
-  //                     console.log('**OK!'+JSON.stringify(resp.data));
-  //                     localStorage.setItem('user', JSON.stringify(resp.data));
-  //                     this.isAuthenticated=true;
-  //                   },
-  //                   error: (err)  =>{
-  //                     console.log('**CUAK!'+JSON.stringify(err.error));
-  //                     console.log('**CUAK! NO estas autorizado a andar por aca!');
-  //                     localStorage.removeItem('user');
-  //                     this.isAuthenticated=false;
-  //                   },
-  //                   complete: () => {return this.isAuthenticated;}
-  //                 })
-  //                 console.log('_____________________SALIDA_CODIGO_PROBLEMATICO__________________________');
-  //                 console.log('this.isAuthenticated= '+this.isAuthenticated)
-  //                 return this.isAuthenticated;
-  //       }
-  //   }catch(e){
-  //     this.isAuthenticated=false;
-  //     console.log('_____________________SALIDA_CODIGO_PROBLEMATICO_POR EXCEPCION_________________________');
-  //     console.log('this.isAuthenticated= '+this.isAuthenticated)
-  //     return false;
-  //   }
-
-  // isLoggedIn():boolean{
-  //   if(localStorage.getItem('user')){
-  //     return true;
-  //   }else{
-  //     return false;
-  //   }
-  // }
+  isAdmin(): boolean{
+    console.log();
+    return JSON.parse(String(this.getCurrentUser()))?.roles == 'admin';
+  }
 
   getCurrentUser(){
     return localStorage.getItem('user');
