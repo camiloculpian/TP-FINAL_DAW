@@ -105,6 +105,7 @@ export class TicketsComponent implements OnInit {
   public tickets:any=[]; // Usar una matriz escrita para boletos
   public selectedTicket: Ticket | null = null;
   public response: any | null = null; // Usar'cualquiera' para el objeto de respuesta
+  currentUser!:CurrentUser;
 
   constructor(
     private router: Router,
@@ -114,8 +115,8 @@ export class TicketsComponent implements OnInit {
   ngOnInit(): void {
     console.log('ngOnInit()');
     try{
-      let currentUser:CurrentUser = JSON.parse(String(localStorage.getItem('user')));
-      if(!currentUser){
+      this.currentUser = JSON.parse(String(localStorage.getItem('user')));
+      if(!this.currentUser){
         this.router.navigate(['/login']);
         return;
       }

@@ -69,6 +69,10 @@ export class TicketService {
         return this.http.get<any>(this.apiUrl+`/${ticketId}`, { headers });
     }
 
+    saveTicket(ticket: Ticket, headers: HttpHeaders){
+        return this.http.patch<any>(this.apiUrl, { headers });
+    }
+
     addTicket(ticket: Ticket, headers: HttpHeaders): Observable<any> {
         return this.http.post<any>(this.apiUrl, ticket, { headers });
     }
