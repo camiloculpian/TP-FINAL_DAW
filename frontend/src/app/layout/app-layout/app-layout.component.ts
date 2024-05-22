@@ -3,11 +3,12 @@ import { LoginService } from '../../components/login/login.service';
 import { Router, RouterOutlet } from '@angular/router';
 import { StatusBarComponent } from '../../components/status-bar/status-bar.component';
 import { AppMenuComponent } from '../../components/app-menu/app-menu.component';
+import { HeaderComponent } from '../../shared/header/header.component';
 
 @Component({
   selector: 'app-app-layout',
   standalone: true,
-  imports: [RouterOutlet, StatusBarComponent, AppMenuComponent],
+  imports: [RouterOutlet, StatusBarComponent, AppMenuComponent, HeaderComponent],
   templateUrl: './app-layout.component.html',
   styleUrl: './app-layout.component.css'
 })
