@@ -175,7 +175,7 @@ export class TicketsController {
     @ApiOperation({ summary: 'Actualizar un ticket' })
     @ApiResponse({ status: 200, description: 'Ticket actualizado con éxito' })
     @ApiResponse({ status: 404, description: 'Ticket no encontrado' })
-    @ApiParam({ name: 'id', description: 'ID único del ticket' })
+    // @ApiParam({ name: 'id', description: 'ID único del ticket' })
     @UseInterceptors(
         FileInterceptor('archive', {
             storage: diskStorage({

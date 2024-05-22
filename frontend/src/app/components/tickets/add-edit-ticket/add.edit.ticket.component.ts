@@ -8,31 +8,9 @@ import { Observable, map } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { CommonModule, NgIf } from '@angular/common';
 import { CurrentUser, User } from '../../../models/users';
-
-// Enums
-export enum TicketPriority {
-    LOW = 'LOW',
-    MEDIUM = 'MEDIUM',
-    HIGH = 'HIGH'
-}
-
-export enum TicketStatus {
-    OPEN = 'OPEN',
-    IN_PROGRESS = 'IN_PROGRESS',
-    RESOLVED = 'RESOLVED'
-}
-
-// Interfaces
-
-export interface Ticket {
-    id: number;
-    title: string;
-    description: string;
-    priority: string;
-    service: string;
-    status: string;
-    asignedToUserId: number;
-}
+import { AllValidationErrors, getFormValidationErrors } from '../../../utils/validations';
+import { TicketService } from '../tickets.service';
+import { Ticket } from '../../../models/ticket';
 
 // Servicio de Usuarios
 @Injectable({
@@ -48,37 +26,6 @@ export class UserService {
       return this.http.get<{ data: User[] }>(this.apiUrl, { headers }).pipe(
         map((response: { data: any; }) => response.data)
       );
-    }
-  }
-
-
-// Servicio de Tickets
-@Injectable({
-    providedIn: 'root'
-})
-export class TicketService {
-    private apiUrl = 'http://localhost:3000/api/v1/tickets';
-
-    constructor(private http: HttpClient) { }
-
-    getTickets(headers: HttpHeaders): Observable<any> {
-        return this.http.get<any>(this.apiUrl, { headers });
-    }
-
-    getTicket(ticketId:number|undefined, headers: HttpHeaders): Observable<any> {
-        return this.http.get<any>(this.apiUrl+`/${ticketId}`, { headers });
-    }
-
-    saveTicket(ticket: Ticket, headers: HttpHeaders){
-        return this.http.patch<any>(this.apiUrl, { headers });
-    }
-
-    addTicket(ticket: Ticket, headers: HttpHeaders): Observable<any> {
-        return this.http.post<any>(this.apiUrl, ticket, { headers });
-    }
-
-    deleteTicket(ticketId: number, headers: HttpHeaders): Observable<any> {
-        return this.http.delete<any>(`${this.apiUrl}/${ticketId}`, { headers });
     }
 }
 
@@ -96,12 +43,13 @@ export class AddEditTicketsComponent implements OnInit {
     public ticketForm!: FormGroup;
     public users: User[] = [];
     public currentUser!:CurrentUser;
+    public inputMissingMessage:String='';
 
     constructor(
         private router: Router,
         private _httpReq: HttpClient,
         private formBuilder: FormBuilder,
-        private ticketService: TicketService,
+        private ticketService:TicketService,
         private userService: UserService,
     ) { }
 
@@ -121,7 +69,7 @@ export class AddEditTicketsComponent implements OnInit {
         if(this.ticketId){
             console.log('es edicion');
             this.ticketForm.addControl('status',new FormControl('',Validators.required));
-            this.ticketService.getTicket(this.ticketId, headers).subscribe({
+            this.ticketService.getTicket(this.ticketId).subscribe({
                 next: (response) => {
                     console.log(response);
                     this.ticketForm.patchValue({
@@ -130,7 +78,7 @@ export class AddEditTicketsComponent implements OnInit {
                         priority: response.data.priority,
                         service: response.data.service,
                         status: response.data.status,
-                        asignedToUserId: response.data.asignedToUserId
+                        asignedToUserId: response.data.asignedToUser
                     });
                 },
                 error: (err) =>{
@@ -154,40 +102,82 @@ export class AddEditTicketsComponent implements OnInit {
         });
     }
 
-    addTicket(): void {
-        if (this.ticketForm.invalid) {
-            // MOSTRAR CUAL ES EL ERROR!!!
-            return;
-        }
-
-        const user = JSON.parse(localStorage.getItem('user') || '{}');
-        const headers = new HttpHeaders({
-            Authorization: `Bearer ${user.token}`,
-        });
-
-        const newTicket: Ticket = this.ticketForm.value;
-
-        this.ticketService.addTicket(newTicket, headers).subscribe({
-            next: (response) => {
-                console.log('Response from server:', response);
-                if (response.status !== 'success' && response.statusCode !== 201) {
-                    Swal.fire('Error', 'error al crear ticket', 'error');
-                } else {
-                    Swal.fire('Success', response.message);
-                    this.ticketForm.reset({
-                        title: '',
-                        description: '',
-                        priority: 'LOW',
-                        service: 'HARDWARE_REPAIR',
-                        asignedToUserId: ''
-                    });
-                    this.activeModal.close();
+    save(e:Event): void {
+        e.preventDefault();
+        if(this.ticketId){
+            console.log('es edicion');
+            if (this.ticketForm.valid) {
+                let formObj = this.ticketForm.getRawValue();
+                delete formObj.asignedToUser;
+                delete formObj.asignedToUserId;
+                delete formObj.priority;
+                delete formObj.title;
+                delete formObj.service;
+                const ticket: Ticket = formObj;
+                this.ticketService.updateTicket(this.ticketId,ticket).subscribe({
+                    next: ()=>{
+                        this.activeModal.close();
+                    }
+                })
+            }else{
+                const error: AllValidationErrors|undefined = getFormValidationErrors(this.ticketForm.controls).shift();
+                if (error) {
+                    let text;
+                    switch (error.error_name) {
+                    case 'required': text = `${error.control_name} is required!`; break;
+                    case 'pattern': text = `${error.control_name} has wrong pattern!`; break;
+                    case 'email': text = `${error.control_name} has wrong email format!`; break;
+                    case 'minlength': text = `${error.control_name} has wrong length! Required length: ${error.error_value.requiredLength}`; break;
+                    case 'areEqual': text = `${error.control_name} must be equal!`; break;
+                    default: text = `${error.control_name}: ${error.error_name}: ${error.error_value}`;
+                    }
+                    this.inputMissingMessage = text;
                 }
-            },
-            error: (error) => {
-                Swal.fire('Error', error.error.message);
-                console.error('Error creando el ticket:', error);
             }
-        });
+        }else{
+            console.log('es nuevo');
+            if (this.ticketForm.valid) {
+                
+                const newTicket: Ticket = this.ticketForm.value;
+                this.ticketService.addTicket(newTicket).subscribe({
+                    next: (response) => {
+                        console.log('Response from server:', response);
+                        if (response.status !== 'success' && response.statusCode !== 201) {
+                            Swal.fire('Error', 'error al crear ticket', 'error');
+                        } else {
+                            Swal.fire('Success', response.message);
+                            this.ticketForm.reset({
+                                title: '',
+                                description: '',
+                                priority: 'LOW',
+                                service: 'HARDWARE_REPAIR',
+                                asignedToUserId: ''
+                            });
+                            this.activeModal.close();
+                        }
+                    },
+                    error: (error) => {
+                        Swal.fire('Error', error.error.message);
+                        console.error('Error creando el ticket:', error.error.message);
+                    }
+                });
+                this
+            }else{
+                const error: AllValidationErrors|undefined = getFormValidationErrors(this.ticketForm.controls).shift();
+                if (error) {
+                    let text;
+                    switch (error.error_name) {
+                    case 'required': text = `${error.control_name} is required!`; break;
+                    case 'pattern': text = `${error.control_name} has wrong pattern!`; break;
+                    case 'email': text = `${error.control_name} has wrong email format!`; break;
+                    case 'minlength': text = `${error.control_name} has wrong length! Required length: ${error.error_value.requiredLength}`; break;
+                    case 'areEqual': text = `${error.control_name} must be equal!`; break;
+                    default: text = `${error.control_name}: ${error.error_name}: ${error.error_value}`;
+                    }
+                    this.inputMissingMessage = text;
+                }
+            }
+        }
     }
+        
 }

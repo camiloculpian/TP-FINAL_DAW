@@ -133,6 +133,7 @@ export class TicketsService {
   // Actualizar ticket: Admin (todos los campos) User (solo archive, description and status)
   async update(id: number, updateTicketDto: UpdateTicketDto, userId: number) {
     try {
+      console.log('async update(id: number, updateTicketDto: UpdateTicketDto, userId: number)');
       // El usuario que solicita la operacion de actualizacion
       const user = await this.userService.findOne(userId);
       const ticket = await this.ticketRepository.findOne({
@@ -201,6 +202,7 @@ export class TicketsService {
       }
     } catch (e) {
       if(e instanceof BadRequestException || e instanceof UnauthorizedException){
+        console.log(e);
         throw e;
       }else{
         throw new InternalServerErrorException({status:responseStatus.ERROR,message:e.message});

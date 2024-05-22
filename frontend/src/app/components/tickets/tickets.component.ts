@@ -95,7 +95,7 @@ export interface Ticket {
 @Component({
   selector: 'app-tickets',
   standalone: true,
-  imports: [NgFor, NgForOf, NgIf,AddEditTicketsComponent],
+  imports: [NgFor, NgForOf, NgIf, AddEditTicketsComponent],
   templateUrl: './tickets.component.html',
   styleUrls: ['./tickets.component.css']
 })

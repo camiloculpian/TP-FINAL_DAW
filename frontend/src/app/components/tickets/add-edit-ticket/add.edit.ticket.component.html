@@ -58,8 +58,13 @@
         </select>
       </div>
     </form>
+    <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('Cancel click')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="save($event)">Save Ticket</button>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('Cancel click')">Close</button>
-    <button type="button" class="btn btn-primary" (click)="addTicket()">Save Ticket</button>
+    @if(this.inputMissingMessage){
+      <div class="alert alert-danger">
+          <strong>Error!</strong> {{this.inputMissingMessage}}
+      </div>
+    }
   </div>
