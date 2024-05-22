@@ -57,7 +57,7 @@ export class UserService {
     providedIn: 'root'
 })
 export class TicketService {
-    private apiUrl = 'http://localhost:3000/api/v1/tickets'; // Ajusta esto a tu URL de API
+    private apiUrl = 'http://localhost:3000/api/v1/tickets';
 
     constructor(private http: HttpClient) { }
 
