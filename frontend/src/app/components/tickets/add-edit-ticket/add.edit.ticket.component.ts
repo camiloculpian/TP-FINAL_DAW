@@ -78,7 +78,7 @@ export class AddEditTicketsComponent implements OnInit {
                         priority: response.data.priority,
                         service: response.data.service,
                         status: response.data.status,
-                        asignedToUserId: response.data.asignedToUser
+                        asignedToUserId: response.data.asignedToUser?.id
                     });
                 },
                 error: (err) =>{
@@ -108,11 +108,17 @@ export class AddEditTicketsComponent implements OnInit {
             console.log('es edicion');
             if (this.ticketForm.valid) {
                 let formObj = this.ticketForm.getRawValue();
-                delete formObj.asignedToUser;
-                delete formObj.asignedToUserId;
-                delete formObj.priority;
-                delete formObj.title;
-                delete formObj.service;
+                if(this.currentUser.roles!='admin'){
+                    delete formObj.asignedToUserId;
+                    delete formObj.priority;
+                    delete formObj.title;
+                    delete formObj.service;
+
+                }else{
+                    formObj.asignedToUserId=String(formObj.asignedToUserId);
+                }
+                
+                console.log (formObj)
                 const ticket: Ticket = formObj;
                 this.ticketService.updateTicket(this.ticketId,ticket).subscribe({
                     next: ()=>{
@@ -137,7 +143,6 @@ export class AddEditTicketsComponent implements OnInit {
         }else{
             console.log('es nuevo');
             if (this.ticketForm.valid) {
-                
                 const newTicket: Ticket = this.ticketForm.value;
                 this.ticketService.addTicket(newTicket).subscribe({
                     next: (response) => {

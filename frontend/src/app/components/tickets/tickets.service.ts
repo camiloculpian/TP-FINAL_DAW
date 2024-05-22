@@ -28,7 +28,7 @@ export class TicketService {
     getTicket(ticketId:number|undefined): Observable<any> {
         return this.http.get<any>(this.apiUrl+`/${ticketId}`, { 
             headers: new HttpHeaders({
-                Authorization: `Bearer ${this.currentUser.token}`,
+                'Authorization': String('Bearer ' + this.currentUser.token),
             })
          });
     }
@@ -45,7 +45,7 @@ export class TicketService {
     addTicket(ticket: Ticket): Observable<any> {
         return this.http.post<any>(this.apiUrl, ticket, {
             headers: new HttpHeaders({
-                Authorization: `Bearer ${this.currentUser.token}`,
+                'Authorization': String('Bearer ' + this.currentUser.token),
             })
         });
     }
@@ -53,7 +53,7 @@ export class TicketService {
     deleteTicket(ticketId: number): Observable<any> {
         return this.http.delete<any>(`${this.apiUrl}/${ticketId}`, {
             headers: new HttpHeaders({
-                Authorization: `Bearer ${this.currentUser.token}`,
+                'Authorization': String('Bearer ' + this.currentUser.token),
             })
         });
     }

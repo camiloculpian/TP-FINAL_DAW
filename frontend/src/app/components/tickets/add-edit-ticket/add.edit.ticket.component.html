@@ -11,7 +11,7 @@
       <div class="form-group" *ngIf="this.currentUser.roles == 'admin'">
         <label for="asignedToUserId">Asignar a:</label>
         <select class="form-control" id="asignedToUserId" formControlName="asignedToUserId">
-          <option *ngFor="let user of users" [value]="user.id">{{ user.person?.name+' '+user.person?.lastName }}</option>
+          <option *ngFor="let user of users" value={{user.id}}>{{ user.person?.name+' '+user.person?.lastName }}</option>
         </select>
       </div>
       <div class="form-group">
@@ -38,7 +38,7 @@
           </select>
         <!----------------------------------------->
       </div>
-      <div class="form-group">
+      <div class="form-group" *ngIf="ticketId && this.currentUser.roles == 'admin'">
         <label for="service">Service:</label>
         <select class="form-control" id="service" formControlName="service">
           <option value="HARDWARE_REPAIR">Hardware Repair</option>
