@@ -133,7 +133,6 @@ export class TicketsService {
   // Actualizar ticket: Admin (todos los campos) User (solo archive, description and status)
   async update(id: number, updateTicketDto: UpdateTicketDto, userId: number) {
     try {
-      console.log('async update(id: number, updateTicketDto: UpdateTicketDto, userId: number)');
       // El usuario que solicita la operacion de actualizacion
       const user = await this.userService.findOne(userId);
       const ticket = await this.ticketRepository.findOne({
