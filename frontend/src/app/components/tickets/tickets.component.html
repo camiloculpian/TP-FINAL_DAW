@@ -22,7 +22,7 @@
           <td>{{ ticket.service }}</td>
           <td>{{ ticket.status }}</td>
           <td >
-            <button class="btn btn-danger" (click)="confirmDeleteTicket(ticket.id, ticket.status)"><i class="notifyIcon fa-solid fa-trash-can"></i></button>
+            <button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-danger" (click)="confirmDeleteTicket(ticket.id, ticket.status)"><i class="notifyIcon fa-solid fa-trash-can"></i></button>
             <button class="btn btn-warning" (click)="editTicket(ticket.id)"><i class="notifyIcon fa-solid fa-pen-to-square"></i></button>
           </td>
         </tr>

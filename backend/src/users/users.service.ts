@@ -73,8 +73,8 @@ export class UsersService {
   // Buscar todos: User solo su usuario. Admin todos los usuarios.
   async findAll(userId: number) {
     try {
-      const user = await this.userRepository.findOneBy({ id: userId });
-  
+      const user = await this.userRepository.findOne({ where: {id: userId}, relations:{person:true} });
+
       if (!user) {
         throw new NotFoundException(`User with ID ${userId} not found`);
       }
@@ -108,7 +108,7 @@ export class UsersService {
           relations: {
             person: true,
           },
-          select: ["id", "username", 'roles', 'profilePicture']
+          //select: ["id", "username", 'roles', 'profilePicture']
         }
       );
     } catch (e) {

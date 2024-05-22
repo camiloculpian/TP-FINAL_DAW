@@ -23,6 +23,7 @@ export class UsersComponent implements OnInit {
   // cambie la lista de user en vez de undefined, lo deje como lista vacia...
   public usersList: User[] | [];
   public response: Response | null;
+  public currentUser: CurrentUser = JSON.parse(String(localStorage.getItem('user')));
 
   enableEdit:boolean=false;
   enableEditIndex:number=0;
@@ -61,10 +62,9 @@ export class UsersComponent implements OnInit {
   }
 
   getUsers(){
-    let user: CurrentUser = JSON.parse(String(localStorage.getItem('user')));
     this._httpReq.get<Response>("http://localhost:3000/api/v1/users", {
       headers: new HttpHeaders({
-        "Authorization": String("Bearer " + user.token),
+        "Authorization": String("Bearer " + this.currentUser.token),
       }),
     }).subscribe({
       next: (resp) => {

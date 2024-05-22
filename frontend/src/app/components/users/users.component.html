@@ -22,7 +22,7 @@
             <td>{{ user.person?.email }}</td>
             <td>{{ user.person?.phone }}</td>
             <td>
-              <button class="btn btn-danger" (click)="deleteUser(user.id)"><i class="notifyIcon fa-solid fa-xmark"></i></button>
+              <button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-danger" (click)="deleteUser(user.id)"><i class="notifyIcon fa-solid fa-xmark"></i></button>
               <button class="btn btn-warning" (click)="onEditUser(user)"><i class="notifyIcon fa-solid fa-user-pen"></i></button>
             </td>
           </tr>
@@ -31,4 +31,4 @@
           </tr>
         </tbody>
       </table>
-      <button class="btn btn-warning" (click)="onAddUser()"><i class="notifyIcon fa-solid fa-user-plus">Add User</i></button>
+      <button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-warning" (click)="onAddUser()"><i class="notifyIcon fa-solid fa-user-plus">Add User</i></button>

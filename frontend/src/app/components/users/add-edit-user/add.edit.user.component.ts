@@ -6,6 +6,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { sha512 } from "js-sha512";
 import Swal from "sweetalert2";
 import { AllValidationErrors, getFormValidationErrors } from "../../../utils/validations";
+import { User } from "../../../models/users";
 
 @Component({
     selector: 'app-add-edit-user',
@@ -18,7 +19,7 @@ import { AllValidationErrors, getFormValidationErrors } from "../../../utils/val
     userForm : FormGroup;
     userId:number=0;
     // @Output() messageEventOut = new EventEmitter<string>();
-    @Input() user:any;
+    @Input() user!:User;
     @Input() name: string|undefined;
     activeModal = inject(NgbActiveModal);
     inputMissingMessage:string='';
@@ -26,18 +27,24 @@ import { AllValidationErrors, getFormValidationErrors } from "../../../utils/val
         private usersService:UsersService,
         private fbuilder: FormBuilder,
     ) {
-        this.userForm = this.fbuilder.group({
-            username: new FormControl('', Validators.required),
-            name: new FormControl('', Validators.required),
-            lastName: new FormControl('', Validators.required),
-            dni: new FormControl('', Validators.required),
-            birthDate: new FormControl('', Validators.required),
-            roles: new FormControl('', Validators.required),
-            email: new FormControl('', [Validators.required,Validators.email]),
-            phone: new FormControl('', [Validators.required,/*Validators.pattern('^(\\+?)\d{3,3}-?\d{2,2}-?\d{2,2}-?\d{3,3}$')*/]),
-            address: new FormControl('', Validators.required),
-            gender: new FormControl('', Validators.required),
-        });
+        // if(this.user.roles == 'admin'){
+            this.userForm = this.fbuilder.group({
+                username: new FormControl('', Validators.required),
+                name: new FormControl('', Validators.required),
+                lastName: new FormControl('', Validators.required),
+                dni: new FormControl('', Validators.required),
+                birthDate: new FormControl('', Validators.required),
+                roles: new FormControl('', Validators.required),
+                email: new FormControl('', [Validators.required,Validators.email]),
+                phone: new FormControl('', [Validators.required,/*Validators.pattern('^(\\+?)\d{3,3}-?\d{2,2}-?\d{2,2}-?\d{3,3}$')*/]),
+                address: new FormControl('', Validators.required),
+                gender: new FormControl('', Validators.required),
+            });
+        // }else{
+        //     this.userForm = this.fbuilder.group({
+        //         username: new FormControl('', Validators.required),
+        //     });
+        // }
     }
 
     ngOnInit(){
@@ -46,17 +53,21 @@ import { AllValidationErrors, getFormValidationErrors } from "../../../utils/val
             this.userId=this.user.id;
             this.userForm.patchValue({
                 username: this.user.username,
-                password: this.user.password,
-                name: this.user.person.name,
-                lastName: this.user.person.lastName,
-                dni: this.user.person.dni,
-                birthDate: this.formatDate(this.user.person.birthDate),
-                roles: this.user.roles,
-                email:this.user.person.email,
-                phone:this.user.person.phone,
-                gender: this.user.person.gender,
-                address:this.user.person.address,
-            });
+                password: '',
+            // });
+            // if (this.user.roles == 'admin'){
+                // this.userForm.patchValue({
+                    name: this.user.person?.name,
+                    lastName: this.user.person?.lastName,
+                    dni: this.user.person?.dni,
+                    birthDate: this.formatDate(String(this.user.person?.birthDate)),
+                    roles: this.user.roles,
+                    email:this.user.person?.email,
+                    phone:this.user.person?.phone,
+                    gender: this.user.person?.gender,
+                    address:this.user.person?.address,
+                });
+            // }
         }else{
             // La contraseña es requerida porque es para agregar uno NUEVO
             this.userForm.addControl('password', new FormControl('',[Validators.required, Validators.minLength(8)]))
