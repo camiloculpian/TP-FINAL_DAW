@@ -6,6 +6,8 @@ import { Ticket } from '../tickets/tickets.component';
 import { NgFor, NgForOf, NgIf } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ViewAuditsComponent } from './audit-view/audit.view.component';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-audits',
@@ -65,7 +67,7 @@ export class AuditsComponent implements OnInit {
   }
 
   viewTicketAudit(ticketId:number){
-    const modalRef = this.modalService.open(ViewAuditsComponent);
+    const modalRef = this.modalService.open(ViewAuditsComponent,{ size: 'xl' });
 		modalRef.componentInstance.ticketId = ticketId;
   }
 }

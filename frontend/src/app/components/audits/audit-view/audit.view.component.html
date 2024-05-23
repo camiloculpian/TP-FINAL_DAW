@@ -1,24 +1,52 @@
-<!-- <h1>editar el archivo audit.view.component.html</h1> -->
-
-<!-- a posteriori pal boton: *ngIf="modalOpened"-->
+<div>
     <div class="modal-header">
         <h4 class="modal-title">Auditanditando Ticket ID: {{ticketId}}</h4>
         <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
     </div>
-            <div class="modal-body">
-                <!-- Si hay datos de auditoría, mostrarlos -->
-                <div *ngIf="audits && audits.length > 0">
-                    <div *ngFor="let audit of audits">
-                        <p>{{ audit.operation + '|' +audit.description+ '|' + audit.asignedToUser.username}}</p>
-                    </div>
-                </div>
-                <!-- Si no hay datos de auditoría, mostrar mensaje -->
-                <div *ngIf="!audits || audits.length === 0">
-                    <p>No hay datos de auditoría para mostrar.</p>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary"  >Exportar a .csv</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="activeModal.dismiss('Cross click')">Cerrar</button>
-            </div>
-        
+    <div class="modal-body">
+        <div *ngIf="audits && audits.length > 0">
+            <table ngb-table class="table table-light table-striped table-hover table-responsive table-md tablaGas" id="autits-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Operacion</th>
+                        <th>Descripcion</th>
+                        <th>Prioridad</th>
+                        <th>Usuario Asignado</th>
+                        <th>Status</th>
+                        <th>Modificada por Usuario</th>
+                        <th>Fecha de Modificacion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr div *ngFor="let audit of audits">
+                        <td>{{ audit.id }}</td>
+                        <td>{{ audit.operation }}</td>
+                        <td>{{ audit.description }}</td>
+                        <td>{{ audit.priority }}</td>
+                        <td>{{ audit.asignedToUser?.username }}</td>
+                        <td>{{ audit.status }}</td>
+                        <td>{{ audit.modifiedByUser?.username }}</td>
+                        <td>{{ audit.modifiedAt }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div *ngIf="!audits || audits.length === 0">
+            <p>No hay datos de auditoría para mostrar.</p>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="col-6 col-md-4">
+            <button class="btn btn-success" (click)="downloadCSV()">
+              <img class="icon" src="https://static-00.iconduck.com/assets.00/csv-icon-1791x2048-ot22nr8i.png" alt="iconCsv">
+            </button>
+          </div>
+          <div class="col-6 col-md-4">
+            <button  class="btn btn-danger" (click)="downloadPDF()" >
+              <img class="icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1667px-PDF_file_icon.svg.png" alt="iconPdf">
+            </button>
+          </div>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="activeModal.dismiss('Cross click')">Cerrar</button>
+    </div>
+</div>    
