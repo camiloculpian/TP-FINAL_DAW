@@ -1,34 +1,40 @@
-<h2 class="d-flex justify-content-center">Tabla con todos los Usuarios</h2>
-      <table ngb-table class="table table-dark table-striped table-hover table-responsive table-md tablaGas">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Username</th>
-            <th>Roles</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Email</th>
-            <th>Teléfono</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr id="TABLA_USUARIOS" *ngFor="let user of usersList; trackBy: trackByUserId">
-            <td>{{ user.id }}</td>
-            <td>{{ user.username }}</td>
-            <td>{{ user.roles }}</td>
-            <td>{{ user.person?.name }}</td>
-            <td>{{ user.person?.lastName }}</td>
-            <td>{{ user.person?.email }}</td>
-            <td>{{ user.person?.phone }}</td>
-            <td>
-              <button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-danger" (click)="deleteUser(user.id)"><i class="notifyIcon fa-solid fa-xmark"></i></button>
-              <button class="btn btn-warning" (click)="onEditUser(user)"><i class="notifyIcon fa-solid fa-user-pen"></i></button>
-            </td>
-          </tr>
-          <tr *ngIf="usersList?.length === 0">
-            <td colspan="8">No se encontraron datos.</td>
-          </tr>
-        </tbody>
-      </table>
-      <button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-warning" (click)="onAddUser()"><i class="notifyIcon fa-solid fa-user-plus">Add User</i></button>
+
+<div class="row g-0 text-center">
+  <h2 class="d-flex justify-content-center">Tabla con todos los Usuarios</h2>
+<table ngb-table class="table table-light table-striped table-hover table-responsive table-md tablaGas">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Roles</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Email</th>
+      <th>Teléfono</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id="TABLA_USUARIOS" *ngFor="let user of usersList; trackBy: trackByUserId">
+      <td>{{ user.id }}</td>
+      <td>{{ user.username }}</td>
+      <td>{{ user.roles }}</td>
+      <td>{{ user.person?.name }}</td>
+      <td>{{ user.person?.lastName }}</td>
+      <td>{{ user.person?.email }}</td>
+      <td>{{ user.person?.phone }}</td>
+      <td>
+        <button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-danger" (click)="deleteUser(user.id)"><i
+            class="notifyIcon fa-solid fa-xmark"></i></button>
+        <button class="btn btn-warning espaciadoBtn" (click)="onEditUser(user)"><i
+            class="notifyIcon fa-solid fa-user-pen"></i></button>
+      </td>
+    </tr>
+    <tr *ngIf="usersList?.length === 0">
+      <td colspan="8">No se encontraron datos.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-warning" (click)="onAddUser()"><i
+  class="notifyIcon fa-solid fa-user-plus">Add User</i></button>

@@ -31,3 +31,11 @@
         display:initial !important;
     }
 }
+
+.espaciado{
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.espaciadoBtn{
+    margin-left: 10px;
+}

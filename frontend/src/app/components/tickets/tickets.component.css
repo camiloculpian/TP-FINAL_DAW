@@ -26,3 +26,16 @@
         /* Muestra solo las celdas seleccionadas */
     }
 }
+
+.icon{
+    width: 30px;
+    height: 35px;
+}
+
+.espaciado{
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.espaciadoBtn{
+    margin: 5px auto;
+}

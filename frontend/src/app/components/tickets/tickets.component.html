@@ -1,37 +1,57 @@
 <div class="tickets-container">
-    <h2>Tickets</h2>
-  
-    <table ngb-table class="table table-dark table-striped table-hover table-responsive table-md tablaGas">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Priority</th>
-          <th>Service</th>
-          <th>Status</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let ticket of tickets">
-          <td>{{ ticket.id }}</td>
-          <td>{{ ticket.title }}</td>
-          <td>{{ ticket.description }}</td>
-          <td>{{ ticket.priority }}</td>
-          <td>{{ ticket.service }}</td>
-          <td>{{ ticket.status }}</td>
-          <td >
-            <button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-danger" (click)="confirmDeleteTicket(ticket.id, ticket.status)"><i class="notifyIcon fa-solid fa-trash-can"></i></button>
-            <button class="btn btn-warning" (click)="editTicket(ticket.id)"><i class="notifyIcon fa-solid fa-pen-to-square"></i></button>
-          </td>
-        </tr>
-        <tr *ngIf="tickets?.length === 0">
-              <td colspan="8">No se encontraron datos.</td>
-        </tr>
-      </tbody>
-    </table>
+  <h2 class="d-flex justify-content-center">Todos los Tickets</h2>
+  <div class="espaciado"></div>
+  <table id="tickets-table" ngb-table
+    class="table table-light table-striped table-hover table-responsive table-md tablaGas">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Priority</th>
+        <th>Service</th>
+        <th>Status</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ticket of tickets">
+        <td>{{ ticket.id }}</td>
+        <td>{{ ticket.title }}</td>
+        <td>{{ ticket.description }}</td>
+        <td>{{ ticket.priority }}</td>
+        <td>{{ ticket.service }}</td>
+        <td>{{ ticket.status }}</td>
+        <td>
+          <button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-danger espaciadoBtn"
+            (click)="confirmDeleteTicket(ticket.id, ticket.status)"><i
+              class="notifyIcon fa-solid fa-trash-can"></i></button>
+          <button class="btn btn-warning espaciadoBtn" (click)="editTicket(ticket.id)"><i
+              class="notifyIcon fa-solid fa-pen-to-square"></i></button>
+        </td>
+      </tr>
+      <tr *ngIf="tickets?.length === 0">
+        <td colspan="8">No se encontraron datos.</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-<!-- boton de camilo -->
-<button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-warning" (click)="addTicket()"><i class="notifyIcon fa-regular fa-square-plus"> Add Ticket</i></button>
-<button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-success" (click)="downloadCSV()"><i class="notifyIcon fa-regular fa-square-plus"> DESCARGAR  CSV</i></button>
+
+<div class="row g-0 text-center">
+  <div class="col-sm-6 col-md-4">
+    <!-- boton de camilo -->
+    <button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-warning" (click)="addTicket()"><i
+        class="notifyIcon fa-regular fa-square-plus"> Add Ticket</i></button>
+  </div>
+  <div class="col-6 col-md-4">
+    <!-- boton de descarga pal csv -->
+    <button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-success" (click)="downloadCSV()">
+      <img class="icon" src="https://static-00.iconduck.com/assets.00/csv-icon-1791x2048-ot22nr8i.png" alt="iconCsv">
+    </button>
+  </div>
+  <div class="col-6 col-md-4">
+    <button *ngIf="currentUser.roles == 'admin'" class="btn btn-danger" (click)="downloadPDF()">
+      <img class="icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1667px-PDF_file_icon.svg.png" alt="iconPdf">
+    </button>
+  </div>
+</div>
