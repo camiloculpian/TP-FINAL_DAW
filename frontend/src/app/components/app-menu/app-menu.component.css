@@ -12,6 +12,10 @@ ul {
     overflow: auto;
   }
   
+  body {
+    background-color: #fbfbfb;
+  }
+
   li a {
     display: flex;
     color: #000;

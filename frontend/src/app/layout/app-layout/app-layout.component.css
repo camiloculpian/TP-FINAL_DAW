@@ -1,7 +1,6 @@
 .app-layout{
     display: flex;
     flex-direction: column;
-    background-color: brown;
     width: 100%;
     min-height: 800px;
 }
@@ -29,6 +28,7 @@
     background-color: white;
     width: 20%;
     min-height: 80px;
+    margin-top: 30px; 
 }
 
 .app-layout-appcontent{
