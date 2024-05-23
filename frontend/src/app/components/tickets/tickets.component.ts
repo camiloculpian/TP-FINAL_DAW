@@ -65,6 +65,9 @@ import { NgFor, NgForOf, NgIf } from '@angular/common';
 import Swal from 'sweetalert2';
 import { AddEditTicketsComponent } from './add-edit-ticket/add.edit.ticket.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as Papa from 'papaparse';
+import * as jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 
 export enum TicketPriority {
@@ -221,5 +224,63 @@ export class TicketsComponent implements OnInit {
           },
     });
   }
+  // Descargar csv con papaparse
+  downloadCSV() {
+    const csvData = Papa.unparse(this.tickets);
+    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
 
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'tickets.csv');
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+  // Descargar pdf con jspdf
+  downloadPDF() {
+    setTimeout(() => {
+      const element = document.getElementById('tickets-table');
+      if (element) {
+        console.log('Elemento encontrado:', element);
+
+        
+        const actionsColumn = element.querySelector('.actions-column') as HTMLElement;
+        if (actionsColumn) {
+          actionsColumn.style.display = 'none';
+        }
+
+        html2canvas(element).then(canvas => {
+          const imgData = canvas.toDataURL('image/png');
+          console.log('Datos de la imagen:', imgData);
+          const pdf = new jsPDF.default({
+            orientation: 'p',
+            unit: 'mm',
+            format: 'a4'
+          });
+          const imgProps = pdf.getImageProperties(imgData);
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+          pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+          pdf.save('tickets.pdf');
+
+          // Restaurar la visibilidad de la columna de acciones y botones
+          if (actionsColumn) {
+            actionsColumn.style.display = '';
+          }
+        }).catch(error => {
+          console.error('Error al generar PDF:', error);
+
+          // Restaurar la visibilidad de la columna de acciones y botones en caso de error
+          if (actionsColumn) {
+            actionsColumn.style.display = '';
+          }
+        });
+      } else {
+        console.error('Elemento no encontrado');
+      }
+    }, 50); // Retraso de 50 ms
+  }
 }

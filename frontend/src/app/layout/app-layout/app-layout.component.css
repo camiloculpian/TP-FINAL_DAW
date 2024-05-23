@@ -22,9 +22,10 @@
 
 .app-layout-appmenu{
     display: flex;
-    padding: 2em;
+    padding: 1em;
     flex-direction: column;
-    background-color:rgb(255, 0, 140);
+    /* background-color:rgb(255, 0, 140); */
+    background-color: white;
     width: 20%;
     min-height: 80px;
     margin-top: 30px; 
@@ -33,8 +34,9 @@
 .app-layout-appcontent{
     display: flex;
     padding: 3em;
-    flex-direction: column;
-    background-color:rgb(0, 195, 255);
+    flex-direction: row;
+    /* background-color:rgb(0, 195, 255); */
+    background-color: white;
     width: 80%;
     min-height: 80px;
 }
