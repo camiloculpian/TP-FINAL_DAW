@@ -65,6 +65,7 @@ import { NgFor, NgForOf, NgIf } from '@angular/common';
 import Swal from 'sweetalert2';
 import { AddEditTicketsComponent } from './add-edit-ticket/add.edit.ticket.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as Papa from 'papaparse';
 
 
 export enum TicketPriority {
@@ -220,6 +221,20 @@ export class TicketsComponent implements OnInit {
             console.error('Error en la busqueda tickets:', error);
           },
     });
+  }
+
+  downloadCSV() {
+    const csvData = Papa.unparse(this.tickets);
+    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'tickets.csv');
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
 }
