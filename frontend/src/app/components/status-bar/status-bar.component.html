@@ -1,8 +1,34 @@
-<div class="status-bar">
-    <section class="section-user-info"><h6>Usuario:{{' '+currentUser?.nombre}}</h6></section>
-    <section class="section-central">LAS NOTIFICACIONES DEBERIAN IR ACA!</section>
-    <section class="section-logout">
-        <button class="logOut" (click)="logOut()"><i class="fa-solid fa-right-from-bracket"></i></button>
+<!-- <div class="status-bar">
+    <section class="section-user-info">
+        <h6>Usuario:{{' '+currentUser?.nombre}}</h6>
     </section>
-</div>
+</div>-->
 
+<!-- Navbar -->
+<nav class="status-bar navbar navbar-expand-lg fixed-top bg-light navbar-light">
+    <div class="container">
+        <a class="navbar-brand" href="#"><img id="MDB-logo"
+                src="https://mdbcdn.b-cdn.net/wp-content/uploads/2018/06/logo-mdb-jquery-small.png" alt="MDB Logo"
+                draggable="false" height="30" /></a> <!-- Cambiar a logo nombre -->
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+            data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item">
+                    <a class="nav-link mx-2" href="#!"><i class="fa-solid fa-bell pe-3"></i>Notificaciones</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-2" href="#!"><i class="fa-solid fa-user pe-3"></i>Cuenta</a>
+                </li>
+                <li class="nav-item ms-3">
+                    <button class="btn btn-black btn-rounded logOut" (click)="logOut()">
+                        <i class="fa-solid fa-right-from-bracket pe-3"></i> Cerrar sesión
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
