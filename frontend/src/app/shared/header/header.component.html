@@ -1,4 +1,4 @@
-
+ <!--
 <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary mb-3 barra">
   <div class="container-fluid">
     <a class="navbar-brand pl-2cm" [routerLink]="'.'">
@@ -15,4 +15,24 @@
           </ul>
     </div>
   </div>
-</nav>
+</nav>-->
+
+<!-- Agregarle menu hamburguesa -->
+
+<header id="header" class="fixed-top ">
+  <div class="container d-flex align-items-center">
+
+    <h1 class="logo me-auto" [routerLink]="'.'" ><span style="color: #4DABE2;">Compu</span><span style="color: #F39200;">Express</span></h1>
+
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li><a [routerLink]="'/'" class="nav-link scrollto active" >Home</a></li>
+        <li><a [routerLink]="'/'" class="nav-link scrollto" >Servicios</a></li>
+        <li><a [routerLink]="'/'" class="nav-link   scrollto" >Nosotros</a></li>
+        <li><a [routerLink]="'/'" class="nav-link scrollto" >Contacto</a></li>
+        <li><a [routerLink]="'/app'" class="nav-link scrollto" >Iniciar Sesion</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
