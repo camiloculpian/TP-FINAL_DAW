@@ -1,14 +1,20 @@
+/*--------------------------------------------------------------
+# Header Section
+--------------------------------------------------------------*/
+
 #header {
-  position: fixed; 
-  top: 0; 
-  width: 100%; 
+  position: fixed;
+  top: 0;
+  width: 100%;
   z-index: 997;
   transition: all 0.5s;
   padding: 15px 0;
-background: #37517e;}
+  background: #37517e;
+}
 
 
-#header.header-scrolled, #header.header-inner-pages {
+#header.header-scrolled,
+#header.header-inner-pages {
   background: rgba(53, 72, 104, 0.9);
 }
 
@@ -30,6 +36,10 @@ background: #37517e;}
   max-height: 40px;
 }
 
+/*--------------------------------------------------------------
+# Navbar Section
+--------------------------------------------------------------*/ 
+
 .navbar {
   padding: 0;
 }
@@ -46,7 +56,8 @@ background: #37517e;}
   position: relative;
 }
 
-.navbar a, .navbar a:focus {
+.navbar a,
+.navbar a:focus {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -58,13 +69,17 @@ background: #37517e;}
   transition: 0.3s;
 }
 
-.navbar a i, .navbar a:focus i {
+.navbar a i,
+.navbar a:focus i {
   font-size: 12px;
   line-height: 0;
   margin-left: 5px;
 }
 
-.navbar a:hover, .navbar .active, .navbar .active:focus, .navbar li:hover > a {
+.navbar a:hover,
+.navbar .active,
+.navbar .active:focus,
+.navbar li:hover>a {
   color: #47b2e4;
 }
 
@@ -115,11 +130,13 @@ background: #37517e;}
   font-size: 12px;
 }
 
-.navbar .dropdown ul a:hover, .navbar .dropdown ul .active:hover, .navbar .dropdown ul li:hover > a {
+.navbar .dropdown ul a:hover,
+.navbar .dropdown ul .active:hover,
+.navbar .dropdown ul li:hover>a {
   color: #47b2e4;
 }
 
-.navbar .dropdown:hover > ul {
+.navbar .dropdown:hover>ul {
   opacity: 1;
   top: 100%;
   visibility: visible;
@@ -131,7 +148,7 @@ background: #37517e;}
   visibility: hidden;
 }
 
-.navbar .dropdown .dropdown:hover > ul {
+.navbar .dropdown .dropdown:hover>ul {
   opacity: 1;
   top: 0;
   left: 100%;
@@ -142,9 +159,8 @@ background: #37517e;}
   .navbar .dropdown .dropdown ul {
     left: -90%;
   }
-  .navbar .dropdown .dropdown:hover > ul {
+
+  .navbar .dropdown .dropdown:hover>ul {
     left: -100%;
   }
 }
-
-

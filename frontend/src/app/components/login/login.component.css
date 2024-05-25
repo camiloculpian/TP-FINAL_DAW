@@ -1,6 +1,15 @@
 .gradient-custom-2 {
-  background: radial-gradient(circle at 50% -20.71%, #97bdff 0, #3c78f2 50%, #003886 100%);
+  background: radial-gradient(circle at 50% -20.71%, #6083be 0, #37517e 50%, #37517e 100%);
+}
 
+.btn-primary {
+  background-color: #37517e;
+  border-color: #37517e;
+}
+
+.btn-primary:hover {
+  background-color: #6083be;
+  border-color: #6083be;
 }
 
 @media (min-width: 768px) {
