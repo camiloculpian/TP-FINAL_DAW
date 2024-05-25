@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { CurrentUser, User } from '../../models/users';
 import { AddEditUsersComponent } from './add-edit-user/add.edit.user.component';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { UsersService } from './users.service';
 
 @Component({
   selector: 'app-users',
@@ -32,8 +33,7 @@ export class UsersComponent implements OnInit {
   username:string|undefined;
 
   constructor(
-    private _httpReq: HttpClient,
-    //private modalService:ModalService,
+    private usersService:UsersService,
     private fbuilder: FormBuilder,
   ) {
     this.response = null;
@@ -62,11 +62,7 @@ export class UsersComponent implements OnInit {
   }
 
   getUsers(){
-    this._httpReq.get<Response>("http://localhost:3000/api/v1/users", {
-      headers: new HttpHeaders({
-        "Authorization": String("Bearer " + this.currentUser.token),
-      }),
-    }).subscribe({
+    this.usersService.getUsers().subscribe({
       next: (resp) => {
         this.response = resp;
         this.usersList = this.response.data as unknown as User[]; // Cast to User[]
@@ -93,13 +89,7 @@ export class UsersComponent implements OnInit {
         // Usuario confirmó eliminar, realizar la eliminación
         console.log('Deleting user:', userId);
 
-        let user: any = JSON.parse(String(localStorage.getItem('user')));
-
-        this._httpReq.delete<any>(`http://localhost:3000/api/v1/users/${userId}`, {
-          headers: new HttpHeaders({
-            'Authorization': String('Bearer ' + user.token)
-          })
-        }).subscribe({
+      this.usersService.deleteUser(userId).subscribe({
           next: (response) => {
             console.log('User deleted:', response);
 
@@ -107,7 +97,7 @@ export class UsersComponent implements OnInit {
 
             // Mostrar mensaje de éxito
             Swal.fire({
-              title: 'Usuario eliminado con éxito',
+              title: response.message,
               icon: 'success'
             });
           },

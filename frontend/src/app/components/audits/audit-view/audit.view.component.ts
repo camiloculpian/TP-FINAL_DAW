@@ -50,6 +50,7 @@ import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import * as Papa from 'papaparse';
 import * as jsPDF from 'jspdf';
 import html2canvas from "html2canvas";
+import { AuditsService } from "../audits.service";
 
 @Component({
   selector: 'app-view-audits',
@@ -66,7 +67,7 @@ export class ViewAuditsComponent implements OnInit {
   
 
   constructor(
-    private _httpReq: HttpClient,
+    private auditsService: AuditsService,
     public modalService: NgbModal
   ) {}
 
@@ -80,16 +81,16 @@ export class ViewAuditsComponent implements OnInit {
       Authorization: `Bearer ${currentUser.token}`,
     });
 
-    this._httpReq.get<any>(`http://localhost:3000/api/v1/ticket-audits/${ticketId}`, { headers }).subscribe(
-      (response) => {
+    this.auditsService.getAudits(ticketId).subscribe({
+      next: (response) => {
         //this.audits = response;
         this.audits = response.data; // esto devuelve un array vacio
         console.log(this.audits);
       },
-      (error) => {
+      error: (error) => {
         console.log(error);
       }
-    );
+    });
   }
 
   viewTicketAudit(ticketId: number): void {

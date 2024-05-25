@@ -1,50 +1,36 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CurrentUser, User } from '../../models/users';
 import { Observable } from 'rxjs';
 import { Response } from '../../models/responses';
+import { environment } from "../../../environment/environment";
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService {
+  private apiUrl:string = environment.apiUrl;
+  // private apiURL: string = 'http://localhost:3000/api/v1'
 
   constructor(private _httpReq: HttpClient) {}
   
   getUsers():Observable<Response>{
-    let currentUser: CurrentUser = JSON.parse(String(localStorage.getItem('user')));
-    return this._httpReq.get<Response>("http://localhost:3000/api/v1/users", {
-      headers: new HttpHeaders({
-        "Authorization": String("Bearer " + currentUser.token),
-      }),
-    });
+    return this._httpReq.get<Response>(this.apiUrl+"/users");
   }
 
-  getUser(userId:number){
-    let currentUser: CurrentUser = JSON.parse(String(localStorage.getItem('user')));
-    return this._httpReq.get<Response>(`http://localhost:3000/api/v1/users/${userId}`, {
-      headers: new HttpHeaders({
-        "Authorization": String("Bearer " + currentUser.token),
-      }),
-    });
+  getUser(userId:number):Observable<Response>{
+    return this._httpReq.get<Response>(this.apiUrl+`/users/${userId}`);
   }
 
   addUser(user:JSON):Observable<Response>{
-    let currentUser: CurrentUser = JSON.parse(String(localStorage.getItem('user')));
-    return this._httpReq.post<any>(`http://localhost:3000/api/v1/users/`, user,{
-          headers: new HttpHeaders({
-            'Authorization': String('Bearer ' + currentUser.token)
-          })
-        });
+    return this._httpReq.post<any>(this.apiUrl+`/users/`, user);
   }
 
   editUser(user:JSON, userId:number):Observable<Response>{
-    let currentUser: CurrentUser = JSON.parse(String(localStorage.getItem('user')));
-    return this._httpReq.patch<any>(`http://localhost:3000/api/v1/users/${userId}`, user,{
-          headers: new HttpHeaders({
-            'Authorization': String('Bearer ' + currentUser.token)
-          })
-        });
+    return this._httpReq.patch<any>(this.apiUrl+`/users/${userId}`, user);
+  }
+
+  deleteUser(userId:number):Observable<Response>{
+    return this._httpReq.delete<any>(this.apiUrl+`/users/${userId}`);
   }
   
 }

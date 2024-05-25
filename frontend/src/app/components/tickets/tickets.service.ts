@@ -1,60 +1,38 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { Ticket } from "./tickets.component";
 import { Injectable } from "@angular/core";
-import { CurrentUser } from "../../models/users";
-import { FormGroup } from "@angular/forms";
+import { Response } from "../../models/responses";
+import { Ticket } from "../../models/ticket";
+import { environment } from "../../../environment/environment";
 
 // Servicio de Tickets
 @Injectable({
     providedIn: 'root'
 })
 export class TicketService {
-    private apiUrl = 'http://localhost:3000/api/v1/tickets';
-    private currentUser: CurrentUser;
+    private apiUrl = environment.apiUrl;
+    // private apiUrl = 'http://localhost:3000/api/v1';
 
-    constructor(private http: HttpClient) { 
-        this.currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+    constructor(private http: HttpClient) { }
+
+    getTickets(): Observable<Response> {
+        return this.http.get<any>(this.apiUrl+'/tickets');
     }
 
-    getTickets(headers: HttpHeaders): Observable<any> {
-        return this.http.get<any>(this.apiUrl, { 
-            headers: new HttpHeaders({
-                Authorization: `Bearer ${this.currentUser.token}`,
-            })
-        });
-    }
-
-    getTicket(ticketId:number|undefined): Observable<any> {
-        return this.http.get<any>(this.apiUrl+`/${ticketId}`, { 
-            headers: new HttpHeaders({
-                'Authorization': String('Bearer ' + this.currentUser.token),
-            })
-         });
+    getTicket(ticketId:number): Observable<any> {
+        return this.http.get<any>(this.apiUrl+`/tickets/${ticketId}`);
     }
 
     updateTicket(ticketId:number, ticket: Ticket){
 
-        return this.http.patch<any>(this.apiUrl+`/${ticketId}`, ticket,{
-            headers: new HttpHeaders({
-                'Authorization': String('Bearer ' + this.currentUser.token),
-            })
-        });
+        return this.http.patch<any>(this.apiUrl+`/tickets/${ticketId}`, ticket);
     }
 
     addTicket(ticket: Ticket): Observable<any> {
-        return this.http.post<any>(this.apiUrl, ticket, {
-            headers: new HttpHeaders({
-                'Authorization': String('Bearer ' + this.currentUser.token),
-            })
-        });
+        return this.http.post<any>(this.apiUrl+'/tickets', ticket);
     }
 
     deleteTicket(ticketId: number): Observable<any> {
-        return this.http.delete<any>(`${this.apiUrl}/${ticketId}`, {
-            headers: new HttpHeaders({
-                'Authorization': String('Bearer ' + this.currentUser.token),
-            })
-        });
+        return this.http.delete<any>(`${this.apiUrl}/tickets${ticketId}`);
     }
 }
