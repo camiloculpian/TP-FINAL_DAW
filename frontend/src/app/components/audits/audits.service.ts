@@ -9,7 +9,7 @@ import { environment } from "../../../environment/environment";
 })
 export class AuditsService {
   private apiUrl = environment.apiUrl;
-
+  // private apiURL: string = 'http://localhost:3000/api/v1'
   constructor(private _httpReq: HttpClient) {}
 
   getAudits(ticketId: number): Observable<Response> {

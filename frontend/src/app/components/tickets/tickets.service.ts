@@ -3,13 +3,15 @@ import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
 import { Response } from "../../models/responses";
 import { Ticket } from "../../models/ticket";
+import { environment } from "../../../environment/environment";
 
 // Servicio de Tickets
 @Injectable({
     providedIn: 'root'
 })
 export class TicketService {
-    private apiUrl = 'http://localhost:3000/api/v1';
+    private apiUrl = environment.apiUrl;
+    // private apiUrl = 'http://localhost:3000/api/v1';
 
     constructor(private http: HttpClient) { }
 
