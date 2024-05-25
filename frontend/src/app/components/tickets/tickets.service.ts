@@ -9,28 +9,28 @@ import { Ticket } from "../../models/ticket";
     providedIn: 'root'
 })
 export class TicketService {
-    private apiUrl = 'http://localhost:3000/api/v1/tickets';
+    private apiUrl = 'http://localhost:3000/api/v1';
 
     constructor(private http: HttpClient) { }
 
     getTickets(): Observable<Response> {
-        return this.http.get<any>(this.apiUrl);
+        return this.http.get<any>(this.apiUrl+'/tickets');
     }
 
     getTicket(ticketId:number): Observable<any> {
-        return this.http.get<any>(this.apiUrl+`/${ticketId}`);
+        return this.http.get<any>(this.apiUrl+`/tickets/${ticketId}`);
     }
 
     updateTicket(ticketId:number, ticket: Ticket){
 
-        return this.http.patch<any>(this.apiUrl+`/${ticketId}`, ticket);
+        return this.http.patch<any>(this.apiUrl+`/tickets/${ticketId}`, ticket);
     }
 
     addTicket(ticket: Ticket): Observable<any> {
-        return this.http.post<any>(this.apiUrl, ticket);
+        return this.http.post<any>(this.apiUrl+'/tickets', ticket);
     }
 
     deleteTicket(ticketId: number): Observable<any> {
-        return this.http.delete<any>(`${this.apiUrl}/${ticketId}`);
+        return this.http.delete<any>(`${this.apiUrl}/tickets${ticketId}`);
     }
 }

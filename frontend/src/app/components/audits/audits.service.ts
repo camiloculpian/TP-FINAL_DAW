@@ -7,9 +7,11 @@ import { Response } from "../../models/responses";
     providedIn: 'root',
   })
   export class AuditsService {
+    private apiUrl = 'http://localhost:3000/api/v1';
+
     constructor(private _httpReq: HttpClient) {}
 
     getAudits(ticketId: number): Observable<Response> {
-        return this._httpReq.get<any>(`http://localhost:3000/api/v1/ticket-audits/${ticketId}`);
+        return this._httpReq.get<any>(`${this.apiUrl}/ticket-audits/${ticketId}`);
     }
 }
