@@ -4,31 +4,27 @@
     </section>
 </div>-->
 
-<!-- Navbar -->
-<nav class="status-bar navbar navbar-expand-lg fixed-top bg-light navbar-light">
-    <div class="container">
-        <a class="navbar-brand" href="#"><img id="MDB-logo"
-                src="https://mdbcdn.b-cdn.net/wp-content/uploads/2018/06/logo-mdb-jquery-small.png" alt="MDB Logo"
-                draggable="false" height="30" /></a> <!-- Cambiar a logo nombre -->
-        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
-            data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <i class="fas fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto align-items-center">
-                <li class="nav-item">
-                    <a class="nav-link mx-2" href="#!"><i class="fa-solid fa-bell pe-3"></i>Notificaciones</a>
+<!-- ======= Login Navbar Section ======= -->
+
+<header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+  
+        <h1 class="logo me-auto"><span style="color: #4DABE2;">Compu</span><span style="color: #F39200;">Express</span></h1>
+  
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li>
+                    <a class="nav-link scrollto" href="/"><i class="fa-solid fa-home pe-3"></i>Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link mx-2" href="/app/users" routerLink="/app/users"><i class="fa-solid fa-user pe-3"></i>Cuenta</a>
-                </li>
-                <li class="nav-item ms-3">
-                    <button class="btn btn-black btn-rounded logOut" (click)="logOut()">
-                        <i class="fa-solid fa-right-from-bracket pe-3"></i> Cerrar sesión
+                <li>
+                    <button class="btn btn-black btn-rounded logOut scrollto" (click)="logOut()">
+                        <i class="fas fa-sign-out-alt pe-3"></i> Cerrar sesión
                     </button>
                 </li>
             </ul>
-        </div>
+        </nav>
     </div>
-</nav>
+</header>
+
+<!-- ======= End Login Navbar Section ======= -->
+
