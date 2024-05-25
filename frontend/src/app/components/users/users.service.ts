@@ -14,7 +14,7 @@ export class UsersService {
     return this._httpReq.get<Response>("http://localhost:3000/api/v1/users");
   }
 
-  getUser(userId:number){
+  getUser(userId:number):Observable<Response>{
     return this._httpReq.get<Response>(`http://localhost:3000/api/v1/users/${userId}`);
   }
 
@@ -24,6 +24,10 @@ export class UsersService {
 
   editUser(user:JSON, userId:number):Observable<Response>{
     return this._httpReq.patch<any>(`http://localhost:3000/api/v1/users/${userId}`, user);
+  }
+
+  deleteUser(userId:number):Observable<Response>{
+    return this._httpReq.delete<any>(`http://localhost:3000/api/v1/users/${userId}`);
   }
   
 }

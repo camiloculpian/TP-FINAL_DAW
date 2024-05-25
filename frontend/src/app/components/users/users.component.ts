@@ -33,7 +33,6 @@ export class UsersComponent implements OnInit {
   username:string|undefined;
 
   constructor(
-    private _httpReq: HttpClient,
     private usersService:UsersService,
     private fbuilder: FormBuilder,
   ) {
@@ -61,24 +60,6 @@ export class UsersComponent implements OnInit {
   trackByUserId(index: number, user: User): number {
     return user.id;
   }
-
-  // getUsers(){
-  //   this._httpReq.get<Response>("http://localhost:3000/api/v1/users", {
-  //     headers: new HttpHeaders({
-  //       "Authorization": String("Bearer " + this.currentUser.token),
-  //     }),
-  //   }).subscribe({
-  //     next: (resp) => {
-  //       this.response = resp;
-  //       this.usersList = this.response.data as unknown as User[]; // Cast to User[]
-  //       console.log(this.usersList);
-  //     },
-  //     error: (err) => {
-  //       this.response = err;
-  //       console.log(this.response);
-  //     }
-  //   });
-  // }
 
   getUsers(){
     this.usersService.getUsers().subscribe({
@@ -108,13 +89,7 @@ export class UsersComponent implements OnInit {
         // Usuario confirmó eliminar, realizar la eliminación
         console.log('Deleting user:', userId);
 
-        let user: any = JSON.parse(String(localStorage.getItem('user')));
-
-        this._httpReq.delete<any>(`http://localhost:3000/api/v1/users/${userId}`, {
-          headers: new HttpHeaders({
-            'Authorization': String('Bearer ' + user.token)
-          })
-        }).subscribe({
+      this.usersService.deleteUser(userId).subscribe({
           next: (response) => {
             console.log('User deleted:', response);
 
@@ -122,7 +97,7 @@ export class UsersComponent implements OnInit {
 
             // Mostrar mensaje de éxito
             Swal.fire({
-              title: 'Usuario eliminado con éxito',
+              title: response.message,
               icon: 'success'
             });
           },
