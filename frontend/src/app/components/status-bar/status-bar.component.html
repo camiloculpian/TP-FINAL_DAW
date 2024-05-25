@@ -7,19 +7,25 @@
 <!-- Agregarle menu hamburguesa -->
 
 <!-- ======= Login Navbar Section ======= -->
-
 <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
-  
-        <h1 class="logo me-auto"><span style="color: #4DABE2;">Compu</span><span style="color: #F39200;">Express</span></h1>
-  
-        <nav id="navbar" class="navbar">
-            <ul>
+
+        <h1 class="logo me-auto">
+            <span style="color: #4DABE2;">Compu</span>
+            <span style="color: #F39200;">Express</span>
+        </h1>
+
+        <nav id="navbar" class="navbar ms-auto">
+            <ul class="d-flex align-items-center"> 
+                <li>
+                    <a class="nav-link scrollto" ><i class="fa-solid fa-user pe-3"></i>Usuario: {{' '+currentUser?.nombre}}</a>
+                </li>
                 <li>
                     <a class="nav-link scrollto" href="/"><i class="fa-solid fa-home pe-3"></i>Home</a>
                 </li>
+               
                 <li>
-                    <button class="btn btn-black btn-rounded logOut scrollto" (click)="logOut()">
+                    <button class="btn btn-black btn-rounded logOut" (click)="logOut()">
                         <i class="fas fa-sign-out-alt pe-3"></i> Cerrar sesión
                     </button>
                 </li>
@@ -28,5 +34,5 @@
     </div>
 </header>
 
-<!-- ======= End Login Navbar Section ======= -->
 
+<!-- ======= End Login Navbar Section ======= -->
