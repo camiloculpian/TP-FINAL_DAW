@@ -70,6 +70,7 @@ import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { TicketService } from './tickets.service';
 import { Ticket } from '../../models/ticket';
+import { ViewAuditsComponent } from '../audits/audit-view/audit.view.component';
 
 
 export enum TicketPriority {
@@ -168,6 +169,11 @@ export class TicketsComponent implements OnInit {
     //const currentUser: CurrentUser = JSON.parse(String(localStorage.getItem('user')));
     const modalRef = this.modalService.open(AddEditTicketsComponent);
     modalRef.hidden.subscribe({next:()=>(this.getTickets())});
+  }
+
+  viewTicketAudit(ticketId:number){
+    const modalRef = this.modalService.open(ViewAuditsComponent,{ size: 'xl' });
+		modalRef.componentInstance.ticketId = ticketId;
   }
 
   getTickets(){
