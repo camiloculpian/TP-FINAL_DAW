@@ -24,9 +24,9 @@
                         <td>{{ audit.operation }}</td>
                         <td>{{ audit.description }}</td>
                         <td>{{ audit.priority }}</td>
-                        <td>{{ audit.asignedToUser?.username }}</td>
+                        <td>{{ audit.asignedToUser?.username || 'NO Asignado!' }}</td>
                         <td>{{ audit.status }}</td>
-                        <td>{{ audit.modifiedByUser?.username }}</td>
+                        <td>{{ audit.modifiedByUser?.username || 'Null' }}</td>
                         <td>{{ audit.modifiedAt }}</td>
                     </tr>
                 </tbody>

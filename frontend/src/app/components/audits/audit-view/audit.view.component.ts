@@ -96,9 +96,22 @@ export class ViewAuditsComponent implements OnInit {
     this.getAudits(ticketId);
   }
 
+  tableToJson(table:any) {
+    var data = [];
+    for (var i = 0; i < table.rows.length; i++) { 
+        var tableRow = table.rows[i]; 
+        var rowData = []; 
+        for (var j = 0; j < tableRow.cells.length; j++) { 
+            rowData.push(tableRow.cells[j].innerHTML);
+        } 
+        data.push(rowData); 
+    } 
+    return data; 
+  }
+
   // Descargar csv con papaparse
   downloadCSV() {
-    const csvData = Papa.unparse(this.audits);
+    const csvData = Papa.unparse(this.tableToJson(document.getElementById('audits-table')));
     const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
