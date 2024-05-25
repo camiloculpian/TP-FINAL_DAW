@@ -68,6 +68,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as Papa from 'papaparse';
 import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { TicketService } from './tickets.service';
+import { Ticket } from '../../models/ticket';
 
 
 export enum TicketPriority {
@@ -80,19 +82,6 @@ export enum TicketStatus {
   OPEN = 'OPEN',
   IN_PROGRESS = 'IN_PROGRESS',
   RESOLVED = 'RESOLVED'
-}
-
-
-
-// Definir la interface en base al backend
-export interface Ticket {
-  id: number;
-  title: string;
-  description: string;
-  priority: string;
-  service: string;
-  status: string;
-  // Agregar otras propiedades (assignedTo, createdAt, etc.)
 }
 
 @Component({
@@ -111,18 +100,14 @@ export class TicketsComponent implements OnInit {
   currentUser!:CurrentUser;
 
   constructor(
-    private router: Router,
-    private _httpReq: HttpClient,
-  ) { }
+    private ticketsService: TicketService,
+  ) { 
+    this.currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+  }
 
   ngOnInit(): void {
     console.log('ngOnInit()');
     try{
-      this.currentUser = JSON.parse(String(localStorage.getItem('user')));
-      if(!this.currentUser){
-        this.router.navigate(['/login']);
-        return;
-      }
       // obtencion de todos los tickets
       this.getTickets();
     } catch (error) {
@@ -161,13 +146,7 @@ export class TicketsComponent implements OnInit {
 
   // Borrar el ticket
   deleteTicket(ticketId: number): void {
-    const currentUser: CurrentUser = JSON.parse(String(localStorage.getItem('user')));
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${currentUser.token}`,
-    });
-
-    this._httpReq.delete(`http://localhost:3000/api/v1/tickets/${ticketId}`, { headers })
-      .subscribe({
+    this.ticketsService.deleteTicket(ticketId).subscribe({
         next: (response) => {
           Swal.fire('Éxito', 'Ticket eliminado con éxito', 'success');
           this.tickets = this.tickets.filter((ticket: { id: number; }) => ticket.id !== ticketId);
@@ -192,12 +171,7 @@ export class TicketsComponent implements OnInit {
   }
 
   getTickets(){
-    let currentUser:CurrentUser = JSON.parse(String(localStorage.getItem('user')));
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${currentUser.token}`,
-    });
-    this._httpReq.get<Response>('http://localhost:3000/api/v1/tickets', { headers })
-        .subscribe({
+    this.ticketsService.getTickets().subscribe({
           next: (response) => {
             if (response.status == 'success') {
               console.log('Listo pa procesar los datiños')
@@ -207,7 +181,8 @@ export class TicketsComponent implements OnInit {
                 const ticket: Ticket = {
                   id: ticketData.id,
                   title: ticketData.title,
-                  description: ticketData.description, 
+                  description: ticketData.description,
+                  asignedToUser: ticketData.asignedToUser,
                   priority: ticketData.priority,
                   service: ticketData.service,
                   status: ticketData.status,

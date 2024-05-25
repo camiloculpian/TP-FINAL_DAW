@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { CurrentUser, User } from '../../models/users';
 import { AddEditUsersComponent } from './add-edit-user/add.edit.user.component';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { UsersService } from './users.service';
 
 @Component({
   selector: 'app-users',
@@ -33,7 +34,7 @@ export class UsersComponent implements OnInit {
 
   constructor(
     private _httpReq: HttpClient,
-    //private modalService:ModalService,
+    private usersService:UsersService,
     private fbuilder: FormBuilder,
   ) {
     this.response = null;
@@ -61,12 +62,26 @@ export class UsersComponent implements OnInit {
     return user.id;
   }
 
+  // getUsers(){
+  //   this._httpReq.get<Response>("http://localhost:3000/api/v1/users", {
+  //     headers: new HttpHeaders({
+  //       "Authorization": String("Bearer " + this.currentUser.token),
+  //     }),
+  //   }).subscribe({
+  //     next: (resp) => {
+  //       this.response = resp;
+  //       this.usersList = this.response.data as unknown as User[]; // Cast to User[]
+  //       console.log(this.usersList);
+  //     },
+  //     error: (err) => {
+  //       this.response = err;
+  //       console.log(this.response);
+  //     }
+  //   });
+  // }
+
   getUsers(){
-    this._httpReq.get<Response>("http://localhost:3000/api/v1/users", {
-      headers: new HttpHeaders({
-        "Authorization": String("Bearer " + this.currentUser.token),
-      }),
-    }).subscribe({
+    this.usersService.getUsers().subscribe({
       next: (resp) => {
         this.response = resp;
         this.usersList = this.response.data as unknown as User[]; // Cast to User[]

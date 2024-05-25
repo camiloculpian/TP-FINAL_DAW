@@ -12,7 +12,7 @@ export interface ResponseOptions {
     statusCode?:HttpStatusCode;
     status?: responseStatus;
     message?: string;
-    data?: JSON;
+    data?: any;
 }
 
 
@@ -20,7 +20,7 @@ export class Response{
     statusCode?:HttpStatusCode|undefined;
     status?:string|undefined;
     message?:string|undefined;
-    data?:JSON|undefined;
+    data?:any|undefined;
 
     constructor(options: ResponseOptions){
         this.statusCode=options.statusCode;

@@ -17,8 +17,8 @@ export interface Ticket {
     id: number;
     title: string;
     description: string;
+    asignedToUser:any;
     priority: string;
     service: string;
     status: string;
-    asignedToUserId: number;
 }

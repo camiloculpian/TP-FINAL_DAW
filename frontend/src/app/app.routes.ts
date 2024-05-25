@@ -21,7 +21,11 @@ export const routes: Routes = [
             {path: 'audits',component: AuditsComponent,canActivate: [authGuardAdmin]}
         ]
     },
-    { path: 'notify', component: NotifyComponent}
+    { path: 'notify', component: NotifyComponent},
+    {
+        path: '**',
+        redirectTo:'login'
+    },
 ];
 
 @NgModule({

@@ -8,6 +8,7 @@
         <th>ID</th>
         <th>Title</th>
         <th>Description</th>
+        <th>Usuario Asignado</th>
         <th>Priority</th>
         <th>Service</th>
         <th>Status</th>
@@ -19,6 +20,7 @@
         <td>{{ ticket.id }}</td>
         <td>{{ ticket.title }}</td>
         <td>{{ ticket.description }}</td>
+        <td>{{ ticket.asignedToUser?.username || 'No Asignado'}}</td>
         <td>{{ ticket.priority }}</td>
         <td>{{ ticket.service }}</td>
         <td>{{ ticket.status }}</td>
