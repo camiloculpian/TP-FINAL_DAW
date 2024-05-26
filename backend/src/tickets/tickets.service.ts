@@ -183,9 +183,9 @@ export class TicketsService {
         if(updateTicketDto.asignedToUserId  || updateTicketDto.priority  || updateTicketDto.service  || updateTicketDto.title){
           throw new UnauthorizedException({status:responseStatus.ERROR,message:'Usted no esta autorizado a cambiar: Usuario asignado, prioridad, servicio y/o titulo'});
         }
-
         const { description, status, archive } = updateTicketDto;
         const lastModified = new Date(Date.now());
+        ticket.lastModifiedByUser = user;
 
         let resp = await this.ticketRepository.update(id, {
           description,

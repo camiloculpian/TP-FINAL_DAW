@@ -115,7 +115,6 @@ export class TicketService {
     }
 
     updateTicket(ticketId:number, ticket: Ticket){
-
         return this.http.patch<any>(this.apiUrl+`/tickets/${ticketId}`, ticket);
     }
 
