@@ -57,7 +57,7 @@ import { CurrentUser, User } from "../../../models/users";
                 username: this.user.username,
                 password: '',
             // });
-            // if (this.user.roles == 'admin'){
+            // if (this.currentUser.roles == 'admin'){
                 // this.userForm.patchValue({
                     name: this.user.person?.name,
                     lastName: this.user.person?.lastName,
