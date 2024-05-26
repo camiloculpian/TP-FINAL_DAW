@@ -86,7 +86,7 @@ export class AddEditTicketsComponent implements OnInit {
                 }
             })
         }else{
-            console.log('es nuevon');
+            console.log('es nuevo');
         }
     }
 
@@ -104,40 +104,59 @@ export class AddEditTicketsComponent implements OnInit {
 
     save(e:Event): void {
         e.preventDefault();
-        if(this.ticketId){
+        if (this.ticketId) {
             console.log('es edicion');
             if (this.ticketForm.valid) {
-                let formObj = this.ticketForm.getRawValue();
-                if(this.currentUser.roles!='admin'){
-                    delete formObj.asignedToUserId;
-                    delete formObj.priority;
-                    delete formObj.title;
-                    delete formObj.service;
-
-                }else{
-                    formObj.asignedToUserId=String(formObj.asignedToUserId);
+              let formObj = this.ticketForm.getRawValue();
+              if(this.currentUser.roles!='admin'){
+                delete formObj.asignedToUserId;
+                delete formObj.priority;
+                delete formObj.title;
+                delete formObj.service;
+          
+              }else{
+                formObj.asignedToUserId=String(formObj.asignedToUserId);
+              }
+              
+              console.log (formObj)
+              const ticket: Ticket = formObj;
+              this.ticketService.updateTicket(this.ticketId,ticket).subscribe({
+                next: ()=>{
+                  Swal.fire({
+                    title: "Se ha actualizado el ticket con éxito",
+                    icon: "success"
+                  });
+                  this.activeModal.close();
                 }
-                
-                console.log (formObj)
-                const ticket: Ticket = formObj;
-                this.ticketService.updateTicket(this.ticketId,ticket).subscribe({
-                    next: ()=>{
-                        this.activeModal.close();
-                    }
-                })
+              })          
             }else{
                 const error: AllValidationErrors|undefined = getFormValidationErrors(this.ticketForm.controls).shift();
                 if (error) {
                     let text;
                     switch (error.error_name) {
-                    case 'required': text = `${error.control_name} is required!`; break;
-                    case 'pattern': text = `${error.control_name} has wrong pattern!`; break;
-                    case 'email': text = `${error.control_name} has wrong email format!`; break;
-                    case 'minlength': text = `${error.control_name} has wrong length! Required length: ${error.error_value.requiredLength}`; break;
-                    case 'areEqual': text = `${error.control_name} must be equal!`; break;
-                    default: text = `${error.control_name}: ${error.error_name}: ${error.error_value}`;
+                    case 'required': 
+                        text = `Falta ${error.control_name}!`; 
+                        break;
+                    case 'pattern': 
+                        text = `${error.control_name} tiene un patrón incorrecto!`; 
+                        break;
+                    case 'email': 
+                        text = `${error.control_name} tiene un formato de correo electrónico incorrecto!`; 
+                        break;
+                    case 'minlength': 
+                        text = `${error.control_name} debe teneral menos ${error.error_value.requiredLength} caracteres!`; 
+                        break;
+                    case 'areEqual': 
+                        text = `${error.control_name} debe ser igual!`; 
+                        break;
+                    default: 
+                        text = `${error.control_name}: ${error.error_name}: ${error.error_value}`;
                     }
-                    this.inputMissingMessage = text;
+                    Swal.fire({
+                      icon: "error",
+                      title: "Oops...",
+                      text: text,
+                    });
                 }
             }
         }else{
@@ -145,41 +164,58 @@ export class AddEditTicketsComponent implements OnInit {
             if (this.ticketForm.valid) {
                 const newTicket: Ticket = this.ticketForm.value;
                 this.ticketService.addTicket(newTicket).subscribe({
-                    next: (response) => {
-                        console.log('Response from server:', response);
-                        if (response.status !== 'success' && response.statusCode !== 201) {
-                            Swal.fire('Error', 'error al crear ticket', 'error');
-                        } else {
-                            Swal.fire('Success', response.message);
-                            this.ticketForm.reset({
-                                title: '',
-                                description: '',
-                                priority: 'LOW',
-                                service: 'HARDWARE_REPAIR',
-                                asignedToUserId: ''
-                            });
-                            this.activeModal.close();
-                        }
-                    },
-                    error: (error) => {
-                        Swal.fire('Error', error.error.message);
-                        console.error('Error creando el ticket:', error.error.message);
+                  next: (response) => {
+                    console.log('Response from server:', response);
+                    if (response.status !== 'success' && response.statusCode !== 201) {
+                      Swal.fire('Error', 'error al crear ticket', 'error');
+                    } else {
+                      Swal.fire({
+                        title: "El ticket se ha creado con éxito",
+                        icon: "success"
+                      });
+                      this.ticketForm.reset({
+                        title: '',
+                        description: '',
+                        priority: 'LOW',
+                        service: 'HARDWARE_REPAIR',
+                        asignedToUserId: ''
+                      });
+                      this.activeModal.close();
                     }
+                  },
+                  error: (error) => {
+                    Swal.fire('Error', error.error.message);
+                    console.error('Error creando el ticket:', error.error.message);
+                  }
                 });
-                this
-            }else{
+              }else{
                 const error: AllValidationErrors|undefined = getFormValidationErrors(this.ticketForm.controls).shift();
                 if (error) {
                     let text;
                     switch (error.error_name) {
-                    case 'required': text = `${error.control_name} is required!`; break;
-                    case 'pattern': text = `${error.control_name} has wrong pattern!`; break;
-                    case 'email': text = `${error.control_name} has wrong email format!`; break;
-                    case 'minlength': text = `${error.control_name} has wrong length! Required length: ${error.error_value.requiredLength}`; break;
-                    case 'areEqual': text = `${error.control_name} must be equal!`; break;
-                    default: text = `${error.control_name}: ${error.error_name}: ${error.error_value}`;
+                    case 'required': 
+                        text = `Falta ${error.control_name}!`; 
+                        break;
+                    case 'pattern': 
+                        text = `${error.control_name} tiene un patrón incorrecto!`; 
+                        break;
+                    case 'email': 
+                        text = `${error.control_name} tiene un formato de correo electrónico incorrecto!`; 
+                        break;
+                    case 'minlength': 
+                        text = `${error.control_name} debe tener al menos ${error.error_value.requiredLength} caracteres!`; 
+                        break;
+                    case 'areEqual': 
+                        text = `${error.control_name} debe ser igual!`; 
+                        break;
+                    default: 
+                        text = `${error.control_name}: ${error.error_name}: ${error.error_value}`;
                     }
-                    this.inputMissingMessage = text;
+                    Swal.fire({
+                      icon: "error",
+                      title: "Oops...",
+                      text: text,
+                    });
                 }
             }
         }

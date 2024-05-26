@@ -3,115 +3,77 @@
     <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
 </div>
 <div class="modal-body">
-  <div class="container">
-    <div class="container mt-4">
-        <form [formGroup]="userForm" class="form-inline">
-
-          <div class="form-group row mb-2">
-            <label for="username" class="col-sm-2 col-form-label" >Username</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control-plaintext" formControlName="username" id="username" name="username" >
-            </div>
-          </div>
-
-          <div class="form-group row mb-2">
-            <label for="password" class="col-sm-2 col-form-label">Password</label>
-            <div class="col-sm-10">
-              <input type="password" formControlName="password" class="form-control-plaintext" id="password" name="password">
-            </div>
-          </div>
-          <div *ngIf="!user || this.user.roles == 'admin'">
-            <div class="form-group row mb-2">
-              <label for="roles" class="col-sm-2 col-form-label">Roles</label>
-              <div class="col-sm-10">
-                <select class="form-select" formControlName="roles" id="roles" name="roles" >
-                  <option value="user">User</option>
-                  <option value="admin">Admin</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group row mb-2">
-              <label for="name" class="col-sm-2 col-form-label">Nombre</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control-plaintext" formControlName="name" id="name" name="name">
-              </div>
-            </div>
-
-            <div class="form-group row mb-2">
-              <label for="lastName" class="col-sm-2 col-form-label">Apellido</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control-plaintext" formControlName="lastName" id="lastName" name="lastName">
-              </div>
-            </div>
-            
-            <div class="form-group row mb-2">
-              <label for="dni" class="col-sm-2 col-form-label">DNI</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control-plaintext" formControlName="dni" id="dni" name="dni">
-              </div>
-            </div>
-
-            <div class="form-group row mb-2">
-              <label for="gender" class="col-sm-2 col-form-label">Gender</label>
-              <div class="col-sm-10">
-                <select formControlName="gender" class="form-select" id="gender" name="gender">
-                  <option value="male">Male</option>
-                <option value="female">Female</option>
-                </select>
-              </div>
-            </div>
-
-            <!-- Birth Date -->
-            <div class="form-group row mb-2">
-              <label for="birthDate" class="col-sm-2 col-form-label">Fecha de Nac.</label>
-              <div class="col-sm-10">
-                <input type="date" formControlName="birthDate" class="form-control" id="birthDate" name="birthDate">
-              </div>
-            </div>
-            <!-- Email -->
-            <div class="form-group row mb-2">
-              <label for="email" class="col-sm-2 col-form-label">e-mail</label>
-              <div class="col-sm-10">
-                <input type="mail" class="form-control" formControlName="email" id="email" name="email">
-              </div>
-            </div>
-
-            <div class="form-group row mb-2">
-              <label for="phone" class="col-sm-2 col-form-label">Phone</label>
-              <div class="col-sm-10">
-                <input type="phone" class="form-control-plaintext" formControlName="phone" id="phone" name="phone">
-              </div>
-            </div>
-
-            <div class="form-group row mb-2">
-              <label for="address" class="col-sm-2 col-form-label">Address</label>
-              <div class="col-sm-10">
-                <input type="address" class="form-control-plaintext" formControlName="address" id="address" name="address">
-              </div>
-            </div>
-          </div>
-          <!-- Profile Picture -->
-          <div class="form-group row mb-2">
-            <label for="profilePicture" class="col-sm-2 col-form-label">Profile Picture</label>
-            <div class="col-sm-10">
-              <input type="file" class="form-control" id="profilePicture" name="profilePicture" accept="image/*">
-            </div>
-          </div>
-          
-          <button type="submit" class="btn btn-primary" (click)="onSave($event)">Guardar</button>
-        </form>
-    </div>
-  </div>
+    <form [formGroup]="userForm">
+        
+        <div class="form-group mb-3">
+            <label for="username">Nombre de usuario:</label>
+            <input type="text" class="form-control" id="username" formControlName="username"
+                placeholder="Ingrese su nombre de usuario" *ngIf="!user || this.user.roles == 'admin'">
+            <input type="text" class="form-control" id="username" formControlName="username"
+                placeholder="Ingrese su nombre de usuario" readonly *ngIf="user && this.user.roles == 'user'">
+        </div>
+        <div class="form-group mb-3">
+            <label for="password">Contraseña:</label>
+            <input type="password" class="form-control" id="password" formControlName="password"
+                placeholder="Ingrese su contraseña">
+        </div>
+        <div class="form-group mb-3" *ngIf="!user || this.user.roles == 'admin'">
+            <label for="roles">Rol:</label>
+            <select class="form-control" id="roles" formControlName="roles">
+                <option value="user">Usuario</option>
+                <option value="admin">Administrador</option>
+            </select>
+        </div>
+        <div class="form-group mb-3" *ngIf="!user || this.user.roles == 'admin'">
+            <label for="name">Nombre:</label>
+            <input type="text" class="form-control" id="name" formControlName="name" placeholder="Ingrese su nombre">
+        </div>
+        <div class="form-group mb-3" *ngIf="!user || this.user.roles == 'admin'">
+            <label for="lastName">Apellido:</label>
+            <input type="text" class="form-control" id="lastName" formControlName="lastName"
+                placeholder="Ingrese su apellido">
+        </div>
+        <div class="form-group mb-3" *ngIf="!user || this.user.roles == 'admin'">
+            <label for="dni">DNI:</label>
+            <input type="text" class="form-control" id="dni" formControlName="dni" placeholder="Ingrese su DNI">
+        </div>
+        <div class="form-group mb-3" *ngIf="!user || this.user.roles == 'admin'">
+            <label for="gender">Genero:</label>
+            <select class="form-control" id="gender" formControlName="gender">
+                <option value="male">Masculino</option>
+                <option value="female">Femenino</option>
+            </select>
+        </div>
+        <div class="form-group mb-3" *ngIf="!user || this.user.roles == 'admin'">
+            <label for="birthDate">Fecha de Nac.:</label>
+            <input type="date" class="form-control" id="birthDate" formControlName="birthDate"
+                placeholder="Ingrese su fecha de nacimiento">
+        </div>
+        <div class="form-group mb-3" *ngIf="!user || this.user.roles == 'admin'">
+            <label for="email">e-mail:</label>
+            <input type="mail" class="form-control" id="email" formControlName="email" placeholder="Ingrese su email">
+        </div>
+        <div class="form-group mb-3" *ngIf="!user || this.user.roles == 'admin'">
+            <label for="phone">Celular:</label>
+            <input type="phone" class="form-control" id="phone" formControlName="phone" placeholder="Ingrese su numero de celular">
+        </div>
+        <div class="form-group mb-3" *ngIf="!user || this.user.roles == 'admin'">
+            <label for="address">Direccion:</label>
+            <input type="address" class="form-control" id="address" formControlName="address"
+                placeholder="Ingrese su direccion">
+        </div>
+        <div class="form-group mb-3" *ngIf="!user || this.user.roles == 'admin'">
+            <label for="profilePicture">Foto de perfil:</label>
+            <input type="file" class="form-control" id="profilePicture" name="profilePicture" accept="image/*">
+        </div>
+    </form>
 </div>
 <div class="modal-footer">
-  @if(this.inputMissingMessage){
-      <div class="alert alert-danger">
-          <strong>Error!</strong> {{this.inputMissingMessage}}
-      </div>
-  }
+    <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('Cancel click')">Cerrar</button>
+    <button type="button" class="btn btn-primary" (click)="onSave($event)">Guardar</button>
+    <div *ngIf="inputMissingMessage">
+        <div class="alert alert-danger">
+            <strong>Error!</strong> {{inputMissingMessage}}
+        </div>
+    </div>
 </div>
-
-
-
-

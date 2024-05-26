@@ -33,6 +33,6 @@ export class TicketService {
     }
 
     deleteTicket(ticketId: number): Observable<any> {
-        return this.http.delete<any>(`${this.apiUrl}/tickets${ticketId}`);
+        return this.http.delete<any>(`${this.apiUrl}/tickets/${ticketId}`);
     }
 }
