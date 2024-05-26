@@ -185,13 +185,14 @@ export class TicketsService {
         }
         const { description, status, archive } = updateTicketDto;
         const lastModified = new Date(Date.now());
-        ticket.lastModifiedByUser = user;
+        const lastModifiedByUser = user;
 
         let resp = await this.ticketRepository.update(id, {
           description,
           status,
           archive,
           lastModified,
+          lastModifiedByUser
         });
         if(resp.affected=1){
             return resp;
