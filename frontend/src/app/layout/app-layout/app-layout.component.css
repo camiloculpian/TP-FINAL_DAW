@@ -29,7 +29,7 @@
 
 .app-layout-appcontent{
     display: flex;
-    padding: 3em;
+    padding: 0.5em;
     flex-direction: row;
     /* background-color:rgb(0, 195, 255); */
     background-color: white;
