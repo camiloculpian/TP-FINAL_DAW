@@ -6,7 +6,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { sha512 } from "js-sha512";
 import Swal from "sweetalert2";
 import { AllValidationErrors, getFormValidationErrors } from "../../../utils/validations";
-import { User } from "../../../models/users";
+import { CurrentUser, User } from "../../../models/users";
 
 @Component({
     selector: 'app-add-edit-user',
@@ -18,6 +18,7 @@ import { User } from "../../../models/users";
   export class AddEditUsersComponent implements OnInit {
     userForm : FormGroup;
     userId:number=0;
+    currentUser: CurrentUser;
     // @Output() messageEventOut = new EventEmitter<string>();
     @Input() user!:User;
     @Input() name: string|undefined;
@@ -28,6 +29,7 @@ import { User } from "../../../models/users";
         private fbuilder: FormBuilder,
     ) {
         // if(this.user.roles == 'admin'){
+            this.currentUser = JSON.parse(localStorage.getItem('user') || '{}');
             this.userForm = this.fbuilder.group({
                 username: new FormControl('', Validators.required),
                 name: new FormControl('', Validators.required),

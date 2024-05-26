@@ -8,7 +8,7 @@
         <div class="form-group mb-3">
             <label for="username">Nombre de usuario:</label>
             <input type="text" class="form-control" id="username" formControlName="username"
-                placeholder="Ingrese su nombre de usuario" *ngIf="!user || this.user.roles == 'admin'">
+                placeholder="Ingrese su nombre de usuario" *ngIf="!user || this.currentUser.roles == 'admin'">
             <input type="text" class="form-control" id="username" formControlName="username"
                 placeholder="Ingrese su nombre de usuario" readonly *ngIf="user && this.user.roles == 'user'">
         </div>
@@ -17,52 +17,52 @@
             <input type="password" class="form-control" id="password" formControlName="password"
                 placeholder="Ingrese su contraseña">
         </div>
-        <div class="form-group mb-3" *ngIf="!user || this.user.roles == 'admin'">
+        <div class="form-group mb-3" *ngIf="!user || this.currentUser.roles == 'admin'">
             <label for="roles">Rol:</label>
             <select class="form-control" id="roles" formControlName="roles">
                 <option value="user">Usuario</option>
                 <option value="admin">Administrador</option>
             </select>
         </div>
-        <div class="form-group mb-3" *ngIf="!user || this.user.roles == 'admin'">
+        <div class="form-group mb-3" *ngIf="!user || this.currentUser.roles == 'admin'">
             <label for="name">Nombre:</label>
             <input type="text" class="form-control" id="name" formControlName="name" placeholder="Ingrese su nombre">
         </div>
-        <div class="form-group mb-3" *ngIf="!user || this.user.roles == 'admin'">
+        <div class="form-group mb-3" *ngIf="!user || this.currentUser.roles == 'admin'">
             <label for="lastName">Apellido:</label>
             <input type="text" class="form-control" id="lastName" formControlName="lastName"
                 placeholder="Ingrese su apellido">
         </div>
-        <div class="form-group mb-3" *ngIf="!user || this.user.roles == 'admin'">
+        <div class="form-group mb-3" *ngIf="!user || this.currentUser.roles == 'admin'">
             <label for="dni">DNI:</label>
             <input type="text" class="form-control" id="dni" formControlName="dni" placeholder="Ingrese su DNI">
         </div>
-        <div class="form-group mb-3" *ngIf="!user || this.user.roles == 'admin'">
+        <div class="form-group mb-3" *ngIf="!user || this.currentUser.roles == 'admin'">
             <label for="gender">Genero:</label>
             <select class="form-control" id="gender" formControlName="gender">
                 <option value="male">Masculino</option>
                 <option value="female">Femenino</option>
             </select>
         </div>
-        <div class="form-group mb-3" *ngIf="!user || this.user.roles == 'admin'">
+        <div class="form-group mb-3" *ngIf="!user || this.currentUser.roles == 'admin'">
             <label for="birthDate">Fecha de Nac.:</label>
             <input type="date" class="form-control" id="birthDate" formControlName="birthDate"
                 placeholder="Ingrese su fecha de nacimiento">
         </div>
-        <div class="form-group mb-3" *ngIf="!user || this.user.roles == 'admin'">
+        <div class="form-group mb-3" *ngIf="!user || this.currentUser.roles == 'admin'">
             <label for="email">e-mail:</label>
             <input type="mail" class="form-control" id="email" formControlName="email" placeholder="Ingrese su email">
         </div>
-        <div class="form-group mb-3" *ngIf="!user || this.user.roles == 'admin'">
+        <div class="form-group mb-3" *ngIf="!user || this.currentUser.roles == 'admin'">
             <label for="phone">Celular:</label>
             <input type="phone" class="form-control" id="phone" formControlName="phone" placeholder="Ingrese su numero de celular">
         </div>
-        <div class="form-group mb-3" *ngIf="!user || this.user.roles == 'admin'">
+        <div class="form-group mb-3" *ngIf="!user || this.currentUser.roles == 'admin'">
             <label for="address">Direccion:</label>
             <input type="address" class="form-control" id="address" formControlName="address"
                 placeholder="Ingrese su direccion">
         </div>
-        <div class="form-group mb-3" *ngIf="!user || this.user.roles == 'admin'">
+        <div class="form-group mb-3" *ngIf="!user || this.currentUser.roles == 'admin'">
             <label for="profilePicture">Foto de perfil:</label>
             <input type="file" class="form-control" id="profilePicture" name="profilePicture" accept="image/*">
         </div>
