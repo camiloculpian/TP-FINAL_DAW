@@ -17,11 +17,8 @@ import { UsersService } from './users.service';
   styleUrls: ['./users.component.css']
 })
 
-// Tranca, despues modularizamos... Por ahora la tablita esta aca para no estar yendo de un archiv
-// a otro, para mayor practicidad y rapidez
 export class UsersComponent implements OnInit {
   private modalService = inject(NgbModal);
-  // cambie la lista de user en vez de undefined, lo deje como lista vacia...
   public usersList: User[] | [];
   public response: Response | null;
   public currentUser: CurrentUser = JSON.parse(String(localStorage.getItem('user')));
