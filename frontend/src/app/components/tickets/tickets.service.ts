@@ -1,6 +1,6 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, debounceTime, delay, Observable, of, Subject, switchMap, tap } from "rxjs";
-import { Directive, EventEmitter, Inject, Injectable, Input, Output, PipeTransform } from "@angular/core";
+import { Directive, EventEmitter, Injectable, Input, Output, } from "@angular/core";
 import { Response } from "../../models/responses";
 import { Ticket } from "../../models/ticket";
 import { environment } from "../../../environment/environment";
