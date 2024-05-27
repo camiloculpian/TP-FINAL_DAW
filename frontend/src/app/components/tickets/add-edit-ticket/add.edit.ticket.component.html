@@ -16,8 +16,7 @@
             <div class="form-group mb-3" *ngIf="currentUser.roles == 'admin'">
                 <label for="asignedToUserId">Asignar a:</label>
                 <select class="form-control" id="asignedToUserId" formControlName="asignedToUserId">
-                    <option *ngFor="let user of users" [value]="user.id">{{ user.person?.name + ' ' +
-                        user.person?.lastName }}</option>
+                    <option *ngFor="let user of users" [value]="user.id">{{ user.username }}</option>
                 </select>
             </div>
             <div class="form-group mb-3">
