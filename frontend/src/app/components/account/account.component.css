@@ -1,0 +1,108 @@
+/* Por defecto, la tabla se muestra normalmente */
+.tablaGas {
+    width: 100%;
+    border-collapse: collapse;
+    /* Combina los bordes de las celdas */
+}
+
+/* Media query para pantallas de menos de 1000px */
+@media screen and (max-width: 1000px) {
+
+    .tablaGas th,
+    .tablaGas td {
+        display: none;
+        /* Oculta todas las celdas de la tabla */
+    }
+
+    /* Muestra solo la 3era, 4ta, 5ta y última columna */
+    .tablaGas th:nth-child(3),
+    .tablaGas td:nth-child(3),
+    .tablaGas th:nth-child(4),
+    .tablaGas td:nth-child(4),
+    .tablaGas th:nth-child(5),
+    .tablaGas td:nth-child(5),
+    .tablaGas th:last-child,
+    .tablaGas td:last-child {
+        display: table-cell;
+        /* Muestra solo las celdas seleccionadas */
+    }
+
+    .form-control {
+        display:initial !important;
+    }
+}
+
+.espaciado{
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.espaciadoBtn{
+    margin-left: 10px;
+}
+
+/*--------------------------------------------------------------
+# Btn Create Section 
+--------------------------------------------------------------*/ 
+.create {
+    position: relative;
+    width: 190px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border: 1px solid #34974d;
+    background-color: #3aa856;
+    border-radius: 30px;
+
+}
+
+.create,
+.create .button__icon,
+.create .button__text {
+    transition: all 0.3s;
+}
+
+.create .button__text {
+    transform: translateX(30px);
+    color: #fff;
+    font-weight: 600;
+}
+
+.create .button__icon {
+    position: absolute;
+    transform: translateX(145px);
+    height: 100%;
+    width: 43px;
+    background-color: #34974d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+
+}
+
+.create .svg {
+    width: 30px;
+    stroke: #fff;
+}
+
+.create:hover {
+    background: #34974d;
+}
+
+.create:hover .button__text {
+    color: transparent;
+}
+
+.create:hover .button__icon {
+    width: 148px;
+    transform: translateX(0);
+}
+
+.create:active .button__icon {
+    background-color: #2e8644;
+}
+
+.create:active {
+    border: 1px solid #2e8644;
+}
