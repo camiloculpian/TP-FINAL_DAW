@@ -61,7 +61,8 @@ export class AccountComponent implements OnInit {
     this.accountService.getUsers().subscribe({
       next: (resp) => {
         this.response = resp;
-        this.usersList = this.response.data as unknown as User[]; // Cast to User[]
+        const currentUserUsername = this.user.username; 
+        this.usersList = this.response.data.filter((user: User) => user.username === currentUserUsername) as User[];
         console.log(this.usersList);
       },
       error: (err) => {
@@ -70,6 +71,21 @@ export class AccountComponent implements OnInit {
       }
     });
   }
+
+
+  // getUsers(){
+  //   this.accountService.getUsers().subscribe({
+  //     next: (resp) => {
+  //       this.response = resp;
+  //       this.usersList = this.response.data as unknown as User[]; // Cast to User[]
+  //       console.log(this.usersList);
+  //     },
+  //     error: (err) => {
+  //       this.response = err;
+  //       console.log(this.response);
+  //     }
+  //   });
+  // }
 }
 
 
