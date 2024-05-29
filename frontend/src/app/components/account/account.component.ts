@@ -70,59 +70,6 @@ export class AccountComponent implements OnInit {
       }
     });
   }
-  // BORRA UN USUARIO EN ESPECIFICO
-  deleteUser(userId: number): void {
-    // Mostrar Sweet Alert de confirmación
-    Swal.fire({
-      title: '¿Está seguro de eliminar?',
-      text: 'No podrá revertir esta acción',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Sí, eliminar',
-      cancelButtonText: 'Cancelar'
-    }).then((result: { isConfirmed: any; }) => {
-      if (result.isConfirmed) {
-        // Usuario confirmó eliminar, realizar la eliminación
-        console.log('Deleting user:', userId);
-
-      this.accountService.deleteUser(userId).subscribe({
-          next: (response) => {
-            console.log('User deleted:', response);
-
-            this.getUsers();
-
-            // Mostrar mensaje de éxito
-            Swal.fire({
-              title: response.message,
-              icon: 'success'
-            });
-          },
-          error: (error) => {
-            console.error('Error deleting user:', error);
-            // Manejar el error de eliminación (por ejemplo, mostrar un mensaje de error)
-            Swal.fire({
-              title: 'Error al eliminar usuario',
-              text: error.message,
-              icon: 'error'
-            });
-          }
-        });
-      }
-    });
-  }
-
-  // onAddUser(){
-  //   const modalRef = this.modalService.open(AddEditUsersComponent);
-  //   modalRef.hidden.subscribe({next:()=>(this.getUsers())});
-  // }
-
-  // onEditUser(item:any){
-  //   const modalRef = this.modalService.open(AddEditUsersComponent);
-	// 	modalRef.componentInstance.name = item.id;
-  //   modalRef.componentInstance.user = item;
-  //   modalRef.hidden.subscribe({next:()=>(this.getUsers())});
-  // }
-
 }
 
 
