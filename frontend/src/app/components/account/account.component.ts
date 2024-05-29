@@ -38,13 +38,13 @@ export class AccountComponent implements OnInit {
       username: new FormControl('', Validators.required),
       name: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),
-      // dni: new FormControl('', Validators.required),
-      // birthDate: new FormControl('', Validators.required),
+      dni: new FormControl('', Validators.required),
+      birthDate: new FormControl('', Validators.required),
       roles: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required,Validators.email]),
       phone: new FormControl('', Validators.required),
-      // address: new FormControl('', Validators.required),
-      // gender: new FormControl('', Validators.required),
+      address: new FormControl('', Validators.required),
+      gender: new FormControl('', Validators.required),
     });
   }
   // OBTENCION DE TODOS LOS USERS
