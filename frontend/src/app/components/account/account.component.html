@@ -1,1 +1,42 @@
-<p>content works!</p>
+<div class="row g-0 text-center">
+    <h2 class="d-flex justify-content-center">Datos del Usuario</h2>
+  <table ngb-table class="table table-light table-striped table-hover table-responsive table-md tablaGas">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Usuario</th>
+        <th>Contraseña</th>
+        <th>Roles</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>DNI</th>
+        <th>Email</th>
+        <th>Teléfono</th>
+        <th>Direccion</th>
+        <th>Cumpleaños</th>
+        <th>Genero</th>
+        <th>Foto de Perfil</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr id="DATOS_USUARIO" *ngFor="let user of usersList; trackBy: trackByUserId">
+        <td>{{ user.id }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.password }}</td>
+        <td>{{ user.roles }}</td>
+        <td>{{ user.person?.name }}</td>
+        <td>{{ user.person?.lastName }}</td>
+        <td>{{ user.person?.dni }}</td>
+        <td>{{ user.person?.email }}</td>
+        <td>{{ user.person?.phone }}</td>
+        <td>{{ user.person?.adress }}</td>
+        <td>{{ user.person?.birthday }}</td>
+        <td>{{ user.person?.gender }}</td>
+        <td>{{ user.person?.profilePicture }}</td>
+      <tr>
+         
+    </tbody>
+  </table>
+  </div>
+  
+   
