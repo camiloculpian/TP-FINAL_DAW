@@ -408,8 +408,31 @@ section {
   color: #fff;
 }
 
-
-.contact-img {
-  margin-right: 2cm; /* Establece un margen derecho de 2 centímetros */
+/*--------------------------------------------------------------
+# Testimonials Section
+--------------------------------------------------------------*/
+.carrusel {
+  padding: 0 70px;
 }
 
+.imagesCarousel img {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.carousel-caption {
+  text-align: center;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+}
+
+.carousel-caption h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.carousel-caption p {
+  font-size: 16px;
+}

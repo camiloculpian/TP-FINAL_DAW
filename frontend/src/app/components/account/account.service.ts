@@ -21,22 +21,8 @@ export class AccountService {
     return this._httpReq.get<Response>(this.apiUrl+"/users");
   }
 
-  getUser(userId:number):Observable<Response>{
-    return this._httpReq.get<Response>(this.apiUrl+`/users/${userId}`);
-  }
 
-  addUser(user:JSON):Observable<Response>{
-    return this._httpReq.post<any>(this.apiUrl+`/users/`, user);
-  }
 
-  editUser(user:JSON, userId:number):Observable<Response>{
-    return this._httpReq.patch<any>(this.apiUrl+`/users/${userId}`, user);
-  }
-
-  deleteUser(userId:number):Observable<Response>{
-    return this._httpReq.delete<any>(this.apiUrl+`/users/${userId}`);
-  }
-  
 }
 
 // describe('accountComponent', () => {

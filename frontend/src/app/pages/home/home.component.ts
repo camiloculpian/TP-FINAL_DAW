@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { NgModule } from '@angular/core';
-
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-home',
@@ -13,10 +13,8 @@ import { NgModule } from '@angular/core';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
 
-}
-/*
+
 export class HomeComponent {
   images = [
   'https://s1.1zoom.me/b4147/86/Keyboard_Toys_Macro_Closeup_Laptops_Police_520947_1920x1080.jpg',
@@ -24,4 +22,3 @@ export class HomeComponent {
   'https://wallpapers.com/images/featured/laptop-murjp1nk4lp1idlt.jpg'
 ];
 }
-*/
