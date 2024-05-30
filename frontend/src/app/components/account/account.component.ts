@@ -47,7 +47,6 @@ export class AccountComponent implements OnInit {
       gender: new FormControl('', Validators.required),
     });
   }
-  // OBTENCION DE TODOS LOS USERS
   ngOnInit(): void {
     
     this.getUsers();
@@ -71,21 +70,7 @@ export class AccountComponent implements OnInit {
       }
     });
   }
-
-
-  // getUsers(){
-  //   this.accountService.getUsers().subscribe({
-  //     next: (resp) => {
-  //       this.response = resp;
-  //       this.usersList = this.response.data as unknown as User[]; // Cast to User[]
-  //       console.log(this.usersList);
-  //     },
-  //     error: (err) => {
-  //       this.response = err;
-  //       console.log(this.response);
-  //     }
-  //   });
-  // }
+  
 }
 
 
