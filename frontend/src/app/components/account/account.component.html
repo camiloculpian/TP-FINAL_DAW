@@ -1,42 +1,87 @@
-<div class="row g-0 text-center">
-    <h2 class="d-flex justify-content-center">Datos del Usuario</h2>
-  <table ngb-table class="table table-light table-striped table-hover table-responsive table-md tablaGas">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Usuario</th>
-        <th>Contraseña</th>
-        <th>Roles</th>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>DNI</th>
-        <th>Email</th>
-        <th>Teléfono</th>
-        <th>Direccion</th>
-        <th>Cumpleaños</th>
-        <th>Genero</th>
-        <th>Foto de Perfil</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr id="DATOS_USUARIO" *ngFor="let user of usersList">
-        <td>{{ user.id }}</td>
-        <td>{{ user.username }}</td>
-        <td>{{ user.password }}</td>
-        <td>{{ user.roles }}</td>
-        <td>{{ user.person?.name }}</td>
-        <td>{{ user.person?.lastName }}</td>
-        <td>{{ user.person?.dni }}</td>
-        <td>{{ user.person?.email }}</td>
-        <td>{{ user.person?.phone }}</td>
-        <td>{{ user.person?.address }}</td>
-        <td>{{ user.person?.birthDate }}</td>
-        <td>{{ user.person?.gender }}</td>
-        <td>{{ user.person?.profilePicture }}</td>
-      <tr>
-         
-    </tbody>
-  </table>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container" id="DATOS_USUARIO" *ngFor="let user of usersList">
+  <div class="row">
+    <div class="col-sm-12"> 
+      <div class="panel panel-white profile-widget">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="image-container bg2">
+              <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="avatar" alt="avatar">
+              <!--profilePicture-->
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="details">
+              <h4 >{{ user.person?.name }}<i class="fa fa-sheild"></i></h4>
+              <h4 >{{ user.person?.lastName }}<i class="fa fa-sheild"></i></h4>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row">
+
+
+        <div class="col-sm-12" > 
+
+          <div class="panel panel-white border-top-green">
+            <div class="panel-heading">
+              <h3 class="panel-title">Datos de Usuario</h3>
+            </div>
+            <div class="panel-body">
+              <div class="body-section">
+                <h5 class="section-heading">Nombre de Usuario:</h5>
+                <p class="section-content">{{ user.username }}</p>
+              </div>
+              <div class="body-section">
+                <h5 class="section-heading">ID:</h5>
+                <p class="section-content">{{ user.id }}</p>
+              </div>
+              <div class="body-section">
+                <h5 class="section-heading">Nombre y Apellido:</h5>
+                <p class="section-content">{{ user.person?.name }}</p>
+                <p class="section-content">{{ user.person?.lastName }}</p>
+              </div>
+              <div class="body-section">
+                <h5 class="section-heading">Rol:</h5>
+                <p class="section-content">{{ user.roles }}</p>
+              </div>
+              <div class="body-section">
+                <h5 class="section-heading">DNI:</h5>
+                <p class="section-content">{{ user.person?.dni }}</p>
+              </div>              
+              <div class="body-section">
+                <h5 class="section-heading">Genero:</h5>
+                <p class="section-content">{{ user.person?.gender }}</p>
+              </div>
+              <div class="body-section">
+                <h5 class="section-heading">Email:</h5>
+                <p class="section-content">{{ user.person?.email }}</p>
+              </div>
+              <div class="body-section">
+                <h5 class="section-heading">Telefono:</h5>
+                <p class="section-content">{{ user.person?.phone }}</p>
+              </div>
+              <div class="body-section">
+                <h5 class="section-heading">Direccion:</h5>
+                <p class="section-content">{{ user.person?.address }}</p>
+              </div>
+              <div class="body-section">
+                <h5 class="section-heading">Fecha de Nacimiento:</h5>
+                <p class="section-content">{{ user.person?.birthDate }}</p>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
   </div>
-  
-   
+
+</div>
