@@ -1,4 +1,5 @@
 <div class="tickets-container">
+  <div class="espaciado"></div>
   <h2 class="d-flex justify-content-center">Todos los Tickets</h2>
   <div class="espaciado"></div>
   <table id="tickets-table" ngb-table
@@ -25,11 +26,13 @@
         <td>{{ ticket.service }}</td>
         <td>{{ ticket.status }}</td>
         <td>
-          <button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-info espaciadoBtn" (click)="viewTicketAudit(ticket.id)">
+          <button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-info espaciadoBtn"
+            (click)="viewTicketAudit(ticket.id)">
             <i class="notifyIcon fa-solid fa-magnifying-glass"></i></button>
           <button class="btn btn-warning espaciadoBtn" (click)="editTicket(ticket.id)">
             <i class="notifyIcon fa-solid fa-pen-to-square"></i></button>
-          <button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-danger espaciadoBtn" (click)="confirmDeleteTicket(ticket.id, ticket.status)">
+          <button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-danger espaciadoBtn"
+            (click)="confirmDeleteTicket(ticket.id, ticket.status)">
             <i class="notifyIcon fa-solid fa-trash-can"></i></button>
         </td>
       </tr>
@@ -46,7 +49,8 @@
       <button *ngIf="this.currentUser.roles == 'admin'" type="button" class="create" (click)="addTicket()">
         <span class="button__text">Nuevo Ticket</span>
         <span class="button__icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2"
+            stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg">
             <line y2="19" y1="5" x2="12" x1="12"></line>
             <line y2="12" y1="12" x2="19" x1="5"></line>
           </svg>
@@ -58,9 +62,14 @@
       <button *ngIf="this.currentUser.roles == 'admin'" class="download-btn csv" (click)="downloadCSV()">
         <div class="button-content">
           <div class="svg-container">
-            <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="#fff" viewBox="0 0 24 24">
-              <path fill-rule="evenodd" d="M13 11.15V4a1 1 0 1 0-2 0v7.15L8.78 8.374a1 1 0 1 0-1.56 1.25l4 5a1 1 0 0 0 1.56 0l4-5a1 1 0 1 0-1.56-1.25L13 11.15Z" clip-rule="evenodd"/>
-              <path fill-rule="evenodd" d="M9.657 15.874 7.358 13H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2.358l-2.3 2.874a3 3 0 0 1-4.685 0ZM17 16a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z" clip-rule="evenodd"/>
+            <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+              fill="#fff" viewBox="0 0 24 24">
+              <path fill-rule="evenodd"
+                d="M13 11.15V4a1 1 0 1 0-2 0v7.15L8.78 8.374a1 1 0 1 0-1.56 1.25l4 5a1 1 0 0 0 1.56 0l4-5a1 1 0 1 0-1.56-1.25L13 11.15Z"
+                clip-rule="evenodd" />
+              <path fill-rule="evenodd"
+                d="M9.657 15.874 7.358 13H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2.358l-2.3 2.874a3 3 0 0 1-4.685 0ZM17 16a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z"
+                clip-rule="evenodd" />
             </svg>
           </div>
           <div class="text-container">
@@ -75,9 +84,14 @@
 
         <div class="button-content">
           <div class="svg-container">
-            <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="#fff" viewBox="0 0 24 24">
-              <path fill-rule="evenodd" d="M13 11.15V4a1 1 0 1 0-2 0v7.15L8.78 8.374a1 1 0 1 0-1.56 1.25l4 5a1 1 0 0 0 1.56 0l4-5a1 1 0 1 0-1.56-1.25L13 11.15Z" clip-rule="evenodd"/>
-              <path fill-rule="evenodd" d="M9.657 15.874 7.358 13H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2.358l-2.3 2.874a3 3 0 0 1-4.685 0ZM17 16a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z" clip-rule="evenodd"/>
+            <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+              fill="#fff" viewBox="0 0 24 24">
+              <path fill-rule="evenodd"
+                d="M13 11.15V4a1 1 0 1 0-2 0v7.15L8.78 8.374a1 1 0 1 0-1.56 1.25l4 5a1 1 0 0 0 1.56 0l4-5a1 1 0 1 0-1.56-1.25L13 11.15Z"
+                clip-rule="evenodd" />
+              <path fill-rule="evenodd"
+                d="M9.657 15.874 7.358 13H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2.358l-2.3 2.874a3 3 0 0 1-4.685 0ZM17 16a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z"
+                clip-rule="evenodd" />
             </svg>
           </div>
           <div class="text-container">
@@ -89,3 +103,4 @@
   </div>
 
 </div>
+<div class="espaciado"></div>
