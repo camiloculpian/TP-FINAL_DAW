@@ -22,7 +22,7 @@ BEGIN
         NEW.lastModifiedByUserId,
         NEW.priority,
         NEW.status,
-        CURRENT_DATE(),
+        CURRENT_TIME(),
         'UPDATE'
     );
 END;
@@ -53,7 +53,7 @@ BEGIN
         NEW.lastModifiedByUserId,
         NEW.priority,
         NEW.status,
-        CURRENT_DATE(),
+        CURRENT_TIME(),
         'CREATE'
     );
 END;
