@@ -36,5 +36,5 @@ export class User {
     profilePicture?: string | null;
     roles?: string | undefined;
     username?: string | undefined;
-    passsword?: string|undefined;
+    password?: string|undefined;
   }

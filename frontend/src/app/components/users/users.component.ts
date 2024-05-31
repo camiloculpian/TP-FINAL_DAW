@@ -28,6 +28,7 @@ export class UsersComponent implements OnInit {
   userForm : FormGroup;
 
   username:string|undefined;
+  public filteredUsersList: User[] = [];
 
   constructor(
     private usersService:UsersService,
@@ -63,6 +64,7 @@ export class UsersComponent implements OnInit {
       next: (resp) => {
         this.response = resp;
         this.usersList = this.response.data as unknown as User[]; // Cast to User[]
+        this.filteredUsersList = this.usersList;
         console.log(this.usersList);
       },
       error: (err) => {
@@ -71,6 +73,22 @@ export class UsersComponent implements OnInit {
       }
     });
   }
+
+  // busqueda de un usuario por username
+  onSearch(event: Event) {
+    const searchTerm = (event.target as HTMLInputElement).value.toLowerCase();
+    if (searchTerm) {
+      this.filteredUsersList = this.usersList.filter(user =>
+        user.person?.name?.toLowerCase().includes(searchTerm)
+        
+      );
+      this.usersList = this.filteredUsersList; // Actualiza userList con los datos filtrados
+    } else {
+      this.getUsers(); // Llamar de nuevo a getUsers para obtener la lista completa si se borran datos del input
+    }
+  }
+  
+
   // BORRA UN USUARIO EN ESPECIFICO
   deleteUser(userId: number): void {
     // Mostrar Sweet Alert de confirmación

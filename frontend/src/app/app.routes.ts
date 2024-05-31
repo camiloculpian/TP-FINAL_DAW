@@ -8,6 +8,7 @@ import { UsersComponent } from './components/users/users.component';
 import { AuditsComponent } from './components/audits/audits.component';
 import { NgModule } from '@angular/core';
 import { authGuard, authGuardAdmin } from './guards/auth-guard';
+import { AccountComponent } from './components/account/account.component';
 
 export const routes: Routes = [
     
@@ -16,6 +17,7 @@ export const routes: Routes = [
     { path: 'app', component: AppLayoutComponent, 
         canActivate: [authGuard],
         children: [
+            {path: 'account',component: AccountComponent},
             {path: 'users',component: UsersComponent},
             {path: 'tickets',component: TicketsComponent},
             {path: 'audits',component: AuditsComponent,canActivate: [authGuardAdmin]}

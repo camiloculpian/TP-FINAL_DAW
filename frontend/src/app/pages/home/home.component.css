@@ -408,8 +408,19 @@ section {
   color: #fff;
 }
 
+/*--------------------------------------------------------------
+# Testimonials Section
+--------------------------------------------------------------*/
+.testimonial p{
+  margin-bottom: 0;
+}
 
-.contact-img {
-  margin-right: 2cm; /* Establece un margen derecho de 2 centímetros */
+.carousel-item {
+  transition: transform 0.6s ease-in-out;
+}
+
+.rounded-circle {
+  width: 100px;
+  height: 100px;
 }
 

@@ -49,7 +49,7 @@
         <div class="col-xl-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
           <div class="icon-box">
             <div class="icon"><i class="fa-solid fa-wrench"></i></div>
-            <h4><a >Ensamblado de PC</a></h4>
+            <h4><a>Ensamblado de PC</a></h4>
             <p>Calidad y precisión en cada ensamblaje</p>
           </div>
         </div>
@@ -73,7 +73,7 @@
         <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" data-aos="zoom-in" data-aos-delay="400">
           <div class="icon-box">
             <div class="icon"><i class="fa-solid fa-users"></i></div>
-            <h4><a >Atención al cliente</a></h4>
+            <h4><a>Atención al cliente</a></h4>
             <p>Servicio excepcional y compromiso con tu satisfacción.</p>
           </div>
         </div>
@@ -178,8 +178,42 @@
   </section>
   <!-- ======= End Team Section ======= -->
 
+  <!-- ======= Testimonials Section ======= -->
+  <section class="testimonial mt-4">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <div class="section-title">
+          <h2>Nuestros clientes</h2>
+        </div>
+        <ngb-carousel *ngIf="testimonials.length > 0" [showNavigationArrows]="true" [interval]="10000"
+          [pauseOnHover]="false">
+          <ng-template ngbSlide *ngFor="let testimonial of testimonials; let i = index" [id]="'slide-' + i">
+            <div class="text-center">
+              <p class="mx-4 mx-md-5">
+                {{ testimonial.quote }}
+              </p>
+              <div class="mt-5 mb-4 circle-img">
+                <img [src]="testimonial.image" class="rounded-circle img-fluid shadow-1-strong"
+                  [alt]="testimonial.author" />
+              </div>
+              <p class="text-primary mb-3">- {{ testimonial.author }}</p>
+              <span class="rating">
+                <i class="fa-solid fa-star " style="color: #FFD43B;"
+                  *ngFor="let star of generateArray(testimonial.rating)"></i>
+                <i class="fa-solid fa-star " style="color: #515151;"
+                  *ngFor="let star of generateArray(5 - testimonial.rating)"></i>
+              </span>
+            </div>
+          </ng-template>
+        </ngb-carousel>
+
+      </div>
+    </div>
+  </section>
+  <!-- ======= End Testimonials Section ======= -->
+
   <!-- ======= Contact Section ======= --> <!-- ver si se pone, porque no es funcional. -->
-  <section id="contactos" class="contact">
+  <section id="contactos" class="contact section-bg">
     <div class="container" data-aos="fade-up">
 
       <div class="section-title">
@@ -219,7 +253,7 @@
         <div class="col-lg-6 order-1 order-lg-2 contact-img" data-aos="zoom-in" data-aos-delay="200">
           <img src="../../../assets/img/Contact us-rafiki.png" class="img-fluid" alt="">
         </div>
-        
+
       </div>
 
     </div>
