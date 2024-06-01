@@ -1,5 +1,5 @@
 import { HttpInterceptorFn } from '@angular/common/http';
-import { CurrentUser } from '../models/users';
+import { CurrentUser } from '../dto/users';
 
 export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
   const currentUser:CurrentUser = JSON.parse(String(localStorage.getItem('user')));;

@@ -7,10 +7,10 @@ import Swal from 'sweetalert2';
 import { Observable, map } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { CommonModule, NgIf } from '@angular/common';
-import { CurrentUser, User } from '../../../models/users';
+import { CurrentUser, User } from '../../../dto/users';
 import { AllValidationErrors, getFormValidationErrors } from '../../../utils/validations';
 import { TicketService } from '../tickets.service';
-import { Ticket } from '../../../models/ticket';
+import { Ticket } from '../../../dto/ticket';
 
 // Servicio de Usuarios
 @Injectable({

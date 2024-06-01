@@ -6,7 +6,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { sha512 } from "js-sha512";
 import Swal from "sweetalert2";
 import { AllValidationErrors, getFormValidationErrors } from "../../../utils/validations";
-import { CurrentUser, User } from "../../../models/users";
+import { CurrentUser, User } from "../../../dto/users";
 
 @Component({
     selector: 'app-add-edit-user',

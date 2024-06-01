@@ -1,7 +1,7 @@
 import { HttpClient,  HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, last, map, Observable, throwError, timeout } from 'rxjs';
-import { Response } from '../../models/responses';
+import { Response } from '../../dto/responses';
 import { Router } from '@angular/router';
 
 

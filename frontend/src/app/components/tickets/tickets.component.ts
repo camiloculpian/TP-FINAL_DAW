@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CurrentUser } from '../../models/users';
+import { CurrentUser } from '../../dto/users';
 import {  NgFor, NgForOf, NgIf } from '@angular/common';
 import Swal from 'sweetalert2';
 import { AddEditTicketsComponent } from './add-edit-ticket/add.edit.ticket.component';
@@ -8,7 +8,7 @@ import * as Papa from 'papaparse';
 import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { TicketService } from './tickets.service';
-import { Ticket } from '../../models/ticket';
+import { Ticket } from '../../dto/ticket';
 import { ViewAuditsComponent } from '../audits/audit-view/audit.view.component';
 
 

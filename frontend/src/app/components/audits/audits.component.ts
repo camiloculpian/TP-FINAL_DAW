@@ -3,7 +3,7 @@ import { NgFor, NgForOf, NgIf } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ViewAuditsComponent } from './audit-view/audit.view.component';
 import { TicketService } from '../tickets/tickets.service';
-import { Ticket } from '../../models/ticket';
+import { Ticket } from '../../dto/ticket';
 
 @Component({
   selector: 'app-audits',

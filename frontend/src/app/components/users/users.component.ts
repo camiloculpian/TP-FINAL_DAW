@@ -1,12 +1,11 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, ElementRef, inject, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { Response } from '../../models/responses';
+import { Component, inject, OnInit } from '@angular/core';
+import { Response } from '../../dto/responses';
 import { CommonModule, NgForOf } from '@angular/common';
 import { NgbHighlight, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
-import { CurrentUser, User } from '../../models/users';
+import { CurrentUser, User } from '../../dto/users';
 import { AddEditUsersComponent } from './add-edit-user/add.edit.user.component';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { UsersService } from './users.service';
 
 @Component({

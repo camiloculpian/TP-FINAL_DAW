@@ -1,8 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, debounceTime, delay, Observable, of, Subject, switchMap, tap } from "rxjs";
 import { Directive, EventEmitter, Injectable, Input, Output, } from "@angular/core";
-import { Response } from "../../models/responses";
-import { Ticket } from "../../models/ticket";
+import { Response } from "../../dto/responses";
+import { Ticket } from "../../dto/ticket";
 import { environment } from "../../../environment/environment";
 
 export type SortColumn = keyof Ticket | '';

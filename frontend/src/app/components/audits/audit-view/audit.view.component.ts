@@ -45,7 +45,7 @@
 import { NgClass, NgFor, NgIf } from "@angular/common";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Component, inject, Input, OnInit} from "@angular/core";
-import { CurrentUser } from "../../../models/users";
+import { CurrentUser } from "../../../dto/users";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import * as Papa from 'papaparse';
 import * as jsPDF from 'jspdf';
