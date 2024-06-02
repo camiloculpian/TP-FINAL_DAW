@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { BehaviorSubject, debounceTime, delay, Observable, of, Subject, switchMap, tap } from "rxjs";
+import { BehaviorSubject, catchError, debounceTime, delay, map, Observable, of, Subject, switchMap, tap } from "rxjs";
 import { Directive, EventEmitter, Injectable, Input, Output, } from "@angular/core";
 import { Response } from "../../dto/responses";
 import { Ticket } from "../../dto/ticket";
@@ -169,25 +169,26 @@ export class TicketService {
 
 	// private _search(): Observable<SearchResult> {
 	private _search(): Observable<Response> {
+		const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
 		const params = new HttpParams().set('filter', this.searchTerm);
 
-		return this.http.get<Response>(this.apiUrl+'/tickets',{params: params})
+		return this.http.get<Response>(this.apiUrl+'/tickets',{params: params}).pipe(
+			map((resp) => {
+			   //You can perform some transformation here
+			   
+			   // 1. sort
+			   let tickets = sort(resp.data, sortColumn, sortDirection);
 
-		// const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
+			   // 2. paginate
+			   tickets = tickets.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
 
-		// // 1. sort
-		// let tickestUnsorted:Ticket[] = [];
-		// this.getTickets().subscribe({next: (resp) => {
-		// 	tickestUnsorted = resp.data as unknown as Ticket[]
-		// }})
-		// let tickets = sort(tickestUnsorted, sortColumn, sortDirection);
+			   return resp;
+			}),
+			catchError((err, caught) => {
+			  console.error(err);
+			  throw err;
+			})
+		)
 
-		// // 2. filter
-		// tickets = tickets.filter((ticket) => matches(ticket, searchTerm));
-		// const total = tickets.length;
-
-		// // 3. paginate
-		// tickets = tickets.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
-		// return of({ tickets, total });
 	}
 }
