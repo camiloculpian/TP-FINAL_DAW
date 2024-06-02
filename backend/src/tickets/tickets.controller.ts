@@ -124,7 +124,7 @@ export class TicketsController {
     }
     
     // Obtiene todos los tickets de un usuario. Filtros: id de usuario asignado, status, service
-    @Get('/?:filter=?')
+    @Get()
     @UseGuards(AuthGuard)
     @ApiOperation({ summary: 'Obtener todos los tickets' })
     @ApiResponse({ status: 200, description: 'Lista de tickets' })
