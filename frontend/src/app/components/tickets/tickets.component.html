@@ -1,6 +1,15 @@
 <div class="tickets-container">
   <div class="espaciado"></div>
   <h2 class="d-flex justify-content-center">Todos los Tickets</h2>
+  <form>
+    <div class="mb-3 row">
+      <label for="table-filtering-search" class="col-xl-3 col-sm-auto col-form-label"></label>
+      <div class="col-xl-6 col-sm-auto">
+        <input id="table-filtering-search" class="form-control" type="text" name="searchTerm" [(ngModel)]="ticketsService.searchTerm"
+          placeholder="Buscar por ID Titulo o Descripcion" />
+      </div>
+    </div>
+  </form>
   <div class="espaciado"></div>
   <table id="tickets-table" ngb-table
     class="table table-light table-striped table-hover table-responsive table-md tablaGas">

@@ -1,15 +1,16 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CurrentUser } from '../../dto/users';
-import {  NgFor, NgForOf, NgIf } from '@angular/common';
+import {  AsyncPipe, NgFor, NgForOf, NgIf } from '@angular/common';
 import Swal from 'sweetalert2';
 import { AddEditTicketsComponent } from './add-edit-ticket/add.edit.ticket.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbHighlight, NgbModal, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import * as Papa from 'papaparse';
 import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import { TicketService } from './tickets.service';
+import { NgbdSortableHeader, TicketService } from './tickets.service';
 import { Ticket } from '../../dto/ticket';
 import { ViewAuditsComponent } from '../audits/audit-view/audit.view.component';
+import { FormsModule } from '@angular/forms';
 
 
 export enum TicketPriority {
@@ -27,7 +28,7 @@ export enum TicketStatus {
 @Component({
   selector: 'app-tickets',
   standalone: true,
-  imports: [NgFor, NgForOf, NgIf, AddEditTicketsComponent],
+  imports: [NgFor, NgForOf, NgIf, AddEditTicketsComponent, FormsModule, AsyncPipe, NgbHighlight, NgbdSortableHeader, NgbPaginationModule],
   templateUrl: './tickets.component.html',
   styleUrls: ['./tickets.component.css']
 })
@@ -40,7 +41,7 @@ export class TicketsComponent implements OnInit {
   currentUser!:CurrentUser;
 
   constructor(
-    private ticketsService: TicketService,
+    public ticketsService: TicketService,
   ) { 
     this.currentUser = JSON.parse(localStorage.getItem('user') || '{}');
   }
@@ -116,33 +117,27 @@ export class TicketsComponent implements OnInit {
   }
 
   getTickets(){
-    this.ticketsService.getTickets().subscribe({
-          next: (response) => {
-            if (response.status == 'success') {
-              console.log('Listo pa procesar los datiños')
-            } else if (response.data) { // procesar datos
-              this.tickets = (response.data as unknown as Ticket[]).map((ticketData: any) => {
-                // Crear un nuevo objeto Ticket a partir de ticketData
-                const ticket: Ticket = {
-                  id: ticketData.id,
-                  title: ticketData.title,
-                  description: ticketData.description,
-                  asignedToUser: ticketData.asignedToUser,
-                  priority: ticketData.priority,
-                  service: ticketData.service,
-                  status: ticketData.status,
-                  
-                };
-                return ticket;
-              });
-            } else {
-              console.error('error.');
-            }
-          },
-          error: (error) => {
-            console.error('Error en la busqueda tickets:', error);
-          },
-    });
+    this.ticketsService.tickets$.subscribe({
+            next: (tickets) => {
+                this.tickets = (tickets as unknown as Ticket[]).map((ticketData: any) => {
+                  // Crear un nuevo objeto Ticket a partir de ticketData
+                  const ticket: Ticket = {
+                    id: ticketData.id,
+                    title: ticketData.title,
+                    description: ticketData.description,
+                    asignedToUser: ticketData.asignedToUser,
+                    priority: ticketData.priority,
+                    service: ticketData.service,
+                    status: ticketData.status,
+                    
+                  };
+                  return ticket;
+                });
+            },
+            error: (error) => {
+              console.error('Error en la busqueda tickets:', error);
+            },
+      });
   }
   // Descargar csv con papaparse
   downloadCSV() {

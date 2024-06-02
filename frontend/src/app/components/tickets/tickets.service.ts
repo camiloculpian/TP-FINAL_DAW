@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { BehaviorSubject, debounceTime, delay, Observable, of, Subject, switchMap, tap } from "rxjs";
 import { Directive, EventEmitter, Injectable, Input, Output, } from "@angular/core";
 import { Response } from "../../dto/responses";
@@ -99,8 +99,8 @@ export class TicketService {
 				tap(() => this._loading$.next(false)),
 			)
 			.subscribe((resp) => {
-				this._tickets$.next(resp.tickets);
-				this._total$.next(resp.tickets.length);
+				this._tickets$.next(resp.data);
+				this._total$.next(resp.data?.length);
 			});
 		this._search$.next();
 		console.log(this._tickets$);
@@ -168,22 +168,26 @@ export class TicketService {
 	}
 
 	// private _search(): Observable<SearchResult> {
-	private _search(): Observable<any> {
-		const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
+	private _search(): Observable<Response> {
+		const params = new HttpParams().set('filter', this.searchTerm);
 
-		// 1. sort
-		let tickestUnsorted:Ticket[] = [];
-		this.getTickets().subscribe({next: (resp) => {
-			tickestUnsorted = resp.data as unknown as Ticket[]
-		}})
-		let tickets = sort(tickestUnsorted, sortColumn, sortDirection);
+		return this.http.get<Response>(this.apiUrl+'/tickets',{params: params})
 
-		// 2. filter
-		tickets = tickets.filter((ticket) => matches(ticket, searchTerm));
-		const total = tickets.length;
+		// const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
 
-		// 3. paginate
-		tickets = tickets.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
-		return of({ tickets, total });
+		// // 1. sort
+		// let tickestUnsorted:Ticket[] = [];
+		// this.getTickets().subscribe({next: (resp) => {
+		// 	tickestUnsorted = resp.data as unknown as Ticket[]
+		// }})
+		// let tickets = sort(tickestUnsorted, sortColumn, sortDirection);
+
+		// // 2. filter
+		// tickets = tickets.filter((ticket) => matches(ticket, searchTerm));
+		// const total = tickets.length;
+
+		// // 3. paginate
+		// tickets = tickets.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
+		// return of({ tickets, total });
 	}
 }
