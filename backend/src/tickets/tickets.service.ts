@@ -58,11 +58,15 @@ export class TicketsService {
   }
 
   //Parametros de busqueda
-  async findAll(userId: number, service?: string, status?: TicketStatus, assignedToUserId?: number, page?: number, limit?: number) {
+  async findAll(userId: number, filter?: string, service?: string, status?: TicketStatus, assignedToUserId?: number, page?: number, limit?: number) {
     try {
       const user = await this.userService.findOne(userId);
       let queryBuilder = this.ticketRepository.createQueryBuilder('ticket')
         .leftJoinAndSelect('ticket.asignedToUser', 'asignedToUser');
+
+      if (filter) {
+        queryBuilder = queryBuilder.andWhere('ticket.id LIKE :filter || ticket.title LIKE :filter || ticket.description LIKE :filter', { filter });
+      }
 
       if (service) {
         queryBuilder = queryBuilder.andWhere('ticket.service = :service', { service });

@@ -124,12 +124,13 @@ export class TicketsController {
     }
     
     // Obtiene todos los tickets de un usuario. Filtros: id de usuario asignado, status, service
-    @Get()
+    @Get(':filter?')
     @UseGuards(AuthGuard)
     @ApiOperation({ summary: 'Obtener todos los tickets' })
     @ApiResponse({ status: 200, description: 'Lista de tickets' })
     async findAll(
       @CurrentUser('sub') userId: number,
+      @Param('filter') filter?: string,
       @Query('service') service?: string,
       @Query('status') status?: TicketStatus,
       @Query('assignedToUserId') assignedToUserId?: number,
@@ -137,11 +138,12 @@ export class TicketsController {
       @Query('limit') limit?: number,
     ) {
         try {
+            console.log('filter: '+ filter)
             return new Response({
                 statusCode:201,
                 status:responseStatus.OK,
                 message: "OK",
-                data: await this.ticketsService.findAll(userId, service, status, assignedToUserId, page, limit),
+                data: await this.ticketsService.findAll(userId, filter, service, status, assignedToUserId, page, limit),
             });
         } catch (e) {
             throw new BadRequestException({status:responseStatus.ERROR,message:e.message});
