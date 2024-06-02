@@ -58,7 +58,7 @@ export class TicketsService {
   }
 
   //Parametros de busqueda
-  async findAll(userId: number, filter?: string, service?: string, status?: TicketStatus, assignedToUserId?: number, page?: number, limit?: number) {
+  async findAll(userId: number, filter?: string, service?: string, status?: TicketStatus, asignedToUserId?: number, page?: number, limit?: number) {
     try {
       const user = await this.userService.findOne(userId);
       let queryBuilder = this.ticketRepository.createQueryBuilder('ticket')
@@ -77,8 +77,8 @@ export class TicketsService {
         queryBuilder = queryBuilder.andWhere('ticket.status = :status', { status });
       }
 
-      if (assignedToUserId) {
-        queryBuilder = queryBuilder.andWhere('ticket.asignedToUser.id = :assignedToUserId', { assignedToUserId });
+      if (asignedToUserId) {
+        queryBuilder = queryBuilder.andWhere('ticket.asignedToUser.id = :asignedToUserId', { asignedToUserId });
       }
 
       // Si el usuario tiene rol de administrador, puede ver todos los tickets
