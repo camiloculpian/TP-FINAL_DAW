@@ -65,6 +65,7 @@ export class TicketsService {
         .leftJoinAndSelect('ticket.asignedToUser', 'asignedToUser');
 
       if (filter) {
+        filter = '%'+filter+'%';
         queryBuilder = queryBuilder.andWhere('ticket.id LIKE :filter || ticket.title LIKE :filter || ticket.description LIKE :filter', { filter });
       }
 
