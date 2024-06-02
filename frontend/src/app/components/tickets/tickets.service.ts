@@ -185,7 +185,7 @@ export class TicketService {
 			   return resp;
 			}),
 			catchError((err, caught) => {
-			  console.error(err);
+			  console.error('**ERROR ON private _search(): Observable<Response> : '+err);
 			  throw err;
 			})
 		)
