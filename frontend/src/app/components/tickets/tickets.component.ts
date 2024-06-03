@@ -76,11 +76,11 @@ export class TicketsComponent implements OnInit {
   deleteTicket(ticketId: number): void {
     this.ticketsService.deleteTicket(ticketId).subscribe({
         next: (response) => {
-          Swal.fire('Éxito', 'Ticket eliminado con éxito', 'success');
+          Swal.fire('Éxito', response.message, 'success');
           this.tickets = this.tickets.filter((ticket: { id: number; }) => ticket.id !== ticketId);
         },
         error: (error) => {
-          Swal.fire('Error', 'Error al eliminar el ticket', 'error');
+          Swal.fire('Error', error.error.message, 'error');
           console.error('Error al eliminar el ticket:', error);
         }
       });
