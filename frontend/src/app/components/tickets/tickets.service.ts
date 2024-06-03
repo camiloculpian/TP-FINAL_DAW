@@ -126,6 +126,10 @@ export class TicketService {
         return this.http.delete<any>(`${this.apiUrl}/tickets/${ticketId}`);
     }
 
+	refreshTickets(){
+		this._search$.next();
+	}
+
     // FOR SORTING
     get tickets$() {
 		return this._tickets$.asObservable();
@@ -169,9 +173,8 @@ export class TicketService {
 
 	// private _search(): Observable<SearchResult> {
 	private _search(): Observable<Response> {
-		const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
+		const { sortColumn, sortDirection, pageSize, page } = this._state;
 		const params = new HttpParams().set('filter', this.searchTerm);
-
 		return this.http.get<Response>(this.apiUrl+'/tickets',{params: params}).pipe(
 			map((resp) => {
 			   //You can perform some transformation here
@@ -189,6 +192,5 @@ export class TicketService {
 			  throw err;
 			})
 		)
-
 	}
 }

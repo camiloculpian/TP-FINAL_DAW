@@ -102,13 +102,13 @@ export class TicketsComponent implements OnInit {
   editTicket(ticketId:number){
     const modalRef = this.modalService.open(AddEditTicketsComponent);
     modalRef.componentInstance.ticketId =ticketId;
-    modalRef.hidden.subscribe({next:()=>(this.getTickets())});
+    modalRef.hidden.subscribe({next:()=>(this.ticketsService.refreshTickets())});
   }
 
   addTicket(){
     //const currentUser: CurrentUser = JSON.parse(String(localStorage.getItem('user')));
     const modalRef = this.modalService.open(AddEditTicketsComponent);
-    modalRef.hidden.subscribe({next:()=>(this.getTickets())});
+    modalRef.hidden.subscribe({next:()=>(this.ticketsService.refreshTickets())});
   }
 
   viewTicketAudit(ticketId:number){

@@ -66,7 +66,7 @@ export class TicketsService {
 
       if (filter) {
         filter = '%'+filter+'%';
-        queryBuilder = queryBuilder.andWhere('ticket.id LIKE :filter || ticket.title LIKE :filter || ticket.description LIKE :filter', { filter });
+        queryBuilder = queryBuilder.andWhere('ticket.id LIKE :filter || ticket.title LIKE :filter || ticket.description LIKE :filter || asignedToUser.username LIKE :filter', { filter });
       }
 
       if (service) {
