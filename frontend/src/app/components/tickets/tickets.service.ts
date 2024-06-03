@@ -56,14 +56,6 @@ function sort(tickets: Ticket[], column: SortColumn, direction: string): Ticket[
 	}
 }
 
-function matches(ticket: Ticket, term: string) {
-	return (
-		ticket.title.toLowerCase().includes(term.toLowerCase()) ||
-		String(ticket.id).includes(term) ||
-		ticket.asignedToUser?.username.includes(term)
-	);
-}
-
 // Servicio de Tickets
 @Injectable({
     providedIn: 'root'
@@ -103,7 +95,6 @@ export class TicketService {
 				this._total$.next(resp.data?.length);
 			});
 		this._search$.next();
-		console.log(this._tickets$);
      }
 
     getTickets(): Observable<Response> {

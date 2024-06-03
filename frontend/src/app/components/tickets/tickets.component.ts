@@ -12,19 +12,6 @@ import { Ticket } from '../../dto/ticket';
 import { ViewAuditsComponent } from '../audits/audit-view/audit.view.component';
 import { FormsModule } from '@angular/forms';
 
-
-export enum TicketPriority {
-  LOW = 'LOW',
-  MEDIUM = 'MEDIUM',
-  HIGH = 'HIGH'
-}
-
-export enum TicketStatus {
-  OPEN = 'OPEN',
-  IN_PROGRESS = 'IN_PROGRESS',
-  RESOLVED = 'RESOLVED'
-}
-
 @Component({
   selector: 'app-tickets',
   standalone: true,
