@@ -115,7 +115,7 @@ async findAll(@CurrentUser("sub") userId: number) {
     });
   }
 }
-  // Traer usuarios por ID
+  // Trae Perfil del usuario por ID
   @Get('/profile')
   @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Obtener el perfil del usuario' })
