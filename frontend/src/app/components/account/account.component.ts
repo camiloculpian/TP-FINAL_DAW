@@ -1,12 +1,11 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, ElementRef, inject, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Response } from '../../dto/responses';
 import { CommonModule, NgForOf } from '@angular/common';
 import { NgbHighlight, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import Swal from 'sweetalert2';
-import { CurrentUser, User } from '../../dto/users';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AccountService } from './account.service';
+import { User } from '../../dto/users';
+import { FormBuilder, FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { UserService } from '../tickets/add-edit-ticket/add.edit.ticket.component';
+
 
 @Component({
   selector: 'app-account',
@@ -29,7 +28,7 @@ export class AccountComponent implements OnInit {
   username:string|undefined;
 
   constructor(
-    private accountService:AccountService,
+    private accountService:UserService,
     private fbuilder: FormBuilder,
   ) {
     this.response = null;
@@ -61,7 +60,7 @@ export class AccountComponent implements OnInit {
       next: (resp) => {
         this.response = resp;
         const currentUserUsername = this.user.username; 
-        this.usersList = this.response.data.filter((user: User) => user.username === currentUserUsername) as User[];
+        this.usersList = this.response?.data.filter((user: User) => user.username === currentUserUsername) as User[];
         console.log(this.usersList);
       },
       error: (err) => {

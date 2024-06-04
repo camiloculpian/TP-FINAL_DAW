@@ -18,7 +18,7 @@
         <nav id="navbar" class="navbar ms-auto">
             <ul class="d-flex align-items-center"> 
                 <li>
-                    <a class="nav-link scrollto" ><i class="fa-solid fa-user pe-3"></i>Usuario: {{' '+currentUser?.nombre}}</a>
+                    <a [routerLink]="'/app/account'" class="nav-link scrollto" ><i class="fa-solid fa-user pe-3"></i>Usuario: {{' '+currentUser?.nombre}}</a>
                 </li>
                 <li>
                     <a class="nav-link scrollto" href="/"><i class="fa-solid fa-home pe-3"></i>Home</a>

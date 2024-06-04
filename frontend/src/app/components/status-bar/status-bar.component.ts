@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { LoginService } from '../login/login.service';
 import { CurrentUser } from '../../dto/users';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-status-bar',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './status-bar.component.html',
   styleUrl: './status-bar.component.css'
 })
