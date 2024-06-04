@@ -4,7 +4,7 @@ import { CommonModule, NgForOf } from '@angular/common';
 import { NgbHighlight, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { User } from '../../dto/users';
 import { FormBuilder, FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
-import { UserService } from '../tickets/add-edit-ticket/add.edit.ticket.component';
+import { UsersService } from '../users/users.service';
 
 
 @Component({
@@ -16,9 +16,7 @@ import { UserService } from '../tickets/add-edit-ticket/add.edit.ticket.componen
 })
 
 export class AccountComponent implements OnInit {
-  private modalService = inject(NgbModal);
   public usersList: User[] | [];
-  public response: Response | null;
   public user: User = JSON.parse(String(localStorage.getItem('user')));
 
   enableEdit:boolean=false;
@@ -28,10 +26,9 @@ export class AccountComponent implements OnInit {
   username:string|undefined;
 
   constructor(
-    private accountService:UserService,
+    private accountService:UsersService,
     private fbuilder: FormBuilder,
   ) {
-    this.response = null;
     this.usersList = [];
     this.userForm = this.fbuilder.group({
       username: new FormControl('', Validators.required),
@@ -57,15 +54,13 @@ export class AccountComponent implements OnInit {
 
   getUsers(){
     this.accountService.getUsers().subscribe({
-      next: (resp) => {
-        this.response = resp;
+      next: (resp:Response) => {
         const currentUserUsername = this.user.username; 
-        this.usersList = this.response?.data.filter((user: User) => user.username === currentUserUsername) as User[];
+        this.usersList = resp?.data.filter((user: User) => user.username === currentUserUsername) as User[];
         console.log(this.usersList);
       },
-      error: (err) => {
-        this.response = err;
-        console.log(this.response);
+      error: (err:Error) => {
+        console.log(err.message);
       }
     });
   }

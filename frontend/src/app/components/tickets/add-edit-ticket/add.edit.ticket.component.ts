@@ -11,23 +11,12 @@ import { CurrentUser, User } from '../../../dto/users';
 import { AllValidationErrors, getFormValidationErrors } from '../../../utils/validations';
 import { TicketService } from '../tickets.service';
 import { Ticket } from '../../../dto/ticket';
+import { UsersService } from '../../users/users.service';
 
 // Servicio de Usuarios
 @Injectable({
     providedIn: 'root'
 })
-
-export class UserService {
-    private apiUrl = 'http://localhost:3000/api/v1/users';
-  
-    constructor(private http: HttpClient) {}
-  
-    getUsers(headers: HttpHeaders): Observable<User[]> {
-      return this.http.get<{ data: User[] }>(this.apiUrl, { headers }).pipe(
-        map((response: { data: any; }) => response.data)
-      );
-    }
-}
 
 // Componente de add-Tickets
 @Component({
@@ -50,7 +39,7 @@ export class AddEditTicketsComponent implements OnInit {
         private _httpReq: HttpClient,
         private formBuilder: FormBuilder,
         private ticketService:TicketService,
-        private userService: UserService,
+        private userService: UsersService,
     ) { }
 
     ngOnInit(): void {
@@ -65,7 +54,7 @@ export class AddEditTicketsComponent implements OnInit {
         const headers = new HttpHeaders({
             Authorization: `Bearer ${this.currentUser['token']}`,
         });
-        this.loadUsers(headers);
+        this.loadUsers();
         if(this.ticketId){
             console.log('es edicion');
             this.ticketForm.addControl('status',new FormControl('',Validators.required));
@@ -90,11 +79,11 @@ export class AddEditTicketsComponent implements OnInit {
         }
     }
 
-    loadUsers(headers: HttpHeaders): void {
-        this.userService.getUsers(headers).subscribe({
+    loadUsers(): void {
+        this.userService.getUsers().subscribe({
             next: (users) => {
                 console.log('Usuarios recibidos:', users);
-                this.users = users;
+                this.users = users.data;
             },
             error: (error) => {
                 console.error('Error loading users:', error);
