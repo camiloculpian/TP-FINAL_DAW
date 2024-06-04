@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, last, map, Observable, throwError, timeout } from 'rxjs';
 import { Response } from '../../dto/responses';
 import { Router } from '@angular/router';
+import { CurrentUser } from '../../dto/users';
 
 
 @Injectable({
@@ -44,13 +45,13 @@ export class LoginService {
   }
 
   isLoggedIn():Observable<Response>{
-    let user:any = localStorage.getItem('user');
+    let user:CurrentUser = localStorage.getItem('user') as CurrentUser;
     if( user != null){
       return this._httpReq.get<Response>(
         `http://localhost:3000/api/v1/auth/verify`,
         {
           headers: new HttpHeaders ({   
-              "Authorization": String("Bearer "+JSON.parse(user).token),
+              "Authorization": String("Bearer "+user.token),
           }),
         }
       )

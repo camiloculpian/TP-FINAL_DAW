@@ -115,7 +115,27 @@ async findAll(@CurrentUser("sub") userId: number) {
     });
   }
 }
-  
+  // Traer usuarios por ID
+  @Get('/profile')
+  @UseGuards(AuthGuard)
+  @ApiOperation({ summary: 'Obtener el perfil del usuario' })
+  @ApiResponse({ status: 200, description: 'Usuario encontrado' })
+  @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
+  async getProfile(@CurrentUser("sub") userId: number) {
+    console.log('async getProfile(@CurrentUser("sub") userId: number)')
+    try {
+      console.log('-------------------------------->'+userId)
+      return new Response({
+        statusCode:201,
+        status:responseStatus.OK,
+        message:this.i18n.t('lang.users.ReadOK',{ lang:   I18nContext.current().lang }),
+        data: await this.usersService.findOne(+userId)
+      });
+    } catch (error) {
+      console.error('Error al obtener usuario por ID:', error);
+      throw new BadRequestException ({'status':'ERROR','message':error.message,'statusCode':error.statusCode});
+    }
+  }
 
   // Traer usuarios por ID
   @Get(':id')
@@ -161,6 +181,7 @@ async findAll(@CurrentUser("sub") userId: number) {
       }),
     }),
   )
+
   async update(
     @Param('id') id: number,
     @Body() updateUserDto: UpdateUserDto,

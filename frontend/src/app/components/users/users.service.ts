@@ -21,6 +21,10 @@ export class UsersService {
     return this._httpReq.get<Response>(this.apiUrl+`/users/${userId}`);
   }
 
+  getUserProfile():Observable<Response>{
+    return this._httpReq.get<Response>(this.apiUrl+`/users/profile`);
+  }
+
   addUser(user:JSON):Observable<Response>{
     return this._httpReq.post<any>(this.apiUrl+`/users/`, user);
   }

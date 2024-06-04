@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Response } from '../../dto/responses';
 import { CommonModule, NgForOf } from '@angular/common';
 import { NgbHighlight, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { User } from '../../dto/users';
+import { CurrentUser, User } from '../../dto/users';
 import { FormBuilder, FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { UsersService } from '../users/users.service';
 
@@ -16,8 +16,8 @@ import { UsersService } from '../users/users.service';
 })
 
 export class AccountComponent implements OnInit {
-  public usersList: User[] | [];
-  public user: User = JSON.parse(String(localStorage.getItem('user')));
+  public userProfile!: User;
+  public currentUser: User = JSON.parse(String(localStorage.getItem('user')));
 
   enableEdit:boolean=false;
   enableEditIndex:number=0;
@@ -26,10 +26,9 @@ export class AccountComponent implements OnInit {
   username:string|undefined;
 
   constructor(
-    private accountService:UsersService,
+    private usersService:UsersService,
     private fbuilder: FormBuilder,
   ) {
-    this.usersList = [];
     this.userForm = this.fbuilder.group({
       username: new FormControl('', Validators.required),
       name: new FormControl('', Validators.required),
@@ -45,19 +44,18 @@ export class AccountComponent implements OnInit {
   }
   ngOnInit(): void {
     
-    this.getUsers();
+    this.getAccountData();
   }
 
   trackByUserId(index: number, user: User): number {
     return user.id;
   }
 
-  getUsers(){
-    this.accountService.getUsers().subscribe({
+  getAccountData(){
+    this.usersService.getUserProfile().subscribe({
       next: (resp:Response) => {
-        const currentUserUsername = this.user.username; 
-        this.usersList = resp?.data.filter((user: User) => user.username === currentUserUsername) as User[];
-        console.log(this.usersList);
+        console.log(resp.data)
+        this.userProfile = resp?.data as User;
       },
       error: (err:Error) => {
         console.log(err.message);
