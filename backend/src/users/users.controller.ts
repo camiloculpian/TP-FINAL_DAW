@@ -122,9 +122,7 @@ async findAll(@CurrentUser("sub") userId: number) {
   @ApiResponse({ status: 200, description: 'Usuario encontrado' })
   @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
   async getProfile(@CurrentUser("sub") userId: number) {
-    console.log('async getProfile(@CurrentUser("sub") userId: number)')
     try {
-      console.log('-------------------------------->'+userId)
       return new Response({
         statusCode:201,
         status:responseStatus.OK,
