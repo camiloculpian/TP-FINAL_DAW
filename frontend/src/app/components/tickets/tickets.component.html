@@ -120,14 +120,17 @@
 
     <form>
       <div class="mb-3 row">
-
         <label for="table-filtering-search" class="col-xl-3 col-sm-auto col-form-label"></label>
         <div class="col-xl-6 col-sm-auto">
-          <input id="table-filtering-search" class="form-control" type="text" name="searchTerm"
-            [(ngModel)]="ticketsService.searchTerm" placeholder="Buscar por ID Titulo o Descripcion" />
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+            <input id="table-filtering-search" class="form-control" type="text" name="searchTerm"
+              [(ngModel)]="ticketsService.searchTerm" placeholder="Buscar por ID, Título o Descripción" />
+          </div>
         </div>
       </div>
     </form>
+    
 
     <div class="row mt-4 ">
       <div class="col-sm-12 ">
@@ -160,15 +163,21 @@
                   <td>{{ ticket.service }}</td>
                   <td>{{ ticket.status }}</td>
                   <td>
-                    <button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-info espaciadoBtn"
-                      (click)="viewTicketAudit(ticket.id)">
-                      <i class="notifyIcon fa-solid fa-magnifying-glass"></i></button>
-                    <button class="btn btn-warning espaciadoBtn" (click)="editTicket(ticket.id)">
-                      <i class="notifyIcon fa-solid fa-pen-to-square"></i></button>
-                    <button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-danger espaciadoBtn"
-                      (click)="confirmDeleteTicket(ticket.id, ticket.status)">
-                      <i class="notifyIcon fa-solid fa-trash-can"></i></button>
+                    <div class="btn-group" role="group">
+                      <button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-info espaciadoBtn rounded"
+                        (click)="viewTicketAudit(ticket.id)">
+                        <i class="notifyIcon fa-solid fa-magnifying-glass"></i>
+                      </button>
+                      <button class="btn btn-warning espaciadoBtn rounded" (click)="editTicket(ticket.id)">
+                        <i class="notifyIcon fa-solid fa-pen-to-square"></i>
+                      </button>
+                      <button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-danger espaciadoBtn rounded"
+                        (click)="confirmDeleteTicket(ticket.id, ticket.status)">
+                        <i class="notifyIcon fa-solid fa-trash-can"></i>
+                      </button>
+                    </div>
                   </td>
+                  
                 </tr>
                 <tr *ngIf="tickets?.length === 0">
                   <td colspan="8">No se encontraron datos.</td>

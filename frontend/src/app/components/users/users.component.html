@@ -66,17 +66,20 @@
 -->
 
 <div class="row g-0 text-center">
-  <div class="espaciado"></div>
 
   <form>
-    <div class="mb-3 row">
+    <div class="mb-3 row mt-4">
       <label for="table-filtering-search" class="col-xl-3 col-sm-auto col-form-label"></label>
       <div class="col-xl-6 col-sm-auto">
-        <input id="table-filtering-search" class="form-control" type="text" (input)="onSearch($event)"
-          placeholder="Buscar por nombre de Usuario" />
+        <div class="input-group">
+          <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+          <input id="table-filtering-search" class="form-control" type="text" (input)="onSearch($event)"
+            placeholder="Buscar por nombre de Usuario" />
+        </div>
       </div>
     </div>
   </form>
+  
 
   
   <div class="row mt-4 ">
