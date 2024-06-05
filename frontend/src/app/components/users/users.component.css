@@ -106,3 +106,89 @@
 .create:active {
     border: 1px solid #2e8644;
 }
+
+body {
+    margin-top: 20px;
+    background: #eee;
+  }
+  
+  
+  .profile-widget {
+    position: relative;
+  }
+  
+  .profile-widget .image-container {
+    background-size: cover;
+    background-position: center;
+    padding: 190px 0 10px;
+  }
+  
+  .profile-widget .image-container .avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 0 auto -60px;
+    display: block;
+  }
+  
+  .profile-widget .details {
+    padding: 50px 15px 15px;
+    text-align: center;
+  }
+  
+  .panel {
+    border-radius: 0;
+    margin-bottom: 30px;
+  }
+  
+  .panel .panel-heading {
+    border-radius: 0;
+    position: relative;
+    background-color: #37517e;
+    color: white;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .panel .panel-title {
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: bold;
+  }
+  
+  .panel .panel-body {
+    font-size: 19px;
+    padding: 20px;
+  }
+  
+  .panel .panel-body > .body-section {
+    margin: 0px 0px 20px;
+  }
+  
+  .panel .panel-body > .body-section > .section-heading {
+    margin: 0px 0px 5px;
+    font-weight: bold;
+  }
+  
+  .panel .panel-body > .body-section > .section-content {
+    margin: 0px 0px 10px;
+  }
+  
+  .panel-white {
+    border: 1px solid #dddddd;
+  }
+  
+  .panel-white > .panel-heading {
+    color: #333;
+    background-color: #fff;
+    border-color: #ddd;
+  }
+  
+  .border-top-blue {
+    border-top: 4px solid #37517e !important;
+  }
+  
+  .bg2 {
+    background-color: #37517e;
+  }
+  

@@ -60,7 +60,7 @@ export class UsersController {
   @UseInterceptors(
     FileInterceptor('profilePicture', {
       storage: diskStorage({
-        destination: './uploads-profiles/users',
+        destination: './uploads/profiles/users',
         filename: (req, file, cb) => {
           const randomName = Array(32)
             .fill(null)
@@ -168,7 +168,7 @@ async findAll(@CurrentUser("sub") userId: number) {
   @UseInterceptors(
     FileInterceptor('profilePicture', {
       storage: diskStorage({
-        destination: './uploads-profiles/users',
+        destination: './uploads/profiles/users',
         filename: (req, file, cb) => {
           const randomName = Array(32)
             .fill(null)

@@ -5,6 +5,7 @@ import { NgbHighlight, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CurrentUser, User } from '../../dto/users';
 import { FormBuilder, FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { UsersService } from '../users/users.service';
+import { environment } from '../../../environment/environment';
 
 
 @Component({
@@ -16,6 +17,7 @@ import { UsersService } from '../users/users.service';
 })
 
 export class AccountComponent implements OnInit {
+  public apiUrl:string = environment.apiUrl;
   public userProfile!: User;
   public currentUser: User = JSON.parse(String(localStorage.getItem('user')));
 
@@ -56,6 +58,8 @@ export class AccountComponent implements OnInit {
       next: (resp:Response) => {
         console.log(resp.data)
         this.userProfile = resp?.data as User;
+        console.log(this.apiUrl+'/uploads-profiles/users/'+this.userProfile?.person?.profilePicture)
+        
       },
       error: (err:Error) => {
         console.log(err.message);

@@ -5,9 +5,10 @@
         <div class="row">
           <div class="col-sm-12">
             <div class="image-container bg2">
-              <img [src]="userProfile.person?.profilePicture" class="avatar" alt="avatar" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 120 120%27%3E%3Ccircle cx=%2760%27 cy=%2760%27 r=%2760%27 fill=%27white%27/%3E%3C/svg%3E';">
+              <img [src]="apiUrl+'/uploads-profiles/users/'+userProfile.person?.profilePicture" class="avatar" alt="avatar" >
             </div>
           </div>
+          
           <div class="col-sm-12">
             <div class="details">
               <h4>{{ userProfile.person?.name }}</h4>
