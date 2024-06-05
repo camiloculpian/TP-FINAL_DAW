@@ -1,87 +1,68 @@
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="container" id="DATOS_USUARIO">
-  <div class="row">
-    <div class="col-sm-12"> 
-      <div class="panel panel-white profile-widget">
+<div class="container " id="DATOS_USUARIO">
+  <div class="row ">
+    <div class="col-sm-12 ">
+      <div class="panel panel-white profile-widget ">
         <div class="row">
           <div class="col-sm-12">
             <div class="image-container bg2">
-              <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="avatar" alt="avatar">
-              <!--profilePicture-->
+              <img [src]="apiUrl+'/uploads-profiles/users/'+userProfile.person?.profilePicture" class="avatar" alt="avatar" >
             </div>
           </div>
+          
           <div class="col-sm-12">
             <div class="details">
-              <h4 >{{ userProfile.person?.name }}<i class="fa fa-sheild"></i></h4>
-              <h4 >{{ userProfile.person?.lastName }}<i class="fa fa-sheild"></i></h4>
+              <h4>{{ userProfile.person?.name }}</h4>
+              <h4>{{ userProfile.person?.lastName }}</h4>
             </div>
           </div>
-
         </div>
       </div>
 
-      <div class="row">
-
-
-        <div class="col-sm-12" > 
-
-          <div class="panel panel-white border-top-green">
-            <div class="panel-heading">
+      <div class="row mt-4 ">
+        <div class="col-sm-12 ">
+          <div class="panel  border-top-blue ">
+            <div class="panel-heading justify-content-center">
               <h3 class="panel-title">Datos de Usuario</h3>
             </div>
-            <div class="panel-body">
-              <div class="body-section">
-                <h5 class="section-heading">Nombre de Usuario:</h5>
-                <p class="section-content">{{ userProfile.username }}</p>
+            <div class="panel-body panel-white">
+              <div class="row g-0 text-center">
+                <table ngb-table class="table  table-responsive table-md ">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Username</th>
+                      <th>Nombre</th>
+                      <th>Apellido</th>
+                      <th>Rol</th>
+                      <th>DNI</th>
+                      <th>Genero</th>
+                      <th>Email</th>
+                      <th>Teléfono</th>
+                      <th>Dirección</th>
+                      <th>Fecha de Nacimiento</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr id="TABLA_USUARIOS">
+                      <td>{{ userProfile.id }}</td>
+                      <td>{{ userProfile.username }}</td>
+                      <td>{{ userProfile.person?.name }}</td>
+                      <td>{{ userProfile.person?.lastName }}</td>
+                      <td>{{ userProfile.roles }}</td>
+                      <td>{{ userProfile.person?.dni }}</td>
+                      <td>{{ userProfile.person?.gender }}</td>
+                      <td>{{ userProfile.person?.email }}</td>
+                      <td>{{ userProfile.person?.phone }}</td>
+                      <td>{{ userProfile.person?.address }}</td>
+                      <td>{{ userProfile.person?.birthDate }}</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-              <div class="body-section">
-                <h5 class="section-heading">ID:</h5>
-                <p class="section-content">{{ userProfile.id }}</p>
-              </div>
-              <div class="body-section">
-                <h5 class="section-heading">Nombre y Apellido:</h5>
-                <p class="section-content">{{ userProfile.person?.name }}</p>
-                <p class="section-content">{{ userProfile.person?.lastName }}</p>
-              </div>
-              <div class="body-section">
-                <h5 class="section-heading">Rol:</h5>
-                <p class="section-content">{{ userProfile.roles }}</p>
-              </div>
-              <div class="body-section">
-                <h5 class="section-heading">DNI:</h5>
-                <p class="section-content">{{ userProfile.person?.dni }}</p>
-              </div>              
-              <div class="body-section">
-                <h5 class="section-heading">Genero:</h5>
-                <p class="section-content">{{ userProfile.person?.gender }}</p>
-              </div>
-              <div class="body-section">
-                <h5 class="section-heading">Email:</h5>
-                <p class="section-content">{{ userProfile.person?.email }}</p>
-              </div>
-              <div class="body-section">
-                <h5 class="section-heading">Telefono:</h5>
-                <p class="section-content">{{ userProfile.person?.phone }}</p>
-              </div>
-              <div class="body-section">
-                <h5 class="section-heading">Direccion:</h5>
-                <p class="section-content">{{ userProfile.person?.address }}</p>
-              </div>
-              <div class="body-section">
-                <h5 class="section-heading">Fecha de Nacimiento:</h5>
-                <p class="section-content">{{ userProfile.person?.birthDate }}</p>
-              </div>
-
             </div>
           </div>
-
         </div>
-
-
       </div>
-
     </div>
-
   </div>
-
 </div>
