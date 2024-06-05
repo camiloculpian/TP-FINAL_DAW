@@ -218,6 +218,13 @@ export class UsersService {
   
       // Verificar si se cargó un archivo
       if (file) {
+        const fs = require('fs')
+        try {
+          fs.unlinkSync('./uploads/profiles/users/'+updateUserDto.profilePicture);
+          console.log('File removed: '+'./uploads/profiles/users/'+updateUserDto.profilePicture)
+        } catch(err) {
+          console.error('Something wrong happened removing the file', err)
+        }
         updateUserDto.profilePicture = file.filename;
       }
   

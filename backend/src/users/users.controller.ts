@@ -33,7 +33,6 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { CurrentUser } from '../auth/decorators/currentUser.decorator';
 import { I18nContext, I18nService } from 'nestjs-i18n';
 import { Response, responseStatus } from 'src/common/responses/responses';
-import { User } from './entities/user.entity';
 
 @ApiTags('Users')
 @Controller('users')
