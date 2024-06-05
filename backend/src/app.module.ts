@@ -40,7 +40,7 @@ ConfigModule.forRoot({
       resolvers: [new HeaderResolver(['x-custom-lang'])],
     }),
     ServeStaticModule.forRoot ( { 
-      rootPath : join ( __dirname ,  '..' ,  'client' ) 
+      rootPath : join ( __dirname ,  '..' ,  '/uploads' ) 
     }),
     UsersModule,
     AuthModule,
