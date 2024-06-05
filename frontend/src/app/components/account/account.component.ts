@@ -57,9 +57,7 @@ export class AccountComponent implements OnInit {
     this.usersService.getUserProfile().subscribe({
       next: (resp:Response) => {
         console.log(resp.data)
-        this.userProfile = resp?.data as User;
-        console.log(this.apiUrl+'/uploads-profiles/users/'+this.userProfile?.person?.profilePicture)
-        
+        this.userProfile = resp?.data as User;        
       },
       error: (err:Error) => {
         console.log(err.message);
