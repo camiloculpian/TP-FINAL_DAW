@@ -31,9 +31,9 @@ export class User {
       lastName?: string | undefined;
       name?: string | undefined;
       phone?: string | undefined;
-      profilePicture?: string | null;
+      profilePicture?: String;
     };
-    profilePicture?: string | null;
+    profilePicture?: String;
     roles?: string | undefined;
     username?: string | undefined;
     password?: string|undefined;

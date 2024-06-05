@@ -32,6 +32,7 @@ import { CurrentUser, User } from "../../../dto/users";
             this.currentUser = JSON.parse(localStorage.getItem('user') || '{}');
             this.userForm = this.fbuilder.group({
                 username: new FormControl('', Validators.required),
+                profilePicture: new FormControl('', Validators.required),
                 name: new FormControl('', Validators.required),
                 lastName: new FormControl('', Validators.required),
                 dni: new FormControl('', Validators.required),
@@ -56,6 +57,7 @@ import { CurrentUser, User } from "../../../dto/users";
             this.userForm.patchValue({
                 username: this.user.username,
                 password: '',
+                profilePicture: this.user.profilePicture,
             // });
             // if (this.currentUser.roles == 'admin'){
                 // this.userForm.patchValue({
@@ -91,6 +93,7 @@ import { CurrentUser, User } from "../../../dto/users";
                     formObj.password = sha512(String(formObj.password));
                     console.log('formObj.password SHA512 = '+formObj.password);
                 }
+                console.log(formObj.profilePicture);
                 this.usersService.editUser(JSON.parse(JSON.stringify(formObj)), this.userId).subscribe(
                     (resp) => {
                         if(resp.statusCode==201){
@@ -173,4 +176,17 @@ import { CurrentUser, User } from "../../../dto/users";
         if (day.length < 2) day = '0' + day;
         return [year, month, day].join('-');
     }
+
+    selectFile(event: any): void {
+        const selectedFiles = event.target.files;
+    
+        if (selectedFiles) {
+          const file: String | null = selectedFiles.item(0);
+          if (file) {
+            this.user.profilePicture = file;
+            this.userForm.patchValue({profilePicture: file})
+          }
+        }
+      }
+
   }
