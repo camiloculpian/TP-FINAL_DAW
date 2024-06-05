@@ -29,7 +29,7 @@ export class UsersService {
     return this._httpReq.post<any>(this.apiUrl+`/users/`, user);
   }
 
-  editUser(user:JSON, userId:number):Observable<Response>{
+  editUser(user:FormData, userId:number):Observable<Response>{
     return this._httpReq.patch<any>(this.apiUrl+`/users/${userId}`, user);
   }
 

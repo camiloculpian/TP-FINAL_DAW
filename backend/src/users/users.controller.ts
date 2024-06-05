@@ -179,14 +179,14 @@ async findAll(@CurrentUser("sub") userId: number) {
       }),
     }),
   )
-
   async update(
     @Param('id') id: number,
     @Body() updateUserDto: UpdateUserDto,
     @CurrentUser('sub') currentUser: number,
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFile() file,
   ) {
     try {
+      console.log('file: '+file)
       return new Response({
         statusCode:201,
         status:responseStatus.OK,

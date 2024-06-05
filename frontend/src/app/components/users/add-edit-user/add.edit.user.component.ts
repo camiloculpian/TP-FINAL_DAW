@@ -19,6 +19,7 @@ import { CurrentUser, User } from "../../../dto/users";
     userForm : FormGroup;
     userId:number=0;
     currentUser: CurrentUser;
+    private file!: File;
     // @Output() messageEventOut = new EventEmitter<string>();
     @Input() user!:User;
     @Input() name: string|undefined;
@@ -31,8 +32,9 @@ import { CurrentUser, User } from "../../../dto/users";
         // if(this.user.roles == 'admin'){
             this.currentUser = JSON.parse(localStorage.getItem('user') || '{}');
             this.userForm = this.fbuilder.group({
+                file: new FormControl(null),
                 username: new FormControl('', Validators.required),
-                profilePicture: new FormControl('', Validators.required),
+                profilePicture: new FormControl(''),
                 name: new FormControl('', Validators.required),
                 lastName: new FormControl('', Validators.required),
                 dni: new FormControl('', Validators.required),
@@ -92,9 +94,19 @@ import { CurrentUser, User } from "../../../dto/users";
                     console.log('formObj.password = '+formObj.password);
                     formObj.password = sha512(String(formObj.password));
                     console.log('formObj.password SHA512 = '+formObj.password);
+
                 }
-                console.log(formObj.profilePicture);
-                this.usersService.editUser(JSON.parse(JSON.stringify(formObj)), this.userId).subscribe(
+                const formData = new FormData();
+                for (const [key, value] of Object.entries(formObj)) {
+                    if (typeof value != "object") {
+                        formData.append(key, String(value))
+                    }
+                }
+                if(this.file){
+                    formData.append('profilePicture', this.file, this.file.name);
+                }
+                console.log(formData);
+                this.usersService.editUser(formData, this.userId).subscribe(
                     (resp) => {
                         if(resp.statusCode==201){
                             this.activeModal.close();
@@ -181,12 +193,11 @@ import { CurrentUser, User } from "../../../dto/users";
         const selectedFiles = event.target.files;
     
         if (selectedFiles) {
-          const file: String | null = selectedFiles.item(0);
+          const file: File | null = selectedFiles.item(0);
           if (file) {
-            this.user.profilePicture = file;
-            this.userForm.patchValue({profilePicture: file})
+            this.user.profilePicture = file.name;
+            this.file = file;
           }
         }
-      }
-
-  }
+    }
+}
