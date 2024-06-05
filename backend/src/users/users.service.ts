@@ -9,7 +9,11 @@ import { BadRequestException, NotFoundException, ForbiddenException } from '@nes
 import { UpdateUserRolesDto } from './dto/update-userRoles.dto ';
 import { Role } from 'src/auth/enums/role.enum';
 import { responseStatus } from 'src/common/responses/responses';
+import { ConfigModule } from '@nestjs/config';
 
+ConfigModule.forRoot({
+  envFilePath: 'src/config/config.env',
+});
 
 @Injectable()
 export class UsersService {
@@ -220,10 +224,10 @@ export class UsersService {
       if (file) {
         const fs = require('fs')
         try {
-          fs.unlinkSync('./uploads/profiles/users/'+updateUserDto.profilePicture);
-          console.log('File removed: '+'./uploads/profiles/users/'+updateUserDto.profilePicture)
+          fs.unlinkSync(process.env.USER_PROFILE_PICTURES_DIR+updateUserDto.profilePicture);
+          console.log('profilePicture removed: '+process.env.USER_PROFILE_PICTURES_DIR+updateUserDto.profilePicture)
         } catch(err) {
-          console.error('Something wrong happened removing the file', err)
+          console.error('Something wrong happened removing the profilepicture', err)
         }
         updateUserDto.profilePicture = file.filename;
       }

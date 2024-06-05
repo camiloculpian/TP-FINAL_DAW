@@ -33,6 +33,11 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { CurrentUser } from '../auth/decorators/currentUser.decorator';
 import { I18nContext, I18nService } from 'nestjs-i18n';
 import { Response, responseStatus } from 'src/common/responses/responses';
+import { ConfigModule } from '@nestjs/config';
+
+ConfigModule.forRoot({
+  envFilePath: 'src/config/config.env',
+});
 
 @ApiTags('Users')
 @Controller('users')
@@ -59,7 +64,7 @@ export class UsersController {
   @UseInterceptors(
     FileInterceptor('profilePicture', {
       storage: diskStorage({
-        destination: './uploads/profiles/users',
+        destination: process.env.USER_PROFILE_PICTURES_DIR,
         filename: (req, file, cb) => {
           const randomName = Array(32)
             .fill(null)
@@ -167,7 +172,7 @@ async findAll(@CurrentUser("sub") userId: number) {
   @UseInterceptors(
     FileInterceptor('profilePicture', {
       storage: diskStorage({
-        destination: './uploads/profiles/users',
+        destination: process.env.USER_PROFILE_PICTURES_DIR,
         filename: (req, file, cb) => {
           const randomName = Array(32)
             .fill(null)
