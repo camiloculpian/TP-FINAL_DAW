@@ -10,7 +10,7 @@ import { TicketAuditsModule } from './audit/ticket-audits.module';
 import { ConfigModule } from '@nestjs/config';
 import { HeaderResolver, I18nModule } from 'nestjs-i18n';
 import { join } from 'path';
-import  { ServeStaticModule } from '@nestjs/serve-static';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 ConfigModule.forRoot({
   envFilePath: 'src/config/database.env',
@@ -39,8 +39,9 @@ ConfigModule.forRoot({
       }),
       resolvers: [new HeaderResolver(['x-custom-lang'])],
     }),
-    ServeStaticModule.forRoot ( { 
-      rootPath : join ( __dirname ,  '..' ,  '/uploads' ) 
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '../'),
+      renderPath: '/uploads',
     }),
     UsersModule,
     AuthModule,
