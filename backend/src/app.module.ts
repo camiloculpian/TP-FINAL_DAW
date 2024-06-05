@@ -10,6 +10,7 @@ import { TicketAuditsModule } from './audit/ticket-audits.module';
 import { ConfigModule } from '@nestjs/config';
 import { HeaderResolver, I18nModule } from 'nestjs-i18n';
 import { join } from 'path';
+import  { ServeStaticModule } from '@nestjs/serve-static';
 
 ConfigModule.forRoot({
   envFilePath: 'src/config/database.env',
@@ -37,6 +38,9 @@ ConfigModule.forRoot({
         typesOutputPath: join(__dirname, '../src/generated/i18n.generated.ts'),
       }),
       resolvers: [new HeaderResolver(['x-custom-lang'])],
+    }),
+    ServeStaticModule.forRoot ( { 
+      rootPath : join ( __dirname ,  '..' ,  'client' ) 
     }),
     UsersModule,
     AuthModule,
