@@ -105,7 +105,6 @@ import { CurrentUser, User } from "../../../dto/users";
                 if(this.file){
                     formData.append('profilePicture', this.file, this.file.name);
                 }
-                console.log(formData);
                 this.usersService.editUser(formData, this.userId).subscribe(
                     (resp) => {
                         if(resp.statusCode==201){
@@ -144,7 +143,16 @@ import { CurrentUser, User } from "../../../dto/users";
                 this.inputMissingMessage='';
                 let formObj = this.userForm.getRawValue();
                 formObj.password = sha512(String(formObj.password));
-                this.usersService.addUser(JSON.parse(JSON.stringify(formObj))).subscribe(
+                const formData = new FormData();
+                for (const [key, value] of Object.entries(formObj)) {
+                    if (typeof value != "object") {
+                        formData.append(key, String(value))
+                    }
+                }
+                if(this.file){
+                    formData.append('profilePicture', this.file, this.file.name);
+                }
+                this.usersService.addUser(formData).subscribe(
                     (resp) => {
                         if(resp.statusCode==201){
                             this.activeModal.close();

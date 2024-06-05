@@ -5,14 +5,14 @@
         <div class="row">
           <div class="col-sm-12">
             <div class="image-container bg2">
-              <img [src]="'http://localhost:3000/uploads/profiles/users/'+userProfile.profilePicture" class="avatar" alt="avatar" >
+              <img [src]="'http://localhost:3000/uploads/profiles/users/'+userProfile?.profilePicture" class="avatar" alt="avatar" >
             </div>
           </div>
           
           <div class="col-sm-12">
             <div class="details">
-              <h4>{{ userProfile.person?.name }}</h4>
-              <h4>{{ userProfile.person?.lastName }}</h4>
+              <h4>{{ userProfile?.person?.name }}</h4>
+              <h4>{{ userProfile?.person?.lastName }}</h4>
             </div>
           </div>
         </div>
@@ -44,17 +44,17 @@
                   </thead>
                   <tbody>
                     <tr id="TABLA_USUARIOS">
-                      <td>{{ userProfile.id }}</td>
-                      <td>{{ userProfile.username }}</td>
-                      <td>{{ userProfile.person?.name }}</td>
-                      <td>{{ userProfile.person?.lastName }}</td>
-                      <td>{{ userProfile.roles }}</td>
-                      <td>{{ userProfile.person?.dni }}</td>
-                      <td>{{ userProfile.person?.gender }}</td>
-                      <td>{{ userProfile.person?.email }}</td>
-                      <td>{{ userProfile.person?.phone }}</td>
-                      <td>{{ userProfile.person?.address }}</td>
-                      <td>{{ userProfile.person?.birthDate }}</td>
+                      <td>{{ userProfile?.id }}</td>
+                      <td>{{ userProfile?.username }}</td>
+                      <td>{{ userProfile?.person?.name }}</td>
+                      <td>{{ userProfile?.person?.lastName }}</td>
+                      <td>{{ userProfile?.roles }}</td>
+                      <td>{{ userProfile?.person?.dni }}</td>
+                      <td>{{ userProfile?.person?.gender }}</td>
+                      <td>{{ userProfile?.person?.email }}</td>
+                      <td>{{ userProfile?.person?.phone }}</td>
+                      <td>{{ userProfile?.person?.address }}</td>
+                      <td>{{ userProfile?.person?.birthDate }}</td>
                     </tr>
                   </tbody>
                 </table>

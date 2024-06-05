@@ -25,7 +25,7 @@ export class UsersService {
     return this._httpReq.get<Response>(this.apiUrl+`/users/profile`);
   }
 
-  addUser(user:JSON):Observable<Response>{
+  addUser(user:FormData):Observable<Response>{
     return this._httpReq.post<any>(this.apiUrl+`/users/`, user);
   }
 

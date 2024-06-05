@@ -18,7 +18,7 @@ import { environment } from '../../../environment/environment';
 
 export class AccountComponent implements OnInit {
   public apiUrl:string = environment.apiUrl;
-  public userProfile!: User;
+  public userProfile: User|undefined;
   public currentUser: User = JSON.parse(String(localStorage.getItem('user')));
 
   enableEdit:boolean=false;
