@@ -11,7 +11,6 @@ import { Router, RouterLink } from '@angular/router';
   styleUrl: './status-bar.component.css'
 })
 export class StatusBarComponent {
-  // OBVIAMENTE ESTO LO TENEMOS QUE TOMAR DESDE EL USUARIO LOGUEADO!!!!
   currentUser:CurrentUser|undefined=undefined;
   constructor(
     private router:Router,

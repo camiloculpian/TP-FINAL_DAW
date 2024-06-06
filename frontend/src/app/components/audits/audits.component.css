@@ -1,29 +1,45 @@
-.espaciado{
+/*--------------------------------------------------------------
+# General Section 
+--------------------------------------------------------------*/
+.espaciado {
     margin-top: 25px;
     margin-bottom: 25px;
 }
-.icon{
+
+.icon {
     width: 30px;
     height: 35px;
 }
 
-/* Por defecto, la tabla se muestra normalmente */
 .tablaGas {
     width: 100%;
     border-collapse: collapse;
-    /* Combina los bordes de las celdas */
 }
 
-/* Media query para pantallas de menos de 1000px */
+th {
+    white-space: nowrap;
+    text-align: left;
+    padding: 0 0.5cm;
+    background-color: #37517e;
+    color: white;
+}
+
+td {
+    text-align: left;
+    padding-left: 0.5cm;
+}
+
+table {
+    width: 100%;
+}
+
 @media screen and (max-width: 1000px) {
 
     .tablaGas th,
     .tablaGas td {
         display: none;
-        /* Oculta todas las celdas de la tabla */
     }
 
-    /* Muestra solo la 3era, 4ta, 5ta y última columna */
     .tablaGas th:nth-child(3),
     .tablaGas td:nth-child(3),
     .tablaGas th:nth-child(4),
@@ -33,18 +49,17 @@
     .tablaGas th:last-child,
     .tablaGas td:last-child {
         display: table-cell;
-        /* Muestra solo las celdas seleccionadas */
     }
 
     .form-control {
-        display:initial !important;
+        display: initial !important;
     }
 }
 
 
 /*--------------------------------------------------------------
-# Btn Download Section 
---------------------------------------------------------------*/ 
+# Btn Download Section CSV and PDF
+--------------------------------------------------------------*/
 
 .download-btn.pdf {
     width: 150px;
@@ -63,7 +78,7 @@
     cursor: pointer;
     background: white;
     border: none;
-    background: #4DABE2; 
+    background: #4DABE2;
     border-radius: 30px;
     overflow: hidden;
 }
@@ -84,7 +99,7 @@
 
 .download-btn .text-container {
     font-size: 17px;
-    color: #fff; 
+    color: #fff;
     font-weight: 600;
     opacity: 1;
     transition: opacity ease-in-out 250ms;
@@ -114,6 +129,7 @@
     -webkit-animation: heartbeat 1.5s ease-in-out infinite both;
     animation: heartbeat 1.5s ease-in-out infinite both;
 }
+
 @-webkit-keyframes heartbeat {
     from {
         -webkit-transform: scale(1);
@@ -123,24 +139,28 @@
         -webkit-animation-timing-function: ease-out;
         animation-timing-function: ease-out;
     }
+
     10% {
         -webkit-transform: scale(0.91);
         transform: scale(0.91);
         -webkit-animation-timing-function: ease-in;
         animation-timing-function: ease-in;
     }
+
     17% {
         -webkit-transform: scale(0.98);
         transform: scale(0.98);
         -webkit-animation-timing-function: ease-out;
         animation-timing-function: ease-out;
     }
+
     33% {
         -webkit-transform: scale(0.87);
         transform: scale(0.87);
         -webkit-animation-timing-function: ease-in;
         animation-timing-function: ease-in;
     }
+
     45% {
         -webkit-transform: scale(1);
         transform: scale(1);
@@ -158,28 +178,59 @@
         -webkit-animation-timing-function: ease-out;
         animation-timing-function: ease-out;
     }
+
     10% {
         -webkit-transform: scale(0.91);
         transform: scale(0.91);
         -webkit-animation-timing-function: ease-in;
         animation-timing-function: ease-in;
     }
+
     17% {
         -webkit-transform: scale(0.98);
         transform: scale(0.98);
         -webkit-animation-timing-function: ease-out;
         animation-timing-function: ease-out;
     }
+
     33% {
         -webkit-transform: scale(0.87);
         transform: scale(0.87);
         -webkit-animation-timing-function: ease-in;
         animation-timing-function: ease-in;
     }
+
     45% {
         -webkit-transform: scale(1);
         transform: scale(1);
         -webkit-animation-timing-function: ease-out;
         animation-timing-function: ease-out;
+    }
+}
+
+/*--------------------------------------------------------------
+# Responsive Section 
+--------------------------------------------------------------*/
+
+@media screen and (max-width: 1000px) {
+
+    .tablaGas th,
+    .tablaGas td {
+        display: none;
+    }
+
+    .tablaGas th:nth-child(3),
+    .tablaGas td:nth-child(3),
+    .tablaGas th:nth-child(4),
+    .tablaGas td:nth-child(4),
+    .tablaGas th:nth-child(5),
+    .tablaGas td:nth-child(5),
+    .tablaGas th:last-child,
+    .tablaGas td:last-child {
+        display: table-cell;
+    }
+
+    .form-control {
+        display: initial !important;
     }
 }

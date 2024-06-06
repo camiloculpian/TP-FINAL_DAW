@@ -22,9 +22,9 @@ import { FormsModule } from '@angular/forms';
 
 export class TicketsComponent implements OnInit {
   private modalService = inject(NgbModal);
-  public tickets:any=[]; // Usar una matriz escrita para boletos
+  public tickets:any=[];
   public selectedTicket: Ticket | null = null;
-  public response: any | null = null; // Usar'cualquiera' para el objeto de respuesta
+  public response: any | null = null; 
   currentUser!:CurrentUser;
 
   constructor(
@@ -36,7 +36,6 @@ export class TicketsComponent implements OnInit {
   ngOnInit(): void {
     console.log('ngOnInit()');
     try{
-      // obtencion de todos los tickets
       this.getTickets();
     } catch (error) {
       console.error('Error:', error);
@@ -47,7 +46,7 @@ export class TicketsComponent implements OnInit {
     this.selectedTicket = ticket;
   }
 
-  // confirmacion de borrado solo pa resolved
+  // Delete if "resolved"
   confirmDeleteTicket(ticketId: number, ticketStatus: string): void {
     if (ticketStatus !== 'RESOLVED') {
       Swal.fire({
@@ -72,7 +71,6 @@ export class TicketsComponent implements OnInit {
     });
   }
 
-  // Borrar el ticket
   deleteTicket(ticketId: number): void {
     this.ticketsService.deleteTicket(ticketId).subscribe({
         next: (response) => {
@@ -93,7 +91,6 @@ export class TicketsComponent implements OnInit {
   }
 
   addTicket(){
-    //const currentUser: CurrentUser = JSON.parse(String(localStorage.getItem('user')));
     const modalRef = this.modalService.open(AddEditTicketsComponent);
     modalRef.hidden.subscribe({next:()=>(this.ticketsService.refreshTickets())});
   }
@@ -107,7 +104,6 @@ export class TicketsComponent implements OnInit {
     this.ticketsService.tickets$.subscribe({
             next: (tickets) => {
                 this.tickets = (tickets as unknown as Ticket[]).map((ticketData: any) => {
-                  // Crear un nuevo objeto Ticket a partir de ticketData
                   const ticket: Ticket = {
                     id: ticketData.id,
                     title: ticketData.title,
@@ -126,7 +122,7 @@ export class TicketsComponent implements OnInit {
             },
       });
   }
-  // Descargar csv con papaparse
+  //  Download CSV with papaparse
   downloadCSV() {
     const csvData = Papa.unparse(this.tickets);
     const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
@@ -140,7 +136,7 @@ export class TicketsComponent implements OnInit {
     link.click();
     document.body.removeChild(link);
   }
-  // Descargar pdf con jspdf
+  // Download PDF with jspdf
   downloadPDF() {
     setTimeout(() => {
       const element = document.getElementById('tickets-table');
@@ -168,14 +164,12 @@ export class TicketsComponent implements OnInit {
           pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
           pdf.save('tickets.pdf');
 
-          // Restaurar la visibilidad de la columna de acciones y botones
           if (actionsColumn) {
             actionsColumn.style.display = '';
           }
         }).catch(error => {
           console.error('Error al generar PDF:', error);
 
-          // Restaurar la visibilidad de la columna de acciones y botones en caso de error
           if (actionsColumn) {
             actionsColumn.style.display = '';
           }
@@ -183,6 +177,6 @@ export class TicketsComponent implements OnInit {
       } else {
         console.error('Elemento no encontrado');
       }
-    }, 50); // Retraso de 50 ms
+    }, 50); 
   }
 }

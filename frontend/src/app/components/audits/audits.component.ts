@@ -16,7 +16,7 @@ export class AuditsComponent implements OnInit {
   private modalService = inject(NgbModal);
   public tickets:any=[];
   public selectedTicket: Ticket | null = null;
-  public response: any | null = null; // Usar'cualquiera' para el objeto de respuesta
+  public response: any | null = null; 
   constructor(
     private ticketsService: TicketService,
   ){
@@ -34,9 +34,8 @@ export class AuditsComponent implements OnInit {
           next: (response) => {
             if (response.status == 'success') {
               console.log('Listo pa procesar los datiños')
-            } else if (response.data) { // procesar datos
+            } else if (response.data) { 
               this.tickets = (response.data as unknown as Ticket[]).map((ticketData: any) => {
-                // Crear un nuevo objeto Ticket a partir de ticketData
                 const ticket: Ticket = {
                   id: ticketData.id,
                   title: ticketData.title,

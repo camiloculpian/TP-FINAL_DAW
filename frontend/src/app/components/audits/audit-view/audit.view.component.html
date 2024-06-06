@@ -1,78 +1,87 @@
+<!-- ======= Audit Section ======= -->
+
 <div>
-    <div class="modal-header">
-        <h4 class="modal-title">Auditanditando Ticket ID: {{ticketId}}</h4>
-        <button type="button" class="btn-close" aria-label="Close"
-            (click)="activeModal.dismiss('Cross click')"></button>
+  <div class="modal-header">
+    <h4 class="modal-title">Auditanditando Ticket ID: {{ticketId}}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="panel-body panel-white" *ngIf="audits && audits.length > 0">
+      <table ngb-table class="table table-hover table-responsive table-md tablaGas" id="audits-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Operacion</th>
+            <th>Descripcion</th>
+            <th>Prioridad</th>
+            <th>Usuario Asignado</th>
+            <th>Status</th>
+            <th>Modificada por Usuario</th>
+            <th>Fecha de Modificacion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr div *ngFor="let audit of audits">
+            <td>{{ audit.id }}</td>
+            <td>{{ audit.operation }}</td>
+            <td>{{ audit.description }}</td>
+            <td>{{ audit.priority }}</td>
+            <td>{{ audit.asignedToUser?.username || 'NO Asignado!' }}</td>
+            <td>{{ audit.status }}</td>
+            <td>{{ audit.modifiedByUser?.username || 'Null' }}</td>
+            <td>{{ audit.modifiedAt }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="modal-body">
-        <div *ngIf="audits && audits.length > 0">
-            <table ngb-table class="table table-light table-striped table-hover table-responsive table-md tablaGas"
-                id="audits-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Operacion</th>
-                        <th>Descripcion</th>
-                        <th>Prioridad</th>
-                        <th>Usuario Asignado</th>
-                        <th>Status</th>
-                        <th>Modificada por Usuario</th>
-                        <th>Fecha de Modificacion</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr div *ngFor="let audit of audits">
-                        <td>{{ audit.id }}</td>
-                        <td>{{ audit.operation }}</td>
-                        <td>{{ audit.description }}</td>
-                        <td>{{ audit.priority }}</td>
-                        <td>{{ audit.asignedToUser?.username || 'NO Asignado!' }}</td>
-                        <td>{{ audit.status }}</td>
-                        <td>{{ audit.modifiedByUser?.username || 'Null' }}</td>
-                        <td>{{ audit.modifiedAt }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div *ngIf="!audits || audits.length === 0">
-            <p>No hay datos de auditoría para mostrar.</p>
-        </div>
+    <div *ngIf="!audits || audits.length === 0">
+      <p>No hay datos de auditoría para mostrar.</p>
     </div>
-    <div class="modal-footer">
-        <div class="col-6 col-md-4">
-            <!-- Botón para descargar CSV -->
-            <button class="download-btn csv" (click)="downloadCSV()">
-              <div class="button-content">
-                <div class="svg-container">
-                  <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="#fff" viewBox="0 0 24 24">
-                    <path fill-rule="evenodd" d="M13 11.15V4a1 1 0 1 0-2 0v7.15L8.78 8.374a1 1 0 1 0-1.56 1.25l4 5a1 1 0 0 0 1.56 0l4-5a1 1 0 1 0-1.56-1.25L13 11.15Z" clip-rule="evenodd"/>
-                    <path fill-rule="evenodd" d="M9.657 15.874 7.358 13H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2.358l-2.3 2.874a3 3 0 0 1-4.685 0ZM17 16a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z" clip-rule="evenodd"/>
-                  </svg>
-                </div>
-                <div class="text-container">
-                  Download CSV
-                </div>
-              </div>
-            </button>
+  </div>
+  <div class="modal-footer">
+    <div class="col-6 col-md-4">
+      <!-- ======= Download CSV Section ======= -->
+      <button class="download-btn csv" (click)="downloadCSV()">
+        <div class="button-content">
+          <div class="svg-container">
+            <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+              fill="#fff" viewBox="0 0 24 24">
+              <path fill-rule="evenodd"
+                d="M13 11.15V4a1 1 0 1 0-2 0v7.15L8.78 8.374a1 1 0 1 0-1.56 1.25l4 5a1 1 0 0 0 1.56 0l4-5a1 1 0 1 0-1.56-1.25L13 11.15Z"
+                clip-rule="evenodd" />
+              <path fill-rule="evenodd"
+                d="M9.657 15.874 7.358 13H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2.358l-2.3 2.874a3 3 0 0 1-4.685 0ZM17 16a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z"
+                clip-rule="evenodd" />
+            </svg>
           </div>
-          <div class="col-6 col-md-4">
-            <!-- Botón para descargar PDF -->
-            <button class="download-btn pdf" (click)="downloadPDF()">
-        
-              <div class="button-content">
-                <div class="svg-container">
-                  <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="#fff" viewBox="0 0 24 24">
-                    <path fill-rule="evenodd" d="M13 11.15V4a1 1 0 1 0-2 0v7.15L8.78 8.374a1 1 0 1 0-1.56 1.25l4 5a1 1 0 0 0 1.56 0l4-5a1 1 0 1 0-1.56-1.25L13 11.15Z" clip-rule="evenodd"/>
-                    <path fill-rule="evenodd" d="M9.657 15.874 7.358 13H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2.358l-2.3 2.874a3 3 0 0 1-4.685 0ZM17 16a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z" clip-rule="evenodd"/>
-                  </svg>
-                </div>
-                <div class="text-container">
-                  Download PDF
-                </div>
-              </div>
-            </button>
+          <div class="text-container">
+            Download CSV
           </div>
+        </div>
+      </button>
+    </div>
+    <div class="col-6 col-md-4">
+      <!-- ======= Download PDF Section ======= -->
+      <button class="download-btn pdf" (click)="downloadPDF()">
 
+        <div class="button-content">
+          <div class="svg-container">
+            <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+              fill="#fff" viewBox="0 0 24 24">
+              <path fill-rule="evenodd"
+                d="M13 11.15V4a1 1 0 1 0-2 0v7.15L8.78 8.374a1 1 0 1 0-1.56 1.25l4 5a1 1 0 0 0 1.56 0l4-5a1 1 0 1 0-1.56-1.25L13 11.15Z"
+                clip-rule="evenodd" />
+              <path fill-rule="evenodd"
+                d="M9.657 15.874 7.358 13H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2.358l-2.3 2.874a3 3 0 0 1-4.685 0ZM17 16a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z"
+                clip-rule="evenodd" />
+            </svg>
+          </div>
+          <div class="text-container">
+            Download PDF
+          </div>
+        </div>
+      </button>
     </div>
+
+  </div>
 </div>
-

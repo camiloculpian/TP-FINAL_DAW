@@ -1,49 +1,40 @@
 /*--------------------------------------------------------------
-# Table Section
---------------------------------------------------------------*/ 
+# General Section
+--------------------------------------------------------------*/
 
 .tablaGas {
     width: 100%;
     border-collapse: collapse;
 }
 
-@media screen and (max-width: 1000px) {
-
-    .tablaGas th,
-    .tablaGas td {
-        display: none;
-    }
-
-    .tablaGas th:nth-child(3),
-    .tablaGas td:nth-child(3),
-    .tablaGas th:nth-child(4),
-    .tablaGas td:nth-child(4),
-    .tablaGas th:nth-child(5),
-    .tablaGas td:nth-child(5),
-    .tablaGas th:last-child,
-    .tablaGas td:last-child {
-        display: table-cell;
-    }
-}
-
-.icon{
-    width: 30px;
-    height: 35px;
-}
-
-.espaciado{
+.espaciado {
     margin-top: 25px;
     margin-bottom: 25px;
 }
 
 .espaciadoBtn {
-    margin-right: 5px;
-  }
-  
+    margin-right: 10px;
+}
+
+th {
+    white-space: nowrap;
+    text-align: left;
+    padding: 0 0.5cm;
+}
+
+td {
+    text-align: left;
+    padding-left: 0.5cm;
+}
+
+table {
+    width: 100%;
+}
+
 
 /*--------------------------------------------------------------
 # Btn Create Section 
---------------------------------------------------------------*/ 
+--------------------------------------------------------------*/
 .create {
     position: relative;
     width: 180px;
@@ -108,9 +99,14 @@
     border: 1px solid #2e8644;
 }
 
+body {
+    margin-top: 20px;
+    background: #eee;
+}
+
 /*--------------------------------------------------------------
 # Btn Download Section 
---------------------------------------------------------------*/ 
+--------------------------------------------------------------*/
 
 .download-btn.pdf {
     width: 150px;
@@ -129,7 +125,7 @@
     cursor: pointer;
     background: white;
     border: none;
-    background: #4DABE2; 
+    background: #4DABE2;
     border-radius: 30px;
     overflow: hidden;
 }
@@ -150,7 +146,7 @@
 
 .download-btn .text-container {
     font-size: 17px;
-    color: #fff; 
+    color: #fff;
     font-weight: 600;
     opacity: 1;
     transition: opacity ease-in-out 250ms;
@@ -180,6 +176,7 @@
     -webkit-animation: heartbeat 1.5s ease-in-out infinite both;
     animation: heartbeat 1.5s ease-in-out infinite both;
 }
+
 @-webkit-keyframes heartbeat {
     from {
         -webkit-transform: scale(1);
@@ -189,24 +186,28 @@
         -webkit-animation-timing-function: ease-out;
         animation-timing-function: ease-out;
     }
+
     10% {
         -webkit-transform: scale(0.91);
         transform: scale(0.91);
         -webkit-animation-timing-function: ease-in;
         animation-timing-function: ease-in;
     }
+
     17% {
         -webkit-transform: scale(0.98);
         transform: scale(0.98);
         -webkit-animation-timing-function: ease-out;
         animation-timing-function: ease-out;
     }
+
     33% {
         -webkit-transform: scale(0.87);
         transform: scale(0.87);
         -webkit-animation-timing-function: ease-in;
         animation-timing-function: ease-in;
     }
+
     45% {
         -webkit-transform: scale(1);
         transform: scale(1);
@@ -224,24 +225,28 @@
         -webkit-animation-timing-function: ease-out;
         animation-timing-function: ease-out;
     }
+
     10% {
         -webkit-transform: scale(0.91);
         transform: scale(0.91);
         -webkit-animation-timing-function: ease-in;
         animation-timing-function: ease-in;
     }
+
     17% {
         -webkit-transform: scale(0.98);
         transform: scale(0.98);
         -webkit-animation-timing-function: ease-out;
         animation-timing-function: ease-out;
     }
+
     33% {
         -webkit-transform: scale(0.87);
         transform: scale(0.87);
         -webkit-animation-timing-function: ease-in;
         animation-timing-function: ease-in;
     }
+
     45% {
         -webkit-transform: scale(1);
         transform: scale(1);
@@ -250,89 +255,90 @@
     }
 }
 
+/*--------------------------------------------------------------
+# Table Section
+--------------------------------------------------------------*/
 
-body {
-    margin-top: 20px;
-    background: #eee;
-  }
-  
-  
-  .profile-widget {
-    position: relative;
-  }
-  
-  .profile-widget .image-container {
-    background-size: cover;
-    background-position: center;
-    padding: 190px 0 10px;
-  }
-  
-  .profile-widget .image-container .avatar {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    margin: 0 auto -60px;
-    display: block;
-  }
-  
-  .profile-widget .details {
-    padding: 50px 15px 15px;
-    text-align: center;
-  }
-  
-  .panel {
+.panel {
     border-radius: 0;
     margin-bottom: 30px;
-  }
-  
-  .panel .panel-heading {
+}
+
+.panel .panel-heading {
     border-radius: 0;
     position: relative;
     background-color: #37517e;
     color: white;
     text-align: center;
     padding: 10px;
-  }
-  
-  .panel .panel-title {
+}
+
+.panel .panel-title {
     font-size: 20px;
     line-height: 28px;
     font-weight: bold;
-  }
-  
-  .panel .panel-body {
+}
+
+.panel .panel-body {
     font-size: 19px;
     padding: 20px;
-  }
-  
-  .panel .panel-body > .body-section {
+}
+
+.panel .panel-body>.body-section {
     margin: 0px 0px 20px;
-  }
-  
-  .panel .panel-body > .body-section > .section-heading {
+}
+
+.panel .panel-body>.body-section>.section-heading {
     margin: 0px 0px 5px;
     font-weight: bold;
-  }
-  
-  .panel .panel-body > .body-section > .section-content {
+}
+
+.panel .panel-body>.body-section>.section-content {
     margin: 0px 0px 10px;
-  }
-  
-  .panel-white {
+}
+
+.panel-white {
     border: 1px solid #dddddd;
-  }
-  
-  .panel-white > .panel-heading {
+}
+
+.panel-white>.panel-heading {
     color: #333;
     background-color: #fff;
     border-color: #ddd;
-  }
-  
-  .border-top-blue {
+}
+
+.border-top-blue {
     border-top: 4px solid #37517e !important;
-  }
-  
-  .bg2 {
+}
+
+.bg2 {
     background-color: #37517e;
-  }
-  
+}
+
+
+/*--------------------------------------------------------------
+# Responsive Section
+--------------------------------------------------------------*/
+
+@media screen and (max-width: 1000px) {
+
+    .tablaGas th,
+    .tablaGas td {
+        display: none;
+    }
+
+    .tablaGas th:nth-child(3),
+    .tablaGas td:nth-child(3),
+    .tablaGas th:nth-child(4),
+    .tablaGas td:nth-child(4),
+    .tablaGas th:nth-child(5),
+    .tablaGas td:nth-child(5),
+    .tablaGas th:last-child,
+    .tablaGas td:last-child {
+        display: table-cell;
+    }
+
+    .form-control {
+        display: initial !important;
+    }
+}

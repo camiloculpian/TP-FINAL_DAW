@@ -1,8 +1,30 @@
+/*--------------------------------------------------------------
+# General Section
+--------------------------------------------------------------*/
+
 body {
   margin-top: 20px;
   background: #eee;
 }
 
+th {
+  white-space: nowrap;
+  text-align: left;
+  padding: 0 0.5cm;
+}
+
+td {
+  text-align: left;
+  padding-left: 0.5cm;
+}
+
+table {
+  width: 100%;
+}
+
+/*--------------------------------------------------------------
+# Profile Section
+--------------------------------------------------------------*/
 
 .profile-widget {
   position: relative;
@@ -52,16 +74,16 @@ body {
   padding: 20px;
 }
 
-.panel .panel-body > .body-section {
+.panel .panel-body>.body-section {
   margin: 0px 0px 20px;
 }
 
-.panel .panel-body > .body-section > .section-heading {
+.panel .panel-body>.body-section>.section-heading {
   margin: 0px 0px 5px;
   font-weight: bold;
 }
 
-.panel .panel-body > .body-section > .section-content {
+.panel .panel-body>.body-section>.section-content {
   margin: 0px 0px 10px;
 }
 
@@ -69,16 +91,39 @@ body {
   border: 1px solid #dddddd;
 }
 
-.panel-white > .panel-heading {
+.panel-white>.panel-heading {
   color: #333;
   background-color: #fff;
   border-color: #ddd;
 }
 
-.border-top-blue {
-  border-top: 4px solid #37517e !important;
-}
-
 .bg2 {
   background-color: #37517e;
+}
+
+/*--------------------------------------------------------------
+# Responsive Section
+--------------------------------------------------------------*/
+
+@media screen and (max-width: 1000px) {
+
+  .tablaGas th,
+  .tablaGas td {
+    display: none;
+  }
+
+  .tablaGas th:nth-child(3),
+  .tablaGas td:nth-child(3),
+  .tablaGas th:nth-child(4),
+  .tablaGas td:nth-child(4),
+  .tablaGas th:nth-child(5),
+  .tablaGas td:nth-child(5),
+  .tablaGas th:last-child,
+  .tablaGas td:last-child {
+    display: table-cell;
+  }
+
+  .form-control {
+    display: initial !important;
+  }
 }

@@ -48,7 +48,6 @@ export class UsersComponent implements OnInit {
       // gender: new FormControl('', Validators.required),
     });
   }
-  // OBTENCION DE TODOS LOS USERS
   ngOnInit(): void {
     
     this.getUsers();
@@ -62,7 +61,7 @@ export class UsersComponent implements OnInit {
     this.usersService.getUsers().subscribe({
       next: (resp) => {
         this.response = resp;
-        this.usersList = this.response.data as unknown as User[]; // Cast to User[]
+        this.usersList = this.response.data as unknown as User[]; 
         this.filteredUsersList = this.usersList;
         console.log(this.usersList);
       },
@@ -73,7 +72,7 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  // busqueda de un usuario por username
+  // Search username
   onSearch(event: Event) {
     const searchTerm = (event.target as HTMLInputElement).value.toLowerCase();
     if (searchTerm) {
@@ -81,16 +80,14 @@ export class UsersComponent implements OnInit {
         user.person?.name?.toLowerCase().includes(searchTerm)
         
       );
-      this.usersList = this.filteredUsersList; // Actualiza userList con los datos filtrados
+      this.usersList = this.filteredUsersList; 
     } else {
-      this.getUsers(); // Llamar de nuevo a getUsers para obtener la lista completa si se borran datos del input
+      this.getUsers(); 
     }
   }
   
 
-  // BORRA UN USUARIO EN ESPECIFICO
   deleteUser(userId: number): void {
-    // Mostrar Sweet Alert de confirmación
     Swal.fire({
       title: '¿Está seguro de eliminar?',
       text: 'No podrá revertir esta acción',
@@ -100,7 +97,6 @@ export class UsersComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result: { isConfirmed: any; }) => {
       if (result.isConfirmed) {
-        // Usuario confirmó eliminar, realizar la eliminación
         console.log('Deleting user:', userId);
 
       this.usersService.deleteUser(userId).subscribe({
@@ -109,7 +105,6 @@ export class UsersComponent implements OnInit {
 
             this.getUsers();
 
-            // Mostrar mensaje de éxito
             Swal.fire({
               title: response.message,
               icon: 'success'
@@ -117,7 +112,6 @@ export class UsersComponent implements OnInit {
           },
           error: (error) => {
             console.error('Error deleting user:', error);
-            // Manejar el error de eliminación (por ejemplo, mostrar un mensaje de error)
             Swal.fire({
               title: 'Error al eliminar usuario',
               text: error.message,
