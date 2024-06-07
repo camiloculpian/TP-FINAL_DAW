@@ -1,35 +1,35 @@
+<!-- ======= Ticket-audit Section ======= -->
 <div class="tickets-container">
-    <h2 class="d-flex justify-content-center">Auditoria de los Tickets</h2>
-    <div class="espaciado"></div>
-    <table ngb-table class="table table-light table-striped table-hover table-responsive table-md tablaGas">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Priority</th>
-          <th>Service</th>
-          <th>Status</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let ticket of tickets">
-          <td>{{ ticket.id }}</td>
-          <td>{{ ticket.title }}</td>
-          <td>{{ ticket.description }}</td>
-          <td>{{ ticket.priority }}</td>
-          <td>{{ ticket.service }}</td>
-          <td>{{ ticket.status }}</td>
-          <td >
-            <button class="btn btn-info" (click)="viewTicketAudit(ticket.id)"><i class="notifyIcon fa-solid fa-magnifying-glass"></i></button>
-            <!-- <button class="btn btn-warning" (click)="editTicket(ticket.id)"><i class="notifyIcon fa-solid fa-pen-to-square"></i></button> -->
-          </td>
-        </tr>
-        <tr *ngIf="tickets?.length === 0">
-              <td colspan="8">No se encontraron datos.</td>
-        </tr>
-      </tbody>
-    </table>
+  <h2 class="d-flex justify-content-center">Auditoria de los Tickets</h2>
+  <div class="espaciado"></div>
+  <table ngb-table class="table table-light table-striped table-hover table-responsive table-md tablaGas">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Priority</th>
+        <th>Service</th>
+        <th>Status</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ticket of tickets">
+        <td>{{ ticket.id }}</td>
+        <td>{{ ticket.title }}</td>
+        <td>{{ ticket.description }}</td>
+        <td>{{ ticket.priority }}</td>
+        <td>{{ ticket.service }}</td>
+        <td>{{ ticket.status }}</td>
+        <td>
+          <button class="btn btn-info" (click)="viewTicketAudit(ticket.id)"><i
+              class="notifyIcon fa-solid fa-magnifying-glass"></i></button>
+        </td>
+      </tr>
+      <tr *ngIf="tickets?.length === 0">
+        <td colspan="8">No se encontraron datos.</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-<!-- <button class="btn btn-warning" (click)="addTicket()"><i class="notifyIcon fa-regular fa-square-plus"> Add Ticket</i></button> -->

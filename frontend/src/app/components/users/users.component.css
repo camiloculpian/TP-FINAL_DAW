@@ -1,194 +1,212 @@
-/* Por defecto, la tabla se muestra normalmente */
+/*--------------------------------------------------------------
+# General Section 
+--------------------------------------------------------------*/
 .tablaGas {
-    width: 100%;
-    border-collapse: collapse;
-    /* Combina los bordes de las celdas */
+  width: 100%;
+  border-collapse: collapse;
 }
 
-/* Media query para pantallas de menos de 1000px */
-@media screen and (max-width: 1000px) {
+th {
 
-    .tablaGas th,
-    .tablaGas td {
-        display: none;
-        /* Oculta todas las celdas de la tabla */
-    }
-
-    /* Muestra solo la 3era, 4ta, 5ta y última columna */
-    .tablaGas th:nth-child(3),
-    .tablaGas td:nth-child(3),
-    .tablaGas th:nth-child(4),
-    .tablaGas td:nth-child(4),
-    .tablaGas th:nth-child(5),
-    .tablaGas td:nth-child(5),
-    .tablaGas th:last-child,
-    .tablaGas td:last-child {
-        display: table-cell;
-        /* Muestra solo las celdas seleccionadas */
-    }
-
-    .form-control {
-        display:initial !important;
-    }
+  white-space: nowrap;
+  padding: 0 0.5cm;
 }
 
-.espaciado{
-    margin-top: 25px;
-    margin-bottom: 25px;
+td {
+  text-align: left;
+  padding-left: 0.5cm;
 }
-.espaciadoBtn{
-    margin-left: 10px;
+
+table {
+  width: 100%;
+}
+
+.espaciado {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.espaciadoBtn {
+  margin-left: 10px;
+}
+
+body {
+  margin-top: 20px;
+  background: #eee;
 }
 
 /*--------------------------------------------------------------
 # Btn Create Section 
---------------------------------------------------------------*/ 
+--------------------------------------------------------------*/
 .create {
-    position: relative;
-    width: 190px;
-    height: 40px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    border: 1px solid #34974d;
-    background-color: #3aa856;
-    border-radius: 30px;
+  position: relative;
+  width: 190px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: 1px solid #34974d;
+  background-color: #3aa856;
+  border-radius: 30px;
 
 }
 
 .create,
 .create .button__icon,
 .create .button__text {
-    transition: all 0.3s;
+  transition: all 0.3s;
 }
 
 .create .button__text {
-    transform: translateX(30px);
-    color: #fff;
-    font-weight: 600;
+  transform: translateX(30px);
+  color: #fff;
+  font-weight: 600;
 }
 
 .create .button__icon {
-    position: absolute;
-    transform: translateX(145px);
-    height: 100%;
-    width: 43px;
-    background-color: #34974d;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 30px;
+  position: absolute;
+  transform: translateX(145px);
+  height: 100%;
+  width: 43px;
+  background-color: #34974d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
 
 }
 
 .create .svg {
-    width: 30px;
-    stroke: #fff;
+  width: 30px;
+  stroke: #fff;
 }
 
 .create:hover {
-    background: #34974d;
+  background: #34974d;
 }
 
 .create:hover .button__text {
-    color: transparent;
+  color: transparent;
 }
 
 .create:hover .button__icon {
-    width: 148px;
-    transform: translateX(0);
+  width: 148px;
+  transform: translateX(0);
 }
 
 .create:active .button__icon {
-    background-color: #2e8644;
+  background-color: #2e8644;
 }
 
 .create:active {
-    border: 1px solid #2e8644;
+  border: 1px solid #2e8644;
 }
 
-body {
-    margin-top: 20px;
-    background: #eee;
+/*--------------------------------------------------------------
+# Profile Section 
+--------------------------------------------------------------*/
+.profile-widget {
+  position: relative;
+}
+
+.profile-widget .image-container {
+  background-size: cover;
+  background-position: center;
+  padding: 190px 0 10px;
+}
+
+.profile-widget .image-container .avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin: 0 auto -60px;
+  display: block;
+}
+
+.profile-widget .details {
+  padding: 50px 15px 15px;
+  text-align: center;
+}
+
+.panel {
+  border-radius: 0;
+  margin-bottom: 30px;
+}
+
+.panel .panel-heading {
+  border-radius: 0;
+  position: relative;
+  background-color: #37517e;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+.panel .panel-title {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: bold;
+}
+
+.panel .panel-body {
+  font-size: 19px;
+  padding: 20px;
+}
+
+.panel .panel-body>.body-section {
+  margin: 0px 0px 20px;
+}
+
+.panel .panel-body>.body-section>.section-heading {
+  margin: 0px 0px 5px;
+  font-weight: bold;
+}
+
+.panel .panel-body>.body-section>.section-content {
+  margin: 0px 0px 10px;
+}
+
+.panel-white {
+  border: 1px solid #dddddd;
+}
+
+.panel-white>.panel-heading {
+  color: #333;
+  background-color: #fff;
+  border-color: #ddd;
+}
+
+.border-top-blue {
+  border-top: 4px solid #37517e !important;
+}
+
+.bg2 {
+  background-color: #37517e;
+}
+
+
+/*--------------------------------------------------------------
+# Responsive Section 
+--------------------------------------------------------------*/
+@media screen and (max-width: 1000px) {
+
+  .tablaGas th,
+  .tablaGas td {
+    display: none;
   }
-  
-  
-  .profile-widget {
-    position: relative;
+
+  .tablaGas th:nth-child(3),
+  .tablaGas td:nth-child(3),
+  .tablaGas th:nth-child(4),
+  .tablaGas td:nth-child(4),
+  .tablaGas th:nth-child(5),
+  .tablaGas td:nth-child(5),
+  .tablaGas th:last-child,
+  .tablaGas td:last-child {
+    display: table-cell;
   }
-  
-  .profile-widget .image-container {
-    background-size: cover;
-    background-position: center;
-    padding: 190px 0 10px;
+
+  .form-control {
+    display: initial !important;
   }
-  
-  .profile-widget .image-container .avatar {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    margin: 0 auto -60px;
-    display: block;
-  }
-  
-  .profile-widget .details {
-    padding: 50px 15px 15px;
-    text-align: center;
-  }
-  
-  .panel {
-    border-radius: 0;
-    margin-bottom: 30px;
-  }
-  
-  .panel .panel-heading {
-    border-radius: 0;
-    position: relative;
-    background-color: #37517e;
-    color: white;
-    text-align: center;
-    padding: 10px;
-  }
-  
-  .panel .panel-title {
-    font-size: 20px;
-    line-height: 28px;
-    font-weight: bold;
-  }
-  
-  .panel .panel-body {
-    font-size: 19px;
-    padding: 20px;
-  }
-  
-  .panel .panel-body > .body-section {
-    margin: 0px 0px 20px;
-  }
-  
-  .panel .panel-body > .body-section > .section-heading {
-    margin: 0px 0px 5px;
-    font-weight: bold;
-  }
-  
-  .panel .panel-body > .body-section > .section-content {
-    margin: 0px 0px 10px;
-  }
-  
-  .panel-white {
-    border: 1px solid #dddddd;
-  }
-  
-  .panel-white > .panel-heading {
-    color: #333;
-    background-color: #fff;
-    border-color: #ddd;
-  }
-  
-  .border-top-blue {
-    border-top: 4px solid #37517e !important;
-  }
-  
-  .bg2 {
-    background-color: #37517e;
-  }
-  
+}

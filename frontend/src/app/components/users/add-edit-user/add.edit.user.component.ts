@@ -20,7 +20,6 @@ import { CurrentUser, User } from "../../../dto/users";
     userId:number=0;
     currentUser: CurrentUser;
     private file!: File;
-    // @Output() messageEventOut = new EventEmitter<string>();
     @Input() user!:User;
     @Input() name: string|undefined;
     activeModal = inject(NgbActiveModal);

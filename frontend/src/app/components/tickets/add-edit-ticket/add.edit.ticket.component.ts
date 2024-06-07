@@ -13,12 +13,10 @@ import { TicketService } from '../tickets.service';
 import { Ticket } from '../../../dto/ticket';
 import { UsersService } from '../../users/users.service';
 
-// Servicio de Usuarios
 @Injectable({
     providedIn: 'root'
 })
 
-// Componente de add-Tickets
 @Component({
     selector: 'app-add-tickets',
     standalone: true,

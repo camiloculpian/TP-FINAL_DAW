@@ -12,28 +12,20 @@ import { CurrentUser } from '../../dto/users';
 export class LoginService {
   private responseSubject: BehaviorSubject<Response | null>;
   public response: Observable<Response | null>;
-  // public isAuthenticated:boolean;
   constructor(
     private _httpReq:HttpClient,
     private router:Router,
   ) {
     this.responseSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('response')!));
     this.response = this.responseSubject.asObservable();
-    // this.isAuthenticated = this.isLoggedIn();
   }
 
-  // login(username:string, password:string):Observable<Response>{
-  //   return this._httpReq.post<Response>("http://localhost:3000/api/v1/auth/login", {"username":username, "password":password})
-  // }
 
   logIn(username: string, password: string) {
-    // CAMBIAR LAS RUTAS A UN ARCHIVO!!!
     return this._httpReq.post<Response>("http://localhost:3000/api/v1/auth/login", {"username":username, "password":password})
       .pipe(map(resp => {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('user', JSON.stringify(resp.data));
           this.responseSubject.next(resp);
-          // this.isAuthenticated=true;
           return resp;
       })
     )

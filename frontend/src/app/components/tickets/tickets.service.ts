@@ -56,7 +56,6 @@ function sort(tickets: Ticket[], column: SortColumn, direction: string): Ticket[
 	}
 }
 
-// Servicio de Tickets
 @Injectable({
     providedIn: 'root'
 })
@@ -80,7 +79,6 @@ export class TicketService {
 
     constructor(
         private http: HttpClient,
-		// private pipe: DecimalPipe
     ) {
         this._search$
 			.pipe(
@@ -162,7 +160,6 @@ export class TicketService {
 		this._search$.next();
 	}
 
-	// private _search(): Observable<SearchResult> {
 	private _search(): Observable<Response> {
 		const { sortColumn, sortDirection, pageSize, page } = this._state;
 		const params = new HttpParams().set('filter', this.searchTerm);

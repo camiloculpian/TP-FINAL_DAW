@@ -1,37 +1,38 @@
-.app-layout{
+/*--------------------------------------------------------------
+# Layout Section 
+--------------------------------------------------------------*/
+.app-layout {
     display: flex;
     flex-direction: column;
 
 }
-.app-layout-statusbar{
+
+.app-layout-statusbar {
     background-color: rgb(255, 251, 0);
     align-content: center;
-    /* padding-left: 3em;
-    padding-right: 3em; */
 
 }
-.app-layout-main{
+
+.app-layout-main {
     display: flex;
     flex-direction: row;
 
 }
 
-.app-layout-appmenu{
+.app-layout-appmenu {
     display: flex;
     padding: 1em;
     flex-direction: column;
-    /* background-color:rgb(255, 0, 140); */
     background-color: white;
     width: 20%;
     min-height: 80px;
-    margin-top: 30px; 
+    margin-top: 30px;
 }
 
-.app-layout-appcontent{
+.app-layout-appcontent {
     display: flex;
     padding: 0.5em;
     flex-direction: row;
-    /* background-color:rgb(0, 195, 255); */
     background-color: white;
     width: 80%;
     min-height: 80px;

@@ -1,7 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 import { LoginLayoutComponent } from './layout/login-layout/login-layout.component';
 import { HomeComponent } from './pages/home/home.component';
-import { NotifyComponent } from './components/notify/notify.component';
 import { AppLayoutComponent } from './layout/app-layout/app-layout.component';
 import { TicketsComponent } from './components/tickets/tickets.component';
 import { UsersComponent } from './components/users/users.component';
@@ -23,7 +22,6 @@ export const routes: Routes = [
             {path: 'audits',component: AuditsComponent,canActivate: [authGuardAdmin]}
         ]
     },
-    { path: 'notify', component: NotifyComponent},
     {
         path: '**',
         redirectTo:'login'

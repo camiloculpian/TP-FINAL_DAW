@@ -1,38 +1,5 @@
-<!-- ESTE ES EL QUE FUNCIONA __> de camilo
-<div class="login-component">
-    <div class="loginTitle">
-      <h3>Login</h3>
-    </div>
-    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-      <div class="entryBox">
-        <div class="entryLine">
-          <label></label>
-          <input placeholder="                      Enter username"
-          type="text" formControlName="username" (keyup)="onUsernameChange()">
-        </div>
-        <div class="entryLine">
-          <label></label>
-          <input placeholder="                      Enter password"
-          type="password" formControlName="password" (keyup)="onPasswordChange()">
-        </div>
-      </div>
-      <div class="actionLine">
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </div>
-    </form>
-    <div class="notification">
-      <ng-container *ngIf="message.length >= 1">
-        <div class="alert alert-danger">
-          <strong>Error!</strong> {{ message }}
-        </div>
-      </ng-container>
-    </div>
-  </div>
 
-
--->
-
-<!-- LOGIN YA FUNCIONA -->
+<!-- ======= Login Section ======= -->
 <div class="login-component">
   <section class="h-100 gradient-form">
     <div class="container py-5 h-100">
@@ -70,6 +37,7 @@
                   </div>
                 </div>
               </div>
+              <!-- ======= Information Section ======= -->
               <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
                 <div class="text-white px-3 py-4 p-md-5 mx-md-4">
                   <h4 class="mb-4 text-center">Soporte al usuario</h4>
