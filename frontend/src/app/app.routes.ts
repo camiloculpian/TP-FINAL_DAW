@@ -17,9 +17,9 @@ export const routes: Routes = [
     { path: 'app', component: AppLayoutComponent, 
         canActivate: [authGuard],
         children: [
-            {path: 'account',component: AccountComponent},
-            {path: 'users',component: UsersComponent},
-            {path: 'tickets',component: TicketsComponent},
+            {path: 'account',component: AccountComponent, canActivate: [authGuard]},
+            {path: 'users',component: UsersComponent, canActivate: [authGuard]},
+            {path: 'tickets',component: TicketsComponent, canActivate: [authGuard]},
             {path: 'audits',component: AuditsComponent,canActivate: [authGuardAdmin]}
         ]
     },
