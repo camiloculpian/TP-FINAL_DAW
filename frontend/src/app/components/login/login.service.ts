@@ -39,14 +39,7 @@ export class LoginService {
   isLoggedIn():Observable<Response>{
     let user:CurrentUser = localStorage.getItem('user') as CurrentUser;
     if( user != null){
-      return this._httpReq.get<Response>(
-        `http://localhost:3000/api/v1/auth/verify`,
-        {
-          headers: new HttpHeaders ({   
-              "Authorization": String("Bearer "+user.token),
-          }),
-        }
-      )
+      return this._httpReq.get<Response>(this.apiUrl+`/auth/verify`)
     }else{
       return throwError(() => new Error('UNAUTORIZED'));
     }
