@@ -1,23 +1,36 @@
-
-<!-- Agregarle menu hamburguesa -->
-
 <!-- ======= Header and Navbar======= -->
 
-<header id="header" class="fixed-top ">
-  <div class="container d-flex align-items-center">
+<header id="header" class="fixed-top">
+  <div class="container d-flex align-items-center justify-content-between">
+    <h1 class="logo me-auto" [routerLink]="'.'">
+      <span style="color: #4DABE2;">Compu</span><span style="color: #F39200;">Express</span>
+    </h1>
 
-    <h1 class="logo me-auto" [routerLink]="'.'" ><span style="color: #4DABE2;">Compu</span><span style="color: #F39200;">Express</span></h1>
+    <button class="navbar-toggler d-lg-none" type="button" (click)="toggleNavbar()" aria-controls="navbarNav"
+      aria-expanded="!isCollapsed" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon" [class.open]="!isCollapsed"></span>
+    </button>
 
-    <nav id="navbar" class="navbar">
-      <ul> 
-        <li><a [routerLink]="'/'"  class="nav-link scrollto active" >Home</a></li>
-        <li><a [routerLink]="'/'"  fragment="servicios" class="nav-link scrollto" >Servicios</a></li>
-        <li><a [routerLink]="'/'" fragment="SobreNosotros" class="nav-link   scrollto" >Nosotros</a></li>
-        <li><a [routerLink]="'/'" fragment="contactos" class="nav-link scrollto" >Contacto</a></li> 
-        <li><a [routerLink]="'/app'" class="nav-link scrollto" >Iniciar Sesion</a></li>
-      </ul>
+    <nav id="navbar" class="navbar navbar-expand-lg">
+      <div [ngbCollapse]="isCollapsed" class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a [routerLink]="'/'" class="nav-link scrollto active">Home</a>
+          </li>
+          <li class="nav-item">
+            <a [routerLink]="'/'" fragment="servicios" class="nav-link scrollto">Servicios</a>
+          </li>
+          <li class="nav-item">
+            <a [routerLink]="'/'" fragment="SobreNosotros" class="nav-link scrollto">Nosotros</a>
+          </li>
+          <li class="nav-item">
+            <a [routerLink]="'/'" fragment="contactos" class="nav-link scrollto">Contacto</a>
+          </li>
+          <li class="nav-item">
+            <a [routerLink]="'/app'" class="nav-link scrollto">Iniciar Sesion</a>
+          </li>
+        </ul>
+      </div>
     </nav>
   </div>
 </header>
-
-

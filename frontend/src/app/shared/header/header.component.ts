@@ -1,15 +1,20 @@
+
 import { Component } from '@angular/core';
-import { NgbNavModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink,NgbCollapseModule],
+  imports: [CommonModule, RouterLink, NgbCollapseModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  toggleMenu = true;
+  isCollapsed = true;
+
+  toggleNavbar() {
+    this.isCollapsed = !this.isCollapsed;
+  }
 }
