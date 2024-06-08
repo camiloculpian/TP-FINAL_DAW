@@ -12,7 +12,7 @@ import {
     IsUrl,
     IsEnum,
 } from 'class-validator';
-import { Gender } from 'src/persons/entities/person.entity';
+import { Gender } from '../../persons/entities/person.entity';
 
 export class RegisterUserDto {
     @Transform(({ value }) => value.trim())

@@ -4,8 +4,8 @@ import { UpdateTicketDto } from './dto/update-ticket.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Not, Repository } from 'typeorm';
 import { Ticket, TicketStatus } from './entities/ticket.entity';
-import { UsersService } from 'src/users/users.service';
-import { Role } from 'src/auth/enums/role.enum'; // Importacion del Roles
+import { UsersService } from '../users/users.service';
+import { Role } from '../auth/enums/role.enum'; // Importacion del Roles
 import {
   InternalServerErrorException,
   UnauthorizedException,

@@ -2,7 +2,7 @@ import { HttpClient,  HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, last, map, Observable, throwError, timeout } from 'rxjs';
 import { Response } from '../../dto/responses';
-import { Router } from '@angular/router';
+import { environment } from "../../../environment/environment";
 import { CurrentUser } from '../../dto/users';
 
 
@@ -10,11 +10,11 @@ import { CurrentUser } from '../../dto/users';
   providedIn: 'root'
 })
 export class LoginService {
+  private apiUrl:string = environment.apiUrl;
   private responseSubject: BehaviorSubject<Response | null>;
   public response: Observable<Response | null>;
   constructor(
     private _httpReq:HttpClient,
-    private router:Router,
   ) {
     this.responseSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('response')!));
     this.response = this.responseSubject.asObservable();
@@ -22,7 +22,7 @@ export class LoginService {
 
 
   logIn(username: string, password: string) {
-    return this._httpReq.post<Response>("http://localhost:3000/api/v1/auth/login", {"username":username, "password":password})
+    return this._httpReq.post<Response>(this.apiUrl+"/auth/login", {"username":username, "password":password})
       .pipe(map(resp => {
           localStorage.setItem('user', JSON.stringify(resp.data));
           this.responseSubject.next(resp);
@@ -39,14 +39,7 @@ export class LoginService {
   isLoggedIn():Observable<Response>{
     let user:CurrentUser = localStorage.getItem('user') as CurrentUser;
     if( user != null){
-      return this._httpReq.get<Response>(
-        `http://localhost:3000/api/v1/auth/verify`,
-        {
-          headers: new HttpHeaders ({   
-              "Authorization": String("Bearer "+user.token),
-          }),
-        }
-      )
+      return this._httpReq.get<Response>(this.apiUrl+`/auth/verify`)
     }else{
       return throwError(() => new Error('UNAUTORIZED'));
     }

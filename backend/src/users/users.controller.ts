@@ -32,7 +32,7 @@ import { diskStorage } from 'multer';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CurrentUser } from '../auth/decorators/currentUser.decorator';
 import { I18nContext, I18nService } from 'nestjs-i18n';
-import { Response, responseStatus } from 'src/common/responses/responses';
+import { Response, responseStatus } from '../common/responses/responses';
 import { ConfigModule } from '@nestjs/config';
 
 ConfigModule.forRoot({
