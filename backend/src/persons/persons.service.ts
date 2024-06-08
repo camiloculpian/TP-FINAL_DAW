@@ -4,7 +4,7 @@ import { UpdatePersonDto } from './dto/update-person.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Person } from './entities/person.entity';
 import { Repository } from 'typeorm';
-import { responseStatus } from 'src/common/responses/responses';
+import { responseStatus } from '../common/responses/responses';
 
 @Injectable()
 export class PersonsService {

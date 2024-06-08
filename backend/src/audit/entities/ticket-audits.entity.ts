@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column } from "typeorm";
-import { Ticket, TicketPriority, TicketStatus } from "src/tickets/entities/ticket.entity";
+import { Ticket, TicketPriority, TicketStatus } from "../../tickets/entities/ticket.entity";
 import { User } from "../../users/entities/user.entity";
 
 export enum Operation {

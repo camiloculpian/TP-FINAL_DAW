@@ -9,13 +9,8 @@ import {
     UseInterceptors,
     UploadedFile,
     UseGuards,
-    NotFoundException,
     Inject,
     Query,
-    HttpStatus,
-    HttpException,
-    ImATeapotException,
-    NotImplementedException,
     BadRequestException
 } from '@nestjs/common';
 import { TicketsService } from './tickets.service';
@@ -30,11 +25,11 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { Roles } from 'src/auth/decorators/roles.decorator';
-import { Role } from 'src/auth/enums/role.enum';
-import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
-import { UsersService } from 'src/users/users.service';
+import { AuthGuard } from '../auth/auth.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { Role } from '../auth/enums/role.enum';
+import { CurrentUser } from '../auth/decorators/currentUser.decorator';
+import { UsersService } from '../users/users.service';
 import { TicketStatus } from '../tickets/entities/ticket.entity';
 import { Response, responseStatus } from 'src/common/responses/responses';
 import { I18nContext, I18nService } from 'nestjs-i18n';

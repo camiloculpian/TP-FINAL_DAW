@@ -7,8 +7,8 @@ import { DataSource, Repository } from 'typeorm';
 import { Person } from '../persons/entities/person.entity';
 import { BadRequestException, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { UpdateUserRolesDto } from './dto/update-userRoles.dto ';
-import { Role } from 'src/auth/enums/role.enum';
-import { responseStatus } from 'src/common/responses/responses';
+import { Role } from '../auth/enums/role.enum';
+import { responseStatus } from '../common/responses/responses';
 import { ConfigModule } from '@nestjs/config';
 
 ConfigModule.forRoot({

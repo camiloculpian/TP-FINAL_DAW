@@ -3,8 +3,8 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { TicketAudit } from "./entities/ticket-audits.entity";
 import { TicketAuditsService } from "./ticket-audits.service";
 import { TicketAuditsController } from "./ticket-audits.controller";
-import { UsersModule } from "src/users/users.module";
-import { TicketsModule } from "src/tickets/tickets.module";
+import { UsersModule } from "../users/users.module";
+import { TicketsModule } from "../tickets/tickets.module";
 import { DataSource } from "typeorm";
 
 @Module({

@@ -1,20 +1,16 @@
 import {
     Controller,
     Get,
-    Post,
-    Body,
     UseGuards,
     Param,
-    HttpException,
-    HttpStatus,
     BadRequestException,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { TicketAuditsService } from './ticket-audits.service';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { Role } from 'src/auth/enums/role.enum';
-import { Roles } from 'src/auth/decorators/roles.decorator';
-import { Response, responseStatus } from 'src/common/responses/responses';
+import { AuthGuard } from '../auth/auth.guard';
+import { Role } from '../auth/enums/role.enum';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { Response, responseStatus } from '../common/responses/responses';
 
 
 @ApiTags('Ticket Audits')

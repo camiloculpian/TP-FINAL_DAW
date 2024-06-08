@@ -8,7 +8,7 @@ import { UsersService } from '../users/users.service';
 import { RegisterUserDto } from './dto/registerUser.dto';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { JwtService } from '@nestjs/jwt';
-import { responseStatus } from 'src/common/responses/responses';
+import { responseStatus } from '../common/responses/responses';
 import { I18nContext, I18nService } from 'nestjs-i18n';
 
 @Injectable()

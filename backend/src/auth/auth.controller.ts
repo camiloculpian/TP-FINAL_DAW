@@ -19,7 +19,7 @@ import { RegisterUserDto } from '../auth/dto/registerUser.dto'; // Asegúrate de
 import { diskStorage } from 'multer'; // Importa diskStorage desde multer
 import { extname } from 'path'; 
 import { HttpExceptionFilter } from './decorators/httpExceptionFilter.decorator';
-import { Response, responseStatus } from 'src/common/responses/responses';
+import { Response, responseStatus } from '../common/responses/responses';
 import { I18nContext, I18nService } from 'nestjs-i18n';
 
 @Controller('auth')
