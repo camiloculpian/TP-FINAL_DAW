@@ -1,7 +1,7 @@
 import { ConfigModule } from "@nestjs/config";
 
 ConfigModule.forRoot({
-    envFilePath: '../config/jwtConstants.env',
+    envFilePath: 'src/config/jwtConstants.env',
   });
   
 export const jwtConstants= {

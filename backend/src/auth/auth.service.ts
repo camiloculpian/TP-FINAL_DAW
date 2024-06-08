@@ -86,6 +86,7 @@ export class AuthService {
                 throw new UnauthorizedException({status:responseStatus.UNAUTH,message:this.i18n.t('lang.auth.WrongLogin',{ lang:   I18nContext.current().lang })});
             }
         }catch(e){
+            console.log(e);
             if(e instanceof BadRequestException || e instanceof UnauthorizedException){
                 throw e;
             }else{
