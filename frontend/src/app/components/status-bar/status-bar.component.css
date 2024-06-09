@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------
 # Header Section
---------------------------------------------------------------*/ 
+--------------------------------------------------------------*/
 
 #header {
   position: sticky;
@@ -37,13 +37,10 @@
 
 /*--------------------------------------------------------------
 # Navbar Section
---------------------------------------------------------------*/  
-.navbar ul {
-  margin: 0;
+--------------------------------------------------------------*/
+
+.navbar {
   padding: 0;
-  display: flex;
-  list-style: none;
-  align-items: center;
 }
 
 .navbar li {
@@ -54,8 +51,7 @@
 .navbar a:focus {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 10px 30px;
+  padding: 10px 0 10px 30px;
   font-size: 18px;
   font-weight: 500;
   color: #fff;
@@ -77,6 +73,20 @@
   color: #47b2e4;
 }
 
+.navbar .getstarted {
+  padding: 8px 20px;
+  margin-left: 30px;
+  border-radius: 50px;
+  color: #fff;
+  font-size: 15px;
+  border: 2px solid #47b2e4;
+  font-weight: 600;
+}
+
+.navbar .getstarted:hover {
+  color: #fff;
+  background: #31a9e1;
+}
 .navbar .btn.btn-black.btn-rounded.logOut {
   padding: 8px 20px;
   margin-left: 30px;
@@ -84,4 +94,54 @@
   color: #fff;
   font-size: 15px;
   font-weight: 600;
+}
+
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler-icon {
+  margin-top: 10px;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+.navbar-toggler-icon.open {
+  margin-top: 10px;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M6 6l18 18M6 24L24 6'/%3E%3C/svg%3E");
+}
+
+/*--------------------------------------------------------------
+# Media Queries Section
+--------------------------------------------------------------*/
+
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    text-align: center;
+    flex-direction: column;
+  }
+
+  .navbar-nav {
+    flex-direction: column;
+    margin-top: 10px;
+  }
+
+  .navbar-nav .nav-item {
+    margin-bottom: 10px;
+  }
+
+  .container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    margin-bottom: 0;
+    order: -1; 
+    text-align: center;
+    width: 100%; 
+    display: flex;
+    justify-content: center;
+  }
+
 }

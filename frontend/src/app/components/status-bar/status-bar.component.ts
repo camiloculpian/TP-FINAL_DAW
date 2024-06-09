@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { LoginService } from '../login/login.service';
 import { CurrentUser } from '../../dto/users';
 import { Router, RouterLink } from '@angular/router';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-status-bar',
   standalone: true,
-  imports: [RouterLink],
+  imports: [CommonModule, RouterLink, NgbCollapseModule],
   templateUrl: './status-bar.component.html',
   styleUrl: './status-bar.component.css'
 })
@@ -27,4 +29,9 @@ export class StatusBarComponent {
     this.router.navigate(['']);
   }
 
+  isCollapsed = true;
+
+  toggleNavbar() {
+    this.isCollapsed = !this.isCollapsed;
+  }
 }
