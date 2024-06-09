@@ -1,4 +1,4 @@
-DROP TRIGGER trigger_ticket_update;
+DROP TRIGGER IF EXISTS trigger_ticket_update;
 
 DELIMITER //
 CREATE TRIGGER IF NOT EXISTS trigger_ticket_update
