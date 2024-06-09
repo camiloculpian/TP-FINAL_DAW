@@ -41,7 +41,7 @@ ConfigModule.forRoot({
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../'),
-      renderPath: '/uploads',
+      renderPath: 'api/v1/uploads',
     }),
     UsersModule,
     AuthModule,
