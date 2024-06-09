@@ -1,4 +1,3 @@
-
 <!-- ======= Login Navbar Section ======= -->
 
 <header id="header" class="fixed-top">
@@ -23,12 +22,21 @@
                                 class="fa-solid fa-user pe-3"></i>Usuario: {{' '+currentUser?.nombre}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link scrollto" href="/"><i class="fa-solid fa-home pe-3"></i>Home</a>
+                        <a routerLink="/app/tickets" class="nav-link scrollto">
+                            <i class="fa-solid fa-ticket me-3"></i>
+                            Tareas</a>
                     </li>
 
                     <li class="nav-item">
-                            <a class="nav-link scrollto" (click)="logOut()" href="/"><i class="fa-solid fa-arrow-right-from-bracket pe-3"></i>Cerrar
-                                sesión</a>
+                        <a routerLink="/app/users" class="nav-link scrollto">
+                            <i class="fa-solid fa-user me-3"></i>
+                            Usuarios</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link scrollto" (click)="logOut()" href="/"><i
+                                class="fa-solid fa-arrow-right-from-bracket pe-3"></i>Cerrar
+                            sesión</a>
                     </li>
                 </ul>
             </div>
