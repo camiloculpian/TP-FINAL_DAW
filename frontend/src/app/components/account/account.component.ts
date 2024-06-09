@@ -1,8 +1,8 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Response } from '../../dto/responses';
 import { CommonModule, NgForOf } from '@angular/common';
-import { NgbHighlight, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CurrentUser, User } from '../../dto/users';
+import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
+import { User } from '../../dto/users';
 import { FormBuilder, FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { UsersService } from '../users/users.service';
 import { environment } from '../../../environment/environment';
