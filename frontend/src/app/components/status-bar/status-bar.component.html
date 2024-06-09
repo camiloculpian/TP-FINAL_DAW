@@ -1,31 +1,45 @@
-
-<!-- Agregarle menu hamburguesa -->
-
 <!-- ======= Login Navbar Section ======= -->
+
 <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
-
-        <h1 class="logo me-auto">
+        <h1 class="logo me-auto  ">
             <span style="color: #4DABE2;">Compu</span>
             <span style="color: #F39200;">Express</span>
         </h1>
 
-        <nav id="navbar" class="navbar ms-auto">
-            <ul class="d-flex align-items-center"> 
-                <li>
-                    <a [routerLink]="'/app/account'" class="nav-link scrollto" ><i class="fa-solid fa-user pe-3"></i>Usuario: {{' '+currentUser?.nombre}}</a>
-                </li>
-                <li>
-                    <a class="nav-link scrollto" href="/"><i class="fa-solid fa-home pe-3"></i>Home</a>
-                </li>
-               
-                <li>
-                    <button class="btn btn-black btn-rounded logOut" (click)="logOut()">
-                        <i class="fas fa-sign-out-alt pe-3"></i> Cerrar sesión
-                    </button>
-                </li>
-            </ul>
+        <button class="navbar-toggler d-lg-none" type="button" (click)="toggleNavbar()" aria-controls="navbarNav"
+            aria-expanded="!isCollapsed" aria-label="Toggle navigation">
+
+            <span class="navbar-toggler-icon" [class.open]="!isCollapsed"></span>
+
+        </button>
+
+        <nav id="navbar" class="navbar navbar-expand-lg">
+            <div [ngbCollapse]="isCollapsed" class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a [routerLink]="'/app/account'" class="nav-link scrollto"><i
+                                class="fa-solid fa-user pe-3"></i>Usuario: {{' '+currentUser?.nombre}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/app/tickets" class="nav-link scrollto">
+                            <i class="fa-solid fa-ticket me-3"></i>
+                            Tareas</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a routerLink="/app/users" class="nav-link scrollto">
+                            <i class="fa-solid fa-user me-3"></i>
+                            Usuarios</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link scrollto" (click)="logOut()" href="/"><i
+                                class="fa-solid fa-arrow-right-from-bracket pe-3"></i>Cerrar
+                            sesión</a>
+                    </li>
+                </ul>
+            </div>
         </nav>
     </div>
 </header>
-
