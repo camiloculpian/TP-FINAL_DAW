@@ -13,11 +13,13 @@ th {
 }
 
 td {
+  white-space: nowrap;
   text-align: left;
   padding-left: 0.5cm;
 }
 
 table {
+  text-align: left;
   width: 100%;
 }
 
