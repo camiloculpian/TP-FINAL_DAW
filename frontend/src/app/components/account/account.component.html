@@ -1,73 +1,74 @@
 <!-- ======= Profile Section ======= -->
 
-<div class="row g-0 text-center">
-  <div class="row ">
-    <div class="col-sm-12 ">
-      <div class="panel panel-white profile-widget ">
+  <div class="row g-0 text-center">
+    <div class="row ">
+      <div class="col-sm-12 ">
+        <div class="panel panel-white profile-widget ">
 
-        <!-- ======= User Profile Section ======= -->
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="image-container bg2">
-              <img [src]="apiUrl+'/uploads/profiles/users/'+userProfile?.profilePicture" class="avatar"
-                alt="avatar">
+          <!-- ======= User Profile Section ======= -->
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="image-container bg2">
+                <img [src]="apiUrl+'/uploads/profiles/users/'+userProfile?.profilePicture" class="avatar" alt="avatar">
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <div class="details">
+                <h4>{{ userProfile?.person?.name }}</h4>
+                <h4>{{ userProfile?.person?.lastName }}</h4>
+              </div>
             </div>
           </div>
 
-          <div class="col-sm-12">
-            <div class="details">
-              <h4>{{ userProfile?.person?.name }}</h4>
-              <h4>{{ userProfile?.person?.lastName }}</h4>
-            </div>
-          </div>
         </div>
 
-      </div>
+        <div class="row mt-4 ">
+          <div class="col-sm-12 ">
+            <div class="panel  border-top-blue ">
+              <div class="panel-heading justify-content-center">
+                <h3 class="panel-title">Datos de Usuario</h3>
+              </div>
+              <div class="panel-body panel-white">
+                <div class="table-responsive">
+                  <table ngb-table class="table table-hover table-md tablaGas">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Rol</th>
+                        <th>DNI</th>
+                        <th>Genero</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
+                        <th>Dirección</th>
+                        <th>Fecha de Nacimiento</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{{ userProfile?.id }}</td>
+                        <td>{{ userProfile?.username }}</td>
+                        <td>{{ userProfile?.person?.name }}</td>
+                        <td>{{ userProfile?.person?.lastName }}</td>
+                        <td>{{ userProfile?.roles }}</td>
+                        <td>{{ userProfile?.person?.dni }}</td>
+                        <td>{{ userProfile?.person?.gender }}</td>
+                        <td>{{ userProfile?.person?.email }}</td>
+                        <td>{{ userProfile?.person?.phone }}</td>
+                        <td>{{ userProfile?.person?.address }}</td>
+                        <td>{{ userProfile?.person?.birthDate }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
 
-      <div class="row mt-4 ">
-        <div class="col-sm-12 ">
-          <div class="panel  border-top-blue ">
-            <div class="panel-heading justify-content-center">
-              <h3 class="panel-title">Datos de Usuario</h3>
-            </div>
-            <div class="panel-body panel-white">
-              <table ngb-table class="table table-responsive table-md tablaGas">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Username</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Rol</th>
-                    <th>DNI</th>
-                    <th>Genero</th>
-                    <th>Email</th>
-                    <th>Teléfono</th>
-                    <th>Dirección</th>
-                    <th>Fecha de Nacimiento</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{{ userProfile?.id }}</td>
-                    <td>{{ userProfile?.username }}</td>
-                    <td>{{ userProfile?.person?.name }}</td>
-                    <td>{{ userProfile?.person?.lastName }}</td>
-                    <td>{{ userProfile?.roles }}</td>
-                    <td>{{ userProfile?.person?.dni }}</td>
-                    <td>{{ userProfile?.person?.gender }}</td>
-                    <td>{{ userProfile?.person?.email }}</td>
-                    <td>{{ userProfile?.person?.phone }}</td>
-                    <td>{{ userProfile?.person?.address }}</td>
-                    <td>{{ userProfile?.person?.birthDate }}</td>
-                  </tr>
-                </tbody>
-              </table>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-

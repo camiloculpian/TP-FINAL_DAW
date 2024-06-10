@@ -1,3 +1,5 @@
+<!-- =======  Los botones deben ubicarse uno debajo del otro cuando se hace responsive y ademas sale una linea blanca ======= -->
+
 <!-- =======  Ticket Section ======= -->
 <div class="row g-0 text-center">
 
@@ -27,50 +29,53 @@
         </div>
 
         <div class="panel-body  panel-white">
-          <table ngb-table class="table table-hover table-responsive table-md tablaGas" id="tickets-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Titulo</th>
-                <th>Descripcion</th>
-                <th>Usuario asignado</th>
-                <th>Pioridad</th>
-                <th>Servicios</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let ticket of tickets">
-                <td>{{ ticket.id }}</td>
-                <td>{{ ticket.title }}</td>
-                <td>{{ ticket.description }}</td>
-                <td>{{ ticket.asignedToUser?.username || 'No Asignado'}}</td>
-                <td>{{ ticket.priority }}</td>
-                <td>{{ ticket.service }}</td>
-                <td>{{ ticket.status }}</td>
-                <td>
-                  <div class="btn-group" role="group">
-                    <button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-info espaciadoBtn rounded"
-                      (click)="viewTicketAudit(ticket.id)">
-                      <i class="notifyIcon fa-solid fa-magnifying-glass"></i>
-                    </button>
-                    <button class="btn btn-warning espaciadoBtn rounded" (click)="editTicket(ticket.id)">
-                      <i class="notifyIcon fa-solid fa-pen-to-square"></i>
-                    </button>
-                    <button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-danger espaciadoBtn rounded"
-                      (click)="confirmDeleteTicket(ticket.id, ticket.status)">
-                      <i class="notifyIcon fa-solid fa-trash-can"></i>
-                    </button>
-                  </div>
-                </td>
+          <div class="table-responsive">
 
-              </tr>
-              <tr *ngIf="tickets?.length === 0">
-                <td colspan="8">No se encontraron datos.</td>
-              </tr>
-            </tbody>
-          </table>
+            <table ngb-table class="table table-hover table-md tablaGas">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Titulo</th>
+                  <th>Descripcion</th>
+                  <th>Usuario asignado</th>
+                  <th>Pioridad</th>
+                  <th>Servicios</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let ticket of tickets">
+                  <td>{{ ticket.id }}</td>
+                  <td>{{ ticket.title }}</td>
+                  <td>{{ ticket.description }}</td>
+                  <td>{{ ticket.asignedToUser?.username || 'No Asignado'}}</td>
+                  <td>{{ ticket.priority }}</td>
+                  <td>{{ ticket.service }}</td>
+                  <td>{{ ticket.status }}</td>
+                  <td>
+                    <div class="btn-group" role="group">
+                      <button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-info espaciadoBtn rounded"
+                        (click)="viewTicketAudit(ticket.id)">
+                        <i class="notifyIcon fa-solid fa-magnifying-glass"></i>
+                      </button>
+                      <button class="btn btn-warning espaciadoBtn rounded" (click)="editTicket(ticket.id)">
+                        <i class="notifyIcon fa-solid fa-pen-to-square"></i>
+                      </button>
+                      <button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-danger espaciadoBtn rounded"
+                        (click)="confirmDeleteTicket(ticket.id, ticket.status)">
+                        <i class="notifyIcon fa-solid fa-trash-can"></i>
+                      </button>
+                    </div>
+                  </td>
+
+                </tr>
+                <tr *ngIf="tickets?.length === 0">
+                  <td colspan="8">No se encontraron datos.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
         </div>
       </div>

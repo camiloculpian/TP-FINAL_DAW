@@ -13,18 +13,11 @@
 
 }
 
-.app-layout-main {
-    display: flex;
-    flex-direction: row;
-
-}
 
 
 .app-layout-appcontent {
-    display: flex;
-
     background-color: white;
     justify-content: center;
-    padding: 10px 20px 30px 40px; 
+    padding: 10px 20px 20px 20px; 
 
 }
