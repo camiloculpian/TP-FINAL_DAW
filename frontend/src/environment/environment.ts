@@ -1,3 +1,3 @@
 export const environment = {
-    apiUrl: 'https://daw.hi-lab.com.ar/api/v1',
+    apiUrl: 'http://localhost:3000/api/v1'
 };
