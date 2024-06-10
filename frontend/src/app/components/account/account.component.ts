@@ -49,9 +49,9 @@ export class AccountComponent implements OnInit {
     this.getAccountData();
   }
 
-  trackByUserId(index: number, user: User): number {
-    return user.id;
-  }
+  // trackByUserId(index: number, user: User): number {
+  //   return user.id;
+  // }
 
   getAccountData(){
     this.usersService.getUserProfile().subscribe({
