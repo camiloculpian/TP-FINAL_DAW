@@ -54,7 +54,7 @@
                   <td>{{ ticket.service }}</td>
                   <td>{{ ticket.status }}</td>
                   <td>
-                    <div class="btn-group" role="group">
+                    <div>
                       <button *ngIf="this.currentUser.roles == 'admin'" class="btn btn-info espaciadoBtn rounded"
                         (click)="viewTicketAudit(ticket.id)">
                         <i class="notifyIcon fa-solid fa-magnifying-glass"></i>
